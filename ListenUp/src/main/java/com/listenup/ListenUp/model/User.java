@@ -1,6 +1,11 @@
 package com.listenup.ListenUp.model;
 
-public class User{
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public abstract class User{
     private int id;
     private String userName;
     private String email;
