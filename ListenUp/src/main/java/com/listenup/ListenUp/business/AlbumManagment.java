@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AlbumManagment {
     boolean addAlbum(Album album);
-    List<Album> getAlbum();
+    List<Album> getAlbums();
     boolean editAlbum(Album album);
     boolean deleteAlbum(int id);
     Album getAlbum(int id);

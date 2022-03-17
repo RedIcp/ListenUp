@@ -16,12 +16,12 @@ public class AlbumManagmentImp implements AlbumManagment {
 
     public boolean addAlbum(Album album){
         if(albumExist(album.getId()) == false){
-            getAlbum().add(album);
+            getAlbums().add(album);
             return true;
         }
         return false;
     }
-    public List<Album> getAlbum(){
+    public List<Album> getAlbums(){
         return db.getAlbums();
     }
     public boolean editAlbum(Album album){
@@ -29,13 +29,21 @@ public class AlbumManagmentImp implements AlbumManagment {
         if(old == null){
             return false;
         }
+        old.setName(album.getName());
+        old.setReleasedDate(album.getReleasedDate());
+        old.setUploadedDate(album.getUploadedDate());
+        old.setArtist(album.getArtist());
         return true;
     }
     public boolean deleteAlbum(int id){
-        return true;
+        if(albumExist(id) == true){
+            getAlbums().remove(getAlbum(id));
+            return true;
+        }
+        return false;
     }
     public Album getAlbum(int id){
-        for(Album album: getAlbum()){
+        for(Album album: getAlbums()){
             if(album.getId()==id){
                 return album;
             }
