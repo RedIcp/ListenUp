@@ -3,7 +3,11 @@ package com.listenup.ListenUp.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Album {
     private int id;
     private String name;

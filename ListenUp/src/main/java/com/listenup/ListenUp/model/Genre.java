@@ -2,7 +2,11 @@ package com.listenup.ListenUp.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Genre {
     private int id;
     private String name;

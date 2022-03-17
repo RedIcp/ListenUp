@@ -2,7 +2,11 @@ package com.listenup.ListenUp.model;
 
 import java.util.Date;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Single extends  Song{
     private Date releasedDate;
     private Date uploadedDate;
