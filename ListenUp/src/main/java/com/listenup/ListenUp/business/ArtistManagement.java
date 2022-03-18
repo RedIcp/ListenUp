@@ -4,7 +4,7 @@ import com.listenup.ListenUp.model.Artist;
 
 import java.util.List;
 
-public interface ArtistManagment {
+public interface ArtistManagement {
     boolean addArtist(Artist artist);
     List<Artist> getArtists();
     boolean editArtist(Artist artist);

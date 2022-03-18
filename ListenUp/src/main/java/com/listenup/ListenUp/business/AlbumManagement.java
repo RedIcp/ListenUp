@@ -4,7 +4,7 @@ import com.listenup.ListenUp.model.Album;
 
 import java.util.List;
 
-public interface AlbumManagment {
+public interface AlbumManagement {
     boolean addAlbum(Album album);
     List<Album> getAlbums();
     boolean editAlbum(Album album);

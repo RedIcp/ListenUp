@@ -12,6 +12,7 @@ public class DBArtistImp implements DBArtist {
     public DBArtistImp(){
         artists = new ArrayList<>();
     }
+
     public boolean addArtist(int id, String name){
         return true;
     }

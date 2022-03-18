@@ -4,7 +4,7 @@ import com.listenup.ListenUp.model.User;
 
 import java.util.List;
 
-public interface UserManagment {
+public interface UserManagement {
     boolean createAccount(User user);
     List<User> getUsers();
     User getUserByID(int id);

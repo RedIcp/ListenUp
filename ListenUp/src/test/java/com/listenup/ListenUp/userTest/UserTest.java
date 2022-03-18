@@ -1,7 +1,7 @@
 package com.listenup.ListenUp.userTest;
 
-import com.listenup.ListenUp.business.UserManagment;
-import com.listenup.ListenUp.business.imp.UserManagmentImp;
+import com.listenup.ListenUp.business.UserManagement;
+import com.listenup.ListenUp.business.imp.UserManagementImp;
 import com.listenup.ListenUp.model.Customer;
 import com.listenup.ListenUp.model.User;
 import com.listenup.ListenUp.persistence.DBUser;
@@ -13,12 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
     DBUser db;
-    UserManagment managment;
+    UserManagement managment;
 
     @BeforeEach
     void  setUp(){
         db = new DBUserImp();
-        managment = new UserManagmentImp(db);
+        managment = new UserManagementImp(db);
     }
 
     @Test

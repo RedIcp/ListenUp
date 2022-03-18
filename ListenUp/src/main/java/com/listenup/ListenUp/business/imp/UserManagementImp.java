@@ -1,16 +1,16 @@
 package com.listenup.ListenUp.business.imp;
 
-import com.listenup.ListenUp.business.UserManagment;
+import com.listenup.ListenUp.business.UserManagement;
 import com.listenup.ListenUp.model.User;
 import com.listenup.ListenUp.persistence.DBUser;
 
 import java.util.List;
 
-public class UserManagmentImp implements UserManagment {
+public class UserManagementImp implements UserManagement {
 
     private DBUser db;
 
-    public UserManagmentImp(DBUser db){
+    public UserManagementImp(DBUser db){
         this.db = db;
     }
     public List<User> getUsers(){

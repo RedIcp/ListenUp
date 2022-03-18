@@ -1,4 +1,4 @@
 package com.listenup.ListenUp.business.imp;
 
-public class SongManagmentImp {
+public class SongManagementImp {
 }
