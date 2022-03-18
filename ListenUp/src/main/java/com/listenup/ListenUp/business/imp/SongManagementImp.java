@@ -9,7 +9,7 @@ import java.util.List;
 public class SongManagementImp implements SongManagement {
     private DBSong db;
 
-    private SongManagementImp(DBSong db){
+    public SongManagementImp(DBSong db){
         this.db = db;
     }
 

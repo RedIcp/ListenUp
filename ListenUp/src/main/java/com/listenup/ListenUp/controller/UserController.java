@@ -16,11 +16,11 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private DBUser db = new DBUserImp();
-    private UserManagement managment = new UserManagementImp(db);
+    private UserManagement management = new UserManagementImp(db);
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = managment.getUsers();
+        List<User> users = management.getUsers();
 
         if(users != null) {
             return ResponseEntity.ok().body(users);
@@ -30,17 +30,17 @@ public class UserController {
     }
     @GetMapping("{id}")
     public ResponseEntity<User> getUserPath(@PathVariable(value = "id") int id) {
-        User student = managment.getUserByID(id);
+        User user = management.getUserByID(id);
 
-        if(student != null) {
-            return ResponseEntity.ok().body(student);
+        if(user != null) {
+            return ResponseEntity.ok().body(user);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
     @PostMapping()
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        if (!managment.createAccount(user)){
+        if (!management.createAccount(user)){
             String entity =  "User with this email " + user.getEmail() + " already exists.";
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
         } else {
@@ -51,15 +51,15 @@ public class UserController {
     }
     @PutMapping()
     public ResponseEntity<User> updateUser(@RequestBody User user) {
-        if (managment.updateAccount(user)) {
+        if (management.updateAccount(user)) {
             return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity("Please provide a valid country code.",HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Please provide a valid info.",HttpStatus.NOT_FOUND);
         }
     }
     @DeleteMapping("{id}")
-    public ResponseEntity deletePost(@PathVariable int id) {
-        managment.deleteAccount(id);
+    public ResponseEntity deleteUser(@PathVariable int id) {
+        management.deleteAccount(id);
         return ResponseEntity.ok().build();
 
     }
