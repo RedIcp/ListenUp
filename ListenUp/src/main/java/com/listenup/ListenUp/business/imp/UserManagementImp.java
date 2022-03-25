@@ -20,7 +20,7 @@ public class UserManagementImp implements UserManagement {
     public boolean createAccount(User user){
         if(userByEmailExist(user.getEmail()) == false && userByIdExist(user.getId()) == false){
             getUsers().add(user);
-            db.addUser(user.getId(), user.getUserName(), user.getEmail(), user.getPassword());
+            db.addUser(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
             return true;
         }
         return false;
@@ -43,8 +43,8 @@ public class UserManagementImp implements UserManagement {
         }
         old.setEmail(user.getEmail());
         old.setPassword(user.getPassword());
-        old.setUserName(user.getUserName());
-        db.editUser(user.getId(), user.getUserName(), user.getEmail(), user.getPassword());
+        old.setUsername(user.getUsername());
+        db.editUser(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
         return true;
     }
 

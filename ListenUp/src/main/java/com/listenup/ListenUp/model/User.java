@@ -1,27 +1,24 @@
 package com.listenup.ListenUp.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public abstract class User{
     private int id;
-    private String userName;
+    private String username;
     private String email;
     private String password;
 
-    public User(int id, String userName, String email, String password){
-        this.id = id;
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
-    }
     @Override
     public String toString() {
-        return "Student{" +
+        return "User{" +
                 "ID: " + id +
-                ", Username: " + userName + '\'' +
+                ", Username: " + username + '\'' +
                 ", Email: " + email + '\'' +
                 ", Password: " + password +
                 '}';

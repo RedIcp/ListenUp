@@ -1,6 +1,7 @@
 package com.listenup.ListenUp.persistence.imp;
 
 import com.listenup.ListenUp.model.Genre;
+import com.listenup.ListenUp.model.Single;
 import com.listenup.ListenUp.model.Song;
 import com.listenup.ListenUp.persistence.DBSong;
 

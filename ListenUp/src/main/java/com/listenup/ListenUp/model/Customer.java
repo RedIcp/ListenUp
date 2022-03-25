@@ -12,8 +12,8 @@ public class Customer extends User{
     private List<Playlist> playlists;
     private List<Playlist> likedPlaylists;
 
-    public Customer(int id, String userName, String email, String password){
-        super(id, userName, email, password);
+    public Customer(int id, String username, String email, String password){
+        super(id, username, email, password);
 
         likedSongs = new ArrayList<>();
         playlists = new ArrayList<>();

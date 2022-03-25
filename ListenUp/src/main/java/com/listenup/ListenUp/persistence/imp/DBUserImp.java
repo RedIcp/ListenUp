@@ -9,9 +9,11 @@ import java.util.List;
 
 public class DBUserImp implements DBUser {
 
-    private  List<User> users = new ArrayList<>();
+    private  List<User> users;
 
     public DBUserImp(){
+        users = new ArrayList<>();
+
         users.add(new Customer(1,"Yellow","yellow@gmail.com", "123Yellow"));
         users.add(new Customer(2,"Blue","blue@gmail.com", "123Blue"));
         users.add(new Customer(3,"Red","red@gmail.com", "123Red"));

@@ -2,6 +2,7 @@ package com.listenup.ListenUp.controller;
 
 import com.listenup.ListenUp.business.UserManagement;
 import com.listenup.ListenUp.business.imp.UserManagementImp;
+import com.listenup.ListenUp.model.Customer;
 import com.listenup.ListenUp.model.User;
 import com.listenup.ListenUp.persistence.DBUser;
 import com.listenup.ListenUp.persistence.imp.DBUserImp;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin
 public class UserController {
     private DBUser db = new DBUserImp();
     private UserManagement management = new UserManagementImp(db);
@@ -38,8 +40,9 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PostMapping()
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<Customer> createUser(@RequestBody Customer user) {
         if (!management.createAccount(user)){
             String entity =  "User with this email " + user.getEmail() + " already exists.";
             return new ResponseEntity(entity, HttpStatus.CONFLICT);
@@ -50,7 +53,7 @@ public class UserController {
         }
     }
     @PutMapping()
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
+    public ResponseEntity<Customer> updateUser(@RequestBody Customer user) {
         if (management.updateAccount(user)) {
             return ResponseEntity.noContent().build();
         } else {
