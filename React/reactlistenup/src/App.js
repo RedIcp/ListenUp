@@ -1,12 +1,13 @@
-import './App.css';
-import UserList from './UserList.js';
-import SignUp from './SignUp.js';
+import User from './Admin/Users.js';
+import SignUp from './ThirdParty/SignUp.js';
+import UpdateProfile from './Customer/UpdateProfile.js';
 
 function App() {
   return (
       <div ClassName="App">
-        <UserList/>
+        <User/>
         <SignUp/>
+        <UpdateProfile/>
       </div>
   )
 }
