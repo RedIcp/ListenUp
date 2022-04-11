@@ -1,20 +1,15 @@
 package com.listenup.individualassignment.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public abstract class User{
     private int id;
-    @NonNull
     private String username;
-    @NonNull
     private String email;
-    @NonNull
     private String password;
 
     @Override

@@ -3,21 +3,19 @@ package com.listenup.individualassignment.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 
-@Getter
-@Setter
+import lombok.*;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Album {
     private int id;
-    @NonNull
     private String name;
     private Artist artist;
     private List<AlbumSong> songs;
-    @NonNull
     private Date releasedDate;
-    @NonNull
     private Date uploadedDate;
 
     public Album(int id, String name, Artist artist, Date releasedDate, Date uploadedDate){

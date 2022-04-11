@@ -1,9 +1,10 @@
 package com.listenup.individualassignment.model;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class AlbumSong extends Song{
     private Album album;
 

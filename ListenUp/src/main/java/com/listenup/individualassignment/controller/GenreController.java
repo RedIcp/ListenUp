@@ -3,8 +3,8 @@ package com.listenup.individualassignment.controller;
 import com.listenup.individualassignment.business.GenreManagement;
 import com.listenup.individualassignment.business.imp.GenreManagementImp;
 import com.listenup.individualassignment.model.Genre;
-import com.listenup.individualassignment.persistence.DBGenre;
-import com.listenup.individualassignment.persistence.imp.DBGenreImp;
+import com.listenup.individualassignment.repository.GenreRepository;
+import com.listenup.individualassignment.repository.imp.GenreRepositoryImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/genres")
 @CrossOrigin(origins = "http://localhost:3000")
 public class GenreController {
-    private DBGenre db = new DBGenreImp();
+    private GenreRepository db = new GenreRepositoryImp();
     private GenreManagement management = new GenreManagementImp(db);
 
     @GetMapping

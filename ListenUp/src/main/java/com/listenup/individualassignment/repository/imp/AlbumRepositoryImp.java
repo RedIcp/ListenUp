@@ -1,17 +1,17 @@
-package com.listenup.individualassignment.persistence.imp;
+package com.listenup.individualassignment.repository.imp;
 
 import com.listenup.individualassignment.model.Album;
 import com.listenup.individualassignment.model.Artist;
-import com.listenup.individualassignment.persistence.DBAlbum;
+import com.listenup.individualassignment.repository.AlbumRepository;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DBAlbumImp implements DBAlbum {
+public class AlbumRepositoryImp implements AlbumRepository {
     private List<Album> albums;
 
-    public DBAlbumImp(){
+    public AlbumRepositoryImp(){
         albums = new ArrayList<>();
     }
 

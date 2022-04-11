@@ -1,15 +1,15 @@
-package com.listenup.individualassignment.persistence.imp;
+package com.listenup.individualassignment.repository.imp;
 
 import com.listenup.individualassignment.model.Genre;
-import com.listenup.individualassignment.persistence.DBGenre;
+import com.listenup.individualassignment.repository.GenreRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBGenreImp implements DBGenre {
+public class GenreRepositoryImp implements GenreRepository {
     private List<Genre> genres;
 
-    public DBGenreImp(){
+    public GenreRepositoryImp(){
         genres = new ArrayList<>();
     }
 

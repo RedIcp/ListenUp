@@ -2,11 +2,11 @@ package com.listenup.individualassignment.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+import lombok.*;
+
+@Data
+@Builder
 public class Customer extends User{
     private List<Song> likedSongs;
     private List<Playlist> playlists;

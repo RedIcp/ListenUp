@@ -2,17 +2,16 @@ package com.listenup.individualassignment.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 
-@Getter
-@Setter
+import lombok.*;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class Song{
     private int id;
-    @NonNull
     private String name;
-    @NonNull
     private Genre genre;
     private List<Artist> features;
     private List<User> viewers;

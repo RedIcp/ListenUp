@@ -2,14 +2,14 @@ package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.GenreManagement;
 import com.listenup.individualassignment.model.Genre;
-import com.listenup.individualassignment.persistence.DBGenre;
+import com.listenup.individualassignment.repository.GenreRepository;
 
 import java.util.List;
 
 public class GenreManagementImp implements GenreManagement {
-    private DBGenre db;
+    private GenreRepository db;
 
-    public GenreManagementImp(DBGenre db){
+    public GenreManagementImp(GenreRepository db){
         this.db = db;
     }
 

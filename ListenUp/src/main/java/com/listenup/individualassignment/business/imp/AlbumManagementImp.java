@@ -2,14 +2,14 @@ package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.AlbumManagement;
 import com.listenup.individualassignment.model.Album;
-import com.listenup.individualassignment.persistence.DBAlbum;
+import com.listenup.individualassignment.repository.AlbumRepository;
 
 import java.util.List;
 
 public class AlbumManagementImp implements AlbumManagement {
-    private DBAlbum db;
+    private AlbumRepository db;
 
-    public AlbumManagementImp(DBAlbum db){
+    public AlbumManagementImp(AlbumRepository db){
         this.db = db;
     }
 

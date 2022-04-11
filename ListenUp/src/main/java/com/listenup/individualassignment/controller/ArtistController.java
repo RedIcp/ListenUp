@@ -3,8 +3,8 @@ package com.listenup.individualassignment.controller;
 import com.listenup.individualassignment.business.ArtistManagement;
 import com.listenup.individualassignment.business.imp.ArtistManagementImp;
 import com.listenup.individualassignment.model.Artist;
-import com.listenup.individualassignment.persistence.DBArtist;
-import com.listenup.individualassignment.persistence.imp.DBArtistImp;
+import com.listenup.individualassignment.repository.ArtistRepository;
+import com.listenup.individualassignment.repository.imp.ArtistRepositoryImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/artists")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ArtistController {
-    private DBArtist db = new DBArtistImp();
+    private ArtistRepository db = new ArtistRepositoryImp();
     private ArtistManagement management = new ArtistManagementImp(db);
 
     @GetMapping

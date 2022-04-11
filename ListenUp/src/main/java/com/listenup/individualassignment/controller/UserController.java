@@ -4,8 +4,8 @@ import com.listenup.individualassignment.business.UserManagement;
 import com.listenup.individualassignment.business.imp.UserManagementImp;
 import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.model.User;
-import com.listenup.individualassignment.persistence.DBUser;
-import com.listenup.individualassignment.persistence.imp.DBUserImp;
+import com.listenup.individualassignment.repository.UserRepository;
+import com.listenup.individualassignment.repository.imp.UserRepositoryImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/users")
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
-    private DBUser db = new DBUserImp();
+    private UserRepository db = new UserRepositoryImp();
     private UserManagement management = new UserManagementImp(db);
 
     @GetMapping

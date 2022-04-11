@@ -2,15 +2,15 @@ package com.listenup.individualassignment.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 
-@Getter
-@Setter
+import lombok.*;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Genre {
     private int id;
-    @NonNull
     private String name;
     private List<Song> songs;
 

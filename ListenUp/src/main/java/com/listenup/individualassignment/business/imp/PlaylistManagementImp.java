@@ -2,14 +2,14 @@ package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.PlaylistManagement;
 import com.listenup.individualassignment.model.Playlist;
-import com.listenup.individualassignment.persistence.DBPlaylist;
+import com.listenup.individualassignment.repository.PlaylistRepository;
 
 import java.util.List;
 
 public class PlaylistManagementImp implements PlaylistManagement {
-    private DBPlaylist db;
+    private PlaylistRepository db;
 
-    public PlaylistManagementImp(DBPlaylist db){
+    public PlaylistManagementImp(PlaylistRepository db){
         this.db = db;
     }
 

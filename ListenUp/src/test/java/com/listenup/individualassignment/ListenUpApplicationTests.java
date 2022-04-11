@@ -3,8 +3,8 @@ package com.listenup.individualassignment;
 import com.listenup.individualassignment.business.*;
 import com.listenup.individualassignment.business.imp.*;
 import com.listenup.individualassignment.model.*;
-import com.listenup.individualassignment.persistence.*;
-import com.listenup.individualassignment.persistence.imp.*;
+import com.listenup.individualassignment.repository.*;
+import com.listenup.individualassignment.repository.imp.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,12 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
 class ListenUpApplicationTests {
-	DBUser dbUser;
-	DBSong dbSong;
-	DBAlbum dbAlbum;
-	DBArtist dbArtist;
-	DBGenre dbGenre;
-	DBPlaylist dbPlaylist;
+	UserRepository dbUser;
+	SongRepository dbSong;
+	AlbumRepository dbAlbum;
+	ArtistRepository dbArtist;
+	GenreRepository dbGenre;
+	PlaylistRepository dbPlaylist;
 
 	UserManagement userMG;
 	SongManagement songMG;
@@ -32,12 +32,12 @@ class ListenUpApplicationTests {
 
 	@BeforeEach
 	void  setUp(){
-		dbUser = new DBUserImp();
-		dbSong = new DBSongImp();
-		dbAlbum = new DBAlbumImp();
-		dbArtist = new DBArtistImp();
-		dbGenre = new DBGenreImp();
-		dbPlaylist = new DBPlaylistImp();
+		dbUser = new UserRepositoryImp();
+		dbSong = new SongRepositoryImp();
+		dbAlbum = new AlbumRepositoryImp();
+		dbArtist = new ArtistRepositoryImp();
+		dbGenre = new GenreRepositoryImp();
+		dbPlaylist = new PlaylistRepositoryImp();
 
 		userMG = new UserManagementImp(dbUser);
 		songMG = new SongManagementImp(dbSong);

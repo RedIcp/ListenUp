@@ -1,16 +1,16 @@
-package com.listenup.individualassignment.persistence.imp;
+package com.listenup.individualassignment.repository.imp;
 
 import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.model.Song;
-import com.listenup.individualassignment.persistence.DBSong;
+import com.listenup.individualassignment.repository.SongRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBSongImp implements DBSong {
+public class SongRepositoryImp implements SongRepository {
     private List<Song> songs;
 
-    public DBSongImp(){
+    public SongRepositoryImp(){
         songs = new ArrayList<>();
     }
     public boolean addSong(int id, String name, Genre genre){

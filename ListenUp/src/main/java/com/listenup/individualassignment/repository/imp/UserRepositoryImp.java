@@ -1,17 +1,17 @@
-package com.listenup.individualassignment.persistence.imp;
+package com.listenup.individualassignment.repository.imp;
 
 import com.listenup.individualassignment.model.Customer;
-import com.listenup.individualassignment.persistence.DBUser;
+import com.listenup.individualassignment.repository.UserRepository;
 import com.listenup.individualassignment.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBUserImp implements DBUser {
+public class UserRepositoryImp implements UserRepository {
 
     private  List<User> users;
 
-    public DBUserImp(){
+    public UserRepositoryImp(){
         users = new ArrayList<>();
 
         users.add(new Customer(1,"Yellow","yellow@gmail.com", "123Yellow"));

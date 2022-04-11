@@ -2,15 +2,15 @@ package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.UserManagement;
 import com.listenup.individualassignment.model.User;
-import com.listenup.individualassignment.persistence.DBUser;
+import com.listenup.individualassignment.repository.UserRepository;
 
 import java.util.List;
 
 public class UserManagementImp implements UserManagement {
 
-    private DBUser db;
+    private UserRepository db;
 
-    public UserManagementImp(DBUser db){
+    public UserManagementImp(UserRepository db){
         this.db = db;
     }
     public List<User> getUsers(){

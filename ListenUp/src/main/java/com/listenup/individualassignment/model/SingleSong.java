@@ -2,16 +2,15 @@ package com.listenup.individualassignment.model;
 
 import java.util.Date;
 import java.util.List;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 
-@Getter
-@Setter
+import lombok.*;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class SingleSong extends  Song{
-    @NonNull
     private Date releasedDate;
-    @NonNull
     private Date uploadedDate;
     private List<Artist> artists;
 

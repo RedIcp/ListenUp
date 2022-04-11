@@ -1,10 +1,9 @@
 package com.listenup.individualassignment.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@Builder
 public class Admin extends  User{
     public Admin(int id, String username, String email, String password){
         super(id, username, email, password);
