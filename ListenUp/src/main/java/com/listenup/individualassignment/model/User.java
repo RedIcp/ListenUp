@@ -3,7 +3,6 @@ package com.listenup.individualassignment.model;
 import lombok.*;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class User{

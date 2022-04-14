@@ -2,7 +2,6 @@ package com.listenup.individualassignment.model;
 import lombok.*;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class AlbumSong extends Song{

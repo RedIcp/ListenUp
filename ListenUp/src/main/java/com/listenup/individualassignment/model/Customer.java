@@ -6,7 +6,6 @@ import java.util.List;
 import lombok.*;
 
 @Data
-@Builder
 public class Customer extends User{
     private List<Song> likedSongs;
     private List<Playlist> playlists;
