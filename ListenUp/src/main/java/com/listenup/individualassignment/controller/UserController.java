@@ -1,11 +1,8 @@
 package com.listenup.individualassignment.controller;
 
 import com.listenup.individualassignment.business.UserService;
-import com.listenup.individualassignment.business.imp.UserServiceImp;
 import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.model.User;
-import com.listenup.individualassignment.repository.UserRepository;
-import com.listenup.individualassignment.repository.imp.UserRepositoryImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,10 +1,7 @@
 package com.listenup.individualassignment.controller;
 
 import com.listenup.individualassignment.business.SongService;
-import com.listenup.individualassignment.business.imp.SongServiceImp;
 import com.listenup.individualassignment.model.Song;
-import com.listenup.individualassignment.repository.SongRepository;
-import com.listenup.individualassignment.repository.imp.SongRepositoryImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

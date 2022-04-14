@@ -1,10 +1,7 @@
 package com.listenup.individualassignment.controller;
 
 import com.listenup.individualassignment.business.AlbumService;
-import com.listenup.individualassignment.business.imp.AlbumServiceImp;
 import com.listenup.individualassignment.model.Album;
-import com.listenup.individualassignment.repository.AlbumRepository;
-import com.listenup.individualassignment.repository.imp.AlbumRepositoryImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,10 +38,9 @@ public class AlbumController {
         }
     }
     @PostMapping()
-    public ResponseEntity<String> createAlbum(@RequestBody Album album) {
+    public ResponseEntity<Album> createAlbum(@RequestBody Album album) {
         if (!management.addAlbum(album)){
-            String entity =  "Wrong id!";
-            return new ResponseEntity(entity, HttpStatus.CONFLICT);
+            return ResponseEntity.notFound().build();
         } else {
             String url = "Album" + "/" + album.getId();
             URI uri = URI.create(url);
@@ -56,7 +52,7 @@ public class AlbumController {
         if (management.editAlbum(album)) {
             return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity("Please provide a valid info.",HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
     @DeleteMapping("{id}")
