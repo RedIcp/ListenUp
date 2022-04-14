@@ -1,17 +1,19 @@
 package com.listenup.individualassignment.business.imp;
 
-import com.listenup.individualassignment.business.AlbumManagement;
+import com.listenup.individualassignment.business.AlbumService;
 import com.listenup.individualassignment.model.Album;
 import com.listenup.individualassignment.repository.AlbumRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class AlbumManagementImp implements AlbumManagement {
-    private AlbumRepository db;
-
-    public AlbumManagementImp(AlbumRepository db){
-        this.db = db;
-    }
+@Service
+@Primary
+@RequiredArgsConstructor
+public class AlbumServiceImp implements AlbumService {
+    private final AlbumRepository db;
 
     public boolean addAlbum(Album album){
         boolean result = false;

@@ -1,18 +1,21 @@
 package com.listenup.individualassignment.business.imp;
 
-import com.listenup.individualassignment.business.UserManagement;
+import com.listenup.individualassignment.business.UserService;
 import com.listenup.individualassignment.model.User;
 import com.listenup.individualassignment.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class UserManagementImp implements UserManagement {
+@Service
+@Primary
+@RequiredArgsConstructor
+public class UserServiceImp implements UserService {
 
-    private UserRepository db;
+    private final UserRepository db;
 
-    public UserManagementImp(UserRepository db){
-        this.db = db;
-    }
     public List<User> getUsers(){
         return db.getUsers();
     }

@@ -4,7 +4,7 @@ import com.listenup.individualassignment.model.Song;
 
 import java.util.List;
 
-public interface SongManagement {
+public interface SongService {
     boolean addSong(Song song);
     List<Song> getSongs();
     boolean editSong(Song song);

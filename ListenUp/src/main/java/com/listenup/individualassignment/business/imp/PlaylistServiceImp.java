@@ -1,17 +1,19 @@
 package com.listenup.individualassignment.business.imp;
 
-import com.listenup.individualassignment.business.PlaylistManagement;
+import com.listenup.individualassignment.business.PlaylistService;
 import com.listenup.individualassignment.model.Playlist;
 import com.listenup.individualassignment.repository.PlaylistRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class PlaylistManagementImp implements PlaylistManagement {
-    private PlaylistRepository db;
-
-    public PlaylistManagementImp(PlaylistRepository db){
-        this.db = db;
-    }
+@Service
+@Primary
+@RequiredArgsConstructor
+public class PlaylistServiceImp implements PlaylistService {
+    private final PlaylistRepository db;
 
     public boolean addPlaylist(Playlist playlist){
         boolean result = false;

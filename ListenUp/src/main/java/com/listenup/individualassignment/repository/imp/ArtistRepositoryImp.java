@@ -2,12 +2,16 @@ package com.listenup.individualassignment.repository.imp;
 
 import com.listenup.individualassignment.model.Artist;
 import com.listenup.individualassignment.repository.ArtistRepository;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Primary
+@Service
 public class ArtistRepositoryImp implements ArtistRepository {
-    private List<Artist> artists;
+    private final List<Artist> artists;
 
     public ArtistRepositoryImp(){
         artists = new ArrayList<>();

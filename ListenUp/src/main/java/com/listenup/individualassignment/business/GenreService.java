@@ -4,7 +4,7 @@ import com.listenup.individualassignment.model.Genre;
 
 import java.util.List;
 
-public interface GenreManagement {
+public interface GenreService {
     boolean addGenre(Genre genre);
     List<Genre> getGenres();
     boolean editGenre(Genre genre);

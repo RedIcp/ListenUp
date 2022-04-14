@@ -4,7 +4,7 @@ import com.listenup.individualassignment.model.Album;
 
 import java.util.List;
 
-public interface AlbumManagement {
+public interface AlbumService {
     boolean addAlbum(Album album);
     List<Album> getAlbums();
     boolean editAlbum(Album album);

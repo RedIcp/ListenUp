@@ -1,11 +1,12 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.UserManagement;
-import com.listenup.individualassignment.business.imp.UserManagementImp;
+import com.listenup.individualassignment.business.UserService;
+import com.listenup.individualassignment.business.imp.UserServiceImp;
 import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.model.User;
 import com.listenup.individualassignment.repository.UserRepository;
 import com.listenup.individualassignment.repository.imp.UserRepositoryImp;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +15,11 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/users")
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
-    private UserRepository db = new UserRepositoryImp();
-    private UserManagement management = new UserManagementImp(db);
+    private final UserService management;
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {

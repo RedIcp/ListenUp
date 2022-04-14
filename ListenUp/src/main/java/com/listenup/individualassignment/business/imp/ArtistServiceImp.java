@@ -1,17 +1,19 @@
 package com.listenup.individualassignment.business.imp;
 
-import com.listenup.individualassignment.business.ArtistManagement;
+import com.listenup.individualassignment.business.ArtistService;
 import com.listenup.individualassignment.model.Artist;
 import com.listenup.individualassignment.repository.ArtistRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class ArtistManagementImp implements ArtistManagement {
-    private ArtistRepository db;
-
-    public ArtistManagementImp(ArtistRepository db){
-        this.db = db;
-    }
+@Service
+@Primary
+@RequiredArgsConstructor
+public class ArtistServiceImp implements ArtistService {
+    private final ArtistRepository db;
 
     public boolean addArtist(Artist artist){
         boolean result = false;

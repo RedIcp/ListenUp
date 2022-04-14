@@ -4,7 +4,7 @@ import com.listenup.individualassignment.model.Playlist;
 
 import java.util.List;
 
-public interface PlaylistManagement {
+public interface PlaylistService {
     boolean addPlaylist(Playlist playlist);
     List<Playlist> getPlaylists();
     boolean editPlaylist(Playlist playlist);

@@ -1,17 +1,19 @@
 package com.listenup.individualassignment.business.imp;
 
-import com.listenup.individualassignment.business.SongManagement;
+import com.listenup.individualassignment.business.SongService;
 import com.listenup.individualassignment.model.Song;
 import com.listenup.individualassignment.repository.SongRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class SongManagementImp implements SongManagement {
-    private SongRepository db;
-
-    public SongManagementImp(SongRepository db){
-        this.db = db;
-    }
+@Service
+@Primary
+@RequiredArgsConstructor
+public class SongServiceImp implements SongService {
+    private final SongRepository db;
 
     public boolean addSong(Song song){
         boolean result = false;

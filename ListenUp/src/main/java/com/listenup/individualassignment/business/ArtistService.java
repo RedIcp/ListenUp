@@ -4,7 +4,7 @@ import com.listenup.individualassignment.model.Artist;
 
 import java.util.List;
 
-public interface ArtistManagement {
+public interface ArtistService {
     boolean addArtist(Artist artist);
     List<Artist> getArtists();
     boolean editArtist(Artist artist);

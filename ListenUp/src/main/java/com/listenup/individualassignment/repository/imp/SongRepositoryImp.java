@@ -3,12 +3,16 @@ package com.listenup.individualassignment.repository.imp;
 import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.model.Song;
 import com.listenup.individualassignment.repository.SongRepository;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Primary
+@Service
 public class SongRepositoryImp implements SongRepository {
-    private List<Song> songs;
+    private final List<Song> songs;
 
     public SongRepositoryImp(){
         songs = new ArrayList<>();

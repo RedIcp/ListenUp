@@ -4,7 +4,7 @@ import com.listenup.individualassignment.model.User;
 
 import java.util.List;
 
-public interface UserManagement {
+public interface UserService {
     boolean createAccount(User user);
     boolean login(User user);
     List<User> getUsers();

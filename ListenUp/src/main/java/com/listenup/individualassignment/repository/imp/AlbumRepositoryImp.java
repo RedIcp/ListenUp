@@ -3,13 +3,17 @@ package com.listenup.individualassignment.repository.imp;
 import com.listenup.individualassignment.model.Album;
 import com.listenup.individualassignment.model.Artist;
 import com.listenup.individualassignment.repository.AlbumRepository;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Primary
+@Service
 public class AlbumRepositoryImp implements AlbumRepository {
-    private List<Album> albums;
+    private final List<Album> albums;
 
     public AlbumRepositoryImp(){
         albums = new ArrayList<>();

@@ -3,13 +3,16 @@ package com.listenup.individualassignment.repository.imp;
 import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.repository.UserRepository;
 import com.listenup.individualassignment.model.User;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Primary
+@Service
 public class UserRepositoryImp implements UserRepository {
-
-    private  List<User> users;
+    private final List<User> users;
 
     public UserRepositoryImp(){
         users = new ArrayList<>();

@@ -23,12 +23,12 @@ class ListenUpApplicationTests {
 	GenreRepository dbGenre;
 	PlaylistRepository dbPlaylist;
 
-	UserManagement userMG;
-	SongManagement songMG;
-	AlbumManagement albumMG;
-	ArtistManagement artistMG;
-	GenreManagement genreMG;
-	PlaylistManagement playlistMG;
+	UserService userMG;
+	SongService songMG;
+	AlbumService albumMG;
+	ArtistService artistMG;
+	GenreService genreMG;
+	PlaylistService playlistMG;
 
 	@BeforeEach
 	void  setUp(){
@@ -39,12 +39,12 @@ class ListenUpApplicationTests {
 		dbGenre = new GenreRepositoryImp();
 		dbPlaylist = new PlaylistRepositoryImp();
 
-		userMG = new UserManagementImp(dbUser);
-		songMG = new SongManagementImp(dbSong);
-		albumMG = new AlbumManagementImp(dbAlbum);
-		artistMG = new ArtistManagementImp(dbArtist);
-		genreMG = new GenreManagementImp(dbGenre);
-		playlistMG = new PlaylistManagementImp(dbPlaylist);
+		userMG = new UserServiceImp(dbUser);
+		songMG = new SongServiceImp(dbSong);
+		albumMG = new AlbumServiceImp(dbAlbum);
+		artistMG = new ArtistServiceImp(dbArtist);
+		genreMG = new GenreServiceImp(dbGenre);
+		playlistMG = new PlaylistServiceImp(dbPlaylist);
 	}
 
 	//USER------------------------------------------------------------------------------------------------------

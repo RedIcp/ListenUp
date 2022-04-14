@@ -1,10 +1,11 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.GenreManagement;
-import com.listenup.individualassignment.business.imp.GenreManagementImp;
+import com.listenup.individualassignment.business.GenreService;
+import com.listenup.individualassignment.business.imp.GenreServiceImp;
 import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.repository.GenreRepository;
 import com.listenup.individualassignment.repository.imp.GenreRepositoryImp;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +14,11 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/genres")
 @CrossOrigin(origins = "http://localhost:3000")
 public class GenreController {
-    private GenreRepository db = new GenreRepositoryImp();
-    private GenreManagement management = new GenreManagementImp(db);
+    private final GenreService management;
 
     @GetMapping
     public ResponseEntity<List<Genre>> getAllGenres() {

@@ -1,17 +1,19 @@
 package com.listenup.individualassignment.business.imp;
 
-import com.listenup.individualassignment.business.GenreManagement;
+import com.listenup.individualassignment.business.GenreService;
 import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.repository.GenreRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class GenreManagementImp implements GenreManagement {
-    private GenreRepository db;
-
-    public GenreManagementImp(GenreRepository db){
-        this.db = db;
-    }
+@Service
+@Primary
+@RequiredArgsConstructor
+public class GenreServiceImp implements GenreService {
+    private final GenreRepository db;
 
     public boolean addGenre(Genre genre){
         boolean result = false;

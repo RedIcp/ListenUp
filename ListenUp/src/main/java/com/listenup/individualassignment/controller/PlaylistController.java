@@ -1,10 +1,11 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.PlaylistManagement;
-import com.listenup.individualassignment.business.imp.PlaylistManagementImp;
+import com.listenup.individualassignment.business.PlaylistService;
+import com.listenup.individualassignment.business.imp.PlaylistServiceImp;
 import com.listenup.individualassignment.model.Playlist;
 import com.listenup.individualassignment.repository.PlaylistRepository;
 import com.listenup.individualassignment.repository.imp.PlaylistRepositoryImp;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +14,11 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/playlists")
 @CrossOrigin(origins = "http://localhost:3000")
 public class PlaylistController {
-    private PlaylistRepository db = new PlaylistRepositoryImp();
-    private PlaylistManagement management = new PlaylistManagementImp(db);
+    private final PlaylistService management;
 
     @GetMapping
     public ResponseEntity<List<Playlist>> getAllPlaylists() {

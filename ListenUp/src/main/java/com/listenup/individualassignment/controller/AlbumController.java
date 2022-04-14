@@ -1,10 +1,11 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.AlbumManagement;
-import com.listenup.individualassignment.business.imp.AlbumManagementImp;
+import com.listenup.individualassignment.business.AlbumService;
+import com.listenup.individualassignment.business.imp.AlbumServiceImp;
 import com.listenup.individualassignment.model.Album;
 import com.listenup.individualassignment.repository.AlbumRepository;
 import com.listenup.individualassignment.repository.imp.AlbumRepositoryImp;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +14,11 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/albums")
 @CrossOrigin(origins = "http://localhost:3000")
 public class AlbumController {
-    private AlbumRepository db = new AlbumRepositoryImp();
-    private AlbumManagement management = new AlbumManagementImp(db);
+    private final AlbumService management;
 
     @GetMapping
     public ResponseEntity<List<Album>> getAllAlbums() {
