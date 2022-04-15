@@ -43,7 +43,7 @@ function UpdateProfile(){
                     Password:
                     <input onChange={(e) => handle(e)} id="password" value={data.password} type="password" /><br/>
                 </label>
-                <button type="submit">Add</button>
+                <button type="submit">Update</button>
             </form>
         </div>
     );

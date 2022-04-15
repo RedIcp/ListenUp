@@ -3,7 +3,6 @@ package com.listenup.individualassignment.controller;
 import com.listenup.individualassignment.business.PlaylistService;
 import com.listenup.individualassignment.model.Playlist;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,14 +37,13 @@ public class PlaylistController {
         }
     }
     @PostMapping()
-    public ResponseEntity<String> createPlaylist(@RequestBody Playlist playlist) {
+    public ResponseEntity<Playlist> createPlaylist(@RequestBody Playlist playlist) {
         if (!management.addPlaylist(playlist)){
-            String entity =  "Wrong id!";
-            return new ResponseEntity(entity, HttpStatus.CONFLICT);
+            return ResponseEntity.notFound().build();
         } else {
             String url = "Playlist" + "/" + playlist.getId();
             URI uri = URI.create(url);
-            return new ResponseEntity(uri,HttpStatus.CREATED);
+            return ResponseEntity.created(uri).body(playlist);
         }
     }
     @PutMapping()
@@ -53,11 +51,11 @@ public class PlaylistController {
         if (management.editPlaylist(playlist)) {
             return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity("Please provide a valid info.",HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
     @DeleteMapping("{id}")
-    public ResponseEntity deletePlaylist(@PathVariable int id) {
+    public ResponseEntity<Object> deletePlaylist(@PathVariable int id) {
         management.deletePlaylist(id);
         return ResponseEntity.ok().build();
     }

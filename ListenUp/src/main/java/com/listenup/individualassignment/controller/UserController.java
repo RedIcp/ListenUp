@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> createUser(@RequestBody Customer user) {
+    public ResponseEntity<User> createUser(@RequestBody Customer user) {
         if (!management.createAccount(user)){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {
@@ -50,15 +50,15 @@ public class UserController {
         }
     }
     @PutMapping()
-    public ResponseEntity<String> updateUser(@RequestBody Customer user) {
+    public ResponseEntity<User> updateUser(@RequestBody Customer user) {
         if (management.updateAccount(user)) {
             return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity("Please provide a valid info.",HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
     @DeleteMapping("{id}")
-    public ResponseEntity deleteUser(@PathVariable int id) {
+    public ResponseEntity<Object> deleteUser(@PathVariable int id) {
         management.deleteAccount(id);
         return ResponseEntity.ok().build();
 

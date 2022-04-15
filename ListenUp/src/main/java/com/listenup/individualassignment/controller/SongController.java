@@ -3,7 +3,6 @@ package com.listenup.individualassignment.controller;
 import com.listenup.individualassignment.business.SongService;
 import com.listenup.individualassignment.model.Song;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,26 +37,25 @@ public class SongController {
         }
     }
     @PostMapping()
-    public ResponseEntity<String> createSong(@RequestBody Song song) {
+    public ResponseEntity<Song> createSong(@RequestBody Song song) {
         if (!management.addSong(song)){
-            String entity =  "Wrong id!";
-            return new ResponseEntity(entity, HttpStatus.CONFLICT);
+            return ResponseEntity.notFound().build();
         } else {
             String url = "Song" + "/" + song.getId();
             URI uri = URI.create(url);
-            return new ResponseEntity(uri,HttpStatus.CREATED);
+            return ResponseEntity.created(uri).body(song);
         }
     }
     @PutMapping()
-    public ResponseEntity<String> updateSong(@RequestBody Song song) {
+    public ResponseEntity<Song> updateSong(@RequestBody Song song) {
         if (management.editSong(song)) {
             return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity("Please provide a valid info.",HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
     @DeleteMapping("{id}")
-    public ResponseEntity deleteSong(@PathVariable int id) {
+    public ResponseEntity<Object> deleteSong(@PathVariable int id) {
         management.deleteSong(id);
         return ResponseEntity.ok().build();
     }

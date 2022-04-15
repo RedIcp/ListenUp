@@ -3,7 +3,6 @@ package com.listenup.individualassignment.controller;
 import com.listenup.individualassignment.business.AlbumService;
 import com.listenup.individualassignment.model.Album;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,11 +43,11 @@ public class AlbumController {
         } else {
             String url = "Album" + "/" + album.getId();
             URI uri = URI.create(url);
-            return new ResponseEntity(uri,HttpStatus.CREATED);
+            return ResponseEntity.created(uri).body(album);
         }
     }
     @PutMapping()
-    public ResponseEntity<String> updateAlbum(@RequestBody Album album) {
+    public ResponseEntity<Album> updateAlbum(@RequestBody Album album) {
         if (management.editAlbum(album)) {
             return ResponseEntity.noContent().build();
         } else {
@@ -56,7 +55,7 @@ public class AlbumController {
         }
     }
     @DeleteMapping("{id}")
-    public ResponseEntity deleteAlbum(@PathVariable int id) {
+    public ResponseEntity<Object> deleteAlbum(@PathVariable int id) {
         management.deleteAlbum(id);
         return ResponseEntity.ok().build();
     }

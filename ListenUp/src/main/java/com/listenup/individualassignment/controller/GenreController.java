@@ -3,7 +3,6 @@ package com.listenup.individualassignment.controller;
 import com.listenup.individualassignment.business.GenreService;
 import com.listenup.individualassignment.model.Genre;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,26 +37,25 @@ public class GenreController {
         }
     }
     @PostMapping()
-    public ResponseEntity<String> createGenre(@RequestBody Genre genre) {
+    public ResponseEntity<Genre> createGenre(@RequestBody Genre genre) {
         if (!management.addGenre(genre)){
-            String entity =  "Wrong id!";
-            return new ResponseEntity(entity, HttpStatus.CONFLICT);
+            return ResponseEntity.notFound().build();
         } else {
             String url = "Genre" + "/" + genre.getId();
             URI uri = URI.create(url);
-            return new ResponseEntity(uri,HttpStatus.CREATED);
+            return ResponseEntity.created(uri).body(genre);
         }
     }
     @PutMapping()
-    public ResponseEntity<String> updateGenre(@RequestBody Genre genre) {
+    public ResponseEntity<Genre> updateGenre(@RequestBody Genre genre) {
         if (management.editGenre(genre)) {
             return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity("Please provide a valid info.",HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
     @DeleteMapping("{id}")
-    public ResponseEntity deleteGenre(@PathVariable int id) {
+    public ResponseEntity<Object> deleteGenre(@PathVariable int id) {
         management.deleteGenre(id);
         return ResponseEntity.ok().build();
     }
