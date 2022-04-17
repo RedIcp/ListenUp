@@ -1,8 +1,10 @@
 package com.listenup.individualassignment.controller;
 
 import com.listenup.individualassignment.business.ArtistService;
+import com.listenup.individualassignment.dto.ArtistDTO;
 import com.listenup.individualassignment.model.Artist;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,21 +39,23 @@ public class ArtistController {
         }
     }
     @PostMapping()
-    public ResponseEntity<Artist> createArtist(@RequestBody Artist artist) {
+    public ResponseEntity<ArtistDTO> createArtist(@RequestBody ArtistDTO artistDTO) {
+        Artist artist = management.artistDTOConvertor(artistDTO);
         if (!management.addArtist(artist)){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {
             String url = "Artist" + "/" + artist.getId();
             URI uri = URI.create(url);
-            return ResponseEntity.created(uri).body(artist);
+            return ResponseEntity.created(uri).body(artistDTO);
         }
     }
     @PutMapping()
-    public ResponseEntity<Artist> updateArtist(@RequestBody Artist artist) {
+    public ResponseEntity<ArtistDTO> updateArtist(@RequestBody ArtistDTO artistDTO) {
+        Artist artist = management.artistDTOConvertor(artistDTO);
         if (management.editArtist(artist)) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
     @DeleteMapping("{id}")

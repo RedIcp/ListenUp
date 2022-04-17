@@ -1,8 +1,10 @@
 package com.listenup.individualassignment.controller;
 
 import com.listenup.individualassignment.business.PlaylistService;
+import com.listenup.individualassignment.dto.PlaylistDTO;
 import com.listenup.individualassignment.model.Playlist;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,21 +39,23 @@ public class PlaylistController {
         }
     }
     @PostMapping()
-    public ResponseEntity<Playlist> createPlaylist(@RequestBody Playlist playlist) {
+    public ResponseEntity<PlaylistDTO> createPlaylist(@RequestBody PlaylistDTO playlistDTO) {
+        Playlist playlist = management.playlistDTOConvertor(playlistDTO);
         if (!management.addPlaylist(playlist)){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {
             String url = "Playlist" + "/" + playlist.getId();
             URI uri = URI.create(url);
-            return ResponseEntity.created(uri).body(playlist);
+            return ResponseEntity.created(uri).body(playlistDTO);
         }
     }
     @PutMapping()
-    public ResponseEntity<String> updatePlaylist(@RequestBody Playlist playlist) {
+    public ResponseEntity<PlaylistDTO> updatePlaylist(@RequestBody PlaylistDTO playlistDTO) {
+        Playlist playlist = management.playlistDTOConvertor(playlistDTO);
         if (management.editPlaylist(playlist)) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
     @DeleteMapping("{id}")

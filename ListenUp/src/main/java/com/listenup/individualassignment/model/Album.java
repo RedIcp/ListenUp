@@ -5,10 +5,8 @@ import java.util.Date;
 import java.util.List;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Builder
@@ -20,10 +18,10 @@ import javax.validation.constraints.NotNull;
 public class Album {
     @Id
     @Column(name = "id")
-    private int id;
+    private long id;
 
-    @NotBlank
-    @Length(min = 2, max = 50)
+    @NotNull
+    @Length(min = 1, max = 50)
     @Column(name = "name")
     private String name;
 
@@ -36,21 +34,21 @@ public class Album {
     @JoinTable(
             name = "album_song",
             joinColumns = @JoinColumn(name = "album_id"))
-    private List<AlbumSong> album_songs;
+    private List<AlbumSong> albumSongs;
 
     @Column(name = "released_date")
-    private Date released_date;
+    private Date releasedDate;
 
     @Column(name = "uploaded_date")
-    private Date uploaded_date;
+    private Date uploadedDate;
 
-    public Album(int id, String name, Artist artist, Date released_date, Date uploaded_date){
+    public Album(long id, String name, Artist artist, Date releasedDate, Date uploadedDate){
         this.id = id;
         this.name = name;
         this.artist = artist;
-        this.released_date = released_date;
-        this.uploaded_date = uploaded_date;
+        this.releasedDate = releasedDate;
+        this.uploadedDate = uploadedDate;
 
-        this.album_songs = new ArrayList<>();
+        this.albumSongs = new ArrayList<>();
     }
 }

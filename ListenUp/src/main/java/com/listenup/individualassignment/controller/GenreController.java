@@ -1,8 +1,10 @@
 package com.listenup.individualassignment.controller;
 
 import com.listenup.individualassignment.business.GenreService;
+import com.listenup.individualassignment.dto.GenreDTO;
 import com.listenup.individualassignment.model.Genre;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,21 +39,23 @@ public class GenreController {
         }
     }
     @PostMapping()
-    public ResponseEntity<Genre> createGenre(@RequestBody Genre genre) {
+    public ResponseEntity<GenreDTO> createGenre(@RequestBody GenreDTO genreDTO) {
+        Genre genre = management.genreDTOConvertor(genreDTO);
         if (!management.addGenre(genre)){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {
             String url = "Genre" + "/" + genre.getId();
             URI uri = URI.create(url);
-            return ResponseEntity.created(uri).body(genre);
+            return ResponseEntity.created(uri).body(genreDTO);
         }
     }
     @PutMapping()
-    public ResponseEntity<Genre> updateGenre(@RequestBody Genre genre) {
+    public ResponseEntity<GenreDTO> updateGenre(@RequestBody GenreDTO genreDTO) {
+        Genre genre = management.genreDTOConvertor(genreDTO);
         if (management.editGenre(genre)) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
     @DeleteMapping("{id}")

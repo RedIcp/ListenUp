@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Data
 @AllArgsConstructor
 public class Admin extends  User{
-    public Admin(int id, String username, String email, String password){
+    public Admin(long id, String username, String email, String password){
         super(id, username, email, password);
     }
 }

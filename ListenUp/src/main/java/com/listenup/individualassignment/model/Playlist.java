@@ -5,7 +5,6 @@ import java.util.List;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Builder
@@ -17,14 +16,14 @@ import javax.validation.constraints.NotNull;
 public class Playlist {
     @Id
     @Column(name = "id")
-    private int id;
+    private long id;
 
     @Length(min = 2, max = 50)
     @Column(name = "name")
     private String name;
 
     @Column(name = "is_public")
-    private boolean is_public;
+    private boolean isPublic;
 
     @NotNull
     @ManyToOne
@@ -32,7 +31,7 @@ public class Playlist {
     private Customer owner;
 
     @Column(name = "liked_users")
-    private int liked_users;
+    private long likedUsers;
 
     @ManyToMany
     @JoinTable(
@@ -41,12 +40,12 @@ public class Playlist {
             inverseJoinColumns = @JoinColumn(name = "song_id"))
     private List<Song> songs;
 
-    public Playlist(int id, String name, Customer owner){
+    public Playlist(long id, String name, Customer owner){
         this.id = id;
         this.name = name;
         this.owner = owner;
-        this.is_public = true;
-        this.liked_users = 0;
+        this.isPublic = true;
+        this.likedUsers = 0;
 
         this.songs = new ArrayList<>();
     }

@@ -1,8 +1,10 @@
 package com.listenup.individualassignment.controller;
 
 import com.listenup.individualassignment.business.SongService;
+import com.listenup.individualassignment.dto.SongDTO;
 import com.listenup.individualassignment.model.Song;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,21 +39,23 @@ public class SongController {
         }
     }
     @PostMapping()
-    public ResponseEntity<Song> createSong(@RequestBody Song song) {
+    public ResponseEntity<SongDTO> createSong(@RequestBody SongDTO songDTO) {
+        Song song = management.songDTOConvertor(songDTO);
         if (!management.addSong(song)){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {
             String url = "Song" + "/" + song.getId();
             URI uri = URI.create(url);
-            return ResponseEntity.created(uri).body(song);
+            return ResponseEntity.created(uri).body(songDTO);
         }
     }
     @PutMapping()
-    public ResponseEntity<Song> updateSong(@RequestBody Song song) {
+    public ResponseEntity<SongDTO> updateSong(@RequestBody SongDTO songDTO) {
+        Song song = management.songDTOConvertor(songDTO);
         if (management.editSong(song)) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
     @DeleteMapping("{id}")

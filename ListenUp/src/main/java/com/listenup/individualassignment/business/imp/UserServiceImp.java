@@ -1,6 +1,8 @@
 package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.UserService;
+import com.listenup.individualassignment.dto.AccountDTO;
+import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.model.User;
 import com.listenup.individualassignment.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,14 @@ import java.util.List;
 public class UserServiceImp implements UserService {
 
     private final UserRepository db;
+
+    public User userDTOConvertor(AccountDTO dto) {
+        if(userByIdExist((dto.getId()))){
+            User newUser = new Customer(dto.getId(),dto.getUsername(), dto.getEmail(), dto.getPassword());
+            return newUser;
+        }
+        return null;
+    }
 
     public List<User> getUsers(){
         return db.findAll();
@@ -36,7 +46,7 @@ public class UserServiceImp implements UserService {
         }
         return result;
     }
-    public boolean deleteAccount(int id){
+    public boolean deleteAccount(long id){
         boolean result = false;
         if(userByIdExist(id)){
             getUsers().remove(getUserByID(id));
@@ -69,7 +79,7 @@ public class UserServiceImp implements UserService {
         return result;
     }
 
-    public User getUserByID(int id){
+    public User getUserByID(long id){
         for(User user: getUsers()){
             if(user.getId()==id){
                 return user;
@@ -93,7 +103,7 @@ public class UserServiceImp implements UserService {
         }
         return null;
     }
-    public boolean userByIdExist(int id){
+    public boolean userByIdExist(long id){
         boolean result = false;
         if(getUserByID(id)!=null){
             result = true;

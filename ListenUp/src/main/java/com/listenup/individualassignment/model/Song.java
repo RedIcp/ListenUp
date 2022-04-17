@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 public abstract class Song{
     @Id
     @Column(name = "id")
-    private int id;
+    private long id;
 
     @NotBlank
     @Length(min = 2, max = 50)
@@ -36,15 +36,11 @@ public abstract class Song{
     private Artist artist;
 
     @Column(name = "released_date")
-    private Date released_date;
+    private Date releasedDate;
 
     @Column(name = "uploaded_date")
-    private Date uploaded_date;
+    private Date uploadedDate;
 
-    /*@Column(name = "viewers")
-    private int viewers;
-    @Column(name = "liked_users")
-    private int liked_users;*/
 
     @ManyToMany
     @JoinTable(
@@ -53,13 +49,14 @@ public abstract class Song{
             inverseJoinColumns = @JoinColumn(name = "artist_id"))
     private List<Artist> features;
 
-    protected Song(int id, String name, Artist artist, Genre genre, Date released_date, Date uploaded_date){
+    protected Song(long id, String name, Artist artist, Genre genre, Date releasedDate, Date uploadedDate){
         this.id = id;
         this.name = name;
         this.artist = artist;
         this.genre = genre;
-        this.released_date = released_date;
-        this.uploaded_date = uploaded_date;
+        this.releasedDate = releasedDate;
+        this.uploadedDate = uploadedDate;
+
 
         this.features = new ArrayList<>();
     }

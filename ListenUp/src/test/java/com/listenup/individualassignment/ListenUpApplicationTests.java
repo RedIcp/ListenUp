@@ -2,6 +2,7 @@ package com.listenup.individualassignment;
 
 import com.listenup.individualassignment.business.*;
 import com.listenup.individualassignment.business.imp.*;
+import com.listenup.individualassignment.dto.*;
 import com.listenup.individualassignment.model.*;
 import com.listenup.individualassignment.repository.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,16 +51,39 @@ class ListenUpApplicationTests {
 	}
 
 	//USER------------------------------------------------------------------------------------------------------
+	//dto: valid input
+	@Test
+	void userDTOConverterValidInput() {
+		User user = new Admin(10, "Jam", "jam@yahoo.com", "123Jam");
+		AccountDTO userDTO = new AccountDTO(10, "Jam", "jam@yahoo.com", "123Jam");
+		userMG.createAccount(user);
+		assertNotNull(userMG.userDTOConvertor(userDTO));
+	}
+	//login: valid input
+	@Test
+	void loginValidInput() {
+		User user = new Admin(10, "Jam", "jam@yahoo.com", "123Jam");
+		userMG.createAccount(user);
+		assertTrue(userMG.login(user));
+	}
+	//login: invalid input
+	@Test
+	void loginInvalidInput() {
+		User user1 = new Admin(10, "Jam", "jam@yahoo.com", "123Jam");
+		User user2 = new Admin(2, "Jam", "jam@yahoo.com", "1234");
+		userMG.createAccount(user1);
+		assertFalse(userMG.login(user2));
+	}
 	//create user: valid input
 	@Test
 	void createUserValidInput() {
-		User user = new Customer(10, "Jam", "jam@yahoo.com", "123Jam");
+		User user = new Admin(10, "Jam", "jam@yahoo.com", "123Jam");
 		assertTrue(userMG.createAccount(user));
 	}
 	//create user: same email
 	@Test
 	void createUserSameEmail() {
-		User user1 = new Customer(10, "Jam", "yellow@gmail.com", "123Jam");
+		User user1 = new Admin(10, "Jam", "yellow@gmail.com", "123Jam");
 		User user2 = new Customer(1, "Jam", "yellow@gmail.com", "123Jam");
 		userMG.createAccount(user1);
 		assertFalse(userMG.createAccount(user2));
@@ -115,6 +139,20 @@ class ListenUpApplicationTests {
 	}
 
 	//SONG------------------------------------------------------------------------------------------------------
+	//dto: valid input
+	@Test
+	void songDTOConverterValidInput() {
+		Genre genre = new Genre(1, "Pop");
+		genreMG.addGenre(genre);
+		Date date = new Date(2021,11,27);
+		Artist artist = new Artist(1, "Maroon 5");
+		artistMG.addArtist(artist);
+		Song song = new SingleSong(1, "Payphone", artist, genre, date, date);
+		songMG.addSong(song);
+
+		SongDTO songDTO = new SongDTO(1, "Payphone", artist, genre, date, date);
+		assertNotNull(songMG.songDTOConvertor(songDTO));
+	}
 	//create song: valid input
 	@Test
 	void addSongValidInput() {
@@ -134,8 +172,10 @@ class ListenUpApplicationTests {
 		Date date = new Date(2021,11,27);
 		Artist artist = new Artist(1, "Maroon 5");
 		artistMG.addArtist(artist);
+		Album album = new Album(1, "V", artist, date, date);
+		albumMG.addAlbum(album);
 		Song song1 = new SingleSong(1, "Payphone", artist, genre, date, date);
-		Song song2 = new SingleSong(1, "Star Boy", artist, genre, date, date);
+		Song song2 = new AlbumSong(1, "Star Boy", genre, album);
 		songMG.addSong(song1);
 		assertFalse(songMG.addSong(song2));
 	}
@@ -184,6 +224,18 @@ class ListenUpApplicationTests {
 	}
 
 	//ALBUM-----------------------------------------------------------------------------------------------------
+	//dto: valid input
+	@Test
+	void albumDTOConverterValidInput() {
+		Artist artist = new Artist(1, "Maroon 5");
+		artistMG.addArtist(artist);
+		Date date = new Date(2021,11,27);
+		Album album = new Album(1, "Overexposed", artist, date, date);
+		albumMG.addAlbum(album);
+
+		AlbumDTO albumDTO= new AlbumDTO(1, "Overexposed", artist, date, date);
+		assertNotNull(albumMG.albumDTOConvertor(albumDTO));
+	}
 	//create album: valid input
 	@Test
 	void addAlbumValidInput() {
@@ -244,6 +296,17 @@ class ListenUpApplicationTests {
 	}
 
 	//PLAYLIST--------------------------------------------------------------------------------------------------
+	//dto: valid input
+	@Test
+	void playlistDTOConverterValidInput() {
+		Customer customer = new Customer(1, "Jam", "jam@gmail.com", "123Jam");
+		userMG.createAccount(customer);
+		Playlist playlist = new Playlist(1, "Workout", customer);
+		playlistMG.addPlaylist(playlist);
+
+		PlaylistDTO playlistDTO= new PlaylistDTO(1, "Workout", customer);
+		assertNotNull(playlistMG.playlistDTOConvertor(playlistDTO));
+	}
 	//create playlist: valid input
 	@Test
 	void addPlaylistValidInput() {
@@ -299,6 +362,15 @@ class ListenUpApplicationTests {
 	}
 
 	//GENRE-----------------------------------------------------------------------------------------------------
+	//dto: valid input
+	@Test
+	void genreDTOConverterValidInput() {
+		Genre genre = new Genre(1, "Pop");
+		genreMG.addGenre(genre);
+
+		GenreDTO genreDTO= new GenreDTO(1, "Pop");
+		assertNotNull(genreMG.genreDTOConvertor(genreDTO));
+	}
 	//create genre: valid input
 	@Test
 	void addGenreValidInput() {
@@ -344,6 +416,15 @@ class ListenUpApplicationTests {
 	}
 
 	//ARTIST----------------------------------------------------------------------------------------------------
+	//dto: valid input
+	@Test
+	void artistDTOConverterValidInput() {
+		Artist artist = new Artist(1, "Maroon 5");
+		artistMG.addArtist(artist);
+
+		ArtistDTO artistDTO= new ArtistDTO(1, "Maroon 5");
+		assertNotNull(artistMG.artistDTOConvertor(artistDTO));
+	}
 	//create artist: valid input
 	@Test
 	void addArtistValidID() {

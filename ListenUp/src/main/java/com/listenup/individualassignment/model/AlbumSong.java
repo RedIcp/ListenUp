@@ -4,7 +4,6 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Builder
 @Entity
 @Table(name = "album_song")
 @Data
@@ -16,8 +15,8 @@ public class AlbumSong extends Song{
     @JoinColumn(name = "album_id")
     private Album album;
 
-    public AlbumSong(int id, String name, Genre genre, Album album){
-        super(id, name, album.getArtist(), genre, album.getReleased_date(), album.getUploaded_date());
+    public AlbumSong(long id, String name, Genre genre, Album album){
+        super(id, name, album.getArtist(), genre, album.getReleasedDate(), album.getUploadedDate());
         this.album = album;
     }
 }

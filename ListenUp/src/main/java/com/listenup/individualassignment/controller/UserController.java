@@ -1,7 +1,7 @@
 package com.listenup.individualassignment.controller;
 
 import com.listenup.individualassignment.business.UserService;
-import com.listenup.individualassignment.model.Customer;
+import com.listenup.individualassignment.dto.AccountDTO;
 import com.listenup.individualassignment.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,21 +40,23 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<User> createUser(@RequestBody Customer user) {
-        if (!management.createAccount(user)){
+    public ResponseEntity<AccountDTO> createUser(@RequestBody AccountDTO userDTO) {
+        User customer = management.userDTOConvertor(userDTO);
+        if (!management.createAccount(customer)){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {
-            String url = "user" + "/" + user.getId();
+            String url = "user" + "/" + customer.getId();
             URI uri = URI.create(url);
-            return ResponseEntity.created(uri).build();
+            return ResponseEntity.created(uri).body(userDTO);
         }
     }
     @PutMapping()
-    public ResponseEntity<User> updateUser(@RequestBody Customer user) {
-        if (management.updateAccount(user)) {
+    public ResponseEntity<AccountDTO> updateUser(@RequestBody AccountDTO userDTO) {
+        User customer = management.userDTOConvertor(userDTO);
+        if (management.updateAccount(customer)) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
     @DeleteMapping("{id}")

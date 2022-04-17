@@ -1,6 +1,7 @@
 package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.GenreService;
+import com.listenup.individualassignment.dto.GenreDTO;
 import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.repository.GenreRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GenreServiceImp implements GenreService {
     private final GenreRepository db;
+
+    public Genre genreDTOConvertor(GenreDTO dto) {
+        if(genreExist((dto.getId()))){
+            Genre newGenre = Genre.builder()
+                    .id(dto.getId())
+                    .name(dto.getName())
+                    .build();
+            return newGenre;
+        }
+        return null;
+    }
 
     public boolean addGenre(Genre genre){
         boolean result = false;
@@ -40,7 +52,7 @@ public class GenreServiceImp implements GenreService {
         return result;
     }
 
-    public boolean deleteGenre(int id){
+    public boolean deleteGenre(long id){
         boolean result = false;
         if(genreExist(id)){
             getGenres().remove(getGenre(id));
@@ -50,7 +62,7 @@ public class GenreServiceImp implements GenreService {
         return result;
     }
 
-    public Genre getGenre(int id){
+    public Genre getGenre(long id){
         for(Genre genre : getGenres()){
             if(genre.getId() == id){
                 return genre;
@@ -58,7 +70,7 @@ public class GenreServiceImp implements GenreService {
         }
         return null;
     }
-    public boolean genreExist(int id){
+    public boolean genreExist(long id){
         boolean result = true;
         if(getGenre(id) == null){
             result = false;

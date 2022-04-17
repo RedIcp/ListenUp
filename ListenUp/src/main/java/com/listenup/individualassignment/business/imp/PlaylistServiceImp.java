@@ -1,6 +1,7 @@
 package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.PlaylistService;
+import com.listenup.individualassignment.dto.PlaylistDTO;
 import com.listenup.individualassignment.model.Playlist;
 import com.listenup.individualassignment.repository.PlaylistRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlaylistServiceImp implements PlaylistService {
     private final PlaylistRepository db;
+
+    public Playlist playlistDTOConvertor(PlaylistDTO dto) {
+        if(playlistExist((dto.getId()))){
+            Playlist newPlaylist = Playlist.builder()
+                    .id(dto.getId())
+                    .name(dto.getName())
+                    .build();
+            return newPlaylist;
+        }
+        return null;
+    }
 
     public boolean addPlaylist(Playlist playlist){
         boolean result = false;
@@ -37,7 +49,7 @@ public class PlaylistServiceImp implements PlaylistService {
         }
         return result;
     }
-    public boolean deletePlaylist(int id){
+    public boolean deletePlaylist(long id){
         boolean result = false;
         if(playlistExist(id)){
             getPlaylists().remove(getPlaylist(id));
@@ -47,7 +59,7 @@ public class PlaylistServiceImp implements PlaylistService {
         return result;
     }
 
-    public Playlist getPlaylist(int id){
+    public Playlist getPlaylist(long id){
         for (Playlist playlist : getPlaylists()){
             if(playlist.getId() == id){
                 return playlist;
@@ -55,7 +67,7 @@ public class PlaylistServiceImp implements PlaylistService {
         }
         return null;
     }
-    public boolean playlistExist(int id){
+    public boolean playlistExist(long id){
         boolean result = true;
         if(getPlaylist(id)==null){
             result = false;

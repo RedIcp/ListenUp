@@ -1,6 +1,8 @@
 package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.SongService;
+import com.listenup.individualassignment.dto.SongDTO;
+import com.listenup.individualassignment.model.SingleSong;
 import com.listenup.individualassignment.model.Song;
 import com.listenup.individualassignment.repository.SongRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SongServiceImp implements SongService {
     private final SongRepository db;
+
+    public Song songDTOConvertor(SongDTO dto) {
+        if(songExist((dto.getId()))){
+            Song newSong = new SingleSong(dto.getId(),dto.getName(), dto.getArtist(), dto.getGenre(), dto.getReleasedDate(), dto.getUploadedDate());
+            return newSong;
+        }
+        return null;
+    }
 
     public boolean addSong(Song song){
         boolean result = false;
@@ -41,7 +51,7 @@ public class SongServiceImp implements SongService {
         return result;
     }
 
-    public boolean deleteSong(int id){
+    public boolean deleteSong(long id){
         boolean result = false;
         if(songExist(id)){
             getSongs().remove(getSong(id));
@@ -51,7 +61,7 @@ public class SongServiceImp implements SongService {
         return result;
     }
 
-    public Song getSong(int id){
+    public Song getSong(long id){
         for(Song song: getSongs()){
             if(song.getId() == id){
                 return song;
@@ -59,7 +69,7 @@ public class SongServiceImp implements SongService {
         }
         return null;
     }
-    public boolean songExist(int id){
+    public boolean songExist(long id){
         boolean result = true;
         if(getSong(id)==null){
             result = false;

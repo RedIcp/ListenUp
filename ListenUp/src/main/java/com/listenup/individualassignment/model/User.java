@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 public abstract class User {
     @Id
     @Column(name = "id")
-    private int id;
+    private long id;
 
     @NotBlank
     @Length(min = 2, max = 50)

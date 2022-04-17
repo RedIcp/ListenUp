@@ -17,7 +17,7 @@ public class Customer extends User{
             name = "liked_song",
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id"))
-    private List<Song> liked_songs;
+    private List<Song> likedSongs;
 
     @OneToMany
     @JoinTable(
@@ -30,13 +30,13 @@ public class Customer extends User{
             name = "liked_playlist",
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "playlist_id"))
-    private List<Playlist> liked_playlists;
+    private List<Playlist> likedPlaylists;
 
-    public Customer(int id, String username, String email, String password){
+    public Customer(long id, String username, String email, String password){
         super(id, username, email, password);
 
-        this.liked_songs = new ArrayList<>();
+        this.likedSongs = new ArrayList<>();
         this.playlists = new ArrayList<>();
-        this.liked_playlists = new ArrayList<>();
+        this.likedPlaylists = new ArrayList<>();
     }
 }

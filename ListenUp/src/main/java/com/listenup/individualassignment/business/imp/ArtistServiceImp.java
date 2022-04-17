@@ -1,6 +1,7 @@
 package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.ArtistService;
+import com.listenup.individualassignment.dto.ArtistDTO;
 import com.listenup.individualassignment.model.Artist;
 import com.listenup.individualassignment.repository.ArtistRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArtistServiceImp implements ArtistService {
     private final ArtistRepository db;
+
+    public Artist artistDTOConvertor(ArtistDTO dto) {
+        if(artistExit(dto.getId())){
+            Artist newArtist = Artist.builder()
+                    .id(dto.getId())
+                    .name(dto.getName())
+                    .build();
+            return newArtist;
+        }
+        return null;
+    }
 
     public boolean addArtist(Artist artist){
         boolean result = false;
@@ -40,7 +52,7 @@ public class ArtistServiceImp implements ArtistService {
         return result;
     }
 
-    public boolean deleteArtist(int id){
+    public boolean deleteArtist(long id){
         boolean result = false;
         if(artistExit(id)){
             getArtists().remove(getArtist(id));
@@ -50,7 +62,7 @@ public class ArtistServiceImp implements ArtistService {
         return result;
     }
 
-    public Artist getArtist(int id){
+    public Artist getArtist(long id){
         for(Artist artist : getArtists()){
             if(artist.getId() == id){
                 return artist;
@@ -58,7 +70,7 @@ public class ArtistServiceImp implements ArtistService {
         }
         return null;
     }
-    private boolean artistExit(int id){
+    private boolean artistExit(long id){
         boolean result = true;
         if(getArtist(id) == null){
             result = false;

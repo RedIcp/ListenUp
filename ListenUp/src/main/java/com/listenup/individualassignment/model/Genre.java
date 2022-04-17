@@ -5,8 +5,6 @@ import java.util.List;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Builder
 @Entity
@@ -17,9 +15,8 @@ import javax.validation.constraints.NotNull;
 public class Genre {
     @Id
     @Column(name = "id")
-    private int id;
+    private long id;
 
-    @NotBlank
     @Length(min = 2, max = 50)
     @Column(name = "name")
     private String name;
@@ -30,7 +27,7 @@ public class Genre {
             joinColumns = @JoinColumn(name = "genre_id"))
     private List<Song> songs;
 
-    public Genre(int id, String name){
+    public Genre(long id, String name){
         this.id = id;
         this.name = name;
 

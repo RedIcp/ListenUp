@@ -1,8 +1,10 @@
 package com.listenup.individualassignment.controller;
 
 import com.listenup.individualassignment.business.AlbumService;
+import com.listenup.individualassignment.dto.AlbumDTO;
 import com.listenup.individualassignment.model.Album;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,21 +39,23 @@ public class AlbumController {
         }
     }
     @PostMapping()
-    public ResponseEntity<Album> createAlbum(@RequestBody Album album) {
+    public ResponseEntity<AlbumDTO> createAlbum(@RequestBody AlbumDTO albumDTO) {
+        Album album = management.albumDTOConvertor(albumDTO);
         if (!management.addAlbum(album)){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {
-            String url = "Album" + "/" + album.getId();
+            String url = "Album" + "/" + albumDTO.getId();
             URI uri = URI.create(url);
-            return ResponseEntity.created(uri).body(album);
+            return ResponseEntity.created(uri).body(albumDTO);
         }
     }
     @PutMapping()
-    public ResponseEntity<Album> updateAlbum(@RequestBody Album album) {
+    public ResponseEntity<AlbumDTO> updateAlbum(@RequestBody AlbumDTO albumDTO) {
+        Album album = management.albumDTOConvertor(albumDTO);
         if (management.editAlbum(album)) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
     @DeleteMapping("{id}")
