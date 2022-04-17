@@ -4,23 +4,32 @@ import com.listenup.individualassignment.business.*;
 import com.listenup.individualassignment.business.imp.*;
 import com.listenup.individualassignment.model.*;
 import com.listenup.individualassignment.repository.*;
-import com.listenup.individualassignment.repository.imp.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
+@DataJpaTest
 class ListenUpApplicationTests {
+	@Autowired
 	UserRepository dbUser;
+	@Autowired
 	SongRepository dbSong;
+	@Autowired
 	AlbumRepository dbAlbum;
+	@Autowired
 	ArtistRepository dbArtist;
+	@Autowired
 	GenreRepository dbGenre;
+	@Autowired
 	PlaylistRepository dbPlaylist;
 
 	UserService userMG;
@@ -32,13 +41,6 @@ class ListenUpApplicationTests {
 
 	@BeforeEach
 	void  setUp(){
-		dbUser = new UserRepositoryImp();
-		dbSong = new SongRepositoryImp();
-		dbAlbum = new AlbumRepositoryImp();
-		dbArtist = new ArtistRepositoryImp();
-		dbGenre = new GenreRepositoryImp();
-		dbPlaylist = new PlaylistRepositoryImp();
-
 		userMG = new UserServiceImp(dbUser);
 		songMG = new SongServiceImp(dbSong);
 		albumMG = new AlbumServiceImp(dbAlbum);
@@ -57,33 +59,45 @@ class ListenUpApplicationTests {
 	//create user: same email
 	@Test
 	void createUserSameEmail() {
-		User user = new Customer(10, "Jam", "yellow@gmail.com", "123Jam");
-		assertFalse(userMG.createAccount(user));
+		User user1 = new Customer(10, "Jam", "yellow@gmail.com", "123Jam");
+		User user2 = new Customer(1, "Jam", "yellow@gmail.com", "123Jam");
+		userMG.createAccount(user1);
+		assertFalse(userMG.createAccount(user2));
 	}
 	//create user: same id
 	@Test
 	void createUserSameID() {
-		User user = new Customer(1, "Jam", "jam@gmail.com", "123Jam");
-		assertFalse(userMG.createAccount(user));
+		User user1 = new Customer(1, "Jam", "jam@gmail.com", "123Jam");
+		User user2 = new Customer(1, "Jam", "jam@gmail.com", "123Jam");
+		userMG.createAccount(user1);
+		assertFalse(userMG.createAccount(user2));
 	}
 
 	//update user: valid input
 	@Test
 	void updateUserValidInput() {
-		User user = new Customer(1, "Jam", "jam@gmail.com", "123Jam");
-		assertTrue(userMG.updateAccount(user));
+		User user1 = new Customer(1, "Jam", "jam@gmail.com", "123Jam");
+		User user2 = new Customer(1, "Yellow", "yellow@gmail.com", "123Yellow");
+		userMG.createAccount(user1);
+		assertTrue(userMG.updateAccount(user2));
 	}
 	//update user: same email same user
 	@Test
 	void updateUserSameEmailAsUser() {
-		User user = new Customer(1, "Jam", "yellow@gmail.com", "123Jam");
-		assertTrue(userMG.updateAccount(user));
+		User user1 = new Customer(1, "Jam", "yellow@gmail.com", "123Jam");
+		User user2 = new Customer(1, "Yellow", "yellow@gmail.com", "123Yellow");
+		userMG.createAccount(user1);
+		assertTrue(userMG.updateAccount(user2));
 	}
 	//update user: same email another user
 	@Test
 	void updateUserSameEmailAsAnotherUser() {
-		User user = new Customer(1, "Jam", "red@gmail.com", "123Jam");
-		assertFalse(userMG.updateAccount(user));
+		User user1 = new Customer(1, "Red", "red@gmail.com", "123Red");
+		User user2 = new Customer(2, "Yellow", "yellow@gmail.com", "123Yellow");
+		User user3 = new Customer(2, "Jam", "red@gmail.com", "123Jam");
+		userMG.createAccount(user1);
+		userMG.createAccount(user2);
+		assertFalse(userMG.updateAccount(user3));
 	}
 
 	//delete user: valid input
@@ -105,17 +119,23 @@ class ListenUpApplicationTests {
 	@Test
 	void addSongValidInput() {
 		Genre genre = new Genre(1, "Pop");
+		genreMG.addGenre(genre);
 		Date date = new Date(2021,11,27);
-		Song song = new SingleSong(1, "Payphone", genre, date, date);
+		Artist artist = new Artist(1, "Maroon 5");
+		artistMG.addArtist(artist);
+		Song song = new SingleSong(1, "Payphone", artist, genre, date, date);
 		assertTrue(songMG.addSong(song));
 	}
 	//create song: same id
 	@Test
 	void addSongSameID() {
 		Genre genre = new Genre(1, "Pop");
+		genreMG.addGenre(genre);
 		Date date = new Date(2021,11,27);
-		Song song1 = new SingleSong(1, "Payphone", genre, date, date);
-		Song song2 = new SingleSong(1, "Star Boy", genre, date, date);
+		Artist artist = new Artist(1, "Maroon 5");
+		artistMG.addArtist(artist);
+		Song song1 = new SingleSong(1, "Payphone", artist, genre, date, date);
+		Song song2 = new SingleSong(1, "Star Boy", artist, genre, date, date);
 		songMG.addSong(song1);
 		assertFalse(songMG.addSong(song2));
 	}
@@ -124,8 +144,11 @@ class ListenUpApplicationTests {
 	@Test
 	void updateSongValidInput() {
 		Genre genre = new Genre(1, "Pop");
+		genreMG.addGenre(genre);
 		Date date = new Date(2021,11,27);
-		Song song = new SingleSong(1, "Payphone", genre, date, date);
+		Artist artist = new Artist(1, "Maroon 5");
+		artistMG.addArtist(artist);
+		Song song = new SingleSong(1, "Payphone", artist, genre, date, date);
 		songMG.addSong(song);
 		assertTrue(songMG.editSong(song));
 	}
@@ -133,8 +156,11 @@ class ListenUpApplicationTests {
 	@Test
 	void updateSongInvalidID() {
 		Genre genre = new Genre(1, "Pop");
+		genreMG.addGenre(genre);
 		Date date = new Date(2021,11,27);
-		Song song = new SingleSong(1, "Payphone", genre, date, date);
+		Artist artist = new Artist(1, "Maroon 5");
+		artistMG.addArtist(artist);
+		Song song = new SingleSong(1, "Payphone", artist, genre, date, date);
 		assertFalse(songMG.editSong(song));
 	}
 
@@ -142,8 +168,11 @@ class ListenUpApplicationTests {
 	@Test
 	void deleteSongValidInput() {
 		Genre genre = new Genre(1, "Pop");
+		genreMG.addGenre(genre);
 		Date date = new Date(2021,11,27);
-		Song song = new SingleSong(1, "Payphone", genre, date, date);
+		Artist artist = new Artist(1, "Maroon 5");
+		artistMG.addArtist(artist);
+		Song song = new SingleSong(1, "Payphone", artist, genre, date, date);
 		songMG.addSong(song);
 		assertTrue(songMG.deleteSong(1));
 	}
@@ -159,6 +188,7 @@ class ListenUpApplicationTests {
 	@Test
 	void addAlbumValidInput() {
 		Artist artist = new Artist(1, "Maroon 5");
+		artistMG.addArtist(artist);
 		Date date = new Date(2021,11,27);
 		Album album = new Album(1, "Overexposed", artist, date, date);
 		assertTrue(albumMG.addAlbum(album));
@@ -167,6 +197,7 @@ class ListenUpApplicationTests {
 	@Test
 	void addAlbumSameID() {
 		Artist artist = new Artist(1, "Maroon 5");
+		artistMG.addArtist(artist);
 		Date date = new Date(2021,11,27);
 		Album album1 = new Album(1, "Overexposed", artist, date, date);
 		Album album2 = new Album(1, "V", artist, date, date);
@@ -178,6 +209,7 @@ class ListenUpApplicationTests {
 	@Test
 	void updateAlbumValidInput() {
 		Artist artist = new Artist(1, "Maroon 5");
+		artistMG.addArtist(artist);
 		Date date = new Date(2021,11,27);
 		Album album1 = new Album(1, "Overexposed", artist, date, date);
 		Album album2 = new Album(1, "V", artist, date, date);
@@ -188,6 +220,7 @@ class ListenUpApplicationTests {
 	@Test
 	void updateAlbumInvalidID() {
 		Artist artist = new Artist(1, "Maroon 5");
+		artistMG.addArtist(artist);
 		Date date = new Date(2021,11,27);
 		Album album = new Album(1, "Overexposed", artist, date, date);
 		assertFalse(albumMG.editAlbum(album));
@@ -197,6 +230,7 @@ class ListenUpApplicationTests {
 	@Test
 	void deleteAlbumValidInput() {
 		Artist artist = new Artist(1, "Maroon 5");
+		artistMG.addArtist(artist);
 		Date date = new Date(2021,11,27);
 		Album album = new Album(1, "Overexposed", artist, date, date);
 		albumMG.addAlbum(album);
@@ -214,6 +248,7 @@ class ListenUpApplicationTests {
 	@Test
 	void addPlaylistValidInput() {
 		Customer customer = new Customer(1, "Jam", "jam@gmail.com", "123Jam");
+		userMG.createAccount(customer);
 		Playlist playlist = new Playlist(1, "Workout", customer);
 		assertTrue(playlistMG.addPlaylist(playlist));
 	}
@@ -221,6 +256,7 @@ class ListenUpApplicationTests {
 	@Test
 	void addPlaylistSameID() {
 		Customer customer = new Customer(1, "Jam", "jam@gmail.com", "123Jam");
+		userMG.createAccount(customer);
 		Playlist playlist = new Playlist(1, "Workout", customer);
 		Playlist playlist1 = new Playlist(1, "Chill", customer);
 		playlistMG.addPlaylist(playlist);
@@ -231,15 +267,17 @@ class ListenUpApplicationTests {
 	@Test
 	void updatePlaylistValidInput() {
 		Customer customer = new Customer(1, "Jam", "jam@gmail.com", "123Jam");
-		Playlist playlist = new Playlist(1, "Workout", customer);
-		Playlist playlist1 = new Playlist(1,"Chill", customer);
-		playlistMG.addPlaylist(playlist);
-		assertTrue(playlistMG.editPlaylist(playlist1));
+		userMG.createAccount(customer);
+		Playlist playlist1 = new Playlist(1, "Workout", customer);
+		Playlist playlist2 = new Playlist(1,"Chill", customer);
+		playlistMG.addPlaylist(playlist1);
+		assertTrue(playlistMG.editPlaylist(playlist2));
 	}
 	//update playlist: playlist not in database
 	@Test
 	void updatePlaylistInvalidID() {
 		Customer customer = new Customer(1, "Jam", "jam@gmail.com", "123Jam");
+		userMG.createAccount(customer);
 		Playlist playlist = new Playlist(1, "Workout", customer);
 		assertFalse(playlistMG.editPlaylist(playlist));
 	}
@@ -248,6 +286,7 @@ class ListenUpApplicationTests {
 	@Test
 	void deletePlaylistValidInput() {
 		Customer customer = new Customer(1, "Jam", "jam@gmail.com", "123Jam");
+		userMG.createAccount(customer);
 		Playlist playlist = new Playlist(1, "Workout", customer);
 		playlistMG.addPlaylist(playlist);
 		assertTrue(playlistMG.deletePlaylist(1));
@@ -269,8 +308,8 @@ class ListenUpApplicationTests {
 	//create genre: same id
 	@Test
 	void addGenreSameID() {
-		Genre genre1 = new Genre(1, "Pop");
-		Genre genre2 = new Genre(1, "Hip-Hop");
+		Genre genre1 = Genre.builder().id(1).name("Pop").build();
+		Genre genre2 = Genre.builder().id(1).name("Hip-hop").build();
 		genreMG.addGenre(genre1);
 		assertFalse(genreMG.addGenre(genre2));
 	}

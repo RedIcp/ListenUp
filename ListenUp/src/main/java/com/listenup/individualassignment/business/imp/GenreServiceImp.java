@@ -19,14 +19,14 @@ public class GenreServiceImp implements GenreService {
         boolean result = false;
         if(!genreExist(genre.getId())){
             getGenres().add(genre);
-            db.addGenre(genre.getId(), genre.getName());
+            db.save(genre);
             result = true;
         }
         return result;
     }
 
     public List<Genre> getGenres(){
-        return  db.getGenres();
+        return  db.findAll();
     }
 
     public boolean editGenre(Genre genre){
@@ -34,7 +34,7 @@ public class GenreServiceImp implements GenreService {
         Genre old = getGenre(genre.getId());
         if(old != null){
             old.setName(genre.getName());
-            db.editGenre(genre.getId(), genre.getName());
+            db.save(genre);
             result = true;
         }
         return result;
@@ -44,7 +44,7 @@ public class GenreServiceImp implements GenreService {
         boolean result = false;
         if(genreExist(id)){
             getGenres().remove(getGenre(id));
-            db.deleteGenre(id);
+            db.delete(getGenre(id));
             result = true;
         }
         return result;

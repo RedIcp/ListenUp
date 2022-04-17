@@ -19,20 +19,20 @@ public class PlaylistServiceImp implements PlaylistService {
         boolean result = false;
         if(!playlistExist(playlist.getId())){
             getPlaylists().add(playlist);
-            db.addPlaylist(playlist.getId(), playlist.getName(), playlist.isPublic());
+            db.save(playlist);
             result = true;
         }
         return result;
     }
     public List<Playlist> getPlaylists(){
-        return db.getPlaylists();
+        return db.findAll();
     }
     public boolean editPlaylist(Playlist playlist){
         boolean result = false;
         Playlist old = getPlaylist(playlist.getId());
         if(old != null){
             old.setName(playlist.getName());
-            db.editPlaylist(playlist.getId(), playlist.getName(), playlist.isPublic());
+            db.save(playlist);
             result = true;
         }
         return result;
@@ -41,7 +41,7 @@ public class PlaylistServiceImp implements PlaylistService {
         boolean result = false;
         if(playlistExist(id)){
             getPlaylists().remove(getPlaylist(id));
-            db.deletePlaylist(id);
+            db.delete(getPlaylist(id));
             result = true;
         }
         return result;

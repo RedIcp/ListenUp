@@ -1,12 +1,8 @@
 package com.listenup.individualassignment.repository;
 
 import com.listenup.individualassignment.model.Genre;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+public interface GenreRepository extends JpaRepository<Genre, Long> {
 
-public interface GenreRepository {
-    boolean addGenre(int id, String name);
-    List<Genre> getGenres();
-    boolean editGenre(int id, String name);
-    boolean deleteGenre(int id);
 }

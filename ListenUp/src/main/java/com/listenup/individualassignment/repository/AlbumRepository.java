@@ -1,14 +1,9 @@
 package com.listenup.individualassignment.repository;
 
 import com.listenup.individualassignment.model.Album;
-import com.listenup.individualassignment.model.Artist;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Date;
-import java.util.List;
 
-public interface AlbumRepository {
-    boolean addAlbum(int id, String name, Artist artist, Date releasedDate, Date uploadedDate);
-    List<Album> getAlbums();
-    boolean editAlbum(int id, String name, Artist artist, Date releasedDate, Date uploadedDate);
-    boolean deleteAlbum(int id);
+public interface AlbumRepository extends JpaRepository<Album, Long> {
+
 }

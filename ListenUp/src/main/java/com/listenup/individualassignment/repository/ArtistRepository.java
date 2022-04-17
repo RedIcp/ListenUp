@@ -1,12 +1,8 @@
 package com.listenup.individualassignment.repository;
 
 import com.listenup.individualassignment.model.Artist;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+public interface ArtistRepository extends JpaRepository<Artist, Long>{
 
-public interface ArtistRepository {
-    boolean addArtist(int id, String name);
-    List<Artist> getArtists();
-    boolean editArtist(int id, String name);
-    boolean deleteArtist(int id);
 }

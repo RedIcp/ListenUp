@@ -1,12 +1,8 @@
 package com.listenup.individualassignment.repository;
 
 import com.listenup.individualassignment.model.Playlist;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
 
-public interface PlaylistRepository {
-    boolean addPlaylist(int id, String name, boolean isPublic);
-    List<Playlist> getPlaylists();
-    boolean editPlaylist(int id, String name, boolean isPublic);
-    boolean deletePlaylist(int id);
 }

@@ -19,14 +19,14 @@ public class AlbumServiceImp implements AlbumService {
         boolean result = false;
         if(!albumExist(album.getId())){
             getAlbums().add(album);
-            db.addAlbum(album.getId(),album.getName(), album.getArtist(), album.getReleasedDate(), album.getUploadedDate());
+            db.save(album);
             result = true;
         }
         return result;
     }
 
     public List<Album> getAlbums(){
-        return db.getAlbums();
+        return db.findAll();
     }
 
     public boolean editAlbum(Album album){
@@ -34,10 +34,10 @@ public class AlbumServiceImp implements AlbumService {
         Album old = getAlbum(album.getId());
         if(old != null){
             old.setName(album.getName());
-            old.setReleasedDate(album.getReleasedDate());
-            old.setUploadedDate(album.getUploadedDate());
+            old.setReleased_date(album.getReleased_date());
+            old.setUploaded_date(album.getUploaded_date());
             old.setArtist(album.getArtist());
-            db.editAlbum(album.getId(),album.getName(), album.getArtist(), album.getReleasedDate(), album.getUploadedDate());
+            db.save(album);
             result = true;
         }
         return result;
@@ -47,7 +47,7 @@ public class AlbumServiceImp implements AlbumService {
         boolean result = false;
         if(albumExist(id)){
             getAlbums().remove(getAlbum(id));
-            db.deleteAlbum(id);
+            db.delete(getAlbum(id));
             result = true;
         }
         return result;

@@ -19,14 +19,14 @@ public class ArtistServiceImp implements ArtistService {
         boolean result = false;
         if(!artistExit(artist.getId())){
             getArtists().add(artist);
-            db.addArtist(artist.getId(), artist.getName());
+            db.save(artist);
             result = true;
         }
         return result;
     }
 
     public List<Artist> getArtists(){
-        return db.getArtists();
+        return db.findAll();
     }
 
     public boolean editArtist(Artist artist){
@@ -34,7 +34,7 @@ public class ArtistServiceImp implements ArtistService {
         Artist old = getArtist(artist.getId());
         if(old != null){
             old.setName(artist.getName());
-            db.editArtist(artist.getId(), artist.getName());
+            db.save(artist);
             result =  true;
         }
         return result;
@@ -44,7 +44,7 @@ public class ArtistServiceImp implements ArtistService {
         boolean result = false;
         if(artistExit(id)){
             getArtists().remove(getArtist(id));
-            db.deleteArtist(id);
+            db.delete(getArtist(id));
             result = true;
         }
         return result;

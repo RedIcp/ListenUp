@@ -17,14 +17,14 @@ public class UserServiceImp implements UserService {
     private final UserRepository db;
 
     public List<User> getUsers(){
-        return db.getUsers();
+        return db.findAll();
     }
 
     public boolean createAccount(User user){
         boolean result = false;
         if(!userByEmailExist(user.getEmail()) && !userByIdExist(user.getId())){
             getUsers().add(user);
-            db.addUser(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
+            db.save(user);
             result = true;
         }
         return result;
@@ -40,7 +40,7 @@ public class UserServiceImp implements UserService {
         boolean result = false;
         if(userByIdExist(id)){
             getUsers().remove(getUserByID(id));
-            db.deleteUser(id);
+            db.delete(getUserByID(id));
             result = true;
         }
         return result;
@@ -53,7 +53,7 @@ public class UserServiceImp implements UserService {
                 old.setEmail(user.getEmail());
                 old.setPassword(user.getPassword());
                 old.setUsername(user.getUsername());
-                db.editUser(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
+                db.save(old);
                 result = true;
             }
             else {
@@ -61,7 +61,7 @@ public class UserServiceImp implements UserService {
                     old.setEmail(user.getEmail());
                     old.setPassword(user.getPassword());
                     old.setUsername(user.getUsername());
-                    db.editUser(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
+                    db.save(old);
                     result = true;
                 }
             }

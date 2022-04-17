@@ -19,14 +19,14 @@ public class SongServiceImp implements SongService {
         boolean result = false;
         if(!songExist(song.getId())){
             getSongs().add(song);
-            db.addSong(song.getId(), song.getName(), song.getGenre());
+            db.save(song);
             result = true;
         }
         return result;
     }
 
     public List<Song> getSongs(){
-        return db.getSongs();
+        return db.findAll();
     }
 
     public boolean editSong(Song song){
@@ -35,7 +35,7 @@ public class SongServiceImp implements SongService {
         if(old != null){
             old.setName(song.getName());
             old.setGenre(song.getGenre());
-            db.editSong(song.getId(), song.getName(), song.getGenre());
+            db.save(song);
             result = true;
         }
         return result;
@@ -45,7 +45,7 @@ public class SongServiceImp implements SongService {
         boolean result = false;
         if(songExist(id)){
             getSongs().remove(getSong(id));
-            db.deleteSong(id);
+            db.delete(getSong(id));
             result = true;
         }
         return result;
