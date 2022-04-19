@@ -17,14 +17,10 @@ public class PlaylistServiceImp implements PlaylistService {
     private final PlaylistRepository db;
 
     public Playlist playlistDTOConvertor(PlaylistDTO dto) {
-        if(playlistExist((dto.getId()))){
-            Playlist newPlaylist = Playlist.builder()
-                    .id(dto.getId())
-                    .name(dto.getName())
-                    .build();
-            return newPlaylist;
-        }
-        return null;
+        return Playlist.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .build();
     }
 
     public boolean addPlaylist(Playlist playlist){

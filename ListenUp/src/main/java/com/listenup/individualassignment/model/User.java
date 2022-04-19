@@ -3,6 +3,7 @@ package com.listenup.individualassignment.model;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -24,6 +25,7 @@ public abstract class User {
     @NotBlank
     @Length(min = 2, max = 50)
     @Column(name = "email")
+    @Email
     private String email;
 
     @NotBlank

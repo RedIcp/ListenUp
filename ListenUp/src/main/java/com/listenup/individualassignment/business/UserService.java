@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface UserService {
     User userDTOConvertor(AccountDTO dto);
+    AccountDTO userObjConvertor(User user);
+    List<AccountDTO> getUserDTOs();
     boolean createAccount(User user);
     boolean login(User user);
     List<User> getUsers();

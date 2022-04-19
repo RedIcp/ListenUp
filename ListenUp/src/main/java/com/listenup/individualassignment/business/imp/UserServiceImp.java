@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,11 +20,17 @@ public class UserServiceImp implements UserService {
     private final UserRepository db;
 
     public User userDTOConvertor(AccountDTO dto) {
-        if(userByIdExist((dto.getId()))){
-            User newUser = new Customer(dto.getId(),dto.getUsername(), dto.getEmail(), dto.getPassword());
-            return newUser;
+        return new Customer(dto.getId(),dto.getUsername(), dto.getEmail(), dto.getPassword());
+    }
+    public AccountDTO userObjConvertor(User user) {
+        return new AccountDTO(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
+    }
+    public List<AccountDTO> getUserDTOs(){
+        List<AccountDTO> dtoList = new ArrayList<>();
+        for (User user: getUsers()){
+            dtoList.add(new AccountDTO(user.getId(), user.getUsername(), user.getEmail(), user.getPassword()));
         }
-        return null;
+        return dtoList;
     }
 
     public List<User> getUsers(){

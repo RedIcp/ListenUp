@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlbumDTO {
-    private int id;
+    private long id;
     private String name;
     private Artist artist;
     private Date releasedDate;

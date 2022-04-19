@@ -17,14 +17,10 @@ public class ArtistServiceImp implements ArtistService {
     private final ArtistRepository db;
 
     public Artist artistDTOConvertor(ArtistDTO dto) {
-        if(artistExit(dto.getId())){
-            Artist newArtist = Artist.builder()
-                    .id(dto.getId())
-                    .name(dto.getName())
-                    .build();
-            return newArtist;
-        }
-        return null;
+        return Artist.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .build();
     }
 
     public boolean addArtist(Artist artist){

@@ -19,8 +19,8 @@ public class UserController {
     private final UserService management;
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = management.getUsers();
+    public ResponseEntity<List<AccountDTO>> getAllUsers() {
+        List<AccountDTO> users = management.getUserDTOs();
 
         if(users != null) {
             return ResponseEntity.ok().body(users);
@@ -29,11 +29,11 @@ public class UserController {
         }
     }
     @GetMapping("{id}")
-    public ResponseEntity<User> getUserPath(@PathVariable(value = "id") int id) {
+    public ResponseEntity<AccountDTO> getUserPath(@PathVariable(value = "id") int id) {
         User user = management.getUserByID(id);
-
+        AccountDTO dto = management.userObjConvertor(user);
         if(user != null) {
-            return ResponseEntity.ok().body(user);
+            return ResponseEntity.ok().body(dto);
         } else {
             return ResponseEntity.notFound().build();
         }

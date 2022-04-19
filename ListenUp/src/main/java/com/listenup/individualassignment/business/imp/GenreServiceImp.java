@@ -17,14 +17,10 @@ public class GenreServiceImp implements GenreService {
     private final GenreRepository db;
 
     public Genre genreDTOConvertor(GenreDTO dto) {
-        if(genreExist((dto.getId()))){
-            Genre newGenre = Genre.builder()
-                    .id(dto.getId())
-                    .name(dto.getName())
-                    .build();
-            return newGenre;
-        }
-        return null;
+        return Genre.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .build();
     }
 
     public boolean addGenre(Genre genre){

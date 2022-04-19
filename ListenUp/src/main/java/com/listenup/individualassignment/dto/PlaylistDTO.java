@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlaylistDTO {
-    private int id;
+    private long id;
     private String name;
     private Customer owner;
 }

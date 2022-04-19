@@ -17,17 +17,13 @@ public class AlbumServiceImp implements AlbumService {
     private final AlbumRepository db;
 
     public Album albumDTOConvertor(AlbumDTO dto) {
-        if(albumExist(dto.getId())){
-            Album newAlbum = Album.builder()
-                    .id(dto.getId())
-                    .name(dto.getName())
-                    .artist(dto.getArtist())
-                    .releasedDate(dto.getReleasedDate())
-                    .uploadedDate(dto.getUploadedDate())
-                    .build();
-            return newAlbum;
-        }
-        return null;
+        return Album.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .artist(dto.getArtist())
+                .releasedDate(dto.getReleasedDate())
+                .uploadedDate(dto.getUploadedDate())
+                .build();
     }
 
     public boolean addAlbum(Album album){

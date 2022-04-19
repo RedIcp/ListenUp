@@ -18,11 +18,7 @@ public class SongServiceImp implements SongService {
     private final SongRepository db;
 
     public Song songDTOConvertor(SongDTO dto) {
-        if(songExist((dto.getId()))){
-            Song newSong = new SingleSong(dto.getId(),dto.getName(), dto.getArtist(), dto.getGenre(), dto.getReleasedDate(), dto.getUploadedDate());
-            return newSong;
-        }
-        return null;
+        return new SingleSong(dto.getId(),dto.getName(), dto.getArtist(), dto.getGenre(), dto.getReleasedDate(), dto.getUploadedDate());
     }
 
     public boolean addSong(Song song){
