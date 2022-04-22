@@ -1,24 +1,24 @@
 package com.listenup.individualassignment.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
+import java.util.List;
 import javax.persistence.*;
+import java.util.ArrayList;
+import org.hibernate.validator.constraints.Length;
 
-@Builder
-@Entity
-@Table(name = "artist")
 @Data
-@AllArgsConstructor
+@Entity
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "artist")
 public class Artist {
     @Id
     @Column(name = "id")
     private long id;
 
-    @Length(min = 2, max = 50)
     @Column(name = "name")
+    @Length(min = 2, max = 50)
     private String name;
 
     @OneToMany

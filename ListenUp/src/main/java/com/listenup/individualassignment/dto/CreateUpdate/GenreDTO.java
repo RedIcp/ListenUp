@@ -1,9 +1,9 @@
-package com.listenup.individualassignment.dto;
+package com.listenup.individualassignment.dto.CreateUpdate;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Data
 @Builder

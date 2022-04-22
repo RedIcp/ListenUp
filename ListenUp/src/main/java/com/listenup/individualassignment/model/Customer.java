@@ -1,16 +1,15 @@
 package com.listenup.individualassignment.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import lombok.*;
+import java.util.List;
 import javax.persistence.*;
+import java.util.ArrayList;
 
-@Builder
 @Entity
-@Table(name = "customer")
-@Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "customer")
 public class Customer extends User{
     @ManyToMany
     @JoinTable(

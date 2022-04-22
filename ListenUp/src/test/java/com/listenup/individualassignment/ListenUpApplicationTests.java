@@ -2,7 +2,7 @@ package com.listenup.individualassignment;
 
 import com.listenup.individualassignment.business.*;
 import com.listenup.individualassignment.business.imp.*;
-import com.listenup.individualassignment.dto.*;
+import com.listenup.individualassignment.dto.CreateUpdate.*;
 import com.listenup.individualassignment.model.*;
 import com.listenup.individualassignment.repository.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,7 +55,7 @@ class ListenUpApplicationTests {
 	@Test
 	void userDTOConverterValidInput() {
 		User user = new Admin(10, "Jam", "jam@yahoo.com", "123Jam");
-		AccountDTO userDTO = new AccountDTO(10, "Jam", "jam@yahoo.com", "123Jam");
+		UserDTO userDTO = new UserDTO(10, "Jam", "jam@yahoo.com", "123Jam");
 		userMG.createAccount(user);
 		assertNotNull(userMG.userDTOConvertor(userDTO));
 	}

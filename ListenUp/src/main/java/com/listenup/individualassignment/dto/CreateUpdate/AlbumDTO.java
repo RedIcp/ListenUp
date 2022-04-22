@@ -1,12 +1,11 @@
-package com.listenup.individualassignment.dto;
+package com.listenup.individualassignment.dto.CreateUpdate;
 
-import com.listenup.individualassignment.model.Artist;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.Builder;
 import java.util.Date;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import com.listenup.individualassignment.model.Artist;
 
 @Data
 @Builder

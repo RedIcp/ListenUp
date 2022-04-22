@@ -1,9 +1,9 @@
-package com.listenup.individualassignment.dto;
+package com.listenup.individualassignment.dto.CreateUpdate;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import javax.validation.constraints.Email;
 
@@ -11,7 +11,7 @@ import javax.validation.constraints.Email;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountDTO {
+public class UserDTO {
     private long id;
     private String username;
     @Email

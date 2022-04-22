@@ -1,20 +1,19 @@
 package com.listenup.individualassignment.model;
 
-import java.util.ArrayList;
+import lombok.*;
 import java.util.Date;
 import java.util.List;
-import lombok.*;
-import org.hibernate.validator.constraints.Length;
-
+import java.util.ArrayList;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
+@Data
 @Builder
 @Entity
-@Table(name = "album")
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "album")
 public class Album {
     @Id
     @Column(name = "id")

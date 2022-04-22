@@ -1,15 +1,17 @@
 package com.listenup.individualassignment.business;
 
-import com.listenup.individualassignment.dto.PlaylistDTO;
-import com.listenup.individualassignment.model.Playlist;
-
 import java.util.List;
+import com.listenup.individualassignment.model.Playlist;
+import com.listenup.individualassignment.dto.CreateUpdate.PlaylistDTO;
 
 public interface PlaylistService {
+    //dto
     Playlist playlistDTOConvertor(PlaylistDTO dto);
+
+    //crud
     boolean addPlaylist(Playlist playlist);
     List<Playlist> getPlaylists();
+    Playlist getPlaylist(long id);
     boolean editPlaylist(Playlist playlist);
     boolean deletePlaylist(long id);
-    Playlist getPlaylist(long id);
 }

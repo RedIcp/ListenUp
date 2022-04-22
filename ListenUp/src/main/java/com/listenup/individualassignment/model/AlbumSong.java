@@ -1,14 +1,14 @@
 package com.listenup.individualassignment.model;
-import lombok.*;
 
+import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "album_song")
-@Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "album_song")
 public class AlbumSong extends Song{
     @NotNull
     @ManyToOne

@@ -1,14 +1,13 @@
 package com.listenup.individualassignment.business.imp;
 
-import com.listenup.individualassignment.business.ArtistService;
-import com.listenup.individualassignment.dto.ArtistDTO;
-import com.listenup.individualassignment.model.Artist;
-import com.listenup.individualassignment.repository.ArtistRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Primary;
+import com.listenup.individualassignment.model.Artist;
+import com.listenup.individualassignment.business.ArtistService;
+import com.listenup.individualassignment.dto.CreateUpdate.ArtistDTO;
+import com.listenup.individualassignment.repository.ArtistRepository;
 
 @Service
 @Primary

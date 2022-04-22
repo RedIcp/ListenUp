@@ -1,13 +1,12 @@
 package com.listenup.individualassignment.model;
 
-import java.util.Date;
 import lombok.*;
+import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "single_song")
-@Data
 @AllArgsConstructor
+@Table(name = "single_song")
 public class SingleSong extends  Song{
     public SingleSong(long id, String name, Artist artist, Genre genre, Date releasedDate, Date uploadedDate){
         super(id, name, artist, genre, releasedDate, uploadedDate);

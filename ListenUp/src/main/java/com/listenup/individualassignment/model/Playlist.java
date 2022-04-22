@@ -1,18 +1,18 @@
 package com.listenup.individualassignment.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
+import java.util.List;
 import javax.persistence.*;
+import java.util.ArrayList;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
-@Builder
-@Entity
-@Table(name = "playlist")
 @Data
-@AllArgsConstructor
+@Entity
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "playlist")
 public class Playlist {
     @Id
     @Column(name = "id")
@@ -49,6 +49,4 @@ public class Playlist {
 
         this.songs = new ArrayList<>();
     }
-
-
 }

@@ -1,15 +1,14 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.UserService;
-import com.listenup.individualassignment.dto.AccountDTO;
-import com.listenup.individualassignment.model.User;
+import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.util.List;
+import com.listenup.individualassignment.model.User;
+import com.listenup.individualassignment.business.UserService;
+import com.listenup.individualassignment.dto.CreateUpdate.UserDTO;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,8 +18,8 @@ public class UserController {
     private final UserService management;
 
     @GetMapping
-    public ResponseEntity<List<AccountDTO>> getAllUsers() {
-        List<AccountDTO> users = management.getUserDTOs();
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = management.getUserDTOs();
 
         if(users != null) {
             return ResponseEntity.ok().body(users);
@@ -29,9 +28,9 @@ public class UserController {
         }
     }
     @GetMapping("{id}")
-    public ResponseEntity<AccountDTO> getUserPath(@PathVariable(value = "id") int id) {
+    public ResponseEntity<UserDTO> getUserPath(@PathVariable(value = "id") int id) {
         User user = management.getUserByID(id);
-        AccountDTO dto = management.userObjConvertor(user);
+        UserDTO dto = management.userObjConvertor(user);
         if(user != null) {
             return ResponseEntity.ok().body(dto);
         } else {
@@ -40,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<AccountDTO> createUser(@RequestBody AccountDTO userDTO) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
         User customer = management.userDTOConvertor(userDTO);
         if (!management.createAccount(customer)){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -51,7 +50,7 @@ public class UserController {
         }
     }
     @PutMapping()
-    public ResponseEntity<AccountDTO> updateUser(@RequestBody AccountDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
         User customer = management.userDTOConvertor(userDTO);
         if (management.updateAccount(customer)) {
             return ResponseEntity.noContent().build();

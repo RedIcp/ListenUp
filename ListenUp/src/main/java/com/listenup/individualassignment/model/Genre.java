@@ -1,17 +1,17 @@
 package com.listenup.individualassignment.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
+import java.util.List;
+import java.util.ArrayList;
 import javax.persistence.*;
+import org.hibernate.validator.constraints.Length;
 
-@Builder
-@Entity
-@Table(name = "genre")
 @Data
-@AllArgsConstructor
+@Entity
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "genre")
 public class Genre {
     @Id
     @Column(name = "id")

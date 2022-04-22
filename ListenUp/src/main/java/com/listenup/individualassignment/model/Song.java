@@ -1,20 +1,20 @@
 package com.listenup.individualassignment.model;
 
-import java.util.ArrayList;
+import lombok.*;
 import java.util.Date;
 import java.util.List;
-import lombok.*;
-import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
+@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "song")
 @Inheritance(strategy = InheritanceType.JOINED)
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public abstract class Song{
     @Id
     @Column(name = "id")

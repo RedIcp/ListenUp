@@ -1,15 +1,14 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.PlaylistService;
-import com.listenup.individualassignment.dto.PlaylistDTO;
-import com.listenup.individualassignment.model.Playlist;
+import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.util.List;
+import com.listenup.individualassignment.model.Playlist;
+import com.listenup.individualassignment.business.PlaylistService;
+import com.listenup.individualassignment.dto.CreateUpdate.PlaylistDTO;
 
 @RestController
 @RequiredArgsConstructor
