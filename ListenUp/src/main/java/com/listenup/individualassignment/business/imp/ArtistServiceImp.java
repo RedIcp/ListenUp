@@ -1,7 +1,7 @@
 package com.listenup.individualassignment.business.imp;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 import com.listenup.individualassignment.model.Artist;
 import com.listenup.individualassignment.dto.ArtistSongListDTO;
@@ -31,7 +31,7 @@ public class ArtistServiceImp implements ArtistService {
                 .songs(artist.getSongs())
                 .build();
     }
-    public List<ArtistDTO> artistDTOS() {
+    public List<ArtistDTO> getArtistDTOS() {
         List<ArtistDTO> dtoList = new ArrayList<>();
         for (Artist artist : getArtists()){
             dtoList.add(new ArtistDTO(artist.getId(), artist.getName()));

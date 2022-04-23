@@ -2,13 +2,18 @@ package com.listenup.individualassignment.controller;
 
 import java.net.URI;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.listenup.individualassignment.model.User;
+import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.business.UserService;
 import com.listenup.individualassignment.dto.CreateUpdate.UserDTO;
+import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
+import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,17 +32,33 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping("{id}")
+    @GetMapping("{id}/profile")
     public ResponseEntity<UserDTO> getUserPath(@PathVariable(value = "id") int id) {
-        User user = management.getUserByID(id);
-        UserDTO dto = management.userObjConvertorForProfile(user);
-        if(user != null) {
+        UserDTO dto = management.userObjConvertorForProfile(management.getUserByID(id));
+        if(dto != null) {
             return ResponseEntity.ok().body(dto);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-
+    @GetMapping("{id}/playlists")
+    public ResponseEntity<CustomerPlaylistListDTO> getCustomerPlaylistsPath(@PathVariable(value = "id") int id) {
+        CustomerPlaylistListDTO dto = management.customerObjConvertorForPlaylist((Customer)management.getUserByID(id));
+        if(dto != null) {
+            return ResponseEntity.ok().body(dto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("{id}/collection")
+    public ResponseEntity<CustomerLikedSongListDTO> getCustomerLikedSongsPath(@PathVariable(value = "id") int id) {
+        CustomerLikedSongListDTO dto = management.customerObjConvertorForLikedSongs((Customer)management.getUserByID(id));
+        if(dto != null) {
+            return ResponseEntity.ok().body(dto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     @PostMapping()
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
         User customer = management.userDTOConvertor(userDTO);

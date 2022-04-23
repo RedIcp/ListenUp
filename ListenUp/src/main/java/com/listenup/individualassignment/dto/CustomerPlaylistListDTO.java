@@ -1,11 +1,13 @@
 package com.listenup.individualassignment.dto;
 
-import lombok.Data;
 import java.util.List;
+
+import com.listenup.individualassignment.model.Playlist;
+
+import lombok.Data;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import com.listenup.individualassignment.model.Playlist;
 
 @Data
 @Builder

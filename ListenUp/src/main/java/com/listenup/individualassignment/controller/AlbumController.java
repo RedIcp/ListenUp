@@ -2,13 +2,16 @@ package com.listenup.individualassignment.controller;
 
 import java.net.URI;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.listenup.individualassignment.model.Album;
+import com.listenup.individualassignment.dto.AlbumSongListDTO;
 import com.listenup.individualassignment.business.AlbumService;
 import com.listenup.individualassignment.dto.CreateUpdate.AlbumDTO;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,8 +21,8 @@ public class AlbumController {
     private final AlbumService management;
 
     @GetMapping
-    public ResponseEntity<List<Album>> getAllAlbums() {
-        List<Album> albums = management.getAlbums();
+    public ResponseEntity<List<AlbumDTO>> getAllAlbums() {
+        List<AlbumDTO> albums = management.getAlbumDTOs();
 
         if(albums != null) {
             return ResponseEntity.ok().body(albums);
@@ -28,8 +31,8 @@ public class AlbumController {
         }
     }
     @GetMapping("{id}")
-    public ResponseEntity<Album> getAlbumPath(@PathVariable(value = "id") int id) {
-        Album album = management.getAlbum(id);
+    public ResponseEntity<AlbumSongListDTO> getAlbumPath(@PathVariable(value = "id") int id) {
+        AlbumSongListDTO album = management.albumObjConvertor(management.getAlbum(id));
 
         if(album != null) {
             return ResponseEntity.ok().body(album);

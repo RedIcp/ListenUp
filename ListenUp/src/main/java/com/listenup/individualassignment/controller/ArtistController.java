@@ -2,24 +2,27 @@ package com.listenup.individualassignment.controller;
 
 import java.net.URI;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.listenup.individualassignment.model.Artist;
+import com.listenup.individualassignment.dto.ArtistSongListDTO;
 import com.listenup.individualassignment.business.ArtistService;
 import com.listenup.individualassignment.dto.CreateUpdate.ArtistDTO;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/artists")
 @CrossOrigin(origins = "http://localhost:3000")
-public class ArtistController {
+public class  ArtistController {
     private final ArtistService management;
 
     @GetMapping
-    public ResponseEntity<List<Artist>> getAllArtists() {
-        List<Artist> artists = management.getArtists();
+    public ResponseEntity<List<ArtistDTO>> getAllArtists() {
+        List<ArtistDTO> artists = management.getArtistDTOS();
 
         if(artists != null) {
             return ResponseEntity.ok().body(artists);
@@ -28,8 +31,8 @@ public class ArtistController {
         }
     }
     @GetMapping("{id}")
-    public ResponseEntity<Artist> getArtistPath(@PathVariable(value = "id") int id) {
-        Artist artist = management.getArtist(id);
+    public ResponseEntity<ArtistSongListDTO> getArtistPath(@PathVariable(value = "id") int id) {
+        ArtistSongListDTO artist = management.artistObjConvertor(management.getArtist(id));
 
         if(artist != null) {
             return ResponseEntity.ok().body(artist);

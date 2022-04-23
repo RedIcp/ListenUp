@@ -2,13 +2,16 @@ package com.listenup.individualassignment.controller;
 
 import java.net.URI;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.listenup.individualassignment.model.Genre;
+import com.listenup.individualassignment.dto.GenreSongListDTO;
 import com.listenup.individualassignment.business.GenreService;
 import com.listenup.individualassignment.dto.CreateUpdate.GenreDTO;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,8 +21,8 @@ public class GenreController {
     private final GenreService management;
 
     @GetMapping
-    public ResponseEntity<List<Genre>> getAllGenres() {
-        List<Genre> genres = management.getGenres();
+    public ResponseEntity<List<GenreDTO>> getAllGenres() {
+        List<GenreDTO> genres = management.getGenreDTOs();
 
         if(genres != null) {
             return ResponseEntity.ok().body(genres);
@@ -28,8 +31,8 @@ public class GenreController {
         }
     }
     @GetMapping("{id}")
-    public ResponseEntity<Genre> getGenrePath(@PathVariable(value = "id") int id) {
-        Genre genre = management.getGenre(id);
+    public ResponseEntity<GenreSongListDTO> getGenrePath(@PathVariable(value = "id") int id) {
+        GenreSongListDTO genre = management.genreObjConvertor(management.getGenre(id));
 
         if(genre != null) {
             return ResponseEntity.ok().body(genre);

@@ -1,12 +1,16 @@
 package com.listenup.individualassignment.business;
 
 import java.util.List;
+
 import com.listenup.individualassignment.model.Album;
+import com.listenup.individualassignment.dto.AlbumSongListDTO;
 import com.listenup.individualassignment.dto.CreateUpdate.AlbumDTO;
 
 public interface AlbumService {
     //dto
     Album albumDTOConvertor(AlbumDTO dto);
+    AlbumSongListDTO albumObjConvertor(Album album);
+    List<AlbumDTO> getAlbumDTOs();
 
     //crud
     boolean addAlbum(Album album);

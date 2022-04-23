@@ -1,6 +1,7 @@
 package com.listenup.individualassignment.model;
 
 import lombok.*;
+
 import javax.persistence.Table;
 import javax.persistence.Entity;
 

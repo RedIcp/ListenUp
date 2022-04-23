@@ -2,13 +2,16 @@ package com.listenup.individualassignment.controller;
 
 import java.net.URI;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.listenup.individualassignment.model.Playlist;
+import com.listenup.individualassignment.dto.PlaylistSongListDTO;
 import com.listenup.individualassignment.business.PlaylistService;
 import com.listenup.individualassignment.dto.CreateUpdate.PlaylistDTO;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,8 +21,8 @@ public class PlaylistController {
     private final PlaylistService management;
 
     @GetMapping
-    public ResponseEntity<List<Playlist>> getAllPlaylists() {
-        List<Playlist> playlists = management.getPlaylists();
+    public ResponseEntity<List<PlaylistDTO>> getAllPlaylists() {
+        List<PlaylistDTO> playlists = management.getPlaylistDTOs();
 
         if(playlists != null) {
             return ResponseEntity.ok().body(playlists);
@@ -28,8 +31,8 @@ public class PlaylistController {
         }
     }
     @GetMapping("{id}")
-    public ResponseEntity<Playlist> getPlaylistPath(@PathVariable(value = "id") int id) {
-        Playlist playlist = management.getPlaylist(id);
+    public ResponseEntity<PlaylistSongListDTO> getPlaylistPath(@PathVariable(value = "id") int id) {
+        PlaylistSongListDTO playlist = management.playlistObjConvertor(management.getPlaylist(id));
 
         if(playlist != null) {
             return ResponseEntity.ok().body(playlist);

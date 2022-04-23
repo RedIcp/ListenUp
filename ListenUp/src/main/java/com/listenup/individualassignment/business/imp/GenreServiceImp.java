@@ -1,7 +1,7 @@
 package com.listenup.individualassignment.business.imp;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.dto.GenreSongListDTO;
@@ -31,7 +31,7 @@ public class GenreServiceImp implements GenreService {
                 .songs(genre.getSongs())
                 .build();
     }
-    public List<GenreDTO> genreDTOs(){
+    public List<GenreDTO> getGenreDTOs(){
         List<GenreDTO> dtoList = new ArrayList<>();
         for (Genre genre:getGenres()){
             dtoList.add(new GenreDTO(genre.getId(), genre.getName()));

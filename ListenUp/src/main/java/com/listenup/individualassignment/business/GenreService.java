@@ -1,12 +1,16 @@
 package com.listenup.individualassignment.business;
 
 import java.util.List;
+
 import com.listenup.individualassignment.model.Genre;
+import com.listenup.individualassignment.dto.GenreSongListDTO;
 import com.listenup.individualassignment.dto.CreateUpdate.GenreDTO;
 
 public interface GenreService {
     //dto
     Genre genreDTOConvertor(GenreDTO dto);
+    GenreSongListDTO genreObjConvertor(Genre genre);
+    List<GenreDTO> getGenreDTOs();
 
     //crud
     boolean addGenre(Genre genre);

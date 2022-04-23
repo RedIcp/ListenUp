@@ -2,6 +2,7 @@ package com.listenup.individualassignment.model;
 
 import lombok.*;
 import javax.persistence.*;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
