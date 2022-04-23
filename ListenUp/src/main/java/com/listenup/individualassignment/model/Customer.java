@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.*;
 import java.util.ArrayList;
 
+@Data
 @Entity
 @Builder
 @NoArgsConstructor

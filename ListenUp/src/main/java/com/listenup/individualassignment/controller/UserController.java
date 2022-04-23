@@ -30,7 +30,7 @@ public class UserController {
     @GetMapping("{id}")
     public ResponseEntity<UserDTO> getUserPath(@PathVariable(value = "id") int id) {
         User user = management.getUserByID(id);
-        UserDTO dto = management.userObjConvertor(user);
+        UserDTO dto = management.userObjConvertorForProfile(user);
         if(user != null) {
             return ResponseEntity.ok().body(dto);
         } else {

@@ -8,7 +8,7 @@ public interface UserService {
     //dto
     List<UserDTO> getUserDTOs();
     User userDTOConvertor(UserDTO dto);
-    UserDTO userObjConvertor(User user);
+    UserDTO userObjConvertorForProfile(User user);
 
     //crud
     boolean createAccount(User user);

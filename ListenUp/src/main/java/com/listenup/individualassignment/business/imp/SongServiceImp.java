@@ -1,14 +1,17 @@
 package com.listenup.individualassignment.business.imp;
 
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+
 import com.listenup.individualassignment.model.Song;
-import org.springframework.context.annotation.Primary;
 import com.listenup.individualassignment.model.SingleSong;
 import com.listenup.individualassignment.business.SongService;
 import com.listenup.individualassignment.dto.CreateUpdate.SongDTO;
 import com.listenup.individualassignment.repository.SongRepository;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Primary;
 
 @Service
 @Primary
@@ -18,6 +21,28 @@ public class SongServiceImp implements SongService {
 
     public Song songDTOConvertor(SongDTO dto) {
         return new SingleSong(dto.getId(),dto.getName(), dto.getArtist(), dto.getGenre(), dto.getReleasedDate(), dto.getUploadedDate());
+    }
+    public SongDTO songObjConvertor(Song song) {
+        return SongDTO.builder()
+                .id(song.getId())
+                .name(song.getName())
+                .artist(song.getArtist())
+                .releasedDate(song.getReleasedDate())
+                .uploadedDate(song.getUploadedDate())
+                .build();
+    }
+    public List<SongDTO> getSongDTOs(){
+        List<SongDTO> dtoList = new ArrayList<>();
+        for (Song song : getSongs()){
+            dtoList.add(SongDTO.builder()
+                    .id(song.getId())
+                    .name(song.getName())
+                    .artist(song.getArtist())
+                    .releasedDate(song.getReleasedDate())
+                    .uploadedDate(song.getUploadedDate())
+                    .build());
+        }
+        return dtoList;
     }
 
     public boolean addSong(Song song){

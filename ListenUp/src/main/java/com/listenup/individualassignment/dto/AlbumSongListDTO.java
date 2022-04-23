@@ -11,7 +11,7 @@ import com.listenup.individualassignment.model.AlbumSong;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AlbumSongsDTO {
+public class AlbumSongListDTO {
     private long id;
     private List<AlbumSong> songs;
 }

@@ -1,13 +1,17 @@
 package com.listenup.individualassignment.business.imp;
 
+import java.util.ArrayList;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+
 import com.listenup.individualassignment.model.Genre;
-import org.springframework.context.annotation.Primary;
+import com.listenup.individualassignment.dto.GenreSongListDTO;
 import com.listenup.individualassignment.business.GenreService;
 import com.listenup.individualassignment.dto.CreateUpdate.GenreDTO;
 import com.listenup.individualassignment.repository.GenreRepository;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Primary;
 
 @Service
 @Primary
@@ -20,6 +24,19 @@ public class GenreServiceImp implements GenreService {
                 .id(dto.getId())
                 .name(dto.getName())
                 .build();
+    }
+    public GenreSongListDTO genreObjConvertor(Genre genre){
+        return GenreSongListDTO.builder()
+                .id(genre.getId())
+                .songs(genre.getSongs())
+                .build();
+    }
+    public List<GenreDTO> genreDTOs(){
+        List<GenreDTO> dtoList = new ArrayList<>();
+        for (Genre genre:getGenres()){
+            dtoList.add(new GenreDTO(genre.getId(), genre.getName()));
+        }
+        return dtoList;
     }
 
     public boolean addGenre(Genre genre){

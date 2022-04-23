@@ -1,13 +1,17 @@
 package com.listenup.individualassignment.business.imp;
 
+import java.util.ArrayList;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.context.annotation.Primary;
+
 import com.listenup.individualassignment.model.Playlist;
+import com.listenup.individualassignment.dto.PlaylistSongListDTO;
 import com.listenup.individualassignment.business.PlaylistService;
 import com.listenup.individualassignment.dto.CreateUpdate.PlaylistDTO;
 import com.listenup.individualassignment.repository.PlaylistRepository;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Primary;
 
 @Service
 @Primary
@@ -20,6 +24,19 @@ public class PlaylistServiceImp implements PlaylistService {
                 .id(dto.getId())
                 .name(dto.getName())
                 .build();
+    }
+    public PlaylistSongListDTO playlistObjConvertor(Playlist playlist){
+        return PlaylistSongListDTO.builder()
+                .id(playlist.getId())
+                .songs(playlist.getSongs())
+                .build();
+    }
+    public List<PlaylistDTO> playlistDTOs(){
+        List<PlaylistDTO> dtoList = new ArrayList<>();
+        for(Playlist playlist : getPlaylists()){
+            dtoList.add(new PlaylistDTO(playlist.getId(), playlist.getName(), playlist.getOwner()));
+        }
+        return dtoList;
     }
 
     public boolean addPlaylist(Playlist playlist){

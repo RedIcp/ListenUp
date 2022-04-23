@@ -1,13 +1,17 @@
 package com.listenup.individualassignment.business.imp;
 
+import java.util.ArrayList;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+
 import com.listenup.individualassignment.model.Album;
-import org.springframework.context.annotation.Primary;
+import com.listenup.individualassignment.dto.AlbumSongListDTO;
 import com.listenup.individualassignment.business.AlbumService;
 import com.listenup.individualassignment.dto.CreateUpdate.AlbumDTO;
 import com.listenup.individualassignment.repository.AlbumRepository;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Primary;
 
 @Service
 @Primary
@@ -23,6 +27,19 @@ public class AlbumServiceImp implements AlbumService {
                 .releasedDate(dto.getReleasedDate())
                 .uploadedDate(dto.getUploadedDate())
                 .build();
+    }
+    public AlbumSongListDTO albumObjConvertor(Album album) {
+        return AlbumSongListDTO.builder()
+                .id(album.getId())
+                .songs(album.getAlbumSongs())
+                .build();
+    }
+    public List<AlbumDTO> getAlbumDTOs() {
+        List<AlbumDTO> dtoList = new ArrayList<>();
+        for (Album album : getAlbums()){
+            dtoList.add(new AlbumDTO(album.getId(), album.getName(), album.getArtist(), album.getReleasedDate(), album.getUploadedDate()));
+        }
+        return dtoList;
     }
 
     public boolean addAlbum(Album album){
