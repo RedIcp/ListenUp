@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.listenup.individualassignment.model.Artist;
 import com.listenup.individualassignment.dto.ArtistSongListDTO;
 import com.listenup.individualassignment.business.ArtistService;
-import com.listenup.individualassignment.dto.CreateUpdate.ArtistDTO;
+import com.listenup.individualassignment.dto.createupdate.ArtistDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +22,7 @@ public class  ArtistController {
 
     @GetMapping
     public ResponseEntity<List<ArtistDTO>> getAllArtists() {
-        List<ArtistDTO> artists = management.getArtistDTOS();
+        List<ArtistDTO> artists = management.getArtistDTOS(management.getArtists());
 
         if(artists != null) {
             return ResponseEntity.ok().body(artists);

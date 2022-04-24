@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.listenup.individualassignment.model.Song;
 import com.listenup.individualassignment.business.SongService;
-import com.listenup.individualassignment.dto.CreateUpdate.SongDTO;
+import com.listenup.individualassignment.dto.createupdate.SongDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +21,7 @@ public class SongController {
 
     @GetMapping
     public ResponseEntity<List<SongDTO>> getAllSongs() {
-        List<SongDTO> songs = management.getSongDTOs();
+        List<SongDTO> songs = management.getSongDTOs(management.getSongs());
 
         if(songs != null) {
             return ResponseEntity.ok().body(songs);

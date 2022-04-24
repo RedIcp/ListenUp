@@ -1,8 +1,7 @@
-package com.listenup.individualassignment.dto.CreateUpdate;
+package com.listenup.individualassignment.dto.createupdate;
 
 import java.util.Date;
 
-import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.model.Artist;
 
 import lombok.Data;
@@ -14,11 +13,10 @@ import lombok.AllArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SongDTO {
+public class AlbumDTO {
     private long id;
     private String name;
     private Artist artist;
-    private Genre genre;
     private Date releasedDate;
     private Date uploadedDate;
 }

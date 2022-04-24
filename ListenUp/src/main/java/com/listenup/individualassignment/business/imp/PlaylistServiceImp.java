@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import com.listenup.individualassignment.model.Playlist;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
 import com.listenup.individualassignment.business.PlaylistService;
-import com.listenup.individualassignment.dto.CreateUpdate.PlaylistDTO;
+import com.listenup.individualassignment.dto.createupdate.PlaylistDTO;
 import com.listenup.individualassignment.repository.PlaylistRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -31,9 +31,9 @@ public class PlaylistServiceImp implements PlaylistService {
                 .songs(playlist.getSongs())
                 .build();
     }
-    public List<PlaylistDTO> getPlaylistDTOs(){
+    public List<PlaylistDTO> getPlaylistDTOs(List<Playlist> playlists){
         List<PlaylistDTO> dtoList = new ArrayList<>();
-        for(Playlist playlist : getPlaylists()){
+        for(Playlist playlist : playlists){
             dtoList.add(new PlaylistDTO(playlist.getId(), playlist.getName(), playlist.getOwner()));
         }
         return dtoList;

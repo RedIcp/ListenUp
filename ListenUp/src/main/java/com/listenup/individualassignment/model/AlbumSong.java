@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 import javax.validation.constraints.NotNull;
 
+@Data
 @Entity
 @Builder
 @NoArgsConstructor
@@ -21,3 +22,4 @@ public class AlbumSong extends Song{
         this.album = album;
     }
 }
+

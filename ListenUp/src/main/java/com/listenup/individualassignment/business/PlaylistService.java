@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.listenup.individualassignment.model.Playlist;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
-import com.listenup.individualassignment.dto.CreateUpdate.PlaylistDTO;
+import com.listenup.individualassignment.dto.createupdate.PlaylistDTO;
 
 public interface PlaylistService {
     //dto
     Playlist playlistDTOConvertor(PlaylistDTO dto);
     PlaylistSongListDTO playlistObjConvertor(Playlist playlist);
-    List<PlaylistDTO> getPlaylistDTOs();
+    List<PlaylistDTO> getPlaylistDTOs(List<Playlist> playlists);
 
     //crud
     boolean addPlaylist(Playlist playlist);

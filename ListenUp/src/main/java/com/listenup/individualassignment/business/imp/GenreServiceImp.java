@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.dto.GenreSongListDTO;
 import com.listenup.individualassignment.business.GenreService;
-import com.listenup.individualassignment.dto.CreateUpdate.GenreDTO;
+import com.listenup.individualassignment.dto.createupdate.GenreDTO;
 import com.listenup.individualassignment.repository.GenreRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -31,9 +31,9 @@ public class GenreServiceImp implements GenreService {
                 .songs(genre.getSongs())
                 .build();
     }
-    public List<GenreDTO> getGenreDTOs(){
+    public List<GenreDTO> getGenreDTOs(List<Genre> genres){
         List<GenreDTO> dtoList = new ArrayList<>();
-        for (Genre genre:getGenres()){
+        for (Genre genre : genres){
             dtoList.add(new GenreDTO(genre.getId(), genre.getName()));
         }
         return dtoList;

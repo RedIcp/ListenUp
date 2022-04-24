@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.dto.GenreSongListDTO;
 import com.listenup.individualassignment.business.GenreService;
-import com.listenup.individualassignment.dto.CreateUpdate.GenreDTO;
+import com.listenup.individualassignment.dto.createupdate.GenreDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +22,7 @@ public class GenreController {
 
     @GetMapping
     public ResponseEntity<List<GenreDTO>> getAllGenres() {
-        List<GenreDTO> genres = management.getGenreDTOs();
+        List<GenreDTO> genres = management.getGenreDTOs(management.getGenres());
 
         if(genres != null) {
             return ResponseEntity.ok().body(genres);

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import com.listenup.individualassignment.model.User;
 import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.business.UserService;
-import com.listenup.individualassignment.dto.CreateUpdate.UserDTO;
+import com.listenup.individualassignment.dto.createupdate.UserDTO;
 import com.listenup.individualassignment.repository.UserRepository;
 import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
 import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
@@ -28,16 +28,16 @@ public class UserServiceImp implements UserService {
     public UserDTO userObjConvertorForProfile(User user) {
         return new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
     }
-    public CustomerPlaylistListDTO customerObjConvertorForPlaylist(Customer user) {
+    public CustomerPlaylistListDTO customerObjConvertorForPlaylists(Customer user) {
         return new CustomerPlaylistListDTO(user.getId(), user.getPlaylists());
     }
     public CustomerLikedSongListDTO customerObjConvertorForLikedSongs(Customer user) {
         return new CustomerLikedSongListDTO(user.getId(), user.getLikedSongs());
     }
 
-    public List<UserDTO> getUserDTOs(){
+    public List<UserDTO> getUserDTOs(List<User> users){
         List<UserDTO> dtoList = new ArrayList<>();
-        for (User user: getUsers()){
+        for (User user: users){
             dtoList.add(new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getPassword()));
         }
         return dtoList;

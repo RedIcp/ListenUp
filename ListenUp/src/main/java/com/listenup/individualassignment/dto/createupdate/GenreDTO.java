@@ -1,4 +1,4 @@
-package com.listenup.individualassignment.dto.CreateUpdate;
+package com.listenup.individualassignment.dto.createupdate;
 
 import lombok.Data;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArtistDTO {
+public class GenreDTO {
     private long id;
     private String name;
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import com.listenup.individualassignment.model.Song;
 import com.listenup.individualassignment.model.SingleSong;
 import com.listenup.individualassignment.business.SongService;
-import com.listenup.individualassignment.dto.CreateUpdate.SongDTO;
+import com.listenup.individualassignment.dto.createupdate.SongDTO;
 import com.listenup.individualassignment.repository.SongRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -31,9 +31,9 @@ public class SongServiceImp implements SongService {
                 .uploadedDate(song.getUploadedDate())
                 .build();
     }
-    public List<SongDTO> getSongDTOs(){
+    public List<SongDTO> getSongDTOs(List<Song> songs){
         List<SongDTO> dtoList = new ArrayList<>();
-        for (Song song : getSongs()){
+        for (Song song : songs){
             dtoList.add(SongDTO.builder()
                     .id(song.getId())
                     .name(song.getName())

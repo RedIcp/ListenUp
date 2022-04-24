@@ -1,4 +1,4 @@
-package com.listenup.individualassignment.dto.CreateUpdate;
+package com.listenup.individualassignment.dto.createupdate;
 
 import lombok.Data;
 import lombok.Builder;
