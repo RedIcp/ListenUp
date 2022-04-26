@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.listenup.individualassignment.business.imp.dtoconverter.GenreDTOConverter;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.listenup.individualassignment.model.Genre;
@@ -37,14 +39,21 @@ class GenreTest {
         genreMG.addGenre(genre);
 
         GenreDTO genreDTO= new GenreDTO(1, "Pop");
-        assertNotNull(genreMG.genreDTOConvertor(genreDTO));
+        assertNotNull(GenreDTOConverter.convertToModel(genreDTO));
     }
     @Test
     void genreObjConvertorValidInput() {
         Genre genre = new Genre(1, "Pop");
         genreMG.addGenre(genre);
 
-        assertNotNull(genreMG.genreObjConvertor(genre));
+        assertNotNull(GenreDTOConverter.convertToDTO(genre));
+    }
+    @Test
+    void genreObjConvertorForSongValidInput() {
+        Genre genre = new Genre(1, "Pop");
+        genreMG.addGenre(genre);
+
+        assertNotNull(GenreDTOConverter.convertToDTOForSong(genre));
     }
     @Test
     void genreDTOListConvertorValidInput() {
@@ -52,7 +61,7 @@ class GenreTest {
         List<Genre> genres = new ArrayList<>();
         genres.add(genre);
 
-        assertNotNull(genreMG.getGenreDTOs(genres));
+        assertNotNull(GenreDTOConverter.convertToDTOList(genres));
     }
 
     //create genre: valid input

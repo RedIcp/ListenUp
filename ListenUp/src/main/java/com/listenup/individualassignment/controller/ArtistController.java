@@ -6,10 +6,13 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import com.listenup.individualassignment.model.Artist;
 import com.listenup.individualassignment.dto.ArtistSongListDTO;
 import com.listenup.individualassignment.business.ArtistService;
+import com.listenup.individualassignment.dto.ArtistAlbumListDTO;
 import com.listenup.individualassignment.dto.createupdate.ArtistDTO;
+import com.listenup.individualassignment.business.imp.dtoconverter.ArtistDTOConverter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +25,7 @@ public class  ArtistController {
 
     @GetMapping
     public ResponseEntity<List<ArtistDTO>> getAllArtists() {
-        List<ArtistDTO> artists = management.getArtistDTOS(management.getArtists());
+        List<ArtistDTO> artists = ArtistDTOConverter.convertToDTOList(management.getArtists());
 
         if(artists != null) {
             return ResponseEntity.ok().body(artists);
@@ -32,7 +35,17 @@ public class  ArtistController {
     }
     @GetMapping("{id}")
     public ResponseEntity<ArtistSongListDTO> getArtistPath(@PathVariable(value = "id") int id) {
-        ArtistSongListDTO artist = management.artistObjConvertor(management.getArtist(id));
+        ArtistSongListDTO artist = ArtistDTOConverter.convertToDTOForSong(management.getArtist(id));
+
+        if(artist != null) {
+            return ResponseEntity.ok().body(artist);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("{id}/albums")
+    public ResponseEntity<ArtistAlbumListDTO> getArtistAlbumsPath(@PathVariable(value = "id") int id) {
+        ArtistAlbumListDTO artist = ArtistDTOConverter.convertToDTOForAlbum(management.getArtist(id));
 
         if(artist != null) {
             return ResponseEntity.ok().body(artist);
@@ -42,7 +55,7 @@ public class  ArtistController {
     }
     @PostMapping()
     public ResponseEntity<ArtistDTO> createArtist(@RequestBody ArtistDTO artistDTO) {
-        Artist artist = management.artistDTOConvertor(artistDTO);
+        Artist artist = ArtistDTOConverter.convertToModel(artistDTO);
         if (!management.addArtist(artist)){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {
@@ -53,7 +66,7 @@ public class  ArtistController {
     }
     @PutMapping()
     public ResponseEntity<ArtistDTO> updateArtist(@RequestBody ArtistDTO artistDTO) {
-        Artist artist = management.artistDTOConvertor(artistDTO);
+        Artist artist = ArtistDTOConverter.convertToModel(artistDTO);
         if (management.editArtist(artist)) {
             return ResponseEntity.noContent().build();
         } else {

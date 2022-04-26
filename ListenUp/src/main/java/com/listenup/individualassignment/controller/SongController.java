@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import com.listenup.individualassignment.model.Song;
 import com.listenup.individualassignment.business.SongService;
 import com.listenup.individualassignment.dto.createupdate.SongDTO;
+import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +23,7 @@ public class SongController {
 
     @GetMapping
     public ResponseEntity<List<SongDTO>> getAllSongs() {
-        List<SongDTO> songs = management.getSongDTOs(management.getSongs());
+        List<SongDTO> songs = SongDTOConverter.convertToDTOList(management.getSongs());
 
         if(songs != null) {
             return ResponseEntity.ok().body(songs);
@@ -31,7 +33,7 @@ public class SongController {
     }
     @GetMapping("{id}")
     public ResponseEntity<SongDTO> getSongPath(@PathVariable(value = "id") int id) {
-        SongDTO song = management.songObjConvertor(management.getSong(id));
+        SongDTO song = SongDTOConverter.convertToDTO(management.getSong(id));
 
         if(song != null) {
             return ResponseEntity.ok().body(song);
@@ -41,7 +43,7 @@ public class SongController {
     }
     @PostMapping()
     public ResponseEntity<SongDTO> createSong(@RequestBody SongDTO songDTO) {
-        Song song = management.songDTOConvertor(songDTO);
+        Song song = SongDTOConverter.convertToModel(songDTO);
         if (!management.addSong(song)){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {
@@ -52,7 +54,7 @@ public class SongController {
     }
     @PutMapping()
     public ResponseEntity<SongDTO> updateSong(@RequestBody SongDTO songDTO) {
-        Song song = management.songDTOConvertor(songDTO);
+        Song song = SongDTOConverter.convertToModel(songDTO);
         if (management.editSong(song)) {
             return ResponseEntity.noContent().build();
         } else {

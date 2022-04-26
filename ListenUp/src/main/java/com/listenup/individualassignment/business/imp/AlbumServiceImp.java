@@ -1,12 +1,9 @@
 package com.listenup.individualassignment.business.imp;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import com.listenup.individualassignment.model.Album;
-import com.listenup.individualassignment.dto.AlbumSongListDTO;
 import com.listenup.individualassignment.business.AlbumService;
-import com.listenup.individualassignment.dto.createupdate.AlbumDTO;
 import com.listenup.individualassignment.repository.AlbumRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,29 +15,6 @@ import org.springframework.context.annotation.Primary;
 @RequiredArgsConstructor
 public class AlbumServiceImp implements AlbumService {
     private final AlbumRepository db;
-
-    public Album albumDTOConvertor(AlbumDTO dto) {
-        return Album.builder()
-                .id(dto.getId())
-                .name(dto.getName())
-                .artist(dto.getArtist())
-                .releasedDate(dto.getReleasedDate())
-                .uploadedDate(dto.getUploadedDate())
-                .build();
-    }
-    public AlbumSongListDTO albumObjConvertor(Album album) {
-        return AlbumSongListDTO.builder()
-                .id(album.getId())
-                .songs(album.getAlbumSongs())
-                .build();
-    }
-    public List<AlbumDTO> getAlbumDTOs(List<Album> albums) {
-        List<AlbumDTO> dtoList = new ArrayList<>();
-        for (Album album : albums){
-            dtoList.add(new AlbumDTO(album.getId(), album.getName(), album.getArtist(), album.getReleasedDate(), album.getUploadedDate()));
-        }
-        return dtoList;
-    }
 
     public boolean addAlbum(Album album){
         boolean result = false;

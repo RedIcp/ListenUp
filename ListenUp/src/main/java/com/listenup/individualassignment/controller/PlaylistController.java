@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import com.listenup.individualassignment.model.Playlist;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
 import com.listenup.individualassignment.business.PlaylistService;
 import com.listenup.individualassignment.dto.createupdate.PlaylistDTO;
+import com.listenup.individualassignment.business.imp.dtoconverter.PlaylistDTOConverter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +24,7 @@ public class PlaylistController {
 
     @GetMapping
     public ResponseEntity<List<PlaylistDTO>> getAllPlaylists() {
-        List<PlaylistDTO> playlists = management.getPlaylistDTOs(management.getPlaylists());
+        List<PlaylistDTO> playlists = PlaylistDTOConverter.convertToDTOList(management.getPlaylists());
 
         if(playlists != null) {
             return ResponseEntity.ok().body(playlists);
@@ -32,7 +34,7 @@ public class PlaylistController {
     }
     @GetMapping("{id}")
     public ResponseEntity<PlaylistSongListDTO> getPlaylistPath(@PathVariable(value = "id") int id) {
-        PlaylistSongListDTO playlist = management.playlistObjConvertor(management.getPlaylist(id));
+        PlaylistSongListDTO playlist = PlaylistDTOConverter.convertToDTOForSong(management.getPlaylist(id));
 
         if(playlist != null) {
             return ResponseEntity.ok().body(playlist);
@@ -42,7 +44,7 @@ public class PlaylistController {
     }
     @PostMapping()
     public ResponseEntity<PlaylistDTO> createPlaylist(@RequestBody PlaylistDTO playlistDTO) {
-        Playlist playlist = management.playlistDTOConvertor(playlistDTO);
+        Playlist playlist = PlaylistDTOConverter.convertToModel(playlistDTO);
         if (!management.addPlaylist(playlist)){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {
@@ -53,7 +55,7 @@ public class PlaylistController {
     }
     @PutMapping()
     public ResponseEntity<PlaylistDTO> updatePlaylist(@RequestBody PlaylistDTO playlistDTO) {
-        Playlist playlist = management.playlistDTOConvertor(playlistDTO);
+        Playlist playlist = PlaylistDTOConverter.convertToModel(playlistDTO);
         if (management.editPlaylist(playlist)) {
             return ResponseEntity.noContent().build();
         } else {

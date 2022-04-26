@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.listenup.individualassignment.business.imp.dtoconverter.AlbumDTOConverter;
+import com.listenup.individualassignment.business.imp.dtoconverter.ArtistDTOConverter;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.listenup.individualassignment.model.Album;
@@ -50,8 +53,8 @@ class AlbumTest {
         Album album = new Album(1, "Overexposed", artist, date, date);
         albumMG.addAlbum(album);
 
-        AlbumDTO albumDTO= new AlbumDTO(1, "Overexposed", artist, date, date);
-        assertNotNull(albumMG.albumDTOConvertor(albumDTO));
+        AlbumDTO albumDTO= new AlbumDTO(1, "Overexposed", ArtistDTOConverter.convertToDTO(artist), date, date);
+        assertNotNull(AlbumDTOConverter.convertToModel(albumDTO));
     }
     @Test
     void albumObjConverterValidInput() {
@@ -61,7 +64,17 @@ class AlbumTest {
         Album album = new Album(1, "Overexposed", artist, date, date);
         albumMG.addAlbum(album);
 
-        assertNotNull(albumMG.albumObjConvertor(album));
+        assertNotNull(AlbumDTOConverter.convertToDTO(album));
+    }
+    @Test
+    void albumObjConverterForSongValidInput(){
+        Artist artist = new Artist(1, "Maroon 5");
+        artistMG.addArtist(artist);
+        Date date = new Date(2021,11,27);
+        Album album = new Album(1, "Overexposed", artist, date, date);
+        albumMG.addAlbum(album);
+
+        assertNotNull(AlbumDTOConverter.convertToDTOForSong(album));
     }
     @Test
     void albumDTOListConverterValidInput() {
@@ -71,7 +84,7 @@ class AlbumTest {
         List<Album> albums = new ArrayList<>();
         albums.add(album);
 
-        assertNotNull(albumMG.getAlbumDTOs(albums));
+        assertNotNull(AlbumDTOConverter.convertToDTOList(albums));
     }
 
     //create album: valid input

@@ -2,7 +2,7 @@ package com.listenup.individualassignment.dto;
 
 import java.util.List;
 
-import com.listenup.individualassignment.model.Playlist;
+import com.listenup.individualassignment.dto.createupdate.PlaylistDTO;
 
 import lombok.Data;
 import lombok.Builder;
@@ -15,5 +15,5 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CustomerPlaylistListDTO {
     private long id;
-    private List<Playlist> playlists;
+    private List<PlaylistDTO> playlists;
 }

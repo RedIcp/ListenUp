@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.dto.GenreSongListDTO;
 import com.listenup.individualassignment.business.GenreService;
 import com.listenup.individualassignment.dto.createupdate.GenreDTO;
+import com.listenup.individualassignment.business.imp.dtoconverter.GenreDTOConverter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +24,7 @@ public class GenreController {
 
     @GetMapping
     public ResponseEntity<List<GenreDTO>> getAllGenres() {
-        List<GenreDTO> genres = management.getGenreDTOs(management.getGenres());
+        List<GenreDTO> genres = GenreDTOConverter.convertToDTOList(management.getGenres());
 
         if(genres != null) {
             return ResponseEntity.ok().body(genres);
@@ -32,7 +34,7 @@ public class GenreController {
     }
     @GetMapping("{id}")
     public ResponseEntity<GenreSongListDTO> getGenrePath(@PathVariable(value = "id") int id) {
-        GenreSongListDTO genre = management.genreObjConvertor(management.getGenre(id));
+        GenreSongListDTO genre = GenreDTOConverter.convertToDTOForSong(management.getGenre(id));
 
         if(genre != null) {
             return ResponseEntity.ok().body(genre);
@@ -42,7 +44,7 @@ public class GenreController {
     }
     @PostMapping()
     public ResponseEntity<GenreDTO> createGenre(@RequestBody GenreDTO genreDTO) {
-        Genre genre = management.genreDTOConvertor(genreDTO);
+        Genre genre = GenreDTOConverter.convertToModel(genreDTO);
         if (!management.addGenre(genre)){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {
@@ -53,7 +55,7 @@ public class GenreController {
     }
     @PutMapping()
     public ResponseEntity<GenreDTO> updateGenre(@RequestBody GenreDTO genreDTO) {
-        Genre genre = management.genreDTOConvertor(genreDTO);
+        Genre genre = GenreDTOConverter.convertToModel(genreDTO);
         if (management.editGenre(genre)) {
             return ResponseEntity.noContent().build();
         } else {

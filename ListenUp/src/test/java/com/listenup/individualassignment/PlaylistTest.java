@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverter;
+import com.listenup.individualassignment.business.imp.dtoconverter.PlaylistDTOConverter;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.listenup.individualassignment.model.Customer;
@@ -46,8 +49,8 @@ class PlaylistTest {
         Playlist playlist = new Playlist(1, "Workout", customer);
         playlistMG.addPlaylist(playlist);
 
-        PlaylistDTO playlistDTO= new PlaylistDTO(1, "Workout", customer);
-        assertNotNull(playlistMG.playlistDTOConvertor(playlistDTO));
+        PlaylistDTO playlistDTO= new PlaylistDTO(1, "Workout", CustomerDTOConverter.convertToDTO(customer));
+        assertNotNull(PlaylistDTOConverter.convertToModel(playlistDTO));
     }
     @Test
     void playlistObjConvertorValidInput() {
@@ -56,7 +59,16 @@ class PlaylistTest {
         Playlist playlist = new Playlist(1, "Workout", customer);
         playlistMG.addPlaylist(playlist);
 
-        assertNotNull(playlistMG.playlistObjConvertor(playlist));
+        assertNotNull(PlaylistDTOConverter.convertToDTO(playlist));
+    }
+    @Test
+    void playlistObjConvertorForSongValidInput() {
+        Customer customer = new Customer(1, "Jam", "jam@gmail.com", "123Jam");
+        userMG.createAccount(customer);
+        Playlist playlist = new Playlist(1, "Workout", customer);
+        playlistMG.addPlaylist(playlist);
+
+        assertNotNull(PlaylistDTOConverter.convertToDTOForSong(playlist));
     }
     @Test
     void playlistDTOListConvertorValidInput() {
@@ -65,7 +77,7 @@ class PlaylistTest {
         List<Playlist> playlistList = new ArrayList<>();
         playlistList.add(playlist);
 
-        assertNotNull(playlistMG.getPlaylistDTOs(playlistList));
+        assertNotNull(PlaylistDTOConverter.convertToDTOList(playlistList));
     }
 
     //create playlist: valid input

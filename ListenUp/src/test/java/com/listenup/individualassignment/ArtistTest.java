@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.listenup.individualassignment.business.imp.dtoconverter.ArtistDTOConverter;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.listenup.individualassignment.model.Artist;
@@ -37,14 +39,28 @@ class ArtistTest {
         artistMG.addArtist(artist);
 
         ArtistDTO artistDTO= new ArtistDTO(1, "Maroon 5");
-        assertNotNull(artistMG.artistDTOConvertor(artistDTO));
+        assertNotNull(ArtistDTOConverter.convertToModel(artistDTO));
     }
     @Test
     void artistObjConvertorValidInput() {
         Artist artist = new Artist(1, "Maroon 5");
         artistMG.addArtist(artist);
 
-        assertNotNull(artistMG.artistObjConvertor(artist));
+        assertNotNull(ArtistDTOConverter.convertToDTO(artist));
+    }
+    @Test
+    void artistObjConvertorForSongValidInput() {
+        Artist artist = new Artist(1, "Maroon 5");
+        artistMG.addArtist(artist);
+
+        assertNotNull(ArtistDTOConverter.convertToDTOForSong(artist));
+    }
+    @Test
+    void artistObjConvertorForAlbumValidInput() {
+        Artist artist = new Artist(1, "Maroon 5");
+        artistMG.addArtist(artist);
+
+        assertNotNull(ArtistDTOConverter.convertToDTOForAlbum(artist));
     }
     //dto list: valid input
     @Test
@@ -53,7 +69,7 @@ class ArtistTest {
         List<Artist> artists = new ArrayList<>();
         artists.add(artist);
 
-        assertNotNull(artistMG.getArtistDTOS(artists));
+        assertNotNull(ArtistDTOConverter.convertToDTOList(artists));
     }
 
     //create artist: valid input

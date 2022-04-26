@@ -1,12 +1,9 @@
 package com.listenup.individualassignment.business.imp;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import com.listenup.individualassignment.model.Artist;
-import com.listenup.individualassignment.dto.ArtistSongListDTO;
 import com.listenup.individualassignment.business.ArtistService;
-import com.listenup.individualassignment.dto.createupdate.ArtistDTO;
 import com.listenup.individualassignment.repository.ArtistRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,26 +15,6 @@ import org.springframework.context.annotation.Primary;
 @RequiredArgsConstructor
 public class ArtistServiceImp implements ArtistService {
     private final ArtistRepository db;
-
-    public Artist artistDTOConvertor(ArtistDTO dto) {
-        return Artist.builder()
-                .id(dto.getId())
-                .name(dto.getName())
-                .build();
-    }
-    public ArtistSongListDTO artistObjConvertor(Artist artist) {
-        return  ArtistSongListDTO.builder()
-                .id(artist.getId())
-                .songs(artist.getSongs())
-                .build();
-    }
-    public List<ArtistDTO> getArtistDTOS(List<Artist> artists) {
-        List<ArtistDTO> dtoList = new ArrayList<>();
-        for (Artist artist : artists){
-            dtoList.add(new ArtistDTO(artist.getId(), artist.getName()));
-        }
-        return dtoList;
-    }
 
     public boolean addArtist(Artist artist){
         boolean result = false;

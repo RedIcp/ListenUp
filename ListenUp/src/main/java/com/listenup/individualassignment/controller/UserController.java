@@ -6,12 +6,14 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import com.listenup.individualassignment.model.User;
 import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.business.UserService;
 import com.listenup.individualassignment.dto.createupdate.UserDTO;
 import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
 import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
+import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +26,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> users = management.getUserDTOs(management.getUsers());
+        List<UserDTO> users = CustomerDTOConverter.convertToDTOList(management.getUsers());
 
         if(users != null) {
             return ResponseEntity.ok().body(users);
@@ -34,7 +36,7 @@ public class UserController {
     }
     @GetMapping("{id}/profile")
     public ResponseEntity<UserDTO> getUserPath(@PathVariable(value = "id") int id) {
-        UserDTO dto = management.userObjConvertorForProfile(management.getUserByID(id));
+        UserDTO dto = CustomerDTOConverter.convertToDTO((Customer)management.getUserByID(id));
         if(dto != null) {
             return ResponseEntity.ok().body(dto);
         } else {
@@ -43,7 +45,7 @@ public class UserController {
     }
     @GetMapping("{id}/playlists")
     public ResponseEntity<CustomerPlaylistListDTO> getCustomerPlaylistsPath(@PathVariable(value = "id") int id) {
-        CustomerPlaylistListDTO dto = management.customerObjConvertorForPlaylists((Customer)management.getUserByID(id));
+        CustomerPlaylistListDTO dto = CustomerDTOConverter.convertToDTOForPlaylist((Customer)management.getUserByID(id));
         if(dto != null) {
             return ResponseEntity.ok().body(dto);
         } else {
@@ -52,7 +54,7 @@ public class UserController {
     }
     @GetMapping("{id}/collection")
     public ResponseEntity<CustomerLikedSongListDTO> getCustomerLikedSongsPath(@PathVariable(value = "id") int id) {
-        CustomerLikedSongListDTO dto = management.customerObjConvertorForLikedSongs((Customer)management.getUserByID(id));
+        CustomerLikedSongListDTO dto = CustomerDTOConverter.convertToDTOForLikedSong((Customer)management.getUserByID(id));
         if(dto != null) {
             return ResponseEntity.ok().body(dto);
         } else {
@@ -61,7 +63,7 @@ public class UserController {
     }
     @PostMapping()
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        User customer = management.userDTOConvertor(userDTO);
+        User customer = CustomerDTOConverter.convertToModel(userDTO);
         if (!management.createAccount(customer)){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {
@@ -72,7 +74,7 @@ public class UserController {
     }
     @PutMapping()
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
-        User customer = management.userDTOConvertor(userDTO);
+        User customer = CustomerDTOConverter.convertToModel(userDTO);
         if (management.updateAccount(customer)) {
             return ResponseEntity.noContent().build();
         } else {

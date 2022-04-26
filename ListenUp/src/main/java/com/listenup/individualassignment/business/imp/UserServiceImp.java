@@ -1,15 +1,10 @@
 package com.listenup.individualassignment.business.imp;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import com.listenup.individualassignment.model.User;
-import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.business.UserService;
-import com.listenup.individualassignment.dto.createupdate.UserDTO;
 import com.listenup.individualassignment.repository.UserRepository;
-import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
-import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,29 +14,7 @@ import org.springframework.context.annotation.Primary;
 @Primary
 @RequiredArgsConstructor
 public class UserServiceImp implements UserService {
-
     private final UserRepository db;
-
-    public User userDTOConvertor(UserDTO dto) {
-        return new Customer(dto.getId(),dto.getUsername(), dto.getEmail(), dto.getPassword());
-    }
-    public UserDTO userObjConvertorForProfile(User user) {
-        return new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
-    }
-    public CustomerPlaylistListDTO customerObjConvertorForPlaylists(Customer user) {
-        return new CustomerPlaylistListDTO(user.getId(), user.getPlaylists());
-    }
-    public CustomerLikedSongListDTO customerObjConvertorForLikedSongs(Customer user) {
-        return new CustomerLikedSongListDTO(user.getId(), user.getLikedSongs());
-    }
-
-    public List<UserDTO> getUserDTOs(List<User> users){
-        List<UserDTO> dtoList = new ArrayList<>();
-        for (User user: users){
-            dtoList.add(new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getPassword()));
-        }
-        return dtoList;
-    }
 
     public boolean createAccount(User user){
         boolean result = false;

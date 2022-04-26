@@ -29,7 +29,7 @@ public class Playlist {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer owner;
+    private Customer customer;
 
     @Column(name = "liked_users")
     private long likedUsers;
@@ -41,10 +41,10 @@ public class Playlist {
             inverseJoinColumns = @JoinColumn(name = "song_id"))
     private List<Song> songs;
 
-    public Playlist(long id, String name, Customer owner){
+    public Playlist(long id, String name, Customer customer){
         this.id = id;
         this.name = name;
-        this.owner = owner;
+        this.customer = customer;
         this.isPublic = true;
         this.likedUsers = 0;
 

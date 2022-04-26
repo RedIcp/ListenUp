@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverter;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.listenup.individualassignment.model.User;
@@ -38,25 +40,25 @@ class UserTest {
         User user = new Admin(10, "Jam", "jam@yahoo.com", "123Jam");
         UserDTO userDTO = new UserDTO(10, "Jam", "jam@yahoo.com", "123Jam");
         userMG.createAccount(user);
-        assertNotNull(userMG.userDTOConvertor(userDTO));
+        assertNotNull(CustomerDTOConverter.convertToModel(userDTO));
     }
     @Test
     void userObjConvertorValidInput() {
-        User user = new Admin(10, "Jam", "jam@yahoo.com", "123Jam");
+        Customer user = new Customer(10, "Jam", "jam@yahoo.com", "123Jam");
         userMG.createAccount(user);
-        assertNotNull(userMG.userObjConvertorForProfile(user));
+        assertNotNull(CustomerDTOConverter.convertToDTO(user));
     }
     @Test
     void userObjConvertorForPlaylistsValidInput() {
         User user = new Customer(10, "Jam", "jam@yahoo.com", "123Jam");
         userMG.createAccount(user);
-        assertNotNull(userMG.customerObjConvertorForPlaylists((Customer) user));
+        assertNotNull(CustomerDTOConverter.convertToDTOForPlaylist((Customer) user));
     }
     @Test
     void userObjConvertorForLikedSongsValidInput() {
         User user = new Customer(10, "Jam", "jam@yahoo.com", "123Jam");
         userMG.createAccount(user);
-        assertNotNull(userMG.customerObjConvertorForLikedSongs((Customer) user));
+        assertNotNull(CustomerDTOConverter.convertToDTOForLikedSong((Customer) user));
     }
     //dto list: valid input
     @Test
@@ -64,7 +66,7 @@ class UserTest {
         User user = new Customer(10, "Jam", "jam@yahoo.com", "123Jam");
         List<User> users = new ArrayList<>();
         users.add(user);
-        assertNotNull(userMG.getUserDTOs(users));
+        assertNotNull(CustomerDTOConverter.convertToDTOList(users));
     }
     //login: valid input
     @Test

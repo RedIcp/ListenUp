@@ -5,6 +5,11 @@ import java.util.List;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.listenup.individualassignment.business.imp.*;
+import com.listenup.individualassignment.business.imp.dtoconverter.ArtistDTOConverter;
+import com.listenup.individualassignment.business.imp.dtoconverter.GenreDTOConverter;
+import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.listenup.individualassignment.model.*;
@@ -17,10 +22,6 @@ import com.listenup.individualassignment.repository.SongRepository;
 import com.listenup.individualassignment.repository.AlbumRepository;
 import com.listenup.individualassignment.repository.GenreRepository;
 import com.listenup.individualassignment.repository.ArtistRepository;
-import com.listenup.individualassignment.business.imp.SongServiceImp;
-import com.listenup.individualassignment.business.imp.AlbumServiceImp;
-import com.listenup.individualassignment.business.imp.GenreServiceImp;
-import com.listenup.individualassignment.business.imp.ArtistServiceImp;
 
 
 import org.junit.jupiter.api.Test;
@@ -64,20 +65,27 @@ class SongTest {
         Song song = new SingleSong(1, "Payphone", artist, genre, date, date);
         songMG.addSong(song);
 
-        SongDTO songDTO = new SongDTO(1, "Payphone", artist, genre, date, date);
-        assertNotNull(songMG.songDTOConvertor(songDTO));
+        SongDTO songDTO = new SongDTO(1, "Payphone", ArtistDTOConverter.convertToDTO(artist), GenreDTOConverter.convertToDTO(genre), date, date);
+        assertNotNull(SongDTOConverter.convertToModel(songDTO));
     }
     @Test
     void songObjConvertorValidInput() {
         Genre genre = new Genre(1, "Pop");
-        genreMG.addGenre(genre);
         Date date = new Date(2021,11,27);
         Artist artist = new Artist(1, "Maroon 5");
-        artistMG.addArtist(artist);
         Song song = new SingleSong(1, "Payphone", artist, genre, date, date);
-        songMG.addSong(song);
 
-        assertNotNull(songMG.songObjConvertor(song));
+        assertNotNull(SongDTOConverter.convertToDTO(song));
+    }
+    @Test
+    void songObjConvertorForAlbumSongValidInput() {
+        Genre genre = new Genre(1, "Pop");
+        Date date = new Date(2021,11,27);
+        Artist artist = new Artist(1, "Maroon 5");
+        Album album = new Album(1, "V", artist, date, date);
+        AlbumSong song = new AlbumSong(1, "Star Boy", genre, album);
+
+        assertNotNull(SongDTOConverter.convertToDTOForAlbum(song));
     }
     //dto list: valid input
     @Test
@@ -89,7 +97,19 @@ class SongTest {
         List<Song> songs = new ArrayList<>();
         songs.add(song);
 
-        assertNotNull(songMG.getSongDTOs(songs));
+        assertNotNull(SongDTOConverter.convertToDTOList(songs));
+    }
+    @Test
+    void songDTOListForAlbumSongConvertorValidInput() {
+        Genre genre = new Genre(1, "Pop");
+        Date date = new Date(2021,11,27);
+        Artist artist = new Artist(1, "Maroon 5");
+        Album album = new Album(1, "V", artist, date, date);
+        AlbumSong song = new AlbumSong(1, "Star Boy", genre, album);
+        List<AlbumSong> songs = new ArrayList<>();
+        songs.add(song);
+
+        assertNotNull(SongDTOConverter.convertToDTOListForAlbum(songs));
     }
 
     //create song: valid input
