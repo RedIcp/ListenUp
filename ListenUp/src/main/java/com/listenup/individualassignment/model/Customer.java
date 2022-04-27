@@ -22,7 +22,8 @@ public class Customer extends User{
     @OneToMany
     @JoinTable(
             name = "playlist",
-            joinColumns = @JoinColumn(name = "customer_id"))
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
     private List<Playlist> playlists;
 
     @ManyToMany

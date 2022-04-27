@@ -25,13 +25,15 @@ public class Artist {
     @OneToMany
     @JoinTable(
             name = "song",
-            joinColumns = @JoinColumn(name = "artist_id"))
+            joinColumns = @JoinColumn(name = "artist_id"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
     private List<Song> songs;
 
     @OneToMany
     @JoinTable(
             name = "album",
-            joinColumns = @JoinColumn(name = "artist_id"))
+            joinColumns = @JoinColumn(name = "artist_id"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
     private List<Album> albums;
 
     public Artist(long id, String name){

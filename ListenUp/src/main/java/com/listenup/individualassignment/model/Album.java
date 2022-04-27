@@ -33,7 +33,8 @@ public class Album {
     @OneToMany
     @JoinTable(
             name = "album_song",
-            joinColumns = @JoinColumn(name = "album_id"))
+            joinColumns = @JoinColumn(name = "album_id"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
     private List<AlbumSong> albumSongs;
 
     @Column(name = "released_date")

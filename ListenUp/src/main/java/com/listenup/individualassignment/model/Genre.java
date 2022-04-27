@@ -25,7 +25,8 @@ public class Genre {
     @OneToMany
     @JoinTable(
             name = "song",
-            joinColumns = @JoinColumn(name = "genre_id"))
+            joinColumns = @JoinColumn(name = "genre_id"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
     private List<Song> songs;
 
     public Genre(long id, String name){
