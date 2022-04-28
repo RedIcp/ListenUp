@@ -2,6 +2,8 @@ package com.listenup.individualassignment.business.imp;
 
 import java.util.List;
 
+import com.listenup.individualassignment.model.AlbumSong;
+import com.listenup.individualassignment.model.SingleSong;
 import com.listenup.individualassignment.model.Song;
 import com.listenup.individualassignment.business.SongService;
 import com.listenup.individualassignment.repository.SongRepository;
@@ -16,7 +18,17 @@ import org.springframework.context.annotation.Primary;
 public class SongServiceImp implements SongService {
     private final SongRepository db;
 
-    public boolean addSong(Song song){
+    public boolean addSingleSong(SingleSong song){
+        boolean result = false;
+        if(!songExist(song.getId())){
+            getSongs().add(song);
+            db.save(song);
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean addAlbumSong(AlbumSong song){
         boolean result = false;
         if(!songExist(song.getId())){
             getSongs().add(song);

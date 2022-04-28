@@ -26,7 +26,7 @@ public class GenreDTOConverter {
     public static GenreSongListDTO convertToDTOForSong(Genre genre){
         return GenreSongListDTO.builder()
                 .id(genre.getId())
-                .songs(SongDTOConverter.convertToDTOList(genre.getSongs()))
+                .songs(SongDTOConverter.convertToSingleSongDTOList(genre.getSongs()))
                 .build();
     }
     public static List<GenreDTO> convertToDTOList(List<Genre> genres){

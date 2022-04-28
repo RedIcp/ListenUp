@@ -13,6 +13,7 @@ import com.listenup.individualassignment.business.UserService;
 import com.listenup.individualassignment.dto.createupdate.UserDTO;
 import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
 import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
+import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
 import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverter;
 
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,7 @@ public class UserController {
     }
     @GetMapping("{id}/profile")
     public ResponseEntity<UserDTO> getUserPath(@PathVariable(value = "id") int id) {
-        UserDTO dto = CustomerDTOConverter.convertToDTO((Customer)management.getUserByID(id));
+        UserDTO dto = CustomerDTOConverter.convertToDTO(management.getUserByID(id));
         if(dto != null) {
             return ResponseEntity.ok().body(dto);
         } else {
@@ -59,6 +60,16 @@ public class UserController {
             return ResponseEntity.ok().body(dto);
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+    @PutMapping("{id}/collection")
+    public ResponseEntity<CustomerLikedSongListDTO> addSongToCollection(@RequestBody CustomerLikedSongListDTO userDTO) {
+        Customer customer = (Customer) management.getUserByID(userDTO.getId());
+        customer.setLikedSongs(SongDTOConverter.convertToSingleSongModelList(userDTO.getLikedSongs()));
+        if (management.updateAccount(customer)) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
     @PostMapping()

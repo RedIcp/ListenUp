@@ -3,6 +3,7 @@ package com.listenup.individualassignment.controller;
 import java.net.URI;
 import java.util.List;
 
+import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,16 @@ public class PlaylistController {
             String url = "Playlist" + "/" + playlist.getId();
             URI uri = URI.create(url);
             return ResponseEntity.created(uri).body(playlistDTO);
+        }
+    }
+    @PutMapping("{id}")
+    public ResponseEntity<PlaylistSongListDTO> addSongToPlaylist(@PathVariable(value = "id") PlaylistSongListDTO playlistDTO) {
+        Playlist playlist = management.getPlaylist(playlistDTO.getId());
+        playlist.setSongs(SongDTOConverter.convertToSingleSongModelList(playlistDTO.getSongs()));
+        if (management.editPlaylist(playlist)) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
     @PutMapping()

@@ -27,7 +27,7 @@ public class ArtistDTOConverter {
     public static ArtistSongListDTO convertToDTOForSong(Artist artist){
         return ArtistSongListDTO.builder()
                 .id(artist.getId())
-                .songs(SongDTOConverter.convertToDTOList(artist.getSongs()))
+                .songs(SongDTOConverter.convertToSingleSongDTOList(artist.getSongs()))
                 .build();
     }
     public static ArtistAlbumListDTO convertToDTOForAlbum(Artist artist){

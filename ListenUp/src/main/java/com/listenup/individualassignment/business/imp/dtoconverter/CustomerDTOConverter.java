@@ -13,7 +13,7 @@ public class CustomerDTOConverter {
     private CustomerDTOConverter(){
 
     }
-    public static UserDTO convertToDTO(Customer user){
+    public static UserDTO convertToDTO(User user){
         return UserDTO.builder()
                 .id(user.getId())
                 .username(user.getUsername())
@@ -27,7 +27,7 @@ public class CustomerDTOConverter {
     public static CustomerLikedSongListDTO convertToDTOForLikedSong(Customer user){
         return CustomerLikedSongListDTO.builder()
                 .id(user.getId())
-                .likedSongs(SongDTOConverter.convertToDTOList(user.getLikedSongs()))
+                .likedSongs(SongDTOConverter.convertToSingleSongDTOList(user.getLikedSongs()))
                 .build();
     }
     public static CustomerPlaylistListDTO convertToDTOForPlaylist(Customer user){
@@ -39,7 +39,7 @@ public class CustomerDTOConverter {
     public static List<UserDTO> convertToDTOList(List<User> users){
         List<UserDTO> dtoList = new ArrayList<>();
         for (User user: users){
-            dtoList.add(convertToDTO((Customer)user));
+            dtoList.add(convertToDTO(user));
         }
         return dtoList;
     }

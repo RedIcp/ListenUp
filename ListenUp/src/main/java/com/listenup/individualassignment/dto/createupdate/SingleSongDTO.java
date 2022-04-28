@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SongDTO {
+public class SingleSongDTO {
     private long id;
     private String name;
     private ArtistDTO artist;

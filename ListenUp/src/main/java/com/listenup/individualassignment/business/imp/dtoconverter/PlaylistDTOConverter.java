@@ -28,7 +28,7 @@ public class PlaylistDTOConverter {
     public static PlaylistSongListDTO convertToDTOForSong(Playlist playlist){
         return PlaylistSongListDTO.builder()
                 .id(playlist.getId())
-                .songs(SongDTOConverter.convertToDTOList(playlist.getSongs()))
+                .songs(SongDTOConverter.convertToSingleSongDTOList(playlist.getSongs()))
                 .build();
     }
     public static List<PlaylistDTO> convertToDTOList(List<Playlist> playlists){

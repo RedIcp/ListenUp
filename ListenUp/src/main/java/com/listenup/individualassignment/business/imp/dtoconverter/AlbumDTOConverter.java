@@ -32,7 +32,7 @@ public class AlbumDTOConverter {
     public static AlbumSongListDTO convertToDTOForSong(Album album){
         return AlbumSongListDTO.builder()
                 .id(album.getId())
-                .songs(SongDTOConverter.convertToDTOListForAlbum(album.getAlbumSongs()))
+                .songs(SongDTOConverter.convertToAlbumSongDTOList(album.getAlbumSongs()))
                 .build();
     }
     public static List<AlbumDTO> convertToDTOList(List<Album> albums){

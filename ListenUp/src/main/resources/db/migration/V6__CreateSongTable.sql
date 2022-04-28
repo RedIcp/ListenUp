@@ -21,10 +21,9 @@ CREATE TABLE `album_song` (
                              FOREIGN KEY (id) REFERENCES song (id)
 );
 CREATE TABLE `featured_artist` (
-                                   `id` int NOT NULL,
                                    `song_id` int NOT NULL,
                                    `artist_id` int NOT NULL,
-                                   PRIMARY KEY (id),
+                                   PRIMARY KEY (song_id, artist_id),
                                    FOREIGN KEY (song_id) REFERENCES song (id),
                                    FOREIGN KEY (artist_id) REFERENCES artist (id)
 );
