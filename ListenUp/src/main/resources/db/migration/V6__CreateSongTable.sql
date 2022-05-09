@@ -1,5 +1,5 @@
 CREATE TABLE `song` (
-                        `id` int NOT NULL,
+                        `id` int NOT NULL AUTO_INCREMENT,
                         `name` varchar(50) NOT NULL,
                         `genre_id` int NOT NULL,
                         `artist_id` int NOT NULL,
@@ -10,18 +10,18 @@ CREATE TABLE `song` (
                         FOREIGN KEY (genre_id) REFERENCES genre (id)
 );
 CREATE TABLE `single_song` (
-                              `id` int NOT NULL,
+                              `id` int NOT NULL AUTO_INCREMENT,
                               PRIMARY KEY (id),
                               FOREIGN KEY (id) REFERENCES song (id)
 );
 CREATE TABLE `album_song` (
-                             `id` int NOT NULL,
+                             `id` int NOT NULL AUTO_INCREMENT,
                              `album_id` int NOT NULL,
                              PRIMARY KEY (id),
                              FOREIGN KEY (id) REFERENCES song (id)
 );
 CREATE TABLE `featured_artist` (
-                                   `song_id` int NOT NULL,
+                                   `song_id` int NOT NULL AUTO_INCREMENT,
                                    `artist_id` int NOT NULL,
                                    PRIMARY KEY (song_id, artist_id),
                                    FOREIGN KEY (song_id) REFERENCES song (id),

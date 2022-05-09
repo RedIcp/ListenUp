@@ -2,15 +2,15 @@ package com.listenup.individualassignment.business;
 
 import java.util.List;
 
-import com.listenup.individualassignment.model.AlbumSong;
-import com.listenup.individualassignment.model.SingleSong;
-import com.listenup.individualassignment.model.Song;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumSongDTO;
+import com.listenup.individualassignment.dto.createdto.CreateSingleSongDTO;
+import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 
 public interface SongService {
-    boolean addSingleSong(SingleSong song);
-    boolean addAlbumSong(AlbumSong song);
-    List<Song> getSongs();
-    Song getSong(long id);
-    boolean editSong(Song song);
+    CreateSingleSongDTO addSingleSong(CreateSingleSongDTO song);
+    CreateAlbumSongDTO addAlbumSong(CreateAlbumSongDTO song);
+    List<SingleSongDTO> getSongs();
+    SingleSongDTO getSong(long id);
+    SingleSongDTO editSong(SingleSongDTO song);
     boolean deleteSong(long id);
 }

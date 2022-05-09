@@ -1,4 +1,6 @@
-package com.listenup.individualassignment.dto.createupdate;
+package com.listenup.individualassignment.dto.vieweditdto;
+
+import java.util.Date;
 
 import lombok.Data;
 import lombok.Builder;
@@ -9,9 +11,10 @@ import lombok.AllArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AlbumSongDTO {
+public class AlbumDTO {
     private long id;
     private String name;
-    private GenreDTO genre;
-    private AlbumDTO album;
+    private ArtistDTO artist;
+    private Date releasedDate;
+    private Date uploadedDate;
 }

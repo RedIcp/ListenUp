@@ -3,7 +3,6 @@ package com.listenup.individualassignment.model;
 import lombok.*;
 import java.util.List;
 import javax.persistence.*;
-import java.util.ArrayList;
 
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
@@ -17,6 +16,7 @@ import org.hibernate.validator.constraints.Length;
 public class Playlist {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Length(min = 2, max = 50)
@@ -29,6 +29,8 @@ public class Playlist {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Customer customer;
 
     @Column(name = "liked_users")
@@ -40,14 +42,4 @@ public class Playlist {
             joinColumns = @JoinColumn(name = "playlist_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id"))
     private List<Song> songs;
-
-    public Playlist(long id, String name, Customer customer){
-        this.id = id;
-        this.name = name;
-        this.customer = customer;
-        this.isPublic = true;
-        this.likedUsers = 0;
-
-        this.songs = new ArrayList<>();
-    }
 }

@@ -1,5 +1,5 @@
 CREATE TABLE `playlist` (
-                            `id` int NOT NULL,
+                            `id` int NOT NULL AUTO_INCREMENT,
                             `name` varchar(45) NOT NULL,
                             `customer_id` int NOT NULL,
                             `is_public` boolean NOT NULL ,

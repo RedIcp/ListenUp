@@ -19,6 +19,7 @@ import org.hibernate.validator.constraints.Length;
 public abstract class Song{
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotBlank
@@ -29,11 +30,15 @@ public abstract class Song{
     @NotNull
     @ManyToOne
     @JoinColumn(name = "genre_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Genre genre;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "artist_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Artist artist;
 
     @Column(name = "released_date")
@@ -50,6 +55,15 @@ public abstract class Song{
             inverseJoinColumns = @JoinColumn(name = "artist_id"))
     private List<Artist> features;
 
+    protected Song(String name, Artist artist, Genre genre, Date releasedDate, Date uploadedDate){
+        this.name = name;
+        this.artist = artist;
+        this.genre = genre;
+        this.releasedDate = releasedDate;
+        this.uploadedDate = uploadedDate;
+
+        this.features = new ArrayList<>();
+    }
     protected Song(long id, String name, Artist artist, Genre genre, Date releasedDate, Date uploadedDate){
         this.id = id;
         this.name = name;
@@ -57,7 +71,6 @@ public abstract class Song{
         this.genre = genre;
         this.releasedDate = releasedDate;
         this.uploadedDate = uploadedDate;
-
 
         this.features = new ArrayList<>();
     }

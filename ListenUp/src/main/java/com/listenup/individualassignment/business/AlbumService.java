@@ -2,12 +2,14 @@ package com.listenup.individualassignment.business;
 
 import java.util.List;
 
-import com.listenup.individualassignment.model.Album;
+import com.listenup.individualassignment.dto.AlbumSongListDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumDTO;
+import com.listenup.individualassignment.dto.vieweditdto.AlbumDTO;
 
 public interface AlbumService {
-    boolean addAlbum(Album album);
-    List<Album> getAlbums();
-    Album getAlbum(long id);
-    boolean editAlbum(Album album);
+    CreateAlbumDTO addAlbum(CreateAlbumDTO album);
+    List<AlbumDTO> getAlbums();
+    AlbumSongListDTO getAlbumSongs(long id);
+    AlbumDTO editAlbum(AlbumDTO album);
     boolean deleteAlbum(long id);
 }

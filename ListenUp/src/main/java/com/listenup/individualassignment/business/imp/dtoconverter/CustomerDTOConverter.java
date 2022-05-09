@@ -3,9 +3,11 @@ package com.listenup.individualassignment.business.imp.dtoconverter;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.listenup.individualassignment.dto.CustomerLikedPlaylistListDTO;
+import com.listenup.individualassignment.dto.createdto.CreateUserDTO;
 import com.listenup.individualassignment.model.User;
 import com.listenup.individualassignment.model.Customer;
-import com.listenup.individualassignment.dto.createupdate.UserDTO;
+import com.listenup.individualassignment.dto.vieweditdto.UserDTO;
 import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
 import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
 
@@ -21,8 +23,11 @@ public class CustomerDTOConverter {
                 .password(user.getPassword())
                 .build();
     }
-    public static Customer convertToModel(UserDTO user){
+    public static Customer convertToModelForUpdate(UserDTO user){
         return new Customer(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
+    }
+    public static Customer convertToModelForCreate(CreateUserDTO user){
+        return new Customer(user.getUsername(), user.getEmail(), user.getPassword());
     }
     public static CustomerLikedSongListDTO convertToDTOForLikedSong(Customer user){
         return CustomerLikedSongListDTO.builder()
@@ -34,6 +39,12 @@ public class CustomerDTOConverter {
         return CustomerPlaylistListDTO.builder()
                 .id(user.getId())
                 .playlists(PlaylistDTOConverter.convertToDTOList(user.getPlaylists()))
+                .build();
+    }
+    public static CustomerLikedPlaylistListDTO convertToDTOForLikedPlaylist(Customer user){
+        return CustomerLikedPlaylistListDTO.builder()
+                .id(user.getId())
+                .likedPlaylists(PlaylistDTOConverter.convertToDTOList(user.getLikedPlaylists()))
                 .build();
     }
     public static List<UserDTO> convertToDTOList(List<User> users){

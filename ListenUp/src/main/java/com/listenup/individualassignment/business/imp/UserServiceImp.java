@@ -2,6 +2,17 @@ package com.listenup.individualassignment.business.imp;
 
 import java.util.List;
 
+import com.listenup.individualassignment.business.exception.InvalidCustomerEmailException;
+import com.listenup.individualassignment.business.exception.InvalidCustomerException;
+import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverter;
+import com.listenup.individualassignment.business.imp.dtoconverter.PlaylistDTOConverter;
+import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
+import com.listenup.individualassignment.dto.CustomerLikedPlaylistListDTO;
+import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
+import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
+import com.listenup.individualassignment.dto.createdto.CreateUserDTO;
+import com.listenup.individualassignment.dto.vieweditdto.UserDTO;
+import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.model.User;
 import com.listenup.individualassignment.business.UserService;
 import com.listenup.individualassignment.repository.UserRepository;
@@ -16,95 +27,69 @@ import org.springframework.context.annotation.Primary;
 public class UserServiceImp implements UserService {
     private final UserRepository db;
 
-    public boolean createAccount(User user){
-        boolean result = false;
-        if(!userByEmailExist(user.getEmail()) && !userByIdExist(user.getId())){
-            getUsers().add(user);
-            db.save(user);
-            result = true;
+    String error = "INVALID_ID";
+
+    public CreateUserDTO createAccount(CreateUserDTO user){
+        if(db.existsByEmail(user.getEmail())){
+            throw new InvalidCustomerEmailException("EMAIL_EXIST");
         }
-        return result;
+        db.save(CustomerDTOConverter.convertToModelForCreate(user));
+        return user;
     }
 
-    public List<User> getUsers(){
-        return db.findAll();
+    public List<UserDTO> getUsers(){
+        return CustomerDTOConverter.convertToDTOList(db.findAll());
+    }
+    public UserDTO getUser(long id){ return CustomerDTOConverter.convertToDTO(db.getById(id)); }
+    public CustomerLikedSongListDTO getCustomerCollection(long id){
+        return CustomerDTOConverter.convertToDTOForLikedSong((Customer) db.getById(id));
+    }
+    public CustomerPlaylistListDTO getCustomerPlaylists(long id){
+        return CustomerDTOConverter.convertToDTOForPlaylist((Customer) db.getById(id));
+    }
+    public CustomerLikedPlaylistListDTO getCustomerLikedPlaylists(long id){
+        return CustomerDTOConverter.convertToDTOForLikedPlaylist((Customer) db.getById(id));
     }
 
-    public boolean updateAccount(User user){
-        User old = getUserByID(user.getId());
-        boolean result = false;
-        if(old!=null){
-            if(user.getEmail().equals(old.getEmail())){
-                old.setEmail(user.getEmail());
-                old.setPassword(user.getPassword());
-                old.setUsername(user.getUsername());
-                db.save(old);
-                result = true;
-            }
-            else {
-                if(!userByEmailExist(user.getEmail())){
-                    old.setEmail(user.getEmail());
-                    old.setPassword(user.getPassword());
-                    old.setUsername(user.getUsername());
-                    db.save(old);
-                    result = true;
-                }
-            }
+    public UserDTO updateAccount(UserDTO user){
+        User old = db.getById(user.getId());
+        if(!db.existsById(user.getId())){
+            throw new InvalidCustomerException(error);
         }
-        return result;
+        if(user.getEmail().equals(old.getEmail())){
+            db.save(CustomerDTOConverter.convertToModelForUpdate(user));
+        }
+        else {
+            if(db.existsByEmail(user.getEmail())){
+                throw new InvalidCustomerEmailException("EMAIL_EXIST");
+            }
+            db.save(CustomerDTOConverter.convertToModelForUpdate(user));
+        }
+        return user;
+    }
+    public CustomerLikedSongListDTO editUserCollection(CustomerLikedSongListDTO user){
+        Customer old = (Customer) db.getById(user.getId());
+        if(!db.existsById(user.getId())){
+            throw new InvalidCustomerException(error);
+        }
+        old.setLikedSongs(SongDTOConverter.convertToSingleSongModelList(user.getLikedSongs()));
+        db.save(old);
+        return user;
+    }
+    public CustomerLikedPlaylistListDTO editUserLikedPlaylists(CustomerLikedPlaylistListDTO user){
+        Customer old = (Customer) db.getById(user.getId());
+        if(!db.existsById(user.getId())){
+            throw new InvalidCustomerException(error);
+        }
+        old.setLikedPlaylists(PlaylistDTOConverter.convertToModelList(user.getLikedPlaylists()));
+        db.save(old);
+        return user;
     }
 
     public boolean deleteAccount(long id){
         boolean result = false;
-        if(userByIdExist(id)){
-            getUsers().remove(getUserByID(id));
-            db.delete(getUserByID(id));
-            result = true;
-        }
-        return result;
-    }
-
-    public boolean login(User user){
-        boolean result = false;
-        if(getUserForLogin(user.getEmail(), user.getPassword()) != null){
-            result = true;
-        }
-        return result;
-    }
-    public User getUserByID(long id){
-        for(User user: getUsers()){
-            if(user.getId()==id){
-                return user;
-            }
-        }
-        return null;
-    }
-    public User getUserByEmail(String email){
-        for (User user: getUsers()){
-            if(user.getEmail().equals(email)){
-                return user;
-            }
-        }
-        return null;
-    }
-    public User getUserForLogin(String email, String password){
-        for (User user: getUsers()){
-            if(user.getEmail().equals(email) && user.getPassword().equals(password)){
-                return user;
-            }
-        }
-        return null;
-    }
-    public boolean userByIdExist(long id){
-        boolean result = false;
-        if(getUserByID(id)!=null){
-            result = true;
-        }
-        return result;
-    }
-    public boolean userByEmailExist(String email){
-        boolean result = false;
-        if(getUserByEmail(email)!=null){
+        if(db.existsById(id)){
+            db.deleteById(id);
             result = true;
         }
         return result;

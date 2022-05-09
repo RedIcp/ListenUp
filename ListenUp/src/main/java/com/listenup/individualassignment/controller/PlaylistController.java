@@ -1,20 +1,19 @@
 package com.listenup.individualassignment.controller;
 
-import java.net.URI;
 import java.util.List;
 
-import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.listenup.individualassignment.model.Playlist;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
 import com.listenup.individualassignment.business.PlaylistService;
-import com.listenup.individualassignment.dto.createupdate.PlaylistDTO;
-import com.listenup.individualassignment.business.imp.dtoconverter.PlaylistDTOConverter;
+import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
 
 import lombok.RequiredArgsConstructor;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class PlaylistController {
 
     @GetMapping
     public ResponseEntity<List<PlaylistDTO>> getAllPlaylists() {
-        List<PlaylistDTO> playlists = PlaylistDTOConverter.convertToDTOList(management.getPlaylists());
+        List<PlaylistDTO> playlists = management.getPlaylists();
 
         if(playlists != null) {
             return ResponseEntity.ok().body(playlists);
@@ -34,8 +33,8 @@ public class PlaylistController {
         }
     }
     @GetMapping("{id}")
-    public ResponseEntity<PlaylistSongListDTO> getPlaylistPath(@PathVariable(value = "id") int id) {
-        PlaylistSongListDTO playlist = PlaylistDTOConverter.convertToDTOForSong(management.getPlaylist(id));
+    public ResponseEntity<PlaylistSongListDTO> getPlaylistPath(@PathVariable(value = "id") long id) {
+        PlaylistSongListDTO playlist = management.getPlaylistSong(id);
 
         if(playlist != null) {
             return ResponseEntity.ok().body(playlist);
@@ -44,37 +43,24 @@ public class PlaylistController {
         }
     }
     @PostMapping()
-    public ResponseEntity<PlaylistDTO> createPlaylist(@RequestBody PlaylistDTO playlistDTO) {
-        Playlist playlist = PlaylistDTOConverter.convertToModel(playlistDTO);
-        if (!management.addPlaylist(playlist)){
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        } else {
-            String url = "Playlist" + "/" + playlist.getId();
-            URI uri = URI.create(url);
-            return ResponseEntity.created(uri).body(playlistDTO);
-        }
+    public ResponseEntity<CreatePlaylistDTO> createPlaylist(@RequestBody @Valid CreatePlaylistDTO playlistDTO) {
+        CreatePlaylistDTO playlist = management.addPlaylist(playlistDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(playlist);
+    }
+    @PutMapping("{id}/songs")
+    public ResponseEntity<PlaylistSongListDTO> addSongToPlaylist(@PathVariable("id") long id, @RequestBody @Valid PlaylistSongListDTO playlistDTO) {
+        playlistDTO.setId(id);
+        management.editPlaylistSongs(playlistDTO);
+        return ResponseEntity.noContent().build();
     }
     @PutMapping("{id}")
-    public ResponseEntity<PlaylistSongListDTO> addSongToPlaylist(@PathVariable(value = "id") PlaylistSongListDTO playlistDTO) {
-        Playlist playlist = management.getPlaylist(playlistDTO.getId());
-        playlist.setSongs(SongDTOConverter.convertToSingleSongModelList(playlistDTO.getSongs()));
-        if (management.editPlaylist(playlist)) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
-    }
-    @PutMapping()
-    public ResponseEntity<PlaylistDTO> updatePlaylist(@RequestBody PlaylistDTO playlistDTO) {
-        Playlist playlist = PlaylistDTOConverter.convertToModel(playlistDTO);
-        if (management.editPlaylist(playlist)) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
+    public ResponseEntity<PlaylistDTO> updatePlaylist(@PathVariable("id") long id, @RequestBody @Valid PlaylistDTO playlistDTO) {
+        playlistDTO.setId(id);
+        management.editPlaylist(playlistDTO);
+        return ResponseEntity.noContent().build();
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<Object> deletePlaylist(@PathVariable int id) {
+    public ResponseEntity<Object> deletePlaylist(@PathVariable long id) {
         management.deletePlaylist(id);
         return ResponseEntity.ok().build();
     }

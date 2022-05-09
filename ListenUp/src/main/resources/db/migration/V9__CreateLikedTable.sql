@@ -1,5 +1,5 @@
 CREATE TABLE `liked_playlist` (
-                                 `customer_id` int NOT NULL,
+                                 `customer_id` int NOT NULL AUTO_INCREMENT,
                                  `playlist_id` int NOT NULL,
                                  PRIMARY KEY (customer_id, playlist_id),
                                  FOREIGN KEY (customer_id) REFERENCES customer (id),
@@ -7,7 +7,7 @@ CREATE TABLE `liked_playlist` (
 );
 
 CREATE TABLE `liked_song` (
-                             `customer_id` int NOT NULL,
+                             `customer_id` int NOT NULL AUTO_INCREMENT,
                              `song_id` int NOT NULL,
                              PRIMARY KEY (customer_id, song_id),
                              FOREIGN KEY (customer_id) REFERENCES customer (id),

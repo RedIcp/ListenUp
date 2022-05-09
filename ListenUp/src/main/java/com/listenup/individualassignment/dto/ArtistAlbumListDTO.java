@@ -1,6 +1,6 @@
 package com.listenup.individualassignment.dto;
 
-import com.listenup.individualassignment.dto.createupdate.AlbumDTO;
+import com.listenup.individualassignment.dto.vieweditdto.AlbumDTO;
 
 import lombok.Data;
 import lombok.Builder;
@@ -15,5 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ArtistAlbumListDTO {
     private long id;
+    private String name;
     private List<AlbumDTO> albums;
 }

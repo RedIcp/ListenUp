@@ -1,5 +1,5 @@
 CREATE TABLE `album` (
-                         `id` int NOT NULL,
+                         `id` int NOT NULL AUTO_INCREMENT,
                          `name` varchar(45) NOT NULL,
                          `artist_id` int NOT NULL,
                          `released_date` date NOT NULL,

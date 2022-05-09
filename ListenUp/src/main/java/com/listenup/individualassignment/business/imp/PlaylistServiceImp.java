@@ -2,6 +2,12 @@ package com.listenup.individualassignment.business.imp;
 
 import java.util.List;
 
+import com.listenup.individualassignment.business.exception.InvalidPlaylistException;
+import com.listenup.individualassignment.business.imp.dtoconverter.PlaylistDTOConverter;
+import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
+import com.listenup.individualassignment.dto.PlaylistSongListDTO;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistDTO;
+import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
 import com.listenup.individualassignment.model.Playlist;
 import com.listenup.individualassignment.business.PlaylistService;
 import com.listenup.individualassignment.repository.PlaylistRepository;
@@ -16,50 +22,40 @@ import org.springframework.context.annotation.Primary;
 public class PlaylistServiceImp implements PlaylistService {
     private final PlaylistRepository db;
 
-    public boolean addPlaylist(Playlist playlist){
-        boolean result = false;
-        if(!playlistExist(playlist.getId())){
-            getPlaylists().add(playlist);
-            db.save(playlist);
-            result = true;
-        }
-        return result;
-    }
-    public List<Playlist> getPlaylists(){
-        return db.findAll();
-    }
-    public boolean editPlaylist(Playlist playlist){
-        boolean result = false;
-        Playlist old = getPlaylist(playlist.getId());
-        if(old != null){
-            old.setName(playlist.getName());
-            db.save(playlist);
-            result = true;
-        }
-        return result;
-    }
-    public boolean deletePlaylist(long id){
-        boolean result = false;
-        if(playlistExist(id)){
-            getPlaylists().remove(getPlaylist(id));
-            db.delete(getPlaylist(id));
-            result = true;
-        }
-        return result;
+    public CreatePlaylistDTO addPlaylist(CreatePlaylistDTO playlist){
+        db.save(PlaylistDTOConverter.convertToModelForCreate(playlist));
+        return playlist;
     }
 
-    public Playlist getPlaylist(long id){
-        for (Playlist playlist : getPlaylists()){
-            if(playlist.getId() == id){
-                return playlist;
-            }
-        }
-        return null;
+    public List<PlaylistDTO> getPlaylists(){
+        return PlaylistDTOConverter.convertToDTOList(db.findAll());
     }
-    public boolean playlistExist(long id){
-        boolean result = true;
-        if(getPlaylist(id)==null){
-            result = false;
+    public PlaylistSongListDTO getPlaylistSong(long id){
+        return PlaylistDTOConverter.convertToDTOForSong(db.getById(id));
+    }
+
+    public PlaylistDTO editPlaylist(PlaylistDTO playlist){
+        if(!db.existsById(playlist.getId())){
+            throw new InvalidPlaylistException("INVALID_ID");
+        }
+        db.save(PlaylistDTOConverter.convertToModelForUpdate(playlist));
+        return playlist;
+    }
+    public PlaylistSongListDTO editPlaylistSongs(PlaylistSongListDTO playlist){
+        Playlist old = db.getById(playlist.getId());
+        if(!db.existsById(playlist.getId())){
+            throw new InvalidPlaylistException("INVALID_ID");
+        }
+        old.setSongs(SongDTOConverter.convertToSingleSongModelList(playlist.getSongs()));
+        db.save(old);
+        return playlist;
+    }
+
+    public boolean deletePlaylist(long id){
+        boolean result = false;
+        if(db.existsById(id)){
+            db.deleteById(id);
+            result = true;
         }
         return result;
     }

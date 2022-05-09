@@ -3,11 +3,13 @@ package com.listenup.individualassignment.business.imp.dtoconverter;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.listenup.individualassignment.dto.createdto.CreateAlbumSongDTO;
+import com.listenup.individualassignment.dto.createdto.CreateSingleSongDTO;
 import com.listenup.individualassignment.model.Song;
 import com.listenup.individualassignment.model.AlbumSong;
 import com.listenup.individualassignment.model.SingleSong;
-import com.listenup.individualassignment.dto.createupdate.SingleSongDTO;
-import com.listenup.individualassignment.dto.createupdate.AlbumSongDTO;
+import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
+import com.listenup.individualassignment.dto.vieweditdto.AlbumSongDTO;
 
 public class SongDTOConverter {
     private SongDTOConverter(){
@@ -31,11 +33,17 @@ public class SongDTOConverter {
                 .genre(GenreDTOConverter.convertToDTO(song.getGenre()))
                 .build();
     }
-    public static SingleSong convertToSingleSongModel(SingleSongDTO song){
-        return new SingleSong(song.getId(), song.getName(), ArtistDTOConverter.convertToModel(song.getArtist()), GenreDTOConverter.convertToModel(song.getGenre()), song.getReleasedDate(), song.getUploadedDate());
+    public static SingleSong convertToSingleSongModelForUpdate(SingleSongDTO song){
+        return new SingleSong(song.getId(), song.getName(), ArtistDTOConverter.convertToModelForUpdate(song.getArtist()), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), song.getReleasedDate(), song.getUploadedDate());
     }
-    public static AlbumSong convertToAlbumSongModel(AlbumSongDTO song){
-        return new AlbumSong(song.getId(), song.getName(), GenreDTOConverter.convertToModel(song.getGenre()), AlbumDTOConverter.convertToModel(song.getAlbum()));
+    public static SingleSong convertToSingleSongModelForCreate(CreateSingleSongDTO song){
+        return new SingleSong(song.getName(), ArtistDTOConverter.convertToModelForUpdate(song.getArtist()), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), song.getReleasedDate(), song.getUploadedDate());
+    }
+    public static AlbumSong convertToAlbumSongModelForUpdate(AlbumSongDTO song){
+        return new AlbumSong(song.getId(), song.getName(), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), AlbumDTOConverter.convertToModelForUpdate(song.getAlbum()));
+    }
+    public static AlbumSong convertToAlbumSongModelForCreate(CreateAlbumSongDTO song){
+        return new AlbumSong(song.getName(), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), AlbumDTOConverter.convertToModelForUpdate(song.getAlbum()));
     }
     public static List<SingleSongDTO> convertToSingleSongDTOList(List<Song> songs){
         List<SingleSongDTO> dtoList = new ArrayList<>();
@@ -54,14 +62,14 @@ public class SongDTOConverter {
     public static List<Song> convertToSingleSongModelList(List<SingleSongDTO> songs){
         List<Song> songList = new ArrayList<>();
         for (SingleSongDTO songDTO: songs){
-            songList.add(convertToSingleSongModel(songDTO));
+            songList.add(convertToSingleSongModelForUpdate(songDTO));
         }
         return songList;
     }
     public static List<Song> convertToAlbumSongModelList(List<AlbumSongDTO> songs){
         List<Song> songList = new ArrayList<>();
         for (AlbumSongDTO songDTO: songs){
-            songList.add(convertToAlbumSongModel(songDTO));
+            songList.add(convertToAlbumSongModelForUpdate(songDTO));
         }
         return songList;
     }

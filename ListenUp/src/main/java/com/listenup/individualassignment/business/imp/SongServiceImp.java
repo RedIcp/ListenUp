@@ -2,9 +2,11 @@ package com.listenup.individualassignment.business.imp;
 
 import java.util.List;
 
-import com.listenup.individualassignment.model.AlbumSong;
-import com.listenup.individualassignment.model.SingleSong;
-import com.listenup.individualassignment.model.Song;
+import com.listenup.individualassignment.business.exception.InvalidSongException;
+import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumSongDTO;
+import com.listenup.individualassignment.dto.createdto.CreateSingleSongDTO;
+import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 import com.listenup.individualassignment.business.SongService;
 import com.listenup.individualassignment.repository.SongRepository;
 
@@ -18,64 +20,36 @@ import org.springframework.context.annotation.Primary;
 public class SongServiceImp implements SongService {
     private final SongRepository db;
 
-    public boolean addSingleSong(SingleSong song){
-        boolean result = false;
-        if(!songExist(song.getId())){
-            getSongs().add(song);
-            db.save(song);
-            result = true;
-        }
-        return result;
+    public CreateSingleSongDTO addSingleSong(CreateSingleSongDTO song){
+        db.save(SongDTOConverter.convertToSingleSongModelForCreate(song));
+        return song;
     }
 
-    public boolean addAlbumSong(AlbumSong song){
-        boolean result = false;
-        if(!songExist(song.getId())){
-            getSongs().add(song);
-            db.save(song);
-            result = true;
-        }
-        return result;
+    public CreateAlbumSongDTO addAlbumSong(CreateAlbumSongDTO song){
+        db.save(SongDTOConverter.convertToAlbumSongModelForCreate(song));
+        return song;
     }
 
-    public List<Song> getSongs(){
-        return db.findAll();
+    public List<SingleSongDTO> getSongs(){
+        return SongDTOConverter.convertToSingleSongDTOList(db.findAll());
+    }
+    public SingleSongDTO getSong(long id){
+        return SongDTOConverter.convertToSingleSongDTO(db.getById(id));
     }
 
-    public boolean editSong(Song song){
-        boolean result = false;
-        Song old = getSong(song.getId());
-        if(old != null){
-            old.setName(song.getName());
-            old.setGenre(song.getGenre());
-            db.save(song);
-            result = true;
+    public SingleSongDTO editSong(SingleSongDTO song){
+        if(!db.existsById(song.getId())){
+            throw new InvalidSongException("INVALID_ID");
         }
-        return result;
+        db.save(SongDTOConverter.convertToSingleSongModelForUpdate(song));
+        return song;
     }
 
     public boolean deleteSong(long id){
         boolean result = false;
-        if(songExist(id)){
-            getSongs().remove(getSong(id));
-            db.delete(getSong(id));
+        if(db.existsById(id)){
+            db.deleteById(id);
             result = true;
-        }
-        return result;
-    }
-
-    public Song getSong(long id){
-        for(Song song: getSongs()){
-            if(song.getId() == id){
-                return song;
-            }
-        }
-        return null;
-    }
-    public boolean songExist(long id){
-        boolean result = true;
-        if(getSong(id)==null){
-            result = false;
         }
         return result;
     }

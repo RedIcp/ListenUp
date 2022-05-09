@@ -3,9 +3,10 @@ package com.listenup.individualassignment.business.imp.dtoconverter;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.listenup.individualassignment.dto.createdto.CreateGenreDTO;
 import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.dto.GenreSongListDTO;
-import com.listenup.individualassignment.dto.createupdate.GenreDTO;
+import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
 
 public class GenreDTOConverter {
     private GenreDTOConverter(){
@@ -17,15 +18,21 @@ public class GenreDTOConverter {
                 .name(genre.getName())
                 .build();
     }
-    public static Genre convertToModel(GenreDTO genre){
+    public static Genre convertToModelForUpdate(GenreDTO genre){
         return Genre.builder()
                 .id(genre.getId())
+                .name(genre.getName())
+                .build();
+    }
+    public static Genre convertToModelForCreate(CreateGenreDTO genre){
+        return Genre.builder()
                 .name(genre.getName())
                 .build();
     }
     public static GenreSongListDTO convertToDTOForSong(Genre genre){
         return GenreSongListDTO.builder()
                 .id(genre.getId())
+                .name(genre.getName())
                 .songs(SongDTOConverter.convertToSingleSongDTOList(genre.getSongs()))
                 .build();
     }

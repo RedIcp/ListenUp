@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @Table(name = "admin")
 public class Admin extends  User{
+    public Admin(String username, String email, String password){
+        super(username, email, password);
+    }
     public Admin(long id, String username, String email, String password){
         super(id, username, email, password);
     }

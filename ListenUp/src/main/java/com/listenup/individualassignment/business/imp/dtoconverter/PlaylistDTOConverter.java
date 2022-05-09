@@ -3,9 +3,10 @@ package com.listenup.individualassignment.business.imp.dtoconverter;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistDTO;
 import com.listenup.individualassignment.model.Playlist;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
-import com.listenup.individualassignment.dto.createupdate.PlaylistDTO;
+import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
 
 public class PlaylistDTOConverter {
     private PlaylistDTOConverter(){
@@ -18,16 +19,23 @@ public class PlaylistDTOConverter {
                 .customer(CustomerDTOConverter.convertToDTO(playlist.getCustomer()))
                 .build();
     }
-    public static Playlist convertToModel(PlaylistDTO playlist){
+    public static Playlist convertToModelForUpdate(PlaylistDTO playlist){
         return Playlist.builder()
                 .id(playlist.getId())
                 .name(playlist.getName())
-                .customer(CustomerDTOConverter.convertToModel(playlist.getCustomer()))
+                .customer(CustomerDTOConverter.convertToModelForUpdate(playlist.getCustomer()))
+                .build();
+    }
+    public static Playlist convertToModelForCreate(CreatePlaylistDTO playlist){
+        return Playlist.builder()
+                .name(playlist.getName())
+                .customer(CustomerDTOConverter.convertToModelForUpdate(playlist.getCustomer()))
                 .build();
     }
     public static PlaylistSongListDTO convertToDTOForSong(Playlist playlist){
         return PlaylistSongListDTO.builder()
                 .id(playlist.getId())
+                .name(playlist.getName())
                 .songs(SongDTOConverter.convertToSingleSongDTOList(playlist.getSongs()))
                 .build();
     }
@@ -37,5 +45,12 @@ public class PlaylistDTOConverter {
             dtoList.add(convertToDTO(playlist));
         }
         return dtoList;
+    }
+    public static List<Playlist> convertToModelList(List<PlaylistDTO> playlists){
+        List<Playlist> playlistList = new ArrayList<>();
+        for (PlaylistDTO playlistDTO : playlists){
+            playlistList.add(convertToModelForUpdate(playlistDTO));
+        }
+        return playlistList;
     }
 }

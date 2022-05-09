@@ -2,7 +2,7 @@ package com.listenup.individualassignment.dto;
 
 import java.util.List;
 
-import com.listenup.individualassignment.dto.createupdate.SingleSongDTO;
+import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 
 import lombok.Data;
 import lombok.Builder;

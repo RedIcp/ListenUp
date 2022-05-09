@@ -1,19 +1,19 @@
 package com.listenup.individualassignment.controller;
 
-import java.net.URI;
 import java.util.List;
 
+import com.listenup.individualassignment.dto.createdto.CreateAlbumDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.listenup.individualassignment.model.Album;
 import com.listenup.individualassignment.dto.AlbumSongListDTO;
 import com.listenup.individualassignment.business.AlbumService;
-import com.listenup.individualassignment.dto.createupdate.AlbumDTO;
-import com.listenup.individualassignment.business.imp.dtoconverter.AlbumDTOConverter;
+import com.listenup.individualassignment.dto.vieweditdto.AlbumDTO;
 
 import lombok.RequiredArgsConstructor;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public class AlbumController {
 
     @GetMapping
     public ResponseEntity<List<AlbumDTO>> getAllAlbums() {
-        List<AlbumDTO> albums = AlbumDTOConverter.convertToDTOList(management.getAlbums());
+        List<AlbumDTO> albums = management.getAlbums();
 
         if(albums != null) {
             return ResponseEntity.ok().body(albums);
@@ -33,8 +33,8 @@ public class AlbumController {
         }
     }
     @GetMapping("{id}")
-    public ResponseEntity<AlbumSongListDTO> getAlbumPath(@PathVariable(value = "id") int id) {
-        AlbumSongListDTO album = AlbumDTOConverter.convertToDTOForSong(management.getAlbum(id));
+    public ResponseEntity<AlbumSongListDTO> getAlbumPath(@PathVariable(value = "id") long id) {
+        AlbumSongListDTO album = management.getAlbumSongs(id);
 
         if(album != null) {
             return ResponseEntity.ok().body(album);
@@ -43,27 +43,18 @@ public class AlbumController {
         }
     }
     @PostMapping()
-    public ResponseEntity<AlbumDTO> createAlbum(@RequestBody AlbumDTO albumDTO) {
-        Album album = AlbumDTOConverter.convertToModel(albumDTO);
-        if (!management.addAlbum(album)){
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        } else {
-            String url = "Album" + "/" + albumDTO.getId();
-            URI uri = URI.create(url);
-            return ResponseEntity.created(uri).body(albumDTO);
-        }
+    public ResponseEntity<CreateAlbumDTO> createAlbum(@RequestBody @Valid CreateAlbumDTO albumDTO) {
+        CreateAlbumDTO album = management.addAlbum(albumDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(album);
     }
-    @PutMapping()
-    public ResponseEntity<AlbumDTO> updateAlbum(@RequestBody AlbumDTO albumDTO) {
-        Album album = AlbumDTOConverter.convertToModel(albumDTO);
-        if (management.editAlbum(album)) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
+    @PutMapping("{id}")
+    public ResponseEntity<AlbumDTO> updateAlbum(@PathVariable("id") long id, @RequestBody @Valid AlbumDTO albumDTO) {
+        albumDTO.setId(id);
+        management.editAlbum(albumDTO);
+        return ResponseEntity.noContent().build();
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<Object> deleteAlbum(@PathVariable int id) {
+    public ResponseEntity<Object> deleteAlbum(@PathVariable long id) {
         management.deleteAlbum(id);
         return ResponseEntity.ok().build();
     }

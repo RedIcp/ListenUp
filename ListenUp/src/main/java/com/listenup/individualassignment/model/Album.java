@@ -3,21 +3,21 @@ package com.listenup.individualassignment.model;
 import lombok.*;
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
 import javax.persistence.*;
 
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 @Data
-@Builder
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "album")
 public class Album {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotNull
@@ -30,11 +30,7 @@ public class Album {
     @JoinColumn(name = "artist_id")
     private Artist artist;
 
-    @OneToMany
-    @JoinTable(
-            name = "album_song",
-            joinColumns = @JoinColumn(name = "album_id"),
-            inverseJoinColumns = @JoinColumn(name = "id"))
+    @OneToMany(mappedBy = "album")
     private List<AlbumSong> albumSongs;
 
     @Column(name = "released_date")
@@ -42,14 +38,4 @@ public class Album {
 
     @Column(name = "uploaded_date")
     private Date uploadedDate;
-
-    public Album(long id, String name, Artist artist, Date releasedDate, Date uploadedDate){
-        this.id = id;
-        this.name = name;
-        this.artist = artist;
-        this.releasedDate = releasedDate;
-        this.uploadedDate = uploadedDate;
-
-        this.albumSongs = new ArrayList<>();
-    }
 }
