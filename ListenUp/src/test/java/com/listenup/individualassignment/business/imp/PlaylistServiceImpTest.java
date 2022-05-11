@@ -5,7 +5,8 @@ import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOCo
 import com.listenup.individualassignment.business.imp.dtoconverter.PlaylistDTOConverter;
 import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreatePlaylistDTO;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
 import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
@@ -20,7 +21,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,12 +50,16 @@ class PlaylistServiceImpTest {
 
         when(repository.save(playlist)).thenReturn(savedPlaylist);
 
-        CreatePlaylistDTO expectedDTO = CreatePlaylistDTO.builder()
+        CreatePlaylistRequestDTO dto = CreatePlaylistRequestDTO.builder()
                 .name("Chill")
-                .customer(CustomerDTOConverter.convertToDTO(customer))
+                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();
 
-        CreatePlaylistDTO actualDTO = service.addPlaylist(expectedDTO);
+        CreatePlaylistResponseDTO expectedDTO = CreatePlaylistResponseDTO.builder()
+                .playlistID(1l)
+                .build();
+
+        CreatePlaylistResponseDTO actualDTO = service.addPlaylist(dto);
 
         assertEquals(actualDTO, expectedDTO);
 
@@ -115,7 +119,7 @@ class PlaylistServiceImpTest {
         PlaylistDTO updateDTO = PlaylistDTO.builder()
                 .id(1l)
                 .name("Workout")
-                .customer(CustomerDTOConverter.convertToDTO(customer))
+                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();
 
         service.editPlaylist(updateDTO);
@@ -138,7 +142,7 @@ class PlaylistServiceImpTest {
         PlaylistDTO updateDTO = PlaylistDTO.builder()
                 .id(1l)
                 .name("Workout")
-                .customer(CustomerDTOConverter.convertToDTO(customer))
+                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();
 
         InvalidPlaylistException exception = assertThrows(InvalidPlaylistException.class, () -> service.editPlaylist(updateDTO));

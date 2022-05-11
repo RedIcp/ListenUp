@@ -4,7 +4,8 @@ import com.listenup.individualassignment.business.exception.InvalidArtistExcepti
 import com.listenup.individualassignment.business.imp.dtoconverter.ArtistDTOConverter;
 import com.listenup.individualassignment.dto.ArtistAlbumListDTO;
 import com.listenup.individualassignment.dto.ArtistSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateArtistDTO;
+import com.listenup.individualassignment.dto.createdto.CreateArtistRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateArtistResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
 import com.listenup.individualassignment.model.Artist;
 import com.listenup.individualassignment.repository.ArtistRepository;
@@ -40,11 +41,15 @@ class ArtistServiceImpTest {
 
         when(repository.save(artist)).thenReturn(savedArtist);
 
-        CreateArtistDTO expectedDTO = CreateArtistDTO.builder()
+        CreateArtistRequestDTO dto = CreateArtistRequestDTO.builder()
                 .name("Maroon 5")
                 .build();
 
-        CreateArtistDTO actualDTO = service.addArtist(expectedDTO);
+        CreateArtistResponseDTO expectedDTO = CreateArtistResponseDTO.builder()
+                .artistID(1l)
+                .build();
+
+        CreateArtistResponseDTO actualDTO = service.addArtist(dto);
 
         assertEquals(actualDTO, expectedDTO);
 

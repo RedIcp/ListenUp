@@ -3,7 +3,7 @@ package com.listenup.individualassignment.business.imp.dtoconverter;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.listenup.individualassignment.dto.createdto.CreateGenreDTO;
+import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
 import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.dto.GenreSongListDTO;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
@@ -24,7 +24,7 @@ public class GenreDTOConverter {
                 .name(genre.getName())
                 .build();
     }
-    public static Genre convertToModelForCreate(CreateGenreDTO genre){
+    public static Genre convertToModelForCreate(CreateGenreRequestDTO genre){
         return Genre.builder()
                 .name(genre.getName())
                 .build();

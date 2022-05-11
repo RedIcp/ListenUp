@@ -12,7 +12,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateAlbumDTO {
+public class CreateAlbumRequestDTO {
     private String name;
     private ArtistDTO artist;
     private Date releasedDate;

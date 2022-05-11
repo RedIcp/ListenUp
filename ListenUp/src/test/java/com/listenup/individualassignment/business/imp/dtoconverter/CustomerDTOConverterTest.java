@@ -3,8 +3,9 @@ package com.listenup.individualassignment.business.imp.dtoconverter;
 import com.listenup.individualassignment.dto.CustomerLikedPlaylistListDTO;
 import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
 import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateUserDTO;
-import com.listenup.individualassignment.dto.vieweditdto.UserDTO;
+import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
+import com.listenup.individualassignment.dto.vieweditdto.UpdateUserDTO;
+import com.listenup.individualassignment.dto.vieweditdto.ViewUserDTO;
 import com.listenup.individualassignment.model.Admin;
 import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.model.User;
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerDTOConverterTest {
     Customer expectedModel = new Customer(1l, "Yellow", "yellow@gmail.com", "123Yellow");
 
-    UserDTO expectedDTO = UserDTO.builder()
+    UpdateUserDTO expectedDTO = UpdateUserDTO.builder()
             .id(1l)
             .username("Yellow")
             .email("yellow@gmail.com")
@@ -27,8 +28,21 @@ class CustomerDTOConverterTest {
             .build();
 
     @Test
-    void convertToDTO() {
-        UserDTO actualDTO = CustomerDTOConverter.convertToDTO(expectedModel);
+    void convertToDTOForUpdate() {
+        UpdateUserDTO actualDTO = CustomerDTOConverter.convertToDTOForUpdate(expectedModel);
+
+        assertEquals(actualDTO, expectedDTO);
+    }
+
+    @Test
+    void convertToDTOForView() {
+        ViewUserDTO expectedDTO = ViewUserDTO.builder()
+                .id(1l)
+                .username("Yellow")
+                .email("yellow@gmail.com")
+                .build();
+
+        ViewUserDTO actualDTO = CustomerDTOConverter.convertToDTOForView(expectedModel);
 
         assertEquals(actualDTO, expectedDTO);
     }
@@ -42,7 +56,7 @@ class CustomerDTOConverterTest {
 
     @Test
     void convertToModelForCreate() {
-        CreateUserDTO dto = CreateUserDTO.builder()
+        CreateUserRequestDTO dto = CreateUserRequestDTO.builder()
                 .username("Yellow")
                 .email("yellow@gmail.com")
                 .password("123Yellow")
@@ -102,12 +116,14 @@ class CustomerDTOConverterTest {
         List<User> users = new ArrayList<>();
         users.add(user1);
         users.add(user2);
+        users.add(user3);
 
-        List<UserDTO> expectedList = new ArrayList<>();
-        expectedList.add(CustomerDTOConverter.convertToDTO(user1));
-        expectedList.add(CustomerDTOConverter.convertToDTO(user2));
+        List<ViewUserDTO> expectedList = new ArrayList<>();
+        expectedList.add(CustomerDTOConverter.convertToDTOForView(user1));
+        expectedList.add(CustomerDTOConverter.convertToDTOForView(user2));
+        expectedList.add(CustomerDTOConverter.convertToDTOForView(user3));
 
-        List<UserDTO> actualList = CustomerDTOConverter.convertToDTOList(users);
+        List<ViewUserDTO> actualList = CustomerDTOConverter.convertToDTOList(users);
 
         assertEquals(actualList, expectedList);
     }

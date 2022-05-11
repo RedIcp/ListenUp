@@ -2,7 +2,8 @@ package com.listenup.individualassignment.controller;
 
 import java.util.List;
 
-import com.listenup.individualassignment.dto.createdto.CreatePlaylistDTO;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +44,8 @@ public class PlaylistController {
         }
     }
     @PostMapping()
-    public ResponseEntity<CreatePlaylistDTO> createPlaylist(@RequestBody @Valid CreatePlaylistDTO playlistDTO) {
-        CreatePlaylistDTO playlist = management.addPlaylist(playlistDTO);
+    public ResponseEntity<CreatePlaylistResponseDTO> createPlaylist(@RequestBody @Valid CreatePlaylistRequestDTO playlistDTO) {
+        CreatePlaylistResponseDTO playlist = management.addPlaylist(playlistDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(playlist);
     }
     @PutMapping("{id}/songs")

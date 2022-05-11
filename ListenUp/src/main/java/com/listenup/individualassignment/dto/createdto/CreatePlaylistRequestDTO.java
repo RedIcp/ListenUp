@@ -1,7 +1,6 @@
 package com.listenup.individualassignment.dto.createdto;
 
-import com.listenup.individualassignment.dto.vieweditdto.AlbumDTO;
-import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
+import com.listenup.individualassignment.dto.vieweditdto.UpdateUserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateAlbumSongDTO {
+public class CreatePlaylistRequestDTO {
     private String name;
-    private GenreDTO genre;
-    private AlbumDTO album;
+    private UpdateUserDTO customer;
 }

@@ -1,14 +1,13 @@
 package com.listenup.individualassignment.business.imp.dtoconverter;
 
-import com.listenup.individualassignment.dto.createdto.CreateAlbumSongDTO;
-import com.listenup.individualassignment.dto.createdto.CreateSingleSongDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumSongRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDTO;
 import com.listenup.individualassignment.dto.vieweditdto.AlbumSongDTO;
 import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 import com.listenup.individualassignment.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -75,7 +74,7 @@ class SongDTOConverterTest {
 
     @Test
     void convertToSingleSongModelForCreate() {
-        CreateSingleSongDTO dto = CreateSingleSongDTO.builder()
+        CreateSingleSongRequestDTO dto = CreateSingleSongRequestDTO.builder()
                 .name("Sugar")
                 .genre(GenreDTOConverter.convertToDTO(genre))
                 .artist(ArtistDTOConverter.convertToDTO(artist))
@@ -98,7 +97,7 @@ class SongDTOConverterTest {
 
     @Test
     void convertToAlbumSongModelForCreate() {
-        CreateAlbumSongDTO dto = CreateAlbumSongDTO.builder()
+        CreateAlbumSongRequestDTO dto = CreateAlbumSongRequestDTO.builder()
                 .name("Map")
                 .album(AlbumDTOConverter.convertToDTO(album))
                 .genre(GenreDTOConverter.convertToDTO(genre))

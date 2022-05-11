@@ -2,7 +2,7 @@ package com.listenup.individualassignment.business.imp.dtoconverter;
 
 import com.listenup.individualassignment.dto.ArtistAlbumListDTO;
 import com.listenup.individualassignment.dto.ArtistSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateArtistDTO;
+import com.listenup.individualassignment.dto.createdto.CreateArtistRequestDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
 import com.listenup.individualassignment.model.Artist;
 import org.junit.jupiter.api.Test;
@@ -44,7 +44,7 @@ class ArtistDTOConverterTest {
 
     @Test
     void convertToModelForCreate() {
-        CreateArtistDTO dto = CreateArtistDTO.builder()
+        CreateArtistRequestDTO dto = CreateArtistRequestDTO.builder()
                 .name("Maroon 5")
                 .build();
 

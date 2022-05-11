@@ -1,19 +1,16 @@
 package com.listenup.individualassignment.dto.vieweditdto;
 
-import lombok.Data;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import javax.validation.constraints.Email;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+public class ViewUserDTO {
     private long id;
     private String username;
-    @Email
     private String email;
-    private String password;
 }

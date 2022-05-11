@@ -13,7 +13,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateSingleSongDTO {
+public class CreateSingleSongRequestDTO {
     private String name;
     private ArtistDTO artist;
     private GenreDTO genre;

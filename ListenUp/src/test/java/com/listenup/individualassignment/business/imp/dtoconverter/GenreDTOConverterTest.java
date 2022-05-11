@@ -1,7 +1,7 @@
 package com.listenup.individualassignment.business.imp.dtoconverter;
 
 import com.listenup.individualassignment.dto.GenreSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateGenreDTO;
+import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
 import com.listenup.individualassignment.model.Genre;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ class GenreDTOConverterTest {
 
     @Test
     void convertToModelForCreate() {
-        CreateGenreDTO dto = CreateGenreDTO.builder()
+        CreateGenreRequestDTO dto = CreateGenreRequestDTO.builder()
                 .name("Pop")
                 .build();
 

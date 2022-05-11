@@ -8,7 +8,8 @@ import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConver
 import com.listenup.individualassignment.dto.CustomerLikedPlaylistListDTO;
 import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
 import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateUserDTO;
+import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.*;
 import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.repository.UserRepository;
@@ -42,13 +43,17 @@ class UserServiceImpTest {
         when(repository.existsByEmail("yellow@gmail.com")).thenReturn(false);
         when(repository.save(customer)).thenReturn(savedCustomer);
 
-        CreateUserDTO expectedDTO = CreateUserDTO.builder()
+        CreateUserRequestDTO dto = CreateUserRequestDTO.builder()
                 .username("Yellow")
                 .email("yellow@gmail.com")
                 .password("123Yellow")
                 .build();
 
-        CreateUserDTO actualDTO = service.createAccount(expectedDTO);
+        CreateUserResponseDTO expectedDTO = CreateUserResponseDTO.builder()
+                .userID(1l)
+                .build();
+
+        CreateUserResponseDTO actualDTO = service.createAccount(dto);
 
         assertEquals(actualDTO, expectedDTO);
 
@@ -60,7 +65,7 @@ class UserServiceImpTest {
     void createAccountInvalidEmail() {
         when(repository.existsByEmail("yellow@gmail.com")).thenReturn(true);
 
-        CreateUserDTO expectedDTO = CreateUserDTO.builder()
+        CreateUserRequestDTO expectedDTO = CreateUserRequestDTO.builder()
                 .username("Yellow")
                 .email("yellow@gmail.com")
                 .password("123Yellow")
@@ -80,10 +85,10 @@ class UserServiceImpTest {
 
         when(repository.findAll()).thenReturn(List.of(customer));
 
-        List<UserDTO> expectedList = new ArrayList<>();
-        expectedList.add(CustomerDTOConverter.convertToDTO(customer));
+        List<ViewUserDTO> expectedList = new ArrayList<>();
+        expectedList.add(CustomerDTOConverter.convertToDTOForView(customer));
 
-        List<UserDTO> actualList = service.getUsers();
+        List<ViewUserDTO> actualList = service.getUsers();
 
         assertEquals(actualList, expectedList);
     }
@@ -94,14 +99,14 @@ class UserServiceImpTest {
 
         when(repository.getById(1l)).thenReturn(customer);
 
-        UserDTO expectedDTO = UserDTO.builder()
+        UpdateUserDTO expectedDTO = UpdateUserDTO.builder()
                 .id(1l)
                 .username("Yellow")
                 .email("yellow@gmail.com")
                 .password("123Yellow")
                 .build();
 
-        UserDTO actualDTO = service.getUser(1l);
+        UpdateUserDTO actualDTO = service.getUser(1l);
 
         assertEquals(actualDTO, expectedDTO);
     }
@@ -162,7 +167,7 @@ class UserServiceImpTest {
         when(repository.existsById(1l)).thenReturn(true);
         when(repository.existsByEmail("blue@gmail.com")).thenReturn(false);
 
-        UserDTO updateDTO = UserDTO.builder()
+        UpdateUserDTO updateDTO = UpdateUserDTO.builder()
                 .id(1l)
                 .username("Blue")
                 .email("blue@gmail.com")
@@ -184,7 +189,7 @@ class UserServiceImpTest {
         when(repository.getById(1l)).thenReturn(beforeUpdateCustomer);
         when(repository.existsById(1l)).thenReturn(true);
 
-        UserDTO updateDTO = UserDTO.builder()
+        UpdateUserDTO updateDTO = UpdateUserDTO.builder()
                 .id(1l)
                 .username("Blue")
                 .email("yellow@gmail.com")
@@ -202,7 +207,7 @@ class UserServiceImpTest {
     void updateAccountInvalidID() {
         when(repository.existsById(1l)).thenReturn(false);
 
-        UserDTO updateDTO = UserDTO.builder()
+        UpdateUserDTO updateDTO = UpdateUserDTO.builder()
                 .id(1l)
                 .username("Blue")
                 .email("blue@gmail.com")
@@ -225,7 +230,7 @@ class UserServiceImpTest {
         when(repository.existsByEmail("blue@gmail.com")).thenReturn(true);
         when(repository.existsById(1l)).thenReturn(true);
 
-        UserDTO updateDTO = UserDTO.builder()
+        UpdateUserDTO updateDTO = UpdateUserDTO.builder()
                 .id(1l)
                 .username("Blue")
                 .email("blue@gmail.com")
@@ -307,7 +312,7 @@ class UserServiceImpTest {
 
         PlaylistDTO playlist = PlaylistDTO.builder()
                 .id(1l)
-                .customer(CustomerDTOConverter.convertToDTO(customer))
+                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .name("Chill")
                 .build();
 

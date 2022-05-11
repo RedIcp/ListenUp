@@ -4,9 +4,10 @@ import com.listenup.individualassignment.business.UserService;
 import com.listenup.individualassignment.dto.CustomerLikedPlaylistListDTO;
 import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
 import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateUserDTO;
-import com.listenup.individualassignment.dto.vieweditdto.UserDTO;
-import com.listenup.individualassignment.model.Customer;
+import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
+import com.listenup.individualassignment.dto.vieweditdto.UpdateUserDTO;
+import com.listenup.individualassignment.dto.vieweditdto.ViewUserDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -38,14 +38,13 @@ class UserControllerTest {
 
     @Test
     void getAllUsers() throws Exception{
-        UserDTO user = UserDTO.builder()
+        ViewUserDTO user = ViewUserDTO.builder()
                 .id(1l)
                 .username("Blue")
                 .email("blue@gmail.com")
-                .password("123Blue")
                 .build();
 
-        List<UserDTO> users = new ArrayList<>();
+        List<ViewUserDTO> users = new ArrayList<>();
         users.add(user);
 
         when(service.getUsers()).thenReturn(users);
@@ -59,8 +58,7 @@ class UserControllerTest {
                                 {
                                         "id": 1,
                                         "username": "Blue",
-                                        "email": "blue@gmail.com",
-                                        "password": "123Blue"                   
+                                        "email": "blue@gmail.com"       
                                 }
                             ]                          
                         """));
@@ -81,7 +79,7 @@ class UserControllerTest {
 
     @Test
     void getUserPath() throws Exception{
-        UserDTO user = UserDTO.builder()
+        UpdateUserDTO user = UpdateUserDTO.builder()
                 .id(1l)
                 .username("Blue")
                 .email("blue@gmail.com")
@@ -221,13 +219,17 @@ class UserControllerTest {
 
     @Test
     void createUser() throws Exception{
-        CreateUserDTO user = CreateUserDTO.builder()
+        CreateUserRequestDTO user = CreateUserRequestDTO.builder()
                 .username("Yellow")
                 .email("yellow@gmail.com")
                 .password("123Yellow")
                 .build();
 
-        when(service.createAccount(user)).thenReturn(user);
+        CreateUserResponseDTO response = CreateUserResponseDTO.builder()
+                .userID(1l)
+                .build();
+
+        when(service.createAccount(user)).thenReturn(response);
 
         mockMvc.perform(post("/users/signup")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -242,9 +244,7 @@ class UserControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().json("""
                             {
-                                        "username": "Yellow",
-                                        "email": "yellow@gmail.com",
-                                        "password": "123Yellow"                   
+                                        "userID": 1               
                             }  
                         """));
 
@@ -266,7 +266,7 @@ class UserControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        UserDTO user = UserDTO.builder()
+        UpdateUserDTO user = UpdateUserDTO.builder()
                 .id(1l)
                 .username("Yellow")
                 .email("yellow@gmail.com")

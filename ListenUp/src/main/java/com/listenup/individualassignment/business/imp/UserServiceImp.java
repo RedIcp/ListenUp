@@ -10,8 +10,10 @@ import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConver
 import com.listenup.individualassignment.dto.CustomerLikedPlaylistListDTO;
 import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
 import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateUserDTO;
-import com.listenup.individualassignment.dto.vieweditdto.UserDTO;
+import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
+import com.listenup.individualassignment.dto.vieweditdto.UpdateUserDTO;
+import com.listenup.individualassignment.dto.vieweditdto.ViewUserDTO;
 import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.model.User;
 import com.listenup.individualassignment.business.UserService;
@@ -29,18 +31,20 @@ public class UserServiceImp implements UserService {
 
     String error = "INVALID_ID";
 
-    public CreateUserDTO createAccount(CreateUserDTO user){
+    public CreateUserResponseDTO createAccount(CreateUserRequestDTO user){
         if(db.existsByEmail(user.getEmail())){
             throw new InvalidCustomerEmailException("EMAIL_EXIST");
         }
-        db.save(CustomerDTOConverter.convertToModelForCreate(user));
-        return user;
+        User savedUser = db.save(CustomerDTOConverter.convertToModelForCreate(user));
+        return CreateUserResponseDTO.builder()
+                .userID(savedUser.getId())
+                .build();
     }
 
-    public List<UserDTO> getUsers(){
+    public List<ViewUserDTO> getUsers(){
         return CustomerDTOConverter.convertToDTOList(db.findAll());
     }
-    public UserDTO getUser(long id){ return CustomerDTOConverter.convertToDTO(db.getById(id)); }
+    public UpdateUserDTO getUser(long id){ return CustomerDTOConverter.convertToDTOForUpdate(db.getById(id)); }
     public CustomerLikedSongListDTO getCustomerCollection(long id){
         return CustomerDTOConverter.convertToDTOForLikedSong((Customer) db.getById(id));
     }
@@ -51,7 +55,7 @@ public class UserServiceImp implements UserService {
         return CustomerDTOConverter.convertToDTOForLikedPlaylist((Customer) db.getById(id));
     }
 
-    public UserDTO updateAccount(UserDTO user){
+    public UpdateUserDTO updateAccount(UpdateUserDTO user){
         User old = db.getById(user.getId());
         if(!db.existsById(user.getId())){
             throw new InvalidCustomerException(error);

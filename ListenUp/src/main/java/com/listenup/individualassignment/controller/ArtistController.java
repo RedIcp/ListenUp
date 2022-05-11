@@ -2,7 +2,8 @@ package com.listenup.individualassignment.controller;
 
 import java.util.List;
 
-import com.listenup.individualassignment.dto.createdto.CreateArtistDTO;
+import com.listenup.individualassignment.dto.createdto.CreateArtistRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateArtistResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,8 +55,8 @@ public class  ArtistController {
         }
     }
     @PostMapping()
-    public ResponseEntity<CreateArtistDTO> createArtist(@RequestBody @Valid CreateArtistDTO artistDTO) {
-        CreateArtistDTO artist = management.addArtist(artistDTO);
+    public ResponseEntity<CreateArtistResponseDTO> createArtist(@RequestBody @Valid CreateArtistRequestDTO artistDTO) {
+        CreateArtistResponseDTO artist = management.addArtist(artistDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(artist);
     }
     @PutMapping("{id}")

@@ -3,10 +3,10 @@ package com.listenup.individualassignment.controller;
 import com.listenup.individualassignment.business.PlaylistService;
 import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverter;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreatePlaylistDTO;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
 import com.listenup.individualassignment.model.Customer;
-import com.listenup.individualassignment.model.Playlist;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -43,12 +42,12 @@ class PlaylistControllerTest {
         PlaylistDTO playlist1 = PlaylistDTO.builder()
                 .id(1l)
                 .name("Chill")
-                .customer(CustomerDTOConverter.convertToDTO(customer))
+                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();
         PlaylistDTO playlist2 = PlaylistDTO.builder()
                 .id(2l)
                 .name("Workout")
-                .customer(CustomerDTOConverter.convertToDTO(customer))
+                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();
 
         List<PlaylistDTO> playlists = new ArrayList<>();
@@ -138,12 +137,16 @@ class PlaylistControllerTest {
 
     @Test
     void createPlaylist() throws Exception{
-        CreatePlaylistDTO playlist = CreatePlaylistDTO.builder()
+        CreatePlaylistRequestDTO playlist = CreatePlaylistRequestDTO.builder()
                 .name("Chill")
-                .customer(CustomerDTOConverter.convertToDTO(customer))
+                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();
 
-        when(service.addPlaylist(playlist)).thenReturn(playlist);
+        CreatePlaylistResponseDTO response = CreatePlaylistResponseDTO.builder()
+                .playlistID(1l)
+                .build();
+
+        when(service.addPlaylist(playlist)).thenReturn(response);
 
         mockMvc.perform(post("/playlists")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -162,13 +165,7 @@ class PlaylistControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().json("""
                             {
-                                        "name": "Chill",
-                                        "customer": {
-                                            "id": 1,
-                                            "username": "Yellow",
-                                            "email": "yellow@gmail.com",
-                                            "password": "123Yellow" 
-                                    }  
+                                        "playlistID": 1  
                             }
                         """));
 
@@ -220,7 +217,7 @@ class PlaylistControllerTest {
         PlaylistDTO playlist = PlaylistDTO.builder()
                 .id(1l)
                 .name("Chill")
-                .customer(CustomerDTOConverter.convertToDTO(customer))
+                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();
 
         verify(service).editPlaylist(playlist);

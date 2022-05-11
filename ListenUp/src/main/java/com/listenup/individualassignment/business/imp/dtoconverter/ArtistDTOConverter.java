@@ -3,7 +3,7 @@ package com.listenup.individualassignment.business.imp.dtoconverter;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.listenup.individualassignment.dto.createdto.CreateArtistDTO;
+import com.listenup.individualassignment.dto.createdto.CreateArtistRequestDTO;
 import com.listenup.individualassignment.model.Artist;
 import com.listenup.individualassignment.dto.ArtistSongListDTO;
 import com.listenup.individualassignment.dto.ArtistAlbumListDTO;
@@ -25,7 +25,7 @@ public class ArtistDTOConverter {
                 .name(artist.getName())
                 .build();
     }
-    public static Artist convertToModelForCreate(CreateArtistDTO artist){
+    public static Artist convertToModelForCreate(CreateArtistRequestDTO artist){
         return Artist.builder()
                 .name(artist.getName())
                 .build();

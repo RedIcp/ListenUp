@@ -2,8 +2,8 @@ package com.listenup.individualassignment.controller;
 
 import com.listenup.individualassignment.business.GenreService;
 import com.listenup.individualassignment.dto.GenreSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateGenreDTO;
-import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
+import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateGenreResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -120,11 +119,15 @@ class GenreControllerTest {
 
     @Test
     void createGenre() throws Exception{
-        CreateGenreDTO genre = CreateGenreDTO.builder()
+        CreateGenreRequestDTO genre = CreateGenreRequestDTO.builder()
                 .name("Pop")
                 .build();
 
-        when(service.addGenre(genre)).thenReturn(genre);
+        CreateGenreResponseDTO response = CreateGenreResponseDTO.builder()
+                .genreID(1l)
+                .build();
+
+        when(service.addGenre(genre)).thenReturn(response);
 
         mockMvc.perform(post("/genres")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -137,7 +140,7 @@ class GenreControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().json("""
                             {
-                                        "name": "Pop"
+                                        "genreID": 1
                             }
                         """));
 

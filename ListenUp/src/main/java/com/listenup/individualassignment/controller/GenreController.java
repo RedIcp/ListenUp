@@ -2,7 +2,8 @@ package com.listenup.individualassignment.controller;
 
 import java.util.List;
 
-import com.listenup.individualassignment.dto.createdto.CreateGenreDTO;
+import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateGenreResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +44,8 @@ public class GenreController {
         }
     }
     @PostMapping()
-    public ResponseEntity<CreateGenreDTO> createGenre(@RequestBody @Valid CreateGenreDTO genreDTO) {
-        CreateGenreDTO genre = management.addGenre(genreDTO);
+    public ResponseEntity<CreateGenreResponseDTO> createGenre(@RequestBody @Valid CreateGenreRequestDTO genreDTO) {
+        CreateGenreResponseDTO genre = management.addGenre(genreDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(genre);
     }
     @PutMapping("{id}")

@@ -3,13 +3,15 @@ package com.listenup.individualassignment.controller;
 import java.util.List;
 
 import com.listenup.individualassignment.dto.CustomerLikedPlaylistListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateUserDTO;
+import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
+import com.listenup.individualassignment.dto.vieweditdto.ViewUserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.listenup.individualassignment.business.UserService;
-import com.listenup.individualassignment.dto.vieweditdto.UserDTO;
+import com.listenup.individualassignment.dto.vieweditdto.UpdateUserDTO;
 import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
 import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
 
@@ -25,8 +27,8 @@ public class UserController {
     private final UserService management;
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> users = management.getUsers();
+    public ResponseEntity<List<ViewUserDTO>> getAllUsers() {
+        List<ViewUserDTO> users = management.getUsers();
 
         if(users != null) {
             return ResponseEntity.ok().body(users);
@@ -35,8 +37,8 @@ public class UserController {
         }
     }
     @GetMapping("{id}/profile")
-    public ResponseEntity<UserDTO> getUserPath(@PathVariable(value = "id") long id) {
-        UserDTO dto = management.getUser(id);
+    public ResponseEntity<UpdateUserDTO> getUserPath(@PathVariable(value = "id") long id) {
+        UpdateUserDTO dto = management.getUser(id);
         if(dto != null) {
             return ResponseEntity.ok().body(dto);
         } else {
@@ -71,12 +73,12 @@ public class UserController {
         }
     }
     @PostMapping("/signup")
-    public ResponseEntity<CreateUserDTO> createUser(@RequestBody @Valid CreateUserDTO userDTO) {
-        CreateUserDTO user = management.createAccount(userDTO);
+    public ResponseEntity<CreateUserResponseDTO> createUser(@RequestBody @Valid CreateUserRequestDTO userDTO) {
+        CreateUserResponseDTO user = management.createAccount(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
     @PutMapping("{id}/profile")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") long id, @RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<UpdateUserDTO> updateUser(@PathVariable("id") long id, @RequestBody @Valid UpdateUserDTO userDTO) {
         userDTO.setId(id);
         management.updateAccount(userDTO);
         return ResponseEntity.noContent().build();

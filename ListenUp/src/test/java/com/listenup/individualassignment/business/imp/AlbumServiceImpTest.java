@@ -4,7 +4,8 @@ import com.listenup.individualassignment.business.exception.InvalidAlbumExceptio
 import com.listenup.individualassignment.business.imp.dtoconverter.AlbumDTOConverter;
 import com.listenup.individualassignment.business.imp.dtoconverter.ArtistDTOConverter;
 import com.listenup.individualassignment.dto.AlbumSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateAlbumDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.AlbumDTO;
 import com.listenup.individualassignment.model.Album;
 import com.listenup.individualassignment.model.Artist;
@@ -51,13 +52,18 @@ class AlbumServiceImpTest {
 
         when(repository.save(album)).thenReturn(savedAlbum);
 
-        CreateAlbumDTO expectedDTO = CreateAlbumDTO.builder()
+        CreateAlbumRequestDTO dto = CreateAlbumRequestDTO.builder()
                 .name("V")
                 .artist(ArtistDTOConverter.convertToDTO(artist))
                 .releasedDate(date)
                 .uploadedDate(date)
                 .build();
-        CreateAlbumDTO actualDTO = service.addAlbum(expectedDTO);
+
+        CreateAlbumResponseDTO expectedDTO = CreateAlbumResponseDTO.builder()
+                .albumID(1l)
+                .build();
+
+        CreateAlbumResponseDTO actualDTO = service.addAlbum(dto);
 
         assertEquals(actualDTO, expectedDTO);
 

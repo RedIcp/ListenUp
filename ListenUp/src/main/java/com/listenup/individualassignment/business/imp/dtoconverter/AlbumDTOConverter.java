@@ -3,7 +3,7 @@ package com.listenup.individualassignment.business.imp.dtoconverter;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.listenup.individualassignment.dto.createdto.CreateAlbumDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumRequestDTO;
 import com.listenup.individualassignment.model.Album;
 import com.listenup.individualassignment.dto.AlbumSongListDTO;
 import com.listenup.individualassignment.dto.vieweditdto.AlbumDTO;
@@ -30,7 +30,7 @@ public class AlbumDTOConverter {
                 .uploadedDate(album.getUploadedDate())
                 .build();
     }
-    public static Album convertToModelForCreate(CreateAlbumDTO album){
+    public static Album convertToModelForCreate(CreateAlbumRequestDTO album){
         return Album.builder()
                 .name(album.getName())
                 .artist(ArtistDTOConverter.convertToModelForUpdate(album.getArtist()))

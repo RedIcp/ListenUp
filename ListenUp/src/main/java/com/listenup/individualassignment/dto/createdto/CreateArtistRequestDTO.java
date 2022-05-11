@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateArtistDTO {
+public class CreateArtistRequestDTO {
     private String name;
 }

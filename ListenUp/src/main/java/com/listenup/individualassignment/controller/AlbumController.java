@@ -2,7 +2,8 @@ package com.listenup.individualassignment.controller;
 
 import java.util.List;
 
-import com.listenup.individualassignment.dto.createdto.CreateAlbumDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +44,8 @@ public class AlbumController {
         }
     }
     @PostMapping()
-    public ResponseEntity<CreateAlbumDTO> createAlbum(@RequestBody @Valid CreateAlbumDTO albumDTO) {
-        CreateAlbumDTO album = management.addAlbum(albumDTO);
+    public ResponseEntity<CreateAlbumResponseDTO> createAlbum(@RequestBody @Valid CreateAlbumRequestDTO albumDTO) {
+        CreateAlbumResponseDTO album = management.addAlbum(albumDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(album);
     }
     @PutMapping("{id}")

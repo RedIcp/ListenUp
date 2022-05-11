@@ -2,8 +2,10 @@ package com.listenup.individualassignment.controller;
 
 import java.util.List;
 
-import com.listenup.individualassignment.dto.createdto.CreateAlbumSongDTO;
-import com.listenup.individualassignment.dto.createdto.CreateSingleSongDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumSongRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumSongResponseDTO;
+import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateSingleSongResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,13 +45,13 @@ public class SongController {
         }
     }
     @PostMapping("/singlesong")
-    public ResponseEntity<CreateSingleSongDTO> createSingleSong(@RequestBody @Valid CreateSingleSongDTO songDTO) {
-        CreateSingleSongDTO song = management.addSingleSong(songDTO);
+    public ResponseEntity<CreateSingleSongResponseDTO> createSingleSong(@RequestBody @Valid CreateSingleSongRequestDTO songDTO) {
+        CreateSingleSongResponseDTO song = management.addSingleSong(songDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(song);
     }
     @PostMapping("/albumsong")
-    public ResponseEntity<CreateAlbumSongDTO> createAlbumSong(@RequestBody @Valid CreateAlbumSongDTO songDTO) {
-        CreateAlbumSongDTO song = management.addAlbumSong(songDTO);
+    public ResponseEntity<CreateAlbumSongResponseDTO> createAlbumSong(@RequestBody @Valid CreateAlbumSongRequestDTO songDTO) {
+        CreateAlbumSongResponseDTO song = management.addAlbumSong(songDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(song);
     }
     @PutMapping("{id}")

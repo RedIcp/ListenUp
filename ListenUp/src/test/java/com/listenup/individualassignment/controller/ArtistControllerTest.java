@@ -3,9 +3,9 @@ package com.listenup.individualassignment.controller;
 import com.listenup.individualassignment.business.ArtistService;
 import com.listenup.individualassignment.dto.ArtistAlbumListDTO;
 import com.listenup.individualassignment.dto.ArtistSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateArtistDTO;
+import com.listenup.individualassignment.dto.createdto.CreateArtistRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateArtistResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
-import com.listenup.individualassignment.model.Artist;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -157,11 +156,15 @@ class ArtistControllerTest {
 
     @Test
     void createArtist() throws Exception{
-        CreateArtistDTO artist = CreateArtistDTO.builder()
+        CreateArtistRequestDTO artist = CreateArtistRequestDTO.builder()
                 .name("Maroon 5")
                 .build();
 
-        when(service.addArtist(artist)).thenReturn(artist);
+        CreateArtistResponseDTO response = CreateArtistResponseDTO.builder()
+                .artistID(1l)
+                .build();
+
+        when(service.addArtist(artist)).thenReturn(response);
 
         mockMvc.perform(post("/artists")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -174,7 +177,7 @@ class ArtistControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().json("""
                             {
-                                        "name": "Maroon 5"
+                                        "artistID": 1
                             }
                         """));
 

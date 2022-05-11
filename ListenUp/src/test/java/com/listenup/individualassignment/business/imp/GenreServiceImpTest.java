@@ -3,7 +3,8 @@ package com.listenup.individualassignment.business.imp;
 import com.listenup.individualassignment.business.exception.InvalidGenreException;
 import com.listenup.individualassignment.business.imp.dtoconverter.GenreDTOConverter;
 import com.listenup.individualassignment.dto.GenreSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateGenreDTO;
+import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateGenreResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
 import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.repository.GenreRepository;
@@ -39,11 +40,15 @@ class GenreServiceImpTest {
 
         when(repository.save(genre)).thenReturn(savedGenre);
 
-        CreateGenreDTO expectedDTO = CreateGenreDTO.builder()
+        CreateGenreRequestDTO dto = CreateGenreRequestDTO.builder()
                 .name("Pop")
                 .build();
 
-        CreateGenreDTO actualDTO = service.addGenre(expectedDTO);
+        CreateGenreResponseDTO expectedDTO = CreateGenreResponseDTO.builder()
+                .genreID(1l)
+                .build();
+
+        CreateGenreResponseDTO actualDTO = service.addGenre(dto);
 
         assertEquals(actualDTO, expectedDTO);
 

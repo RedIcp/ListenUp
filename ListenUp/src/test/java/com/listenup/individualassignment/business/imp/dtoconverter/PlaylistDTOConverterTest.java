@@ -1,7 +1,7 @@
 package com.listenup.individualassignment.business.imp.dtoconverter;
 
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreatePlaylistDTO;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
 import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
 import com.listenup.individualassignment.model.Customer;
 import com.listenup.individualassignment.model.Playlist;
@@ -26,7 +26,7 @@ class PlaylistDTOConverterTest {
     PlaylistDTO expectedDTO = PlaylistDTO.builder()
             .id(1l)
             .name("Chill")
-            .customer(CustomerDTOConverter.convertToDTO(customer))
+            .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
             .build();
 
     @Test
@@ -46,9 +46,9 @@ class PlaylistDTOConverterTest {
 
     @Test
     void convertToModelForCreate() {
-        CreatePlaylistDTO dto = CreatePlaylistDTO.builder()
+        CreatePlaylistRequestDTO dto = CreatePlaylistRequestDTO.builder()
                 .name("Chill")
-                .customer(CustomerDTOConverter.convertToDTO(customer))
+                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();
 
         Playlist actualModel = PlaylistDTOConverter.convertToModelForCreate(dto);

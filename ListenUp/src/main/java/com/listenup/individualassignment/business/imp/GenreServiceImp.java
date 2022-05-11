@@ -5,9 +5,11 @@ import java.util.List;
 import com.listenup.individualassignment.business.exception.InvalidGenreException;
 import com.listenup.individualassignment.business.imp.dtoconverter.GenreDTOConverter;
 import com.listenup.individualassignment.dto.GenreSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateGenreDTO;
+import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateGenreResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
 import com.listenup.individualassignment.business.GenreService;
+import com.listenup.individualassignment.model.Genre;
 import com.listenup.individualassignment.repository.GenreRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -20,9 +22,12 @@ import org.springframework.context.annotation.Primary;
 public class GenreServiceImp implements GenreService {
     private final GenreRepository db;
 
-    public CreateGenreDTO addGenre(CreateGenreDTO genre){
-        db.save(GenreDTOConverter.convertToModelForCreate(genre));
-        return genre;
+    public CreateGenreResponseDTO addGenre(CreateGenreRequestDTO genre){
+        Genre savedGenre = db.save(GenreDTOConverter.convertToModelForCreate(genre));
+
+        return CreateGenreResponseDTO.builder()
+                .genreID(savedGenre.getId())
+                .build();
     }
 
     public List<GenreDTO> getGenres(){

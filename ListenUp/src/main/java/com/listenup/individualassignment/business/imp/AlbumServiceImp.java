@@ -5,9 +5,11 @@ import java.util.List;
 import com.listenup.individualassignment.business.exception.InvalidAlbumException;
 import com.listenup.individualassignment.business.imp.dtoconverter.AlbumDTOConverter;
 import com.listenup.individualassignment.dto.AlbumSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateAlbumDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.AlbumDTO;
 import com.listenup.individualassignment.business.AlbumService;
+import com.listenup.individualassignment.model.Album;
 import com.listenup.individualassignment.repository.AlbumRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -20,9 +22,12 @@ import org.springframework.context.annotation.Primary;
 public class AlbumServiceImp implements AlbumService {
     private final AlbumRepository db;
 
-    public CreateAlbumDTO addAlbum(CreateAlbumDTO album){
-        db.save(AlbumDTOConverter.convertToModelForCreate(album));
-        return album;
+    public CreateAlbumResponseDTO addAlbum(CreateAlbumRequestDTO album){
+        Album savedAlbum = db.save(AlbumDTOConverter.convertToModelForCreate(album));
+
+        return CreateAlbumResponseDTO.builder()
+                .albumID(savedAlbum.getId())
+                .build();
     }
 
     public List<AlbumDTO> getAlbums(){

@@ -1,16 +1,11 @@
 package com.listenup.individualassignment.controller;
 
 import com.listenup.individualassignment.business.AlbumService;
-import com.listenup.individualassignment.business.imp.AlbumServiceImp;
-import com.listenup.individualassignment.business.imp.dtoconverter.AlbumDTOConverter;
 import com.listenup.individualassignment.dto.AlbumSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateAlbumDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.AlbumDTO;
-import com.listenup.individualassignment.dto.vieweditdto.AlbumSongDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
-import com.listenup.individualassignment.model.Album;
-import com.listenup.individualassignment.model.AlbumSong;
-import com.listenup.individualassignment.model.Artist;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +19,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -153,13 +147,18 @@ class AlbumControllerTest {
 
     @Test
     void createAlbum() throws Exception {
-        CreateAlbumDTO album = CreateAlbumDTO.builder()
+        CreateAlbumRequestDTO album = CreateAlbumRequestDTO.builder()
                 .name("Red Pills Blues")
                 .artist(artist)
                 .uploadedDate(date)
                 .releasedDate(date)
                 .build();
-        when(service.addAlbum(album)).thenReturn(album);
+
+        CreateAlbumResponseDTO response = CreateAlbumResponseDTO.builder()
+                .albumID(1l)
+                .build();
+
+        when(service.addAlbum(album)).thenReturn(response);
 
         mockMvc.perform(post("/albums")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -178,13 +177,7 @@ class AlbumControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().json("""
                             {
-                                    "name": "Red Pills Blues",
-                                    "artist": {
-                                        "id": 1,
-                                        "name": "Maroon 5"
-                                    },
-                                    "releasedDate": "3908-12-25T23:00:00.000+00:00",
-                                    "uploadedDate": "3908-12-25T23:00:00.000+00:00"
+                                    "albumID": 1
                             }
                         """));
 

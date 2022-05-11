@@ -6,7 +6,8 @@ import com.listenup.individualassignment.business.exception.InvalidPlaylistExcep
 import com.listenup.individualassignment.business.imp.dtoconverter.PlaylistDTOConverter;
 import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreatePlaylistDTO;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
 import com.listenup.individualassignment.model.Playlist;
 import com.listenup.individualassignment.business.PlaylistService;
@@ -22,9 +23,12 @@ import org.springframework.context.annotation.Primary;
 public class PlaylistServiceImp implements PlaylistService {
     private final PlaylistRepository db;
 
-    public CreatePlaylistDTO addPlaylist(CreatePlaylistDTO playlist){
-        db.save(PlaylistDTOConverter.convertToModelForCreate(playlist));
-        return playlist;
+    public CreatePlaylistResponseDTO addPlaylist(CreatePlaylistRequestDTO playlist){
+        Playlist savedPlaylist = db.save(PlaylistDTOConverter.convertToModelForCreate(playlist));
+
+        return CreatePlaylistResponseDTO.builder()
+                .playlistID(savedPlaylist.getId())
+                .build();
     }
 
     public List<PlaylistDTO> getPlaylists(){

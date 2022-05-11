@@ -3,8 +3,8 @@ package com.listenup.individualassignment.business.imp.dtoconverter;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.listenup.individualassignment.dto.createdto.CreateAlbumSongDTO;
-import com.listenup.individualassignment.dto.createdto.CreateSingleSongDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumSongRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDTO;
 import com.listenup.individualassignment.model.Song;
 import com.listenup.individualassignment.model.AlbumSong;
 import com.listenup.individualassignment.model.SingleSong;
@@ -36,13 +36,13 @@ public class SongDTOConverter {
     public static SingleSong convertToSingleSongModelForUpdate(SingleSongDTO song){
         return new SingleSong(song.getId(), song.getName(), ArtistDTOConverter.convertToModelForUpdate(song.getArtist()), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), song.getReleasedDate(), song.getUploadedDate());
     }
-    public static SingleSong convertToSingleSongModelForCreate(CreateSingleSongDTO song){
+    public static SingleSong convertToSingleSongModelForCreate(CreateSingleSongRequestDTO song){
         return new SingleSong(song.getName(), ArtistDTOConverter.convertToModelForUpdate(song.getArtist()), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), song.getReleasedDate(), song.getUploadedDate());
     }
     public static AlbumSong convertToAlbumSongModelForUpdate(AlbumSongDTO song){
         return new AlbumSong(song.getId(), song.getName(), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), AlbumDTOConverter.convertToModelForUpdate(song.getAlbum()));
     }
-    public static AlbumSong convertToAlbumSongModelForCreate(CreateAlbumSongDTO song){
+    public static AlbumSong convertToAlbumSongModelForCreate(CreateAlbumSongRequestDTO song){
         return new AlbumSong(song.getName(), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), AlbumDTOConverter.convertToModelForUpdate(song.getAlbum()));
     }
     public static List<SingleSongDTO> convertToSingleSongDTOList(List<Song> songs){

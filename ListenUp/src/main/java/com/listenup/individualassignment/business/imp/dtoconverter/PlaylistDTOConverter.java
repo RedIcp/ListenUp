@@ -3,7 +3,7 @@ package com.listenup.individualassignment.business.imp.dtoconverter;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.listenup.individualassignment.dto.createdto.CreatePlaylistDTO;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
 import com.listenup.individualassignment.model.Playlist;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
 import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
@@ -16,7 +16,7 @@ public class PlaylistDTOConverter {
         return PlaylistDTO.builder()
                 .id(playlist.getId())
                 .name(playlist.getName())
-                .customer(CustomerDTOConverter.convertToDTO(playlist.getCustomer()))
+                .customer(CustomerDTOConverter.convertToDTOForUpdate(playlist.getCustomer()))
                 .build();
     }
     public static Playlist convertToModelForUpdate(PlaylistDTO playlist){
@@ -26,7 +26,7 @@ public class PlaylistDTOConverter {
                 .customer(CustomerDTOConverter.convertToModelForUpdate(playlist.getCustomer()))
                 .build();
     }
-    public static Playlist convertToModelForCreate(CreatePlaylistDTO playlist){
+    public static Playlist convertToModelForCreate(CreatePlaylistRequestDTO playlist){
         return Playlist.builder()
                 .name(playlist.getName())
                 .customer(CustomerDTOConverter.convertToModelForUpdate(playlist.getCustomer()))

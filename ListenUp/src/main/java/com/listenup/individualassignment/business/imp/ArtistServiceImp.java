@@ -6,9 +6,11 @@ import com.listenup.individualassignment.business.exception.InvalidArtistExcepti
 import com.listenup.individualassignment.business.imp.dtoconverter.ArtistDTOConverter;
 import com.listenup.individualassignment.dto.ArtistAlbumListDTO;
 import com.listenup.individualassignment.dto.ArtistSongListDTO;
-import com.listenup.individualassignment.dto.createdto.CreateArtistDTO;
+import com.listenup.individualassignment.dto.createdto.CreateArtistRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateArtistResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
 import com.listenup.individualassignment.business.ArtistService;
+import com.listenup.individualassignment.model.Artist;
 import com.listenup.individualassignment.repository.ArtistRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,9 +23,12 @@ import org.springframework.context.annotation.Primary;
 public class ArtistServiceImp implements ArtistService {
     private final ArtistRepository db;
 
-    public CreateArtistDTO addArtist(CreateArtistDTO artist){
-        db.save(ArtistDTOConverter.convertToModelForCreate(artist));
-        return artist;
+    public CreateArtistResponseDTO addArtist(CreateArtistRequestDTO artist){
+        Artist savedArtist = db.save(ArtistDTOConverter.convertToModelForCreate(artist));
+
+        return CreateArtistResponseDTO.builder()
+                .artistID(savedArtist.getId())
+                .build();
     }
 
     public List<ArtistDTO> getArtists(){

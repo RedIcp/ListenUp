@@ -1,17 +1,14 @@
 package com.listenup.individualassignment.controller;
 
 import com.listenup.individualassignment.business.SongService;
-import com.listenup.individualassignment.business.imp.dtoconverter.ArtistDTOConverter;
-import com.listenup.individualassignment.business.imp.dtoconverter.GenreDTOConverter;
-import com.listenup.individualassignment.dto.createdto.CreateAlbumSongDTO;
-import com.listenup.individualassignment.dto.createdto.CreateSingleSongDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumSongRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumSongResponseDTO;
+import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateSingleSongResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.AlbumDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
 import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
-import com.listenup.individualassignment.model.Album;
-import com.listenup.individualassignment.model.Artist;
-import com.listenup.individualassignment.model.Genre;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -164,7 +160,7 @@ class SongControllerTest {
 
     @Test
     void createSingleSong() throws Exception{
-        CreateSingleSongDTO song = CreateSingleSongDTO.builder()
+        CreateSingleSongRequestDTO song = CreateSingleSongRequestDTO.builder()
                 .name("Lost Stars")
                 .artist(artist)
                 .genre(genre)
@@ -172,7 +168,11 @@ class SongControllerTest {
                 .uploadedDate(date)
                 .build();
 
-        when(service.addSingleSong(song)).thenReturn(song);
+        CreateSingleSongResponseDTO response = CreateSingleSongResponseDTO.builder()
+                .singleSongID(1l)
+                .build();
+
+        when(service.addSingleSong(song)).thenReturn(response);
 
         mockMvc.perform(post("/songs/singlesong")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -195,17 +195,7 @@ class SongControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().json("""
                             {
-                                         "name": "Lost Stars",
-                                         "artist": {
-                                             "id": 1,
-                                             "name": "Maroon 5"
-                                         },
-                                         "genre": {
-                                             "id": 1,
-                                             "name": "Pop"
-                                         },
-                                         "releasedDate": "3921-12-26T23:00:00.000+00:00",
-                                         "uploadedDate": "3921-12-26T23:00:00.000+00:00"
+                                         "singleSongID": 1
                             }
                         """));
 
@@ -214,13 +204,17 @@ class SongControllerTest {
 
     @Test
     void CreateAlbumSong() throws Exception{
-        CreateAlbumSongDTO song = CreateAlbumSongDTO.builder()
+        CreateAlbumSongRequestDTO song = CreateAlbumSongRequestDTO.builder()
                 .name("Map")
                 .album(album)
                 .genre(genre)
                 .build();
 
-        when(service.addAlbumSong(song)).thenReturn(song);
+        CreateAlbumSongResponseDTO response = CreateAlbumSongResponseDTO.builder()
+                .albumSongID(1l)
+                .build();
+
+        when(service.addAlbumSong(song)).thenReturn(response);
 
         mockMvc.perform(post("/songs/albumsong")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -247,21 +241,7 @@ class SongControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().json("""
                             {
-                                    "name": "Map",
-                                    "album": {
-                                        "id": 1,
-                                        "name": "V",
-                                        "artist": {
-                                            "id": 1,
-                                            "name": "Maroon 5"
-                                        },
-                                        "releasedDate": "3921-12-26T23:00:00.000+00:00",
-                                        "uploadedDate": "3921-12-26T23:00:00.000+00:00"
-                                    },
-                                    "genre": {
-                                        "id": 1,
-                                        "name": "Pop"
-                                    }
+                                    "albumSongID": 1
                             }
                         """));
 
