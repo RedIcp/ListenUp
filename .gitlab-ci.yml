@@ -16,7 +16,7 @@ test:
     - ./gradlew test
     - ./gradlew.bat --stop
 
-sonarqube-check:
+sonarqube:
   stage: sonarqube
   image: gradle:jre11-slim
   variables:
