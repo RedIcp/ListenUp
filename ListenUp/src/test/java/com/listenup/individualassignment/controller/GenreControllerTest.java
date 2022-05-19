@@ -8,8 +8,11 @@ import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -25,7 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(GenreController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class GenreControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -34,6 +38,7 @@ class GenreControllerTest {
     private GenreService service;
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllGenres() throws  Exception{
         GenreDTO genre1 = GenreDTO.builder()
                 .id(1l)
@@ -71,6 +76,7 @@ class GenreControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllGenresNotFound() throws Exception {
         when(service.getGenres()).thenReturn(null);
 
@@ -82,6 +88,7 @@ class GenreControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getGenrePath() throws Exception{
         GenreSongListDTO genre = GenreSongListDTO.builder()
                 .id(1l)
@@ -107,6 +114,7 @@ class GenreControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getGenrePathNotFound() throws Exception{
         when(service.getGenreSongs(1l)).thenReturn(null);
 
@@ -118,6 +126,7 @@ class GenreControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void createGenre() throws Exception{
         CreateGenreRequestDTO genre = CreateGenreRequestDTO.builder()
                 .name("Pop")
@@ -148,6 +157,7 @@ class GenreControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void updateGenre() throws Exception{
         mockMvc.perform(put("/genres/1")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -169,6 +179,7 @@ class GenreControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void deleteGenre() throws Exception{
         mockMvc.perform(delete("/genres/1"))
                 .andDo(print())

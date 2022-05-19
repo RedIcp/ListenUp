@@ -1,27 +1,31 @@
 package com.listenup.individualassignment.business.imp;
 
+import com.listenup.individualassignment.business.AccessTokenEncoder;
+import com.listenup.individualassignment.business.exception.InvalidCredentialsException;
 import com.listenup.individualassignment.business.exception.InvalidCustomerEmailException;
 import com.listenup.individualassignment.business.exception.InvalidCustomerException;
 import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverter;
 import com.listenup.individualassignment.business.imp.dtoconverter.PlaylistDTOConverter;
 import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
-import com.listenup.individualassignment.dto.CustomerLikedPlaylistListDTO;
-import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
-import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
+import com.listenup.individualassignment.dto.*;
 import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.*;
-import com.listenup.individualassignment.model.Customer;
+import com.listenup.individualassignment.entity.Customer;
+import com.listenup.individualassignment.entity.RoleEnum;
+import com.listenup.individualassignment.entity.UserRole;
 import com.listenup.individualassignment.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -30,6 +34,10 @@ import static org.mockito.Mockito.*;
 class UserServiceImpTest {
     @Mock
     private UserRepository repository;
+    @Mock
+    private PasswordEncoder passwordEncoder;
+    @Mock
+    private AccessTokenEncoder accessTokenEncoder;
 
     @InjectMocks
     private UserServiceImp service;
@@ -57,6 +65,7 @@ class UserServiceImpTest {
 
         assertEquals(actualDTO, expectedDTO);
 
+        verify(passwordEncoder).encode("123Yellow");
         verify(repository).existsByEmail("yellow@gmail.com");
         verify(repository).save(customer);
     }
@@ -80,6 +89,84 @@ class UserServiceImpTest {
     }
 
     @Test
+    void loginValid(){
+        Customer savedCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "hashed1234");
+        savedCustomer.setUserRoles(Set.of(
+                UserRole.builder()
+                        .user(savedCustomer)
+                        .role(RoleEnum.CUSTOMER)
+                        .build()));
+
+        when(repository.existsByEmail("yellow@gmail.com")).thenReturn(true);
+        when(repository.getByEmail("yellow@gmail.com")).thenReturn(savedCustomer);
+
+
+        LoginRequestDTO request = LoginRequestDTO.builder()
+                .email("yellow@gmail.com")
+                .password("123Yellow")
+                .build();
+
+        when(service.generateAccessToken(savedCustomer)).thenReturn("h123H123s");
+        when(passwordEncoder.matches(request.getPassword(), savedCustomer.getPassword())).thenReturn(true);
+
+        LoginResponseDTO expectedDTO = LoginResponseDTO.builder()
+                .accessToken("h123H123s")
+                .build();
+
+        LoginResponseDTO actualDTO = service.login(request);
+
+        assertEquals(actualDTO, expectedDTO);
+
+        verify(repository).existsByEmail("yellow@gmail.com");
+        verify(repository).getByEmail("yellow@gmail.com");
+    }
+
+    @Test
+    void loginInvalidCredential(){
+        Customer savedCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "hashed1234");
+        savedCustomer.setUserRoles(Set.of(
+                UserRole.builder()
+                        .user(savedCustomer)
+                        .role(RoleEnum.CUSTOMER)
+                        .build()));
+
+        when(repository.existsByEmail("yellow@gmail.com")).thenReturn(true);
+        when(repository.getByEmail("yellow@gmail.com")).thenReturn(savedCustomer);
+
+
+        LoginRequestDTO request = LoginRequestDTO.builder()
+                .email("yellow@gmail.com")
+                .password("123Yellow")
+                .build();
+
+        when(passwordEncoder.matches(request.getPassword(), savedCustomer.getPassword())).thenReturn(false);
+
+        InvalidCredentialsException exception = assertThrows(InvalidCredentialsException.class, ()->service.login(request));
+
+        assertEquals("INVALID_CREDENTIALS", exception.getReason());
+
+        verify(repository).existsByEmail("yellow@gmail.com");
+        verify(repository).getByEmail("yellow@gmail.com");
+    }
+
+    @Test
+    void loginInvalidEmail(){
+        when(repository.existsByEmail("yellow@gmail.com")).thenReturn(false);
+
+
+        LoginRequestDTO request = LoginRequestDTO.builder()
+                .email("yellow@gmail.com")
+                .password("123Yellow")
+                .build();
+
+        InvalidCustomerEmailException exception = assertThrows(InvalidCustomerEmailException.class, ()->service.login(request));
+
+        assertEquals("EMAIL_DOES_NOT_EXIST", exception.getReason());
+
+        verify(repository).existsByEmail("yellow@gmail.com");
+    }
+
+    @Test
     void getUsers() {
         Customer customer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
 
@@ -91,24 +178,6 @@ class UserServiceImpTest {
         List<ViewUserDTO> actualList = service.getUsers();
 
         assertEquals(actualList, expectedList);
-    }
-
-    @Test
-    void getUser() {
-        Customer customer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
-
-        when(repository.getById(1l)).thenReturn(customer);
-
-        UpdateUserDTO expectedDTO = UpdateUserDTO.builder()
-                .id(1l)
-                .username("Yellow")
-                .email("yellow@gmail.com")
-                .password("123Yellow")
-                .build();
-
-        UpdateUserDTO actualDTO = service.getUser(1l);
-
-        assertEquals(actualDTO, expectedDTO);
     }
 
     @Test

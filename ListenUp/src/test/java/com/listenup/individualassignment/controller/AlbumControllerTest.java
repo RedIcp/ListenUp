@@ -9,8 +9,12 @@ import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,7 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(AlbumController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class AlbumControllerTest {
 
     @Autowired
@@ -44,6 +49,7 @@ class AlbumControllerTest {
             .build();
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllAlbums() throws Exception {
         AlbumDTO album1 = AlbumDTO.builder()
                 .id(1l)
@@ -99,6 +105,7 @@ class AlbumControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllAlbumsNotFound() throws Exception{
         when(service.getAlbums()).thenReturn(null);
 
@@ -110,6 +117,7 @@ class AlbumControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAlbumPath() throws Exception{
         AlbumSongListDTO album = AlbumSongListDTO.builder()
                 .id(1l)
@@ -135,6 +143,7 @@ class AlbumControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAlbumPathNotFound() throws Exception{
         when(service.getAlbumSongs(1l)).thenReturn(null);
 
@@ -146,6 +155,7 @@ class AlbumControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void createAlbum() throws Exception {
         CreateAlbumRequestDTO album = CreateAlbumRequestDTO.builder()
                 .name("Red Pills Blues")
@@ -185,6 +195,7 @@ class AlbumControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void updateAlbum() throws Exception{
         mockMvc.perform(put("/albums/1")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -214,6 +225,7 @@ class AlbumControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void deleteAlbum() throws Exception{
         mockMvc.perform(delete("/albums/1"))
                 .andDo(print())

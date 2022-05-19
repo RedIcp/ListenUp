@@ -12,8 +12,11 @@ import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -29,7 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(SongController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class SongControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -58,6 +62,7 @@ class SongControllerTest {
             .build();
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllSongs() throws Exception{
         SingleSongDTO song = SingleSongDTO.builder()
                 .id(1l)
@@ -100,6 +105,7 @@ class SongControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllSongsNotFound() throws Exception {
         when(service.getSongs()).thenReturn(null);
 
@@ -111,6 +117,7 @@ class SongControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getSongPath() throws Exception{
         SingleSongDTO song = SingleSongDTO.builder()
                 .id(1l)
@@ -148,6 +155,7 @@ class SongControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getSongPathNotFound() throws Exception{
         when(service.getSong(1l)).thenReturn(null);
 
@@ -159,6 +167,7 @@ class SongControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void createSingleSong() throws Exception{
         CreateSingleSongRequestDTO song = CreateSingleSongRequestDTO.builder()
                 .name("Lost Stars")
@@ -203,6 +212,7 @@ class SongControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void CreateAlbumSong() throws Exception{
         CreateAlbumSongRequestDTO song = CreateAlbumSongRequestDTO.builder()
                 .name("Map")
@@ -249,6 +259,7 @@ class SongControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void updateSong() throws Exception{
         mockMvc.perform(put("/songs/1")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -284,6 +295,7 @@ class SongControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void deleteSong() throws Exception{
         mockMvc.perform(delete("/songs/1"))
                 .andDo(print())

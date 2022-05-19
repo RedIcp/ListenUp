@@ -2,6 +2,7 @@ package com.listenup.individualassignment.controller;
 
 import java.util.List;
 
+import com.listenup.individualassignment.configuration.security.isauthenticated.IsAuthenticated;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
 
 import lombok.RequiredArgsConstructor;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @RestController
@@ -23,6 +25,8 @@ import javax.validation.Valid;
 public class PlaylistController {
     private final PlaylistService management;
 
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping
     public ResponseEntity<List<PlaylistDTO>> getAllPlaylists() {
         List<PlaylistDTO> playlists = management.getPlaylists();
@@ -33,6 +37,9 @@ public class PlaylistController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping("{id}")
     public ResponseEntity<PlaylistSongListDTO> getPlaylistPath(@PathVariable(value = "id") long id) {
         PlaylistSongListDTO playlist = management.getPlaylistSong(id);
@@ -43,23 +50,35 @@ public class PlaylistController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_CUSTOMER"})
     @PostMapping()
     public ResponseEntity<CreatePlaylistResponseDTO> createPlaylist(@RequestBody @Valid CreatePlaylistRequestDTO playlistDTO) {
         CreatePlaylistResponseDTO playlist = management.addPlaylist(playlistDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(playlist);
     }
+
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_CUSTOMER"})
     @PutMapping("{id}/songs")
     public ResponseEntity<PlaylistSongListDTO> addSongToPlaylist(@PathVariable("id") long id, @RequestBody @Valid PlaylistSongListDTO playlistDTO) {
         playlistDTO.setId(id);
         management.editPlaylistSongs(playlistDTO);
         return ResponseEntity.noContent().build();
     }
+
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_CUSTOMER"})
     @PutMapping("{id}")
     public ResponseEntity<PlaylistDTO> updatePlaylist(@PathVariable("id") long id, @RequestBody @Valid PlaylistDTO playlistDTO) {
         playlistDTO.setId(id);
         management.editPlaylist(playlistDTO);
         return ResponseEntity.noContent().build();
     }
+
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_CUSTOMER"})
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deletePlaylist(@PathVariable long id) {
         management.deletePlaylist(id);

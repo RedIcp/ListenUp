@@ -9,7 +9,7 @@ import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateGenreResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
 import com.listenup.individualassignment.business.GenreService;
-import com.listenup.individualassignment.model.Genre;
+import com.listenup.individualassignment.entity.Genre;
 import com.listenup.individualassignment.repository.GenreRepository;
 
 import lombok.RequiredArgsConstructor;

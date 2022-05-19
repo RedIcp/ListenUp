@@ -3,8 +3,8 @@ package com.listenup.individualassignment.business.imp.dtoconverter;
 import com.listenup.individualassignment.dto.AlbumSongListDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumRequestDTO;
 import com.listenup.individualassignment.dto.vieweditdto.AlbumDTO;
-import com.listenup.individualassignment.model.Album;
-import com.listenup.individualassignment.model.Artist;
+import com.listenup.individualassignment.entity.Album;
+import com.listenup.individualassignment.entity.Artist;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

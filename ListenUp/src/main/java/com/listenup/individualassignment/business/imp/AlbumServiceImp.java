@@ -9,7 +9,7 @@ import com.listenup.individualassignment.dto.createdto.CreateAlbumRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.AlbumDTO;
 import com.listenup.individualassignment.business.AlbumService;
-import com.listenup.individualassignment.model.Album;
+import com.listenup.individualassignment.entity.Album;
 import com.listenup.individualassignment.repository.AlbumRepository;
 
 import lombok.RequiredArgsConstructor;

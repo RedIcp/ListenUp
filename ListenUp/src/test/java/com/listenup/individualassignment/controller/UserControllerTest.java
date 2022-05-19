@@ -11,8 +11,11 @@ import com.listenup.individualassignment.dto.vieweditdto.ViewUserDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -28,7 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(UserController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -37,6 +41,7 @@ class UserControllerTest {
     private UserService service;
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllUsers() throws Exception{
         ViewUserDTO user = ViewUserDTO.builder()
                 .id(1l)
@@ -67,6 +72,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllUsersNotFound() throws Exception{
         when(service.getUsers()).thenReturn(null);
 
@@ -78,6 +84,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getUserPath() throws Exception{
         UpdateUserDTO user = UpdateUserDTO.builder()
                 .id(1l)
@@ -105,6 +112,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getUserPathNotFound() throws Exception{
         when(service.getUser(1l)).thenReturn(null);
 
@@ -116,6 +124,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerPlaylistsPath() throws Exception{
         CustomerPlaylistListDTO user = CustomerPlaylistListDTO.builder()
                 .id(1l)
@@ -139,6 +148,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerPlaylistsPathNotFound() throws Exception{
         when(service.getCustomerPlaylists(1l)).thenReturn(null);
 
@@ -150,6 +160,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerLikedSongsPath() throws Exception{
         CustomerLikedSongListDTO user = CustomerLikedSongListDTO.builder()
                 .id(1l)
@@ -173,6 +184,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerLikedSongsPathNotFound() throws Exception{
         when(service.getCustomerCollection(1l)).thenReturn(null);
 
@@ -184,6 +196,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerLikedPlaylistsPath() throws Exception{
         CustomerLikedPlaylistListDTO user = CustomerLikedPlaylistListDTO.builder()
                 .id(1l)
@@ -207,6 +220,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerLikedPlaylistsPathNotFound() throws Exception{
         when(service.getCustomerLikedPlaylists(1l)).thenReturn(null);
 
@@ -218,40 +232,7 @@ class UserControllerTest {
     }
 
     @Test
-    void createUser() throws Exception{
-        CreateUserRequestDTO user = CreateUserRequestDTO.builder()
-                .username("Yellow")
-                .email("yellow@gmail.com")
-                .password("123Yellow")
-                .build();
-
-        CreateUserResponseDTO response = CreateUserResponseDTO.builder()
-                .userID(1l)
-                .build();
-
-        when(service.createAccount(user)).thenReturn(response);
-
-        mockMvc.perform(post("/users/signup")
-                        .contentType(APPLICATION_JSON_VALUE)
-                        .content("""
-                                {
-                                        "username": "Yellow",
-                                        "email": "yellow@gmail.com",
-                                        "password": "123Yellow"                   
-                            }  
-                                """))
-                .andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(content().json("""
-                            {
-                                        "userID": 1               
-                            }  
-                        """));
-
-        verify(service).createAccount(user);
-    }
-
-    @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void updateUser() throws Exception{
         mockMvc.perform(put("/users/1/profile")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -277,6 +258,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void addSongToCollection() throws Exception{
         mockMvc.perform(put("/users/1/collection")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -298,6 +280,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void addLikedPlaylist() throws Exception{
         mockMvc.perform(put("/users/1/likedplaylist")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -319,6 +302,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void deleteUser() throws Exception{
         mockMvc.perform(delete("/users/1"))
                 .andDo(print())

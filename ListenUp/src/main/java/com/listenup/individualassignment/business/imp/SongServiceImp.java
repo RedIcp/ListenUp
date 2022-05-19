@@ -10,7 +10,7 @@ import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDT
 import com.listenup.individualassignment.dto.createdto.CreateSingleSongResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 import com.listenup.individualassignment.business.SongService;
-import com.listenup.individualassignment.model.Song;
+import com.listenup.individualassignment.entity.Song;
 import com.listenup.individualassignment.repository.SongRepository;
 
 import lombok.RequiredArgsConstructor;

@@ -6,12 +6,14 @@ import com.listenup.individualassignment.dto.PlaylistSongListDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
-import com.listenup.individualassignment.model.Customer;
+import com.listenup.individualassignment.entity.Customer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,7 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(PlaylistController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class PlaylistControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -38,6 +41,7 @@ class PlaylistControllerTest {
     Customer customer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void getAllPlaylists() throws Exception{
         PlaylistDTO playlist1 = PlaylistDTO.builder()
                 .id(1l)
@@ -89,6 +93,7 @@ class PlaylistControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void getAllPlaylistsNotFound() throws Exception {
         when(service.getPlaylists()).thenReturn(null);
 
@@ -100,6 +105,7 @@ class PlaylistControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void getPlaylistPath() throws Exception{
         PlaylistSongListDTO playlist = PlaylistSongListDTO.builder()
                 .id(1l)
@@ -125,6 +131,7 @@ class PlaylistControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void getPlaylistPathNotFound() throws Exception{
         when(service.getPlaylistSong(1l)).thenReturn(null);
 
@@ -136,6 +143,7 @@ class PlaylistControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void createPlaylist() throws Exception{
         CreatePlaylistRequestDTO playlist = CreatePlaylistRequestDTO.builder()
                 .name("Chill")
@@ -173,6 +181,7 @@ class PlaylistControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void addSongToPlaylist() throws Exception{
         mockMvc.perform(put("/playlists/1/songs")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -196,6 +205,7 @@ class PlaylistControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void updatePlaylist() throws Exception{
         mockMvc.perform(put("/playlists/1")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -224,6 +234,7 @@ class PlaylistControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void deletePlaylist() throws Exception{
         mockMvc.perform(delete("/playlists/1"))
                 .andDo(print())

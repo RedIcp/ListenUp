@@ -1,4 +1,4 @@
-package com.listenup.individualassignment.model;
+package com.listenup.individualassignment.entity;
 
 import lombok.*;
 import javax.persistence.*;

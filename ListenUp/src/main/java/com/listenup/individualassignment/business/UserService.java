@@ -2,9 +2,7 @@ package com.listenup.individualassignment.business;
 
 import java.util.List;
 
-import com.listenup.individualassignment.dto.CustomerLikedPlaylistListDTO;
-import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
-import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
+import com.listenup.individualassignment.dto.*;
 import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.UpdateUserDTO;
@@ -12,6 +10,7 @@ import com.listenup.individualassignment.dto.vieweditdto.ViewUserDTO;
 
 public interface UserService {
     CreateUserResponseDTO createAccount(CreateUserRequestDTO user);
+    LoginResponseDTO login(LoginRequestDTO request);
     List<ViewUserDTO> getUsers();
     UpdateUserDTO getUser(long id);
     CustomerLikedSongListDTO getCustomerCollection(long id);

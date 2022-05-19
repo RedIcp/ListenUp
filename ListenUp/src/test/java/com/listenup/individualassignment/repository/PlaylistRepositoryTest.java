@@ -1,6 +1,6 @@
 package com.listenup.individualassignment.repository;
 
-import com.listenup.individualassignment.model.*;
+import com.listenup.individualassignment.entity.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

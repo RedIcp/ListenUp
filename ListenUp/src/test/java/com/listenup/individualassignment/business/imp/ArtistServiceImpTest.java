@@ -7,7 +7,7 @@ import com.listenup.individualassignment.dto.ArtistSongListDTO;
 import com.listenup.individualassignment.dto.createdto.CreateArtistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateArtistResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
-import com.listenup.individualassignment.model.Artist;
+import com.listenup.individualassignment.entity.Artist;
 import com.listenup.individualassignment.repository.ArtistRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

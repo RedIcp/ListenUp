@@ -11,7 +11,7 @@ import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
 import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
 import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
-import com.listenup.individualassignment.model.*;
+import com.listenup.individualassignment.entity.*;
 import com.listenup.individualassignment.repository.PlaylistRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
