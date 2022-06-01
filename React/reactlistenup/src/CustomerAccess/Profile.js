@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import Axios from "axios";
 
-function Signup(){
-    const url = "http://localhost:8080/signup";
+function Profile(){
+    const url = "http://localhost:8080/users";
 
     const [data, setData] = useState({
+        id:"",
         username:"",
         email:"",
         password:""
@@ -19,7 +20,8 @@ function Signup(){
     function submit(e){
         e.preventDefault();
 
-        Axios.post(url,{
+        Axios.put(url,{
+            id: parseInt(data.id),
             username: data.username,
             email: data.email,
             password: data.password
@@ -32,16 +34,18 @@ function Signup(){
         <div>
             <form onSubmit={(e)=>submit(e)}>
                 <label>
+                    ID:
+                    <input onChange={(e) => handle(e)} id="id" value={data.id} type="number" /><br/>
                     Username:
-                    <input onChange={(e) => handle(e)} id="username" value={data.username} type="text" placeholder="Enter your username." /><br/>
+                    <input onChange={(e) => handle(e)} id="username" value={data.username} type="text" /><br/>
                     Email:
-                    <input onChange={(e) => handle(e)} id="email" value={data.email} type="text" placeholder="Enter your email." /><br/>
+                    <input onChange={(e) => handle(e)} id="email" value={data.email} type="text" /><br/>
                     Password:
-                    <input onChange={(e) => handle(e)} id="password" value={data.password} type="password" placeholder="Enter your password." /><br/>
+                    <input onChange={(e) => handle(e)} id="password" value={data.password} type="password" /><br/>
                 </label>
-                <button type="submit">Add</button>
+                <button type="submit">Update</button>
             </form>
         </div>
     );
 }
-export default Signup;
+export default Profile;

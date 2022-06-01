@@ -38,6 +38,8 @@ class UserServiceImpTest {
     private PasswordEncoder passwordEncoder;
     @Mock
     private AccessTokenEncoder accessTokenEncoder;
+    @Mock
+    private AccessTokenDTO requestAccessToken;
 
     @InjectMocks
     private UserServiceImp service;
@@ -164,6 +166,25 @@ class UserServiceImpTest {
         assertEquals("EMAIL_DOES_NOT_EXIST", exception.getReason());
 
         verify(repository).existsByEmail("yellow@gmail.com");
+    }
+
+    @Test
+    void getUser() {
+        Customer customer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
+
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
+        when(repository.getById(1l)).thenReturn(customer);
+
+        UpdateUserDTO expectedDTO = UpdateUserDTO.builder()
+                .id(1l)
+                .username("Yellow")
+                .email("yellow@gmail.com")
+                .password("123Yellow")
+                .build();
+
+        UpdateUserDTO actualDTO = service.getUser(1l);
+
+        assertEquals(actualDTO, expectedDTO);
     }
 
     @Test
