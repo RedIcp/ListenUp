@@ -56,7 +56,7 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
     }
 
     private void setupSpringSecurityContext(AccessTokenDTO accessTokenDTO) {
-        UserDetails userDetails = new User(accessTokenDTO.getSubject(), "",
+        UserDetails userDetails = new User(accessTokenDTO.getEmail(), "",
                 accessTokenDTO.getRoles()
                         .stream()
                         .map(role -> new SimpleGrantedAuthority(SPRING_SECURITY_ROLE_PREFIX + role))

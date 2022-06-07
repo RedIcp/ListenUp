@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccessTokenDTO {
-    private String subject;
+    private String email;
     private List<String> roles;
     private Long userID;
 

@@ -43,10 +43,14 @@ public class AccessTokenEncoderDecoderImpl implements AccessTokenEncoder, Access
             claimsMap.put("userID", accessTokenDTO.getUserID());
         }
 
+        if (accessTokenDTO.getEmail() != null) {
+            claimsMap.put("email", accessTokenDTO.getEmail());
+        }
+
         Instant now = Instant.now();
 
         return Jwts.builder()
-                .setSubject(accessTokenDTO.getSubject())
+                .setSubject("User Details")
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(now.plus(30, ChronoUnit.MINUTES)))
                 .addClaims(claimsMap)
@@ -64,7 +68,7 @@ public class AccessTokenEncoderDecoderImpl implements AccessTokenEncoder, Access
             List<String> roles = claims.get("roles", List.class);
 
             return AccessTokenDTO.builder()
-                    .subject(claims.getSubject())
+                    .email(claims.getSubject())
                     .roles(roles)
                     .userID(claims.get("userID", Long.class))
                     .build();

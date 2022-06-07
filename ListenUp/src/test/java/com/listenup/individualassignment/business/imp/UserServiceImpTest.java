@@ -236,8 +236,8 @@ class UserServiceImpTest {
     @Test
     void getCustomerLikedPlaylists() {
         Customer customer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
-
-        when(repository.getById(1l)).thenReturn(customer);
+        
+        when(repository.getById(1l)).thenReturn(customer);;
 
         CustomerLikedPlaylistListDTO expectedDTO = CustomerLikedPlaylistListDTO.builder()
                 .id(1l)
@@ -253,6 +253,7 @@ class UserServiceImpTest {
     void updateAccountValid() {
         Customer beforeUpdateCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
 
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.getById(1l)).thenReturn(beforeUpdateCustomer);
         when(repository.existsById(1l)).thenReturn(true);
         when(repository.existsByEmail("blue@gmail.com")).thenReturn(false);
@@ -276,6 +277,7 @@ class UserServiceImpTest {
     void updateAccountSameEmailAsCurrentUser() {
         Customer beforeUpdateCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
 
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.getById(1l)).thenReturn(beforeUpdateCustomer);
         when(repository.existsById(1l)).thenReturn(true);
 
@@ -295,6 +297,7 @@ class UserServiceImpTest {
 
     @Test
     void updateAccountInvalidID() {
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.existsById(1l)).thenReturn(false);
 
         UpdateUserDTO updateDTO = UpdateUserDTO.builder()
@@ -316,6 +319,7 @@ class UserServiceImpTest {
     void updateAccountInvalidEmail() {
         Customer beforeUpdateCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
 
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.getById(1l)).thenReturn(beforeUpdateCustomer);
         when(repository.existsByEmail("blue@gmail.com")).thenReturn(true);
         when(repository.existsById(1l)).thenReturn(true);
@@ -339,6 +343,7 @@ class UserServiceImpTest {
     void editUserCollection() {
         Customer beforeUpdateCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
 
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.getById(1l)).thenReturn(beforeUpdateCustomer);
         when(repository.existsById(1l)).thenReturn(true);
 
@@ -376,6 +381,7 @@ class UserServiceImpTest {
 
     @Test
     void editUserCollectionInvalid() {
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.existsById(1l)).thenReturn(false);
 
         CustomerLikedSongListDTO updateDTO = CustomerLikedSongListDTO.builder()
@@ -397,6 +403,7 @@ class UserServiceImpTest {
 
         Customer beforeUpdateCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
 
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.getById(1l)).thenReturn(beforeUpdateCustomer);
         when(repository.existsById(1l)).thenReturn(true);
 
@@ -421,6 +428,7 @@ class UserServiceImpTest {
 
     @Test
     void editUserLikedPlaylistsInvalid(){
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.existsById(1l)).thenReturn(false);
 
         CustomerLikedPlaylistListDTO updateDTO = CustomerLikedPlaylistListDTO.builder()
@@ -438,6 +446,7 @@ class UserServiceImpTest {
 
     @Test
     void deleteAccountValid() {
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.existsById(1l)).thenReturn(true);
 
         service.deleteAccount(1l);
@@ -448,6 +457,7 @@ class UserServiceImpTest {
 
     @Test
     void deleteAccountInvalid() {
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.existsById(1l)).thenReturn(false);
 
         service.deleteAccount(1l);

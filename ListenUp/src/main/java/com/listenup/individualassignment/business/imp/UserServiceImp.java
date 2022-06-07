@@ -88,7 +88,7 @@ public class UserServiceImp implements UserService {
 
         return accessTokenEncoder.encode(
                 AccessTokenDTO.builder()
-                        .subject(user.getEmail())
+                        .email(user.getEmail())
                         .roles(roles)
                         .userID(user.getId())
                         .build());
@@ -98,9 +98,7 @@ public class UserServiceImp implements UserService {
         return CustomerDTOConverter.convertToDTOList(db.findAll());
     }
     public UpdateUserDTO getUser(long id){
-        if (!requestAccessToken.hasRole(RoleEnum.ADMIN.name()) && requestAccessToken.getUserID() != id) {
-            throw new UnauthorizedDataAccessException("USER_ID_NOT_FROM_LOGGED_IN_USER");
-        }
+        isAuthorised(id);
         return CustomerDTOConverter.convertToDTOForUpdate(db.getById(id));
     }
     public CustomerLikedSongListDTO getCustomerCollection(long id){
@@ -113,8 +111,15 @@ public class UserServiceImp implements UserService {
         return CustomerDTOConverter.convertToDTOForLikedPlaylist((Customer) db.getById(id));
     }
 
+    private void isAuthorised(long id){
+        if (!requestAccessToken.hasRole(RoleEnum.ADMIN.name()) && requestAccessToken.getUserID() != id) {
+            throw new UnauthorizedDataAccessException("USER_ID_NOT_FROM_LOGGED_IN_USER");
+        }
+    }
+
     public UpdateUserDTO updateAccount(UpdateUserDTO user){
         User old = db.getById(user.getId());
+        isAuthorised(user.getId());
         if(!db.existsById(user.getId())){
             throw new InvalidCustomerException(error);
         }
@@ -131,29 +136,43 @@ public class UserServiceImp implements UserService {
     }
     public CustomerLikedSongListDTO editUserCollection(CustomerLikedSongListDTO user){
         Customer old = (Customer) db.getById(user.getId());
+
+        isAuthorised(user.getId());
+
         if(!db.existsById(user.getId())){
             throw new InvalidCustomerException(error);
         }
+
         old.setLikedSongs(SongDTOConverter.convertToSingleSongModelList(user.getLikedSongs()));
+
         db.save(old);
         return user;
     }
     public CustomerLikedPlaylistListDTO editUserLikedPlaylists(CustomerLikedPlaylistListDTO user){
         Customer old = (Customer) db.getById(user.getId());
+
+        isAuthorised(user.getId());
+
         if(!db.existsById(user.getId())){
             throw new InvalidCustomerException(error);
         }
+
         old.setLikedPlaylists(PlaylistDTOConverter.convertToModelList(user.getLikedPlaylists()));
+
         db.save(old);
         return user;
     }
 
     public boolean deleteAccount(long id){
         boolean result = false;
+
+        isAuthorised(id);
+
         if(db.existsById(id)){
             db.deleteById(id);
             result = true;
         }
+
         return result;
     }
 }
