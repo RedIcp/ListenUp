@@ -62,10 +62,19 @@ public class PlaylistController {
 
     @IsAuthenticated
     @RolesAllowed({"ROLE_CUSTOMER"})
-    @PutMapping("{id}/songs")
+    @PutMapping("{id}/songs/add")
     public ResponseEntity<PlaylistSongListDTO> addSongToPlaylist(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToPlaylistDTO song) {
         song.setPlaylistID(id);
-        management.editPlaylistSongs(song);
+        management.addSongToPlaylist(song);
+        return ResponseEntity.noContent().build();
+    }
+
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_CUSTOMER"})
+    @PutMapping("{id}/songs/remove")
+    public ResponseEntity<PlaylistSongListDTO> removeSongToPlaylist(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToPlaylistDTO song) {
+        song.setPlaylistID(id);
+        management.removeSongFromPlaylist(song);
         return ResponseEntity.noContent().build();
     }
 

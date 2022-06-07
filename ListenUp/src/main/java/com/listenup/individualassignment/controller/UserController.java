@@ -97,19 +97,37 @@ public class UserController {
 
     @IsAuthenticated
     @RolesAllowed({"ROLE_CUSTOMER"})
-    @PutMapping("{id}/collection")
-    public ResponseEntity<CustomerLikedSongListDTO> editSongInCollection(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToCollectionDTO song) {
+    @PutMapping("{id}/collection/add")
+    public ResponseEntity<CustomerLikedSongListDTO> addSongToCollection(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToCollectionDTO song) {
         song.setCustomerID(id);
-        management.editUserCollection(song);
+        management.addSongToCollection(song);
         return ResponseEntity.noContent().build();
     }
 
     @IsAuthenticated
     @RolesAllowed({"ROLE_CUSTOMER"})
-    @PutMapping("{id}/likedplaylist")
-    public ResponseEntity<CustomerLikedPlaylistListDTO> editLikedPlaylist(@PathVariable("id") long id, @RequestBody @Valid AddRemoveLikedPlaylistDTO playlist) {
+    @PutMapping("{id}/collection/remove")
+    public ResponseEntity<CustomerLikedSongListDTO> removeSongToCollection(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToCollectionDTO song) {
+        song.setCustomerID(id);
+        management.removeSongFromCollection(song);
+        return ResponseEntity.noContent().build();
+    }
+
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_CUSTOMER"})
+    @PutMapping("{id}/likedplaylist/add")
+    public ResponseEntity<CustomerLikedPlaylistListDTO> addLikedPlaylist(@PathVariable("id") long id, @RequestBody @Valid AddRemoveLikedPlaylistDTO playlist) {
         playlist.setCustomerID(id);
-        management.editUserLikedPlaylists(playlist);
+        management.addLikedPlaylist(playlist);
+        return ResponseEntity.noContent().build();
+    }
+
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_CUSTOMER"})
+    @PutMapping("{id}/likedplaylist/remove")
+    public ResponseEntity<CustomerLikedPlaylistListDTO> removeLikedPlaylist(@PathVariable("id") long id, @RequestBody @Valid AddRemoveLikedPlaylistDTO playlist) {
+        playlist.setCustomerID(id);
+        management.removeLikedPlaylist(playlist);
         return ResponseEntity.noContent().build();
     }
 

@@ -158,7 +158,7 @@ class PlaylistServiceImpTest {
     }
 
     @Test
-    void editPlaylistSongsValid() {
+    void addSongToPlaylistValid() {
         Playlist beforeUpdatePlaylist = new Playlist(1l, "Chill", customer);
 
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
@@ -190,7 +190,7 @@ class PlaylistServiceImpTest {
                 .song(song)
                 .build();
 
-        service.editPlaylistSongs(updateDTO);
+        service.addSongToPlaylist(updateDTO);
 
         Playlist actualPlaylist = Playlist.builder()
                 .id(1l)
@@ -203,7 +203,7 @@ class PlaylistServiceImpTest {
     }
 
     @Test
-    void editPlaylistSongsInvalid() {
+    void addSongToPlaylistInvalid() {
         when(repository.existsById(1l)).thenReturn(false);
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
 
@@ -213,7 +213,71 @@ class PlaylistServiceImpTest {
                 .song(null)
                 .build();
 
-        InvalidPlaylistException exception = assertThrows(InvalidPlaylistException.class, () -> service.editPlaylistSongs(updateDTO));
+        InvalidPlaylistException exception = assertThrows(InvalidPlaylistException.class, () -> service.addSongToPlaylist(updateDTO));
+
+        assertEquals("INVALID_ID", exception.getReason());
+
+        verify(repository).getById(1l);
+        verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void removeSongFromPlaylistValid() {
+        Playlist beforeUpdatePlaylist = new Playlist(1l, "Chill", customer);
+
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
+        when(repository.getById(1l)).thenReturn(beforeUpdatePlaylist);
+        when(repository.existsById(1l)).thenReturn(true);
+
+        ArtistDTO artist = ArtistDTO.builder()
+                .id(1l)
+                .name("Maroon 5")
+                .build();
+
+        GenreDTO genre = GenreDTO.builder()
+                .id(1l)
+                .name("Pop")
+                .build();
+
+        SingleSongDTO song = SingleSongDTO.builder()
+                .id(1l)
+                .name("Payphone")
+                .artist(artist)
+                .genre(genre)
+                .uploadedDate(null)
+                .releasedDate(null)
+                .build();
+
+        AddRemoveSongToPlaylistDTO updateDTO = AddRemoveSongToPlaylistDTO.builder()
+                .customerID(1l)
+                .playlistID(1l)
+                .song(song)
+                .build();
+
+        service.removeSongFromPlaylist(updateDTO);
+
+        Playlist actualPlaylist = Playlist.builder()
+                .id(1l)
+                .name("Chill")
+                .customer(customer)
+                .songs(Collections.emptyList())
+                .build();
+
+        verify(repository).save(actualPlaylist);
+    }
+
+    @Test
+    void removeSongFromPlaylistInvalid() {
+        when(repository.existsById(1l)).thenReturn(false);
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
+
+        AddRemoveSongToPlaylistDTO updateDTO = AddRemoveSongToPlaylistDTO.builder()
+                .customerID(1l)
+                .playlistID(1l)
+                .song(null)
+                .build();
+
+        InvalidPlaylistException exception = assertThrows(InvalidPlaylistException.class, () -> service.removeSongFromPlaylist(updateDTO));
 
         assertEquals("INVALID_ID", exception.getReason());
 

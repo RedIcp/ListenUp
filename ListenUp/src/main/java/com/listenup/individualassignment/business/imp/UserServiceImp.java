@@ -106,9 +106,11 @@ public class UserServiceImp implements UserService {
     public CustomerLikedSongListDTO getCustomerCollection(long id){
         return CustomerDTOConverter.convertToDTOForLikedSong((Customer) db.getById(id));
     }
+
     public CustomerPlaylistListDTO getCustomerPlaylists(long id){
         return CustomerDTOConverter.convertToDTOForPlaylist((Customer) db.getById(id));
     }
+
     public CustomerLikedPlaylistListDTO getCustomerLikedPlaylists(long id){
         return CustomerDTOConverter.convertToDTOForLikedPlaylist((Customer) db.getById(id));
     }
@@ -136,7 +138,8 @@ public class UserServiceImp implements UserService {
         }
         return user;
     }
-    public void editUserCollection(AddRemoveSongToCollectionDTO song){
+
+    public void addSongToCollection(AddRemoveSongToCollectionDTO song){
         Customer old = (Customer) db.getById(song.getCustomerID());
 
         isAuthorised(song.getCustomerID());
@@ -149,7 +152,22 @@ public class UserServiceImp implements UserService {
 
         db.save(old);
     }
-    public void editUserLikedPlaylists(AddRemoveLikedPlaylistDTO playlist){
+
+    public void removeSongFromCollection(AddRemoveSongToCollectionDTO song){
+        Customer old = (Customer) db.getById(song.getCustomerID());
+
+        isAuthorised(song.getCustomerID());
+
+        if(!db.existsById(song.getCustomerID())){
+            throw new InvalidCustomerException(error);
+        }
+
+        old.getLikedSongs().remove(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));
+
+        db.save(old);
+    }
+
+    public void addLikedPlaylist(AddRemoveLikedPlaylistDTO playlist){
         Customer old = (Customer) db.getById(playlist.getCustomerID());
 
         isAuthorised(playlist.getCustomerID());
@@ -159,6 +177,20 @@ public class UserServiceImp implements UserService {
         }
 
         old.getLikedPlaylists().add(PlaylistDTOConverter.convertToModelForUpdate(playlist.getPlaylist()));
+
+        db.save(old);
+    }
+
+    public void removeLikedPlaylist(AddRemoveLikedPlaylistDTO playlist){
+        Customer old = (Customer) db.getById(playlist.getCustomerID());
+
+        isAuthorised(playlist.getCustomerID());
+
+        if(!db.existsById(playlist.getCustomerID())){
+            throw new InvalidCustomerException(error);
+        }
+
+        old.getLikedPlaylists().remove(PlaylistDTOConverter.convertToModelForUpdate(playlist.getPlaylist()));
 
         db.save(old);
     }

@@ -200,7 +200,7 @@ class PlaylistControllerTest {
                 .song(null)
                 .build();
 
-        verify(service).editPlaylistSongs(playlist);
+        verify(service).addSongToPlaylist(playlist);
     }
 
     @Test

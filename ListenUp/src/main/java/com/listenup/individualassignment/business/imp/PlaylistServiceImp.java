@@ -50,18 +50,29 @@ public class PlaylistServiceImp implements PlaylistService {
         db.save(PlaylistDTOConverter.convertToModelForUpdate(playlist));
         return playlist;
     }
-    public void editPlaylistSongs(AddRemoveSongToPlaylistDTO song){
-        Playlist old = db.getById(song.getPlaylistID());
 
+    public void addSongToPlaylist(AddRemoveSongToPlaylistDTO song){
+        Playlist old = db.getById(song.getPlaylistID());
         if (!requestAccessToken.hasRole(RoleEnum.ADMIN.name()) && requestAccessToken.getUserID() != song.getCustomerID()) {
             throw new UnauthorizedDataAccessException("USER_ID_NOT_FROM_LOGGED_IN_USER");
         }
-
         if(!db.existsById(song.getPlaylistID())){
             throw new InvalidPlaylistException("INVALID_ID");
         }
-
         old.getSongs().add(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));
+
+        db.save(old);
+    }
+
+    public void removeSongFromPlaylist(AddRemoveSongToPlaylistDTO song){
+        Playlist old = db.getById(song.getPlaylistID());
+        if (!requestAccessToken.hasRole(RoleEnum.ADMIN.name()) && requestAccessToken.getUserID() != song.getCustomerID()) {
+            throw new UnauthorizedDataAccessException("USER_ID_NOT_FROM_LOGGED_IN_USER");
+        }
+        if(!db.existsById(song.getPlaylistID())){
+            throw new InvalidPlaylistException("INVALID_ID");
+        }
+        old.getSongs().remove(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));
 
         db.save(old);
     }

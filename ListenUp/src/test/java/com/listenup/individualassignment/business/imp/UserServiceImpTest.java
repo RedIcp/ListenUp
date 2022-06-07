@@ -342,7 +342,7 @@ class UserServiceImpTest {
     }
 
     @Test
-    void editUserCollection() {
+    void addSongToCollection() {
         Customer beforeUpdateCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
 
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
@@ -373,7 +373,7 @@ class UserServiceImpTest {
                 .song(song)
                 .build();
 
-        service.editUserCollection(updateDTO);
+        service.addSongToCollection(updateDTO);
 
         Customer actualCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
         actualCustomer.setLikedSongs(List.of(SongDTOConverter.convertToSingleSongModelForUpdate(song)));
@@ -382,7 +382,7 @@ class UserServiceImpTest {
     }
 
     @Test
-    void editUserCollectionInvalid() {
+    void addSongToCollectionInvalid() {
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.existsById(1l)).thenReturn(false);
 
@@ -391,7 +391,7 @@ class UserServiceImpTest {
                 .song(null)
                 .build();
 
-        InvalidCustomerException exception = assertThrows(InvalidCustomerException.class, () -> service.editUserCollection(updateDTO));
+        InvalidCustomerException exception = assertThrows(InvalidCustomerException.class, () -> service.addSongToCollection(updateDTO));
 
         assertEquals("INVALID_ID", exception.getReason());
 
@@ -400,7 +400,7 @@ class UserServiceImpTest {
     }
 
     @Test
-    void editUserLikedPlaylists() {
+    void addLikedPlaylists() {
         Customer customer = new Customer(2l,"Blue", "blue@gmail.com", "123Blue");
 
         Customer beforeUpdateCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
@@ -420,7 +420,7 @@ class UserServiceImpTest {
                 .playlist(playlist)
                 .build();
 
-        service.editUserLikedPlaylists(updateDTO);
+        service.addLikedPlaylist(updateDTO);
 
         Customer actualCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
         actualCustomer.setLikedPlaylists(List.of(PlaylistDTOConverter.convertToModelForUpdate(playlist)));
@@ -429,7 +429,7 @@ class UserServiceImpTest {
     }
 
     @Test
-    void editUserLikedPlaylistsInvalid(){
+    void addPlaylistsInvalid(){
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.existsById(1l)).thenReturn(false);
 
@@ -438,7 +438,112 @@ class UserServiceImpTest {
                 .playlist(null)
                 .build();
 
-        InvalidCustomerException exception = assertThrows(InvalidCustomerException.class, () -> service.editUserLikedPlaylists(updateDTO));
+        InvalidCustomerException exception = assertThrows(InvalidCustomerException.class, () -> service.addLikedPlaylist(updateDTO));
+
+        assertEquals("INVALID_ID", exception.getReason());
+
+        verify(repository).getById(1l);
+        verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void removeSongFromCollection() {
+        Customer beforeUpdateCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
+
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
+        when(repository.getById(1l)).thenReturn(beforeUpdateCustomer);
+        when(repository.existsById(1l)).thenReturn(true);
+
+        ArtistDTO artist = ArtistDTO.builder()
+                .id(1l)
+                .name("Maroon 5")
+                .build();
+
+        GenreDTO genre = GenreDTO.builder()
+                .id(1l)
+                .name("Pop")
+                .build();
+
+        SingleSongDTO song = SingleSongDTO.builder()
+                .id(1l)
+                .name("Payphone")
+                .artist(artist)
+                .genre(genre)
+                .uploadedDate(null)
+                .releasedDate(null)
+                .build();
+
+        AddRemoveSongToCollectionDTO updateDTO = AddRemoveSongToCollectionDTO.builder()
+                .customerID(1l)
+                .song(song)
+                .build();
+
+        service.removeSongFromCollection(updateDTO);
+
+        Customer actualCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
+        actualCustomer.setLikedSongs(Collections.emptyList());
+
+        verify(repository).save(actualCustomer);
+    }
+
+    @Test
+    void removeSongFromCollectionInvalid() {
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
+        when(repository.existsById(1l)).thenReturn(false);
+
+        AddRemoveSongToCollectionDTO updateDTO = AddRemoveSongToCollectionDTO.builder()
+                .customerID(1l)
+                .song(null)
+                .build();
+
+        InvalidCustomerException exception = assertThrows(InvalidCustomerException.class, () -> service.removeSongFromCollection(updateDTO));
+
+        assertEquals("INVALID_ID", exception.getReason());
+
+        verify(repository).getById(1l);
+        verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void removeLikedPlaylists() {
+        Customer customer = new Customer(2l,"Blue", "blue@gmail.com", "123Blue");
+
+        Customer beforeUpdateCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
+
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
+        when(repository.getById(1l)).thenReturn(beforeUpdateCustomer);
+        when(repository.existsById(1l)).thenReturn(true);
+
+        PlaylistDTO playlist = PlaylistDTO.builder()
+                .id(1l)
+                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
+                .name("Chill")
+                .build();
+
+        AddRemoveLikedPlaylistDTO updateDTO = AddRemoveLikedPlaylistDTO.builder()
+                .customerID(1l)
+                .playlist(playlist)
+                .build();
+
+        service.removeLikedPlaylist(updateDTO);
+
+        Customer actualCustomer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
+        actualCustomer.setLikedPlaylists(Collections.emptyList());
+
+        verify(repository).save(actualCustomer);
+    }
+
+    @Test
+    void removePlaylistsInvalid(){
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
+        when(repository.existsById(1l)).thenReturn(false);
+
+        AddRemoveLikedPlaylistDTO updateDTO = AddRemoveLikedPlaylistDTO.builder()
+                .customerID(1l)
+                .playlist(null)
+                .build();
+
+        InvalidCustomerException exception = assertThrows(InvalidCustomerException.class, () -> service.removeLikedPlaylist(updateDTO));
 
         assertEquals("INVALID_ID", exception.getReason());
 

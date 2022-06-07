@@ -13,6 +13,7 @@ public interface PlaylistService {
     List<PlaylistDTO> getPlaylists();
     PlaylistSongListDTO getPlaylistSong(long id);
     PlaylistDTO editPlaylist(PlaylistDTO playlist);
-    void editPlaylistSongs(AddRemoveSongToPlaylistDTO song);
+    void addSongToPlaylist(AddRemoveSongToPlaylistDTO song);
+    void removeSongFromPlaylist(AddRemoveSongToPlaylistDTO song);
     boolean deletePlaylist(long id);
 }

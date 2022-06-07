@@ -19,7 +19,9 @@ public interface UserService {
     CustomerPlaylistListDTO getCustomerPlaylists(long id);
     CustomerLikedPlaylistListDTO getCustomerLikedPlaylists(long id);
     UpdateUserDTO updateAccount(UpdateUserDTO user);
-    void editUserCollection(AddRemoveSongToCollectionDTO song);
-    void editUserLikedPlaylists(AddRemoveLikedPlaylistDTO playlist);
+    void addSongToCollection(AddRemoveSongToCollectionDTO song);
+    void removeSongFromCollection(AddRemoveSongToCollectionDTO song);
+    void addLikedPlaylist(AddRemoveLikedPlaylistDTO playlist);
+    void removeLikedPlaylist(AddRemoveLikedPlaylistDTO playlist);
     boolean deleteAccount(long id);
 }

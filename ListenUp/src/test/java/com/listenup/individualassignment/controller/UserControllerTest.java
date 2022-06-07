@@ -6,15 +6,12 @@ import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
 import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
 import com.listenup.individualassignment.dto.createdto.AddRemoveLikedPlaylistDTO;
 import com.listenup.individualassignment.dto.createdto.AddRemoveSongToCollectionDTO;
-import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
-import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.UpdateUserDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ViewUserDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -278,7 +275,7 @@ class UserControllerTest {
                 .song(null)
                 .build();
 
-        verify(service).editUserCollection(user);
+        verify(service).addSongToCollection(user);
     }
 
     @Test
@@ -300,7 +297,7 @@ class UserControllerTest {
                 .playlist(null)
                 .build();
 
-        verify(service).editUserLikedPlaylists(user);
+        verify(service).addLikedPlaylist(user);
     }
 
     @Test
