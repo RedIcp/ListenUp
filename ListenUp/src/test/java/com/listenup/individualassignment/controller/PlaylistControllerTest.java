@@ -184,7 +184,7 @@ class PlaylistControllerTest {
     @Test
     @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void addSongToPlaylist() throws Exception{
-        mockMvc.perform(put("/playlists/1/songs")
+        mockMvc.perform(put("/playlists/1/songs/add")
                         .contentType(APPLICATION_JSON_VALUE)
                         .content("""
                                 {
@@ -201,6 +201,28 @@ class PlaylistControllerTest {
                 .build();
 
         verify(service).addSongToPlaylist(playlist);
+    }
+
+    @Test
+    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
+    void removeSongFromPlaylist() throws Exception{
+        mockMvc.perform(put("/playlists/1/songs/remove")
+                        .contentType(APPLICATION_JSON_VALUE)
+                        .content("""
+                                {
+                                        "id": 1,
+                                        "song": null  
+                                }
+                                """))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+
+        AddRemoveSongToPlaylistDTO playlist = AddRemoveSongToPlaylistDTO.builder()
+                .playlistID(1l)
+                .song(null)
+                .build();
+
+        verify(service).removeSongFromPlaylist(playlist);
     }
 
     @Test

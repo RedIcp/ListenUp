@@ -259,7 +259,7 @@ class UserControllerTest {
     @Test
     @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void addSongToCollection() throws Exception{
-        mockMvc.perform(put("/users/1/collection")
+        mockMvc.perform(put("/users/1/collection/add")
                         .contentType(APPLICATION_JSON_VALUE)
                         .content("""
                                 {
@@ -280,8 +280,30 @@ class UserControllerTest {
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
+    void removeSongToCollection() throws Exception{
+        mockMvc.perform(put("/users/1/collection/remove")
+                        .contentType(APPLICATION_JSON_VALUE)
+                        .content("""
+                                {
+                                        "id": 1,
+                                        "song": null                 
+                                } 
+                                """))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+
+        AddRemoveSongToCollectionDTO user = AddRemoveSongToCollectionDTO.builder()
+                .customerID(1l)
+                .song(null)
+                .build();
+
+        verify(service).removeSongFromCollection(user);
+    }
+
+    @Test
+    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void addLikedPlaylist() throws Exception{
-        mockMvc.perform(put("/users/1/likedplaylist")
+        mockMvc.perform(put("/users/1/likedplaylist/add")
                         .contentType(APPLICATION_JSON_VALUE)
                         .content("""
                                 {
@@ -298,6 +320,28 @@ class UserControllerTest {
                 .build();
 
         verify(service).addLikedPlaylist(user);
+    }
+
+    @Test
+    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
+    void removeLikedPlaylist() throws Exception{
+        mockMvc.perform(put("/users/1/likedplaylist/remove")
+                        .contentType(APPLICATION_JSON_VALUE)
+                        .content("""
+                                {
+                                        "id": 1,
+                                        "playlist": null                       
+                                } 
+                                """))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+
+        AddRemoveLikedPlaylistDTO user = AddRemoveLikedPlaylistDTO.builder()
+                .customerID(1l)
+                .playlist(null)
+                .build();
+
+        verify(service).removeLikedPlaylist(user);
     }
 
     @Test
