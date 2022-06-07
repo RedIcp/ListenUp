@@ -8,6 +8,8 @@ import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOCo
 import com.listenup.individualassignment.business.imp.dtoconverter.PlaylistDTOConverter;
 import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
 import com.listenup.individualassignment.dto.*;
+import com.listenup.individualassignment.dto.createdto.AddRemoveLikedPlaylistDTO;
+import com.listenup.individualassignment.dto.createdto.AddRemoveSongToCollectionDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.*;
@@ -366,9 +368,9 @@ class UserServiceImpTest {
                 .releasedDate(null)
                 .build();
 
-        CustomerLikedSongListDTO updateDTO = CustomerLikedSongListDTO.builder()
-                .id(1l)
-                .likedSongs(List.of(song))
+        AddRemoveSongToCollectionDTO updateDTO = AddRemoveSongToCollectionDTO.builder()
+                .customerID(1l)
+                .song(song)
                 .build();
 
         service.editUserCollection(updateDTO);
@@ -384,9 +386,9 @@ class UserServiceImpTest {
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.existsById(1l)).thenReturn(false);
 
-        CustomerLikedSongListDTO updateDTO = CustomerLikedSongListDTO.builder()
-                .id(1l)
-                .likedSongs(Collections.emptyList())
+        AddRemoveSongToCollectionDTO updateDTO = AddRemoveSongToCollectionDTO.builder()
+                .customerID(1l)
+                .song(null)
                 .build();
 
         InvalidCustomerException exception = assertThrows(InvalidCustomerException.class, () -> service.editUserCollection(updateDTO));
@@ -413,9 +415,9 @@ class UserServiceImpTest {
                 .name("Chill")
                 .build();
 
-        CustomerLikedPlaylistListDTO updateDTO = CustomerLikedPlaylistListDTO.builder()
-                .id(1l)
-                .likedPlaylists(List.of(playlist))
+        AddRemoveLikedPlaylistDTO updateDTO = AddRemoveLikedPlaylistDTO.builder()
+                .customerID(1l)
+                .playlist(playlist)
                 .build();
 
         service.editUserLikedPlaylists(updateDTO);
@@ -431,9 +433,9 @@ class UserServiceImpTest {
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.existsById(1l)).thenReturn(false);
 
-        CustomerLikedPlaylistListDTO updateDTO = CustomerLikedPlaylistListDTO.builder()
-                .id(1l)
-                .likedPlaylists(Collections.emptyList())
+        AddRemoveLikedPlaylistDTO updateDTO = AddRemoveLikedPlaylistDTO.builder()
+                .customerID(1l)
+                .playlist(null)
                 .build();
 
         InvalidCustomerException exception = assertThrows(InvalidCustomerException.class, () -> service.editUserLikedPlaylists(updateDTO));

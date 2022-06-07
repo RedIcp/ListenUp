@@ -4,7 +4,9 @@ import com.listenup.individualassignment.business.exception.InvalidPlaylistExcep
 import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverter;
 import com.listenup.individualassignment.business.imp.dtoconverter.PlaylistDTOConverter;
 import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
+import com.listenup.individualassignment.dto.AccessTokenDTO;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
+import com.listenup.individualassignment.dto.createdto.AddRemoveSongToPlaylistDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
@@ -30,6 +32,8 @@ import static org.mockito.Mockito.*;
 class PlaylistServiceImpTest {
     @Mock
     private PlaylistRepository repository;
+    @Mock
+    private AccessTokenDTO requestAccessToken;
 
     @InjectMocks
     private PlaylistServiceImp service;
@@ -155,13 +159,9 @@ class PlaylistServiceImpTest {
 
     @Test
     void editPlaylistSongsValid() {
-        Playlist beforeUpdatePlaylist = Playlist.builder()
-                .id(1l)
-                .name("Chill")
-                .customer(customer)
-                .songs(Collections.emptyList())
-                .build();
+        Playlist beforeUpdatePlaylist = new Playlist(1l, "Chill", customer);
 
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
         when(repository.getById(1l)).thenReturn(beforeUpdatePlaylist);
         when(repository.existsById(1l)).thenReturn(true);
 
@@ -184,10 +184,10 @@ class PlaylistServiceImpTest {
                 .releasedDate(null)
                 .build();
 
-        PlaylistSongListDTO updateDTO = PlaylistSongListDTO.builder()
-                .id(1l)
-                .name("Chill")
-                .songs(List.of(song))
+        AddRemoveSongToPlaylistDTO updateDTO = AddRemoveSongToPlaylistDTO.builder()
+                .customerID(1l)
+                .playlistID(1l)
+                .song(song)
                 .build();
 
         service.editPlaylistSongs(updateDTO);
@@ -205,11 +205,12 @@ class PlaylistServiceImpTest {
     @Test
     void editPlaylistSongsInvalid() {
         when(repository.existsById(1l)).thenReturn(false);
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
 
-        PlaylistSongListDTO updateDTO = PlaylistSongListDTO.builder()
-                .id(1l)
-                .name("Chill")
-                .songs(Collections.emptyList())
+        AddRemoveSongToPlaylistDTO updateDTO = AddRemoveSongToPlaylistDTO.builder()
+                .customerID(1l)
+                .playlistID(1l)
+                .song(null)
                 .build();
 
         InvalidPlaylistException exception = assertThrows(InvalidPlaylistException.class, () -> service.editPlaylistSongs(updateDTO));

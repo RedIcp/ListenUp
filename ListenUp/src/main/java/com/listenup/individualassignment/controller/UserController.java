@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.listenup.individualassignment.configuration.security.isauthenticated.IsAuthenticated;
 import com.listenup.individualassignment.dto.*;
+import com.listenup.individualassignment.dto.createdto.AddRemoveLikedPlaylistDTO;
+import com.listenup.individualassignment.dto.createdto.AddRemoveSongToCollectionDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ViewUserDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -96,18 +98,18 @@ public class UserController {
     @IsAuthenticated
     @RolesAllowed({"ROLE_CUSTOMER"})
     @PutMapping("{id}/collection")
-    public ResponseEntity<CustomerLikedSongListDTO> addSongToCollection(@PathVariable("id") long id, @RequestBody @Valid CustomerLikedSongListDTO userDTO) {
-        userDTO.setId(id);
-        management.editUserCollection(userDTO);
+    public ResponseEntity<CustomerLikedSongListDTO> editSongInCollection(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToCollectionDTO song) {
+        song.setCustomerID(id);
+        management.editUserCollection(song);
         return ResponseEntity.noContent().build();
     }
 
     @IsAuthenticated
     @RolesAllowed({"ROLE_CUSTOMER"})
     @PutMapping("{id}/likedplaylist")
-    public ResponseEntity<CustomerLikedPlaylistListDTO> addLikedPlaylist(@PathVariable("id") long id, @RequestBody @Valid CustomerLikedPlaylistListDTO userDTO) {
-        userDTO.setId(id);
-        management.editUserLikedPlaylists(userDTO);
+    public ResponseEntity<CustomerLikedPlaylistListDTO> editLikedPlaylist(@PathVariable("id") long id, @RequestBody @Valid AddRemoveLikedPlaylistDTO playlist) {
+        playlist.setCustomerID(id);
+        management.editUserLikedPlaylists(playlist);
         return ResponseEntity.noContent().build();
     }
 

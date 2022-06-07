@@ -3,6 +3,7 @@ package com.listenup.individualassignment.controller;
 import com.listenup.individualassignment.business.PlaylistService;
 import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverter;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
+import com.listenup.individualassignment.dto.createdto.AddRemoveSongToPlaylistDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
@@ -188,17 +189,15 @@ class PlaylistControllerTest {
                         .content("""
                                 {
                                         "id": 1,
-                                        "name": "Chill",
-                                        "songs": []  
+                                        "song": null  
                                 }
                                 """))
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        PlaylistSongListDTO playlist = PlaylistSongListDTO.builder()
-                .id(1l)
-                .name("Chill")
-                .songs(Collections.emptyList())
+        AddRemoveSongToPlaylistDTO playlist = AddRemoveSongToPlaylistDTO.builder()
+                .playlistID(1l)
+                .song(null)
                 .build();
 
         verify(service).editPlaylistSongs(playlist);

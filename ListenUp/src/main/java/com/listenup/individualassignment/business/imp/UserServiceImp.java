@@ -12,6 +12,8 @@ import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOCo
 import com.listenup.individualassignment.business.imp.dtoconverter.PlaylistDTOConverter;
 import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
 import com.listenup.individualassignment.dto.*;
+import com.listenup.individualassignment.dto.createdto.AddRemoveLikedPlaylistDTO;
+import com.listenup.individualassignment.dto.createdto.AddRemoveSongToCollectionDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.UpdateUserDTO;
@@ -134,33 +136,31 @@ public class UserServiceImp implements UserService {
         }
         return user;
     }
-    public CustomerLikedSongListDTO editUserCollection(CustomerLikedSongListDTO user){
-        Customer old = (Customer) db.getById(user.getId());
+    public void editUserCollection(AddRemoveSongToCollectionDTO song){
+        Customer old = (Customer) db.getById(song.getCustomerID());
 
-        isAuthorised(user.getId());
+        isAuthorised(song.getCustomerID());
 
-        if(!db.existsById(user.getId())){
+        if(!db.existsById(song.getCustomerID())){
             throw new InvalidCustomerException(error);
         }
 
-        old.setLikedSongs(SongDTOConverter.convertToSingleSongModelList(user.getLikedSongs()));
+        old.getLikedSongs().add(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));
 
         db.save(old);
-        return user;
     }
-    public CustomerLikedPlaylistListDTO editUserLikedPlaylists(CustomerLikedPlaylistListDTO user){
-        Customer old = (Customer) db.getById(user.getId());
+    public void editUserLikedPlaylists(AddRemoveLikedPlaylistDTO playlist){
+        Customer old = (Customer) db.getById(playlist.getCustomerID());
 
-        isAuthorised(user.getId());
+        isAuthorised(playlist.getCustomerID());
 
-        if(!db.existsById(user.getId())){
+        if(!db.existsById(playlist.getCustomerID())){
             throw new InvalidCustomerException(error);
         }
 
-        old.setLikedPlaylists(PlaylistDTOConverter.convertToModelList(user.getLikedPlaylists()));
+        old.getLikedPlaylists().add(PlaylistDTOConverter.convertToModelForUpdate(playlist.getPlaylist()));
 
         db.save(old);
-        return user;
     }
 
     public boolean deleteAccount(long id){

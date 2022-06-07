@@ -1,6 +1,8 @@
 package com.listenup.individualassignment.entity;
 
 import lombok.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
@@ -42,4 +44,14 @@ public class Playlist {
             joinColumns = @JoinColumn(name = "playlist_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id"))
     private List<Song> songs;
+
+    public Playlist(long id, String name, Customer customer){
+        this.id = id;
+        this.name = name;
+        this.customer = customer;
+
+        isPublic = false;
+        likedUsers = 0;
+        songs = new ArrayList<>();
+    }
 }

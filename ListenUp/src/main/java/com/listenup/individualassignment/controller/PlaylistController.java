@@ -3,6 +3,7 @@ package com.listenup.individualassignment.controller;
 import java.util.List;
 
 import com.listenup.individualassignment.configuration.security.isauthenticated.IsAuthenticated;
+import com.listenup.individualassignment.dto.createdto.AddRemoveSongToPlaylistDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -62,9 +63,9 @@ public class PlaylistController {
     @IsAuthenticated
     @RolesAllowed({"ROLE_CUSTOMER"})
     @PutMapping("{id}/songs")
-    public ResponseEntity<PlaylistSongListDTO> addSongToPlaylist(@PathVariable("id") long id, @RequestBody @Valid PlaylistSongListDTO playlistDTO) {
-        playlistDTO.setId(id);
-        management.editPlaylistSongs(playlistDTO);
+    public ResponseEntity<PlaylistSongListDTO> addSongToPlaylist(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToPlaylistDTO song) {
+        song.setPlaylistID(id);
+        management.editPlaylistSongs(song);
         return ResponseEntity.noContent().build();
     }
 

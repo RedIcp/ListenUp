@@ -4,6 +4,8 @@ import com.listenup.individualassignment.business.UserService;
 import com.listenup.individualassignment.dto.CustomerLikedPlaylistListDTO;
 import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
 import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
+import com.listenup.individualassignment.dto.createdto.AddRemoveLikedPlaylistDTO;
+import com.listenup.individualassignment.dto.createdto.AddRemoveSongToCollectionDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.UpdateUserDTO;
@@ -265,15 +267,15 @@ class UserControllerTest {
                         .content("""
                                 {
                                         "id": 1,
-                                        "likedSongs": []                 
+                                        "song": null                 
                                 } 
                                 """))
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        CustomerLikedSongListDTO user = CustomerLikedSongListDTO.builder()
-                .id(1l)
-                .likedSongs(Collections.emptyList())
+        AddRemoveSongToCollectionDTO user = AddRemoveSongToCollectionDTO.builder()
+                .customerID(1l)
+                .song(null)
                 .build();
 
         verify(service).editUserCollection(user);
@@ -287,15 +289,15 @@ class UserControllerTest {
                         .content("""
                                 {
                                         "id": 1,
-                                        "likedPlaylists": []                       
+                                        "playlist": null                       
                                 } 
                                 """))
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        CustomerLikedPlaylistListDTO user = CustomerLikedPlaylistListDTO.builder()
-                .id(1l)
-                .likedPlaylists(Collections.emptyList())
+        AddRemoveLikedPlaylistDTO user = AddRemoveLikedPlaylistDTO.builder()
+                .customerID(1l)
+                .playlist(null)
                 .build();
 
         verify(service).editUserLikedPlaylists(user);
