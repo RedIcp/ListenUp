@@ -26,8 +26,7 @@ import javax.validation.Valid;
 public class  ArtistController {
     private final ArtistService management;
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
+
     @GetMapping
     public ResponseEntity<List<ArtistDTO>> getAllArtists() {
         List<ArtistDTO> artists = management.getArtists();

@@ -25,8 +25,7 @@ import javax.validation.Valid;
 public class AlbumController {
     private final AlbumService management;
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
+
     @GetMapping
     public ResponseEntity<List<AlbumDTO>> getAllAlbums() {
         List<AlbumDTO> albums = management.getAlbums();

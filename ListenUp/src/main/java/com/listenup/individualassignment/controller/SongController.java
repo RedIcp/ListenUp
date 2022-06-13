@@ -26,8 +26,7 @@ import javax.validation.Valid;
 public class SongController {
     private final SongService management;
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
+
     @GetMapping
     public ResponseEntity<List<SingleSongDTO>> getAllSongs() {
         List<SingleSongDTO> songs = management.getSongs();

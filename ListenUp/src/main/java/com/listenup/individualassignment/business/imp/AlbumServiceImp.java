@@ -13,6 +13,7 @@ import com.listenup.individualassignment.entity.Album;
 import com.listenup.individualassignment.repository.AlbumRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Primary;
 
@@ -25,6 +26,8 @@ import javax.transaction.Transactional;
 public class AlbumServiceImp implements AlbumService {
     private final AlbumRepository db;
 
+    @Async
+    @Override
     public CreateAlbumResponseDTO addAlbum(CreateAlbumRequestDTO album){
         Album savedAlbum = db.save(AlbumDTOConverter.convertToModelForCreate(album));
 
@@ -33,13 +36,20 @@ public class AlbumServiceImp implements AlbumService {
                 .build();
     }
 
+    @Async
+    @Override
     public List<AlbumDTO> getAlbums(){
         return AlbumDTOConverter.convertToDTOList(db.findAll());
     }
+
+    @Async
+    @Override
     public AlbumSongListDTO getAlbumSongs(long id){
         return AlbumDTOConverter.convertToDTOForSong(db.getById(id));
     }
 
+    @Async
+    @Override
     public AlbumDTO editAlbum(AlbumDTO album){
         if(!db.existsById(album.getId())){
             throw new InvalidAlbumException("INVALID_ALBUM");
@@ -48,6 +58,8 @@ public class AlbumServiceImp implements AlbumService {
         return album;
     }
 
+    @Async
+    @Override
     public boolean deleteAlbum(long id){
         boolean result = false;
         if(db.existsById(id)){

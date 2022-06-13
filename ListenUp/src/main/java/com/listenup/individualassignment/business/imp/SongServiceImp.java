@@ -19,6 +19,7 @@ import com.listenup.individualassignment.repository.GenreRepository;
 import com.listenup.individualassignment.repository.SongRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Primary;
 
@@ -28,6 +29,8 @@ import org.springframework.context.annotation.Primary;
 public class SongServiceImp implements SongService {
     private final SongRepository db;
 
+    @Async
+    @Override
     public CreateSingleSongResponseDTO addSingleSong(CreateSingleSongRequestDTO song){
         Song savedSong = db.save(SongDTOConverter.convertToSingleSongModelForCreate(song));
 
@@ -36,6 +39,8 @@ public class SongServiceImp implements SongService {
                 .build();
     }
 
+    @Async
+    @Override
     public CreateAlbumSongResponseDTO addAlbumSong(CreateAlbumSongRequestDTO song){
         Song savedSong = db.save(SongDTOConverter.convertToAlbumSongModelForCreate(song));
         return CreateAlbumSongResponseDTO.builder()
@@ -43,13 +48,20 @@ public class SongServiceImp implements SongService {
                 .build();
     }
 
+    @Async
+    @Override
     public List<SingleSongDTO> getSongs(){
         return SongDTOConverter.convertToSingleSongDTOList(db.findAll());
     }
+
+    @Async
+    @Override
     public SingleSongDTO getSong(long id){
         return SongDTOConverter.convertToSingleSongDTO(db.getById(id));
     }
 
+    @Async
+    @Override
     public SingleSongDTO editSong(SingleSongDTO song){
         if(!db.existsById(song.getId())){
             throw new InvalidSongException("INVALID_ID");
@@ -58,6 +70,8 @@ public class SongServiceImp implements SongService {
         return song;
     }
 
+    @Async
+    @Override
     public boolean deleteSong(long id){
         boolean result = false;
         if(db.existsById(id)){

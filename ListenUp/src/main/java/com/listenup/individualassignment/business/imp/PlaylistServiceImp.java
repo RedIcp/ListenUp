@@ -18,6 +18,7 @@ import com.listenup.individualassignment.entity.RoleEnum;
 import com.listenup.individualassignment.repository.PlaylistRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Primary;
 
@@ -28,6 +29,8 @@ public class PlaylistServiceImp implements PlaylistService {
     private final PlaylistRepository db;
     private final AccessTokenDTO requestAccessToken;
 
+    @Async
+    @Override
     public CreatePlaylistResponseDTO addPlaylist(CreatePlaylistRequestDTO playlist){
         Playlist savedPlaylist = db.save(PlaylistDTOConverter.convertToModelForCreate(playlist));
 
@@ -36,13 +39,20 @@ public class PlaylistServiceImp implements PlaylistService {
                 .build();
     }
 
+    @Async
+    @Override
     public List<PlaylistDTO> getPlaylists(){
         return PlaylistDTOConverter.convertToDTOList(db.findAll());
     }
+
+    @Async
+    @Override
     public PlaylistSongListDTO getPlaylistSong(long id){
         return PlaylistDTOConverter.convertToDTOForSong(db.getById(id));
     }
 
+    @Async
+    @Override
     public PlaylistDTO editPlaylist(PlaylistDTO playlist){
         if(!db.existsById(playlist.getId())){
             throw new InvalidPlaylistException("INVALID_ID");
@@ -51,11 +61,11 @@ public class PlaylistServiceImp implements PlaylistService {
         return playlist;
     }
 
+    @Async
+    @Override
     public void addSongToPlaylist(AddRemoveSongToPlaylistDTO song){
         Playlist old = db.getById(song.getPlaylistID());
-        if (!requestAccessToken.hasRole(RoleEnum.ADMIN.name()) && requestAccessToken.getUserID() != song.getCustomerID()) {
-            throw new UnauthorizedDataAccessException("USER_ID_NOT_FROM_LOGGED_IN_USER");
-        }
+        isAuthorised(song.getCustomerID());
         if(!db.existsById(song.getPlaylistID())){
             throw new InvalidPlaylistException("INVALID_ID");
         }
@@ -64,11 +74,11 @@ public class PlaylistServiceImp implements PlaylistService {
         db.save(old);
     }
 
+    @Async
+    @Override
     public void removeSongFromPlaylist(AddRemoveSongToPlaylistDTO song){
         Playlist old = db.getById(song.getPlaylistID());
-        if (!requestAccessToken.hasRole(RoleEnum.ADMIN.name()) && requestAccessToken.getUserID() != song.getCustomerID()) {
-            throw new UnauthorizedDataAccessException("USER_ID_NOT_FROM_LOGGED_IN_USER");
-        }
+        isAuthorised(song.getCustomerID());
         if(!db.existsById(song.getPlaylistID())){
             throw new InvalidPlaylistException("INVALID_ID");
         }
@@ -77,6 +87,14 @@ public class PlaylistServiceImp implements PlaylistService {
         db.save(old);
     }
 
+    private void isAuthorised(long id){
+        if (!requestAccessToken.hasRole(RoleEnum.ADMIN.name()) && requestAccessToken.getUserID() != id) {
+            throw new UnauthorizedDataAccessException("USER_ID_NOT_FROM_LOGGED_IN_USER");
+        }
+    }
+
+    @Async
+    @Override
     public boolean deletePlaylist(long id){
         boolean result = false;
         if(db.existsById(id)){

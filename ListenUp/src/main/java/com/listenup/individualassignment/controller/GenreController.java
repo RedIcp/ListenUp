@@ -25,8 +25,7 @@ import javax.validation.Valid;
 public class GenreController {
     private final GenreService management;
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
+
     @GetMapping
     public ResponseEntity<List<GenreDTO>> getAllGenres() {
         List<GenreDTO> genres = management.getGenres();
