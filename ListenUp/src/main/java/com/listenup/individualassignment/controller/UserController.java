@@ -25,8 +25,6 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService management;
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
     @GetMapping
     public ResponseEntity<List<ViewUserDTO>> getAllUsers() {
         List<ViewUserDTO> users = management.getUsers();
@@ -38,8 +36,6 @@ public class UserController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping("{id}/profile")
     public ResponseEntity<UpdateUserDTO> getUserPath(@PathVariable(value = "id") long id) {
         UpdateUserDTO dto = management.getUser(id);
@@ -50,8 +46,6 @@ public class UserController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping("{id}/playlists")
     public ResponseEntity<CustomerPlaylistListDTO> getCustomerPlaylistsPath(@PathVariable(value = "id") long id) {
         CustomerPlaylistListDTO dto = management.getCustomerPlaylists(id);
@@ -62,8 +56,6 @@ public class UserController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping("{id}/collection")
     public ResponseEntity<CustomerLikedSongListDTO> getCustomerLikedSongsPath(@PathVariable(value = "id") long id) {
         CustomerLikedSongListDTO dto = management.getCustomerCollection(id);
@@ -74,8 +66,6 @@ public class UserController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping("{id}/likedplaylists")
     public ResponseEntity<CustomerLikedPlaylistListDTO> getCustomerLikedPlaylistsPath(@PathVariable(value = "id") long id) {
         CustomerLikedPlaylistListDTO dto = management.getCustomerLikedPlaylists(id);
@@ -86,8 +76,6 @@ public class UserController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @PutMapping("{id}/profile")
     public ResponseEntity<UpdateUserDTO> updateUser(@PathVariable("id") long id, @RequestBody @Valid UpdateUserDTO userDTO) {
         userDTO.setId(id);
@@ -95,8 +83,6 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER"})
     @PutMapping("{id}/collection/add")
     public ResponseEntity<CustomerLikedSongListDTO> addSongToCollection(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToCollectionDTO song) {
         song.setCustomerID(id);
@@ -104,8 +90,6 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER"})
     @PutMapping("{id}/collection/remove")
     public ResponseEntity<CustomerLikedSongListDTO> removeSongToCollection(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToCollectionDTO song) {
         song.setCustomerID(id);
@@ -113,8 +97,6 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER"})
     @PutMapping("{id}/likedplaylist/add")
     public ResponseEntity<CustomerLikedPlaylistListDTO> addLikedPlaylist(@PathVariable("id") long id, @RequestBody @Valid AddRemoveLikedPlaylistDTO playlist) {
         playlist.setCustomerID(id);
@@ -122,8 +104,6 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER"})
     @PutMapping("{id}/likedplaylist/remove")
     public ResponseEntity<CustomerLikedPlaylistListDTO> removeLikedPlaylist(@PathVariable("id") long id, @RequestBody @Valid AddRemoveLikedPlaylistDTO playlist) {
         playlist.setCustomerID(id);
@@ -131,8 +111,6 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable long id) {
         management.deleteAccount(id);

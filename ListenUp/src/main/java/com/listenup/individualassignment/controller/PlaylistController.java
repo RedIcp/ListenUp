@@ -26,8 +26,6 @@ import javax.validation.Valid;
 public class PlaylistController {
     private final PlaylistService management;
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping
     public ResponseEntity<List<PlaylistDTO>> getAllPlaylists() {
         List<PlaylistDTO> playlists = management.getPlaylists();
@@ -39,8 +37,6 @@ public class PlaylistController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping("{id}")
     public ResponseEntity<PlaylistSongListDTO> getPlaylistPath(@PathVariable(value = "id") long id) {
         PlaylistSongListDTO playlist = management.getPlaylistSong(id);
@@ -52,16 +48,12 @@ public class PlaylistController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER"})
     @PostMapping()
     public ResponseEntity<CreatePlaylistResponseDTO> createPlaylist(@RequestBody @Valid CreatePlaylistRequestDTO playlistDTO) {
         CreatePlaylistResponseDTO playlist = management.addPlaylist(playlistDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(playlist);
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER"})
     @PutMapping("{id}/songs/add")
     public ResponseEntity<PlaylistSongListDTO> addSongToPlaylist(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToPlaylistDTO song) {
         song.setPlaylistID(id);
@@ -69,8 +61,6 @@ public class PlaylistController {
         return ResponseEntity.noContent().build();
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER"})
     @PutMapping("{id}/songs/remove")
     public ResponseEntity<PlaylistSongListDTO> removeSongToPlaylist(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToPlaylistDTO song) {
         song.setPlaylistID(id);
@@ -78,8 +68,6 @@ public class PlaylistController {
         return ResponseEntity.noContent().build();
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER"})
     @PutMapping("{id}")
     public ResponseEntity<PlaylistDTO> updatePlaylist(@PathVariable("id") long id, @RequestBody @Valid PlaylistDTO playlistDTO) {
         playlistDTO.setId(id);
@@ -87,8 +75,6 @@ public class PlaylistController {
         return ResponseEntity.noContent().build();
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER"})
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deletePlaylist(@PathVariable long id) {
         management.deletePlaylist(id);

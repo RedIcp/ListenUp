@@ -38,8 +38,6 @@ public class  ArtistController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping("{id}")
     public ResponseEntity<ArtistSongListDTO> getArtistPath(@PathVariable(value = "id") long id) {
         ArtistSongListDTO artist = management.getArtistSongs(id);
@@ -51,8 +49,6 @@ public class  ArtistController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping("{id}/albums")
     public ResponseEntity<ArtistAlbumListDTO> getArtistAlbumsPath(@PathVariable(value = "id") long id) {
         ArtistAlbumListDTO artist = management.getArtistAlbums(id);
@@ -64,16 +60,12 @@ public class  ArtistController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
     @PostMapping()
     public ResponseEntity<CreateArtistResponseDTO> createArtist(@RequestBody @Valid CreateArtistRequestDTO artistDTO) {
         CreateArtistResponseDTO artist = management.addArtist(artistDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(artist);
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
     @PutMapping("{id}")
     public ResponseEntity<ArtistDTO> updateArtist(@PathVariable("id") long id, @RequestBody @Valid ArtistDTO artistDTO) {
         artistDTO.setId(id);
@@ -81,8 +73,6 @@ public class  ArtistController {
         return ResponseEntity.noContent().build();
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteArtist(@PathVariable long id) {
         management.deleteArtist(id);

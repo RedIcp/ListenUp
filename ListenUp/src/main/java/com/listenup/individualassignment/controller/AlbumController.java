@@ -37,8 +37,6 @@ public class AlbumController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping("{id}")
     public ResponseEntity<AlbumSongListDTO> getAlbumPath(@PathVariable(value = "id") long id) {
         AlbumSongListDTO album = management.getAlbumSongs(id);
@@ -50,16 +48,12 @@ public class AlbumController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
     @PostMapping()
     public ResponseEntity<CreateAlbumResponseDTO> createAlbum(@RequestBody @Valid CreateAlbumRequestDTO albumDTO) {
         CreateAlbumResponseDTO album = management.addAlbum(albumDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(album);
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
     @PutMapping("{id}")
     public ResponseEntity<AlbumDTO> updateAlbum(@PathVariable("id") long id, @RequestBody @Valid AlbumDTO albumDTO) {
         albumDTO.setId(id);
@@ -67,8 +61,6 @@ public class AlbumController {
         return ResponseEntity.noContent().build();
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteAlbum(@PathVariable long id) {
         management.deleteAlbum(id);

@@ -1,12 +1,11 @@
 import {useState, useContext} from 'react';
-import {format} from 'date-fns';
 import axios from "axios";
 import GenreDataContext from '../../Context/GenreDataContext';
 import ArtistDataContext from '../../Context/ArtistDataContext';
 import AlbumDataContext from '../../Context/AlbumDataContext';
 import "../../Style/NewSong.css";
 
-const NewSong = () => {
+const Song = () => {
     const [name, setName] = useState('');
 
     const {searchGenre, setSearchGenre, searchGenresResults} = useContext(GenreDataContext);
@@ -19,31 +18,9 @@ const NewSong = () => {
 
     const [isSingleSong, setIsSingleSong] = useState(false);
 
-    const handleAlbumSongSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const newSong = {
-            name: name,
-            genre: genre,
-            album: album
-        };
-
-        try {
-            const response = await axios.post('http://localhost:8080/songs/singlesong', newSong);
-
-            setName('');
-            setArtist(null);
-            setAlbum(null);
-            setGenre(null);
-        } catch (err) {
-            console.log(`Error: ${err.message}`);
-        }
-    }
-
-    const handleSingleSongSubmit = async (e) => {
-        e.preventDefault();
-
-        const datetime = format(new Date(), 'dd/MM/yyyy');
         try {
             if (isSingleSong) {
                 const newSong = {
@@ -62,7 +39,8 @@ const NewSong = () => {
                 setGenre(null);
 
                 console.log(response)
-            } else {
+            }
+            else {
                 const newSong = {name: name, genre: genre, album: album}
 
                 const response = await axios.post('http://localhost:8080/songs/albumsong', newSong);
@@ -80,7 +58,7 @@ const NewSong = () => {
     }
 
     return (
-        <main>
+        <main className="main">
             <div className="form-container">
                 <h2>New Song</h2>
                 <div className="radio-button" >
@@ -97,7 +75,7 @@ const NewSong = () => {
                     />
                     <label onClick={() => setIsSingleSong(false)}>Album Song</label>
                 </div>
-                <form onSubmit={handleSingleSongSubmit}>
+                <form onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col-25">
                             <label htmlFor="name">Name: </label>
@@ -125,17 +103,6 @@ const NewSong = () => {
                     </div>
                     <div className="row">
                         <div className="col-25">
-                            <label htmlFor="artist">Artist: </label>
-                        </div>
-                        <div className="col-75">
-                            <input
-                                disabled id="artist"
-                                type="text"
-                                value={artist != null ? artist.name : "Select a artist"}/>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-25">
                             <label htmlFor="album">Album: </label>
                         </div>
                         <div className="col-75">
@@ -145,6 +112,20 @@ const NewSong = () => {
                                 value={album != null ? album.name : "Select a album"}/>
                         </div>
                     </div>
+                    {isSingleSong ?
+                        <div className="row">
+                            <div className="col-25">
+                                <label htmlFor="artist">Artist: </label>
+                            </div>
+                            <div className="col-75">
+                                <input
+                                    disabled id="artist"
+                                    type="text"
+                                    value={artist != null ? artist.name : "Select a artist"}
+                                />
+                            </div>
+                        </div> : <div></div>
+                    }
                     <button>Create Song</button>
                 </form>
             </div>
@@ -213,4 +194,4 @@ const NewSong = () => {
     )
 }
 
-export default NewSong
+export default Song

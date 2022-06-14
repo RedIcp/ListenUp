@@ -1,10 +1,9 @@
 import {useState, useEffect, useContext} from 'react';
 import AuthContext from "../Context/AuthProvider";
-import "../Style/Login.css"
+import "../Style/Form.css"
+import jwt_decode from "jwt-decode";
 
 import axios from 'axios';
-
-const LOGIN_URL = '/auth';
 
 const Login = () => {
     const {setAuth} = useContext(AuthContext);
@@ -32,11 +31,14 @@ const Login = () => {
             console.log(response?.data);
 
             const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
+            const decodedAccessToken = jwt_decode(accessToken);
+            const roles = decodedAccessToken.roles;
+            const id = decodedAccessToken.userID;
 
-            setAuth({user: email, pwd, roles, accessToken});
+            setAuth({id, roles, accessToken});
             setEmail('');
             setPwd('');
+            setErrMsg('');
             setSuccess(true);
         } catch (err) {
             if (!err?.response) {
@@ -52,7 +54,7 @@ const Login = () => {
     }
 
     return (
-        <div className="login">
+        <div className="form">
             <>
                 {success ? (
                     <section>
@@ -65,7 +67,7 @@ const Login = () => {
                 ) : (
                     <section>
                         <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                        <h1>Sign In</h1>
+                        <h1>Login</h1>
                         <form onSubmit={handleSubmit}>
                             <label htmlFor="email">Email:</label>
                             <input

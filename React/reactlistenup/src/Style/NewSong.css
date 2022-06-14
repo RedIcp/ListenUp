@@ -1,4 +1,4 @@
-main {
+.main {
     display: flex;
     flex-direction: row;
     background-color: black;
@@ -52,7 +52,7 @@ main {
     background: darksalmon;
 }
 
-main input[type = "text"]{
+.main input[type = "text"]{
     width: 50%;
     padding: 6px;
     color: white;
@@ -66,7 +66,7 @@ input[type = "radio"] {
     color: orange;
 }
 
-main button {
+.main button {
     background-color: white;
     color: black;
     padding: 12px 20px;
@@ -76,7 +76,7 @@ main button {
     float: right;
 }
 
-main button:hover {
+.main button:hover {
     background-color: orange;
 }
 
@@ -85,7 +85,7 @@ main button:hover {
     border-radius: 10px;
 }
 
-main label {
+.main label {
     padding: 12px 12px 12px 0;
     display: inline-block;
 }

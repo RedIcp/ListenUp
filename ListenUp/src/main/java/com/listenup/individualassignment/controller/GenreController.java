@@ -37,8 +37,6 @@ public class GenreController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping("{id}")
     public ResponseEntity<GenreSongListDTO> getGenrePath(@PathVariable(value = "id") long id) {
         GenreSongListDTO genre = management.getGenreSongs(id);
@@ -50,16 +48,12 @@ public class GenreController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
     @PostMapping()
     public ResponseEntity<CreateGenreResponseDTO> createGenre(@RequestBody @Valid CreateGenreRequestDTO genreDTO) {
         CreateGenreResponseDTO genre = management.addGenre(genreDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(genre);
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
     @PutMapping("{id}")
     public ResponseEntity<GenreDTO> updateGenre(@PathVariable("id") long id, @RequestBody @Valid GenreDTO genreDTO) {
         genreDTO.setId(id);
@@ -67,8 +61,6 @@ public class GenreController {
         return ResponseEntity.noContent().build();
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteGenre(@PathVariable int id) {
         management.deleteGenre(id);

@@ -38,8 +38,6 @@ public class SongController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping("{id}")
     public ResponseEntity<SingleSongDTO> getSongPath(@PathVariable(value = "id") long id) {
         SingleSongDTO song = management.getSong(id);
@@ -65,8 +63,6 @@ public class SongController {
         return ResponseEntity.status(HttpStatus.CREATED).body(song);
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
     @PutMapping("{id}")
     public ResponseEntity<SingleSongDTO> updateSong(@PathVariable("id") long id, @RequestBody @Valid SingleSongDTO songDTO) {
         songDTO.setId(id);
@@ -74,8 +70,6 @@ public class SongController {
         return ResponseEntity.noContent().build();
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteSong(@PathVariable int id) {
         management.deleteSong(id);

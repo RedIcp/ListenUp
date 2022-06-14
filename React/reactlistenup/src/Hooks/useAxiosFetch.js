@@ -30,7 +30,7 @@ const useAxiosFetch = (dataUrl) => {
             }
         }
 
-        fetchData(dataUrl);
+        fetchData(dataUrl)
 
         const cleanUp = () => {
             isMounted = false;
