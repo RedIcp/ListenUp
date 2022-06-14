@@ -35,7 +35,7 @@ class ArtistServiceImpTest {
                 .name("Maroon 5")
                 .build();
         Artist savedArtist = Artist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .build();
 
@@ -46,7 +46,7 @@ class ArtistServiceImpTest {
                 .build();
 
         CreateArtistResponseDTO expectedDTO = CreateArtistResponseDTO.builder()
-                .artistID(1l)
+                .artistID(1L)
                 .build();
 
         CreateArtistResponseDTO actualDTO = service.addArtist(dto);
@@ -59,11 +59,11 @@ class ArtistServiceImpTest {
     @Test
     void getArtists() {
         Artist artist1 = Artist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .build();
         Artist artist2 = Artist.builder()
-                .id(2l)
+                .id(2L)
                 .name("Post Malone")
                 .build();
 
@@ -81,20 +81,20 @@ class ArtistServiceImpTest {
     @Test
     void getArtistSongs() {
         Artist artist = Artist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .songs(Collections.emptyList())
                 .build();
 
-        when(repository.getById(1l)).thenReturn(artist);
+        when(repository.getById(1L)).thenReturn(artist);
 
         ArtistSongListDTO expectedDTO = ArtistSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .songs(Collections.emptyList())
                 .build();
 
-        ArtistSongListDTO actualDTO = service.getArtistSongs(1l);
+        ArtistSongListDTO actualDTO = service.getArtistSongs(1L);
 
         assertEquals(actualDTO, expectedDTO);
     }
@@ -102,39 +102,39 @@ class ArtistServiceImpTest {
     @Test
     void getArtistAlbums() {
         Artist artist = Artist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .albums(Collections.emptyList())
                 .build();
 
-        when(repository.getById(1l)).thenReturn(artist);
+        when(repository.getById(1L)).thenReturn(artist);
 
         ArtistAlbumListDTO expectedDTO = ArtistAlbumListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .albums(Collections.emptyList())
                 .build();
 
-        ArtistAlbumListDTO actualDTO = service.getArtistAlbums(1l);
+        ArtistAlbumListDTO actualDTO = service.getArtistAlbums(1L);
 
         assertEquals(actualDTO, expectedDTO);
     }
 
     @Test
     void editArtistValid() {
-        when(repository.existsById(1l)).thenReturn(true);
+        when(repository.existsById(1L)).thenReturn(true);
 
         ArtistDTO updateDTO = ArtistDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Post Malone")
                 .build();
 
         service.editArtist(updateDTO);
 
-        verify(repository).existsById(1l);
+        verify(repository).existsById(1L);
 
         Artist actualArtist = Artist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Post Malone")
                 .build();
 
@@ -143,10 +143,10 @@ class ArtistServiceImpTest {
 
     @Test
     void editArtistInvalidInput(){
-        when(repository.existsById(1l)).thenReturn(false);
+        when(repository.existsById(1L)).thenReturn(false);
 
         ArtistDTO updateDTO = ArtistDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Post Malone")
                 .build();
 
@@ -154,27 +154,27 @@ class ArtistServiceImpTest {
 
         assertEquals("INVALID_ARTIST", exception.getReason());
 
-        verify(repository).existsById(1l);
+        verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);
     }
 
     @Test
     void deleteArtistValid() {
-        when(repository.existsById(1l)).thenReturn(true);
+        when(repository.existsById(1L)).thenReturn(true);
 
-        service.deleteArtist(1l);
+        service.deleteArtist(1L);
 
-        verify(repository).existsById(1l);
-        verify(repository).deleteById(1l);
+        verify(repository).existsById(1L);
+        verify(repository).deleteById(1L);
     }
 
     @Test
     void deleteArtistInvalid() {
-        when(repository.existsById(1l)).thenReturn(false);
+        when(repository.existsById(1L)).thenReturn(false);
 
-        service.deleteArtist(1l);
+        service.deleteArtist(1L);
 
-        verify(repository).existsById(1l);
+        verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);
     }
 }

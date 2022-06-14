@@ -14,12 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SongDTOConverterTest {
     Artist artist = Artist.builder()
-            .id(1l)
+            .id(1L)
             .name("Maroon 5")
             .build();
 
     Album album = Album.builder()
-            .id(1l)
+            .id(1L)
             .name("V")
             .artist(artist)
             .releasedDate(null)
@@ -27,14 +27,14 @@ class SongDTOConverterTest {
             .build();
 
     Genre genre = Genre.builder()
-            .id(1l)
+            .id(1L)
             .name("Pop")
             .build();
 
-    Song expectedSingleSongModel = new SingleSong(1l, "Sugar", artist, genre, null, null);
+    Song expectedSingleSongModel = new SingleSong(1L, "Sugar", artist, genre, null, null);
 
     SingleSongDTO expectedSingleSongDTO = SingleSongDTO.builder()
-            .id(1l)
+            .id(1L)
             .name("Sugar")
             .genre(GenreDTOConverter.convertToDTO(genre))
             .artist(ArtistDTOConverter.convertToDTO(artist))
@@ -42,10 +42,10 @@ class SongDTOConverterTest {
             .uploadedDate(null)
             .build();
 
-    Song expectedAlbumSongModel = new AlbumSong(1l, "Map", genre, album);
+    Song expectedAlbumSongModel = new AlbumSong(1L, "Map", genre, album);
 
     AlbumSongDTO expectedAlbumSongDTO = AlbumSongDTO.builder()
-            .id(1l)
+            .id(1L)
             .name("Map")
             .genre(GenreDTOConverter.convertToDTO(genre))
             .album(AlbumDTOConverter.convertToDTO(album))
@@ -83,7 +83,7 @@ class SongDTOConverterTest {
                 .build();
 
         SingleSong actualModel = SongDTOConverter.convertToSingleSongModelForCreate(dto);
-        actualModel.setId(1l);
+        actualModel.setId(1L);
 
         assertEquals(actualModel, expectedSingleSongModel);
     }

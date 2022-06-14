@@ -31,7 +31,7 @@ class AlbumServiceImpTest {
     private Date date = new Date(2021,11,27);
 
     private Artist artist = Artist.builder()
-            .id(1l)
+            .id(1L)
             .name("Maroon 5")
             .build();
     @Test
@@ -43,7 +43,7 @@ class AlbumServiceImpTest {
                 .releasedDate(date)
                 .build();
         Album savedAlbum = Album.builder()
-                .id(1l)
+                .id(1L)
                 .name("V")
                 .artist(artist)
                 .uploadedDate(date)
@@ -60,7 +60,7 @@ class AlbumServiceImpTest {
                 .build();
 
         CreateAlbumResponseDTO expectedDTO = CreateAlbumResponseDTO.builder()
-                .albumID(1l)
+                .albumID(1L)
                 .build();
 
         CreateAlbumResponseDTO actualDTO = service.addAlbum(dto);
@@ -73,14 +73,14 @@ class AlbumServiceImpTest {
     @Test
     void getAlbums() {
         Album album1 = Album.builder()
-                .id(1l)
+                .id(1L)
                 .name("V")
                 .artist(artist)
                 .uploadedDate(date)
                 .releasedDate(date)
                 .build();
         Album album2 = Album.builder()
-                .id(2l)
+                .id(2L)
                 .name("Overexposed")
                 .artist(artist)
                 .uploadedDate(date)
@@ -101,7 +101,7 @@ class AlbumServiceImpTest {
     @Test
     void getAlbumSongsWithValidInput() {
         Album album = Album.builder()
-                .id(1l)
+                .id(1L)
                 .name("V")
                 .artist(artist)
                 .uploadedDate(date)
@@ -109,25 +109,25 @@ class AlbumServiceImpTest {
                 .albumSongs(Collections.emptyList())
                 .build();
 
-        when(repository.getById(1l)).thenReturn(album);
+        when(repository.getById(1L)).thenReturn(album);
 
         AlbumSongListDTO expectedDTO = AlbumSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("V")
                 .songs(Collections.emptyList())
                 .build();
 
-        AlbumSongListDTO actualDTO = service.getAlbumSongs(1l);
+        AlbumSongListDTO actualDTO = service.getAlbumSongs(1L);
 
         assertEquals(actualDTO, expectedDTO);
     }
 
     @Test
     void editAlbumValidInput() {
-        when(repository.existsById(1l)).thenReturn(true);
+        when(repository.existsById(1L)).thenReturn(true);
 
         AlbumDTO updateDTO = AlbumDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Map")
                 .artist(ArtistDTOConverter.convertToDTO(artist))
                 .releasedDate(date)
@@ -136,10 +136,10 @@ class AlbumServiceImpTest {
 
         service.editAlbum(updateDTO);
 
-        verify(repository).existsById(1l);
+        verify(repository).existsById(1L);
 
         Album actualAlbum = Album.builder()
-                .id(1l)
+                .id(1L)
                 .name("Map")
                 .artist(artist)
                 .releasedDate(date)
@@ -150,10 +150,10 @@ class AlbumServiceImpTest {
     }
     @Test
     void editAlbumInvalidInput() {
-        when(repository.existsById(1l)).thenReturn(false);
+        when(repository.existsById(1L)).thenReturn(false);
 
         AlbumDTO updateDTO = AlbumDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Map")
                 .artist(ArtistDTOConverter.convertToDTO(artist))
                 .releasedDate(date)
@@ -164,7 +164,7 @@ class AlbumServiceImpTest {
 
         assertEquals("INVALID_ALBUM", exception.getReason());
 
-        verify(repository).existsById(1l);
+        verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);
     }
 
@@ -174,7 +174,7 @@ class AlbumServiceImpTest {
 
         service.deleteAlbum(10L);
 
-        verify(repository).existsById(10l);
+        verify(repository).existsById(10L);
         verify(repository).deleteById(10L);
     }
 
@@ -184,7 +184,7 @@ class AlbumServiceImpTest {
 
         service.deleteAlbum(10L);
 
-        verify(repository).existsById(10l);
+        verify(repository).existsById(10L);
         verifyNoMoreInteractions(repository);
     }
 }

@@ -1,6 +1,7 @@
 package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.exception.InvalidPlaylistException;
+import com.listenup.individualassignment.business.exception.UnauthorizedDataAccessException;
 import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverter;
 import com.listenup.individualassignment.business.imp.dtoconverter.PlaylistDTOConverter;
 import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
@@ -38,7 +39,7 @@ class PlaylistServiceImpTest {
     @InjectMocks
     private PlaylistServiceImp service;
 
-    Customer customer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
+    Customer customer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
 
     @Test
     void addPlaylist() {
@@ -47,7 +48,7 @@ class PlaylistServiceImpTest {
                 .customer(customer)
                 .build();
         Playlist savedPlaylist = Playlist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .customer(customer)
                 .build();
@@ -60,7 +61,7 @@ class PlaylistServiceImpTest {
                 .build();
 
         CreatePlaylistResponseDTO expectedDTO = CreatePlaylistResponseDTO.builder()
-                .playlistID(1l)
+                .playlistID(1L)
                 .build();
 
         CreatePlaylistResponseDTO actualDTO = service.addPlaylist(dto);
@@ -73,12 +74,12 @@ class PlaylistServiceImpTest {
     @Test
     void getPlaylists() {
         Playlist playlist1 = Playlist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .customer(customer)
                 .build();
         Playlist playlist2 = Playlist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .customer(customer)
                 .build();
@@ -97,41 +98,42 @@ class PlaylistServiceImpTest {
     @Test
     void getPlaylistSong() {
         Playlist playlist = Playlist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .customer(customer)
                 .songs(Collections.emptyList())
                 .build();
 
-        when(repository.getById(1l)).thenReturn(playlist);
+        when(repository.getById(1L)).thenReturn(playlist);
 
         PlaylistSongListDTO expectedDTO = PlaylistSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .songs(Collections.emptyList())
                 .build();
 
-        PlaylistSongListDTO actualDTO = service.getPlaylistSong(1l);
+        PlaylistSongListDTO actualDTO = service.getPlaylistSong(1L);
 
         assertEquals(actualDTO, expectedDTO);
     }
 
     @Test
     void editPlaylistValid() {
-        when(repository.existsById(1l)).thenReturn(true);
+        when(repository.existsById(1L)).thenReturn(true);
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
 
         PlaylistDTO updateDTO = PlaylistDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Workout")
                 .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();
 
         service.editPlaylist(updateDTO);
 
-        verify(repository).existsById(1l);
+        verify(repository).existsById(1L);
 
         Playlist actualPlaylist = Playlist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Workout")
                 .customer(customer)
                 .build();
@@ -141,10 +143,11 @@ class PlaylistServiceImpTest {
 
     @Test
     void editPlaylistInvalid() {
-        when(repository.existsById(1l)).thenReturn(false);
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
+        when(repository.existsById(1L)).thenReturn(false);
 
         PlaylistDTO updateDTO = PlaylistDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Workout")
                 .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();
@@ -153,30 +156,48 @@ class PlaylistServiceImpTest {
 
         assertEquals("INVALID_ID", exception.getReason());
 
-        verify(repository).existsById(1l);
+        verify(repository).existsById(1L);
+        verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void editPlaylistUnauthorised() {
+        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(false);
+        when(requestAccessToken.getUserID()).thenReturn(4L);
+
+        PlaylistDTO updateDTO = PlaylistDTO.builder()
+                .id(1L)
+                .name("Workout")
+                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
+                .build();
+
+        UnauthorizedDataAccessException exception = assertThrows(UnauthorizedDataAccessException.class, () -> service.editPlaylist(updateDTO));
+
+        assertEquals("USER_ID_NOT_FROM_LOGGED_IN_USER", exception.getReason());
+
         verifyNoMoreInteractions(repository);
     }
 
     @Test
     void addSongToPlaylistValid() {
-        Playlist beforeUpdatePlaylist = new Playlist(1l, "Chill", customer);
+        Playlist beforeUpdatePlaylist = new Playlist(1L, "Chill", customer);
 
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
-        when(repository.getById(1l)).thenReturn(beforeUpdatePlaylist);
-        when(repository.existsById(1l)).thenReturn(true);
+        when(repository.getById(1L)).thenReturn(beforeUpdatePlaylist);
+        when(repository.existsById(1L)).thenReturn(true);
 
         ArtistDTO artist = ArtistDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .build();
 
         GenreDTO genre = GenreDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Pop")
                 .build();
 
         SingleSongDTO song = SingleSongDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Payphone")
                 .artist(artist)
                 .genre(genre)
@@ -185,15 +206,15 @@ class PlaylistServiceImpTest {
                 .build();
 
         AddRemoveSongToPlaylistDTO updateDTO = AddRemoveSongToPlaylistDTO.builder()
-                .customerID(1l)
-                .playlistID(1l)
+                .customerID(1L)
+                .playlistID(1L)
                 .song(song)
                 .build();
 
         service.addSongToPlaylist(updateDTO);
 
         Playlist actualPlaylist = Playlist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .customer(customer)
                 .songs(List.of(SongDTOConverter.convertToSingleSongModelForUpdate(song)))
@@ -204,12 +225,12 @@ class PlaylistServiceImpTest {
 
     @Test
     void addSongToPlaylistInvalid() {
-        when(repository.existsById(1l)).thenReturn(false);
+        when(repository.existsById(1L)).thenReturn(false);
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
 
         AddRemoveSongToPlaylistDTO updateDTO = AddRemoveSongToPlaylistDTO.builder()
-                .customerID(1l)
-                .playlistID(1l)
+                .customerID(1L)
+                .playlistID(1L)
                 .song(null)
                 .build();
 
@@ -217,30 +238,30 @@ class PlaylistServiceImpTest {
 
         assertEquals("INVALID_ID", exception.getReason());
 
-        verify(repository).getById(1l);
+        verify(repository).getById(1L);
         verifyNoMoreInteractions(repository);
     }
 
     @Test
     void removeSongFromPlaylistValid() {
-        Playlist beforeUpdatePlaylist = new Playlist(1l, "Chill", customer);
+        Playlist beforeUpdatePlaylist = new Playlist(1L, "Chill", customer);
 
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
-        when(repository.getById(1l)).thenReturn(beforeUpdatePlaylist);
-        when(repository.existsById(1l)).thenReturn(true);
+        when(repository.getById(1L)).thenReturn(beforeUpdatePlaylist);
+        when(repository.existsById(1L)).thenReturn(true);
 
         ArtistDTO artist = ArtistDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .build();
 
         GenreDTO genre = GenreDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Pop")
                 .build();
 
         SingleSongDTO song = SingleSongDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Payphone")
                 .artist(artist)
                 .genre(genre)
@@ -249,15 +270,15 @@ class PlaylistServiceImpTest {
                 .build();
 
         AddRemoveSongToPlaylistDTO updateDTO = AddRemoveSongToPlaylistDTO.builder()
-                .customerID(1l)
-                .playlistID(1l)
+                .customerID(1L)
+                .playlistID(1L)
                 .song(song)
                 .build();
 
         service.removeSongFromPlaylist(updateDTO);
 
         Playlist actualPlaylist = Playlist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .customer(customer)
                 .songs(Collections.emptyList())
@@ -268,12 +289,12 @@ class PlaylistServiceImpTest {
 
     @Test
     void removeSongFromPlaylistInvalid() {
-        when(repository.existsById(1l)).thenReturn(false);
+        when(repository.existsById(1L)).thenReturn(false);
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
 
         AddRemoveSongToPlaylistDTO updateDTO = AddRemoveSongToPlaylistDTO.builder()
-                .customerID(1l)
-                .playlistID(1l)
+                .customerID(1L)
+                .playlistID(1L)
                 .song(null)
                 .build();
 
@@ -281,27 +302,27 @@ class PlaylistServiceImpTest {
 
         assertEquals("INVALID_ID", exception.getReason());
 
-        verify(repository).getById(1l);
+        verify(repository).getById(1L);
         verifyNoMoreInteractions(repository);
     }
 
     @Test
     void deletePlaylistValid() {
-        when(repository.existsById(1l)).thenReturn(true);
+        when(repository.existsById(1L)).thenReturn(true);
 
-        service.deletePlaylist(1l);
+        service.deletePlaylist(1L);
 
-        verify(repository).existsById(1l);
-        verify(repository).deleteById(1l);
+        verify(repository).existsById(1L);
+        verify(repository).deleteById(1L);
     }
 
     @Test
     void deletePlaylistInvalid() {
-        when(repository.existsById(1l)).thenReturn(false);
+        when(repository.existsById(1L)).thenReturn(false);
 
-        service.deletePlaylist(1l);
+        service.deletePlaylist(1L);
 
-        verify(repository).existsById(1l);
+        verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);
     }
 }

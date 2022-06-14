@@ -24,7 +24,6 @@ import org.springframework.context.annotation.Primary;
 public class ArtistServiceImp implements ArtistService {
     private final ArtistRepository db;
 
-    @Async
     @Override
     public CreateArtistResponseDTO addArtist(CreateArtistRequestDTO artist){
         Artist savedArtist = db.save(ArtistDTOConverter.convertToModelForCreate(artist));
@@ -34,25 +33,21 @@ public class ArtistServiceImp implements ArtistService {
                 .build();
     }
 
-    @Async
     @Override
     public List<ArtistDTO> getArtists(){
         return ArtistDTOConverter.convertToDTOList(db.findAll());
     }
 
-    @Async
     @Override
     public ArtistSongListDTO getArtistSongs(long id){
         return ArtistDTOConverter.convertToDTOForSong(db.getById(id));
     }
 
-    @Async
     @Override
     public ArtistAlbumListDTO getArtistAlbums(long id){
         return ArtistDTOConverter.convertToDTOForAlbum(db.getById(id));
     }
 
-    @Async
     @Override
     public ArtistDTO editArtist(ArtistDTO artist){
         if(!db.existsById(artist.getId())){
@@ -62,7 +57,6 @@ public class ArtistServiceImp implements ArtistService {
         return artist;
     }
 
-    @Async
     @Override
     public boolean deleteArtist(long id){
         boolean result = false;

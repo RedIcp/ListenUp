@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -44,12 +43,12 @@ class SongControllerTest {
     Date date = new Date(2021,11,27);
 
     ArtistDTO artist = ArtistDTO.builder()
-            .id(1l)
+            .id(1L)
             .name("Maroon 5")
             .build();
 
     AlbumDTO album = AlbumDTO.builder()
-            .id(1l)
+            .id(1L)
             .name("V")
             .artist(artist)
             .releasedDate(date)
@@ -57,7 +56,7 @@ class SongControllerTest {
             .build();
 
     GenreDTO genre = GenreDTO.builder()
-            .id(1l)
+            .id(1L)
             .name("Pop")
             .build();
 
@@ -65,7 +64,7 @@ class SongControllerTest {
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllSongs() throws Exception{
         SingleSongDTO song = SingleSongDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Lost Stars")
                 .genre(genre)
                 .artist(artist)
@@ -120,7 +119,7 @@ class SongControllerTest {
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getSongPath() throws Exception{
         SingleSongDTO song = SingleSongDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Lost Stars")
                 .genre(genre)
                 .artist(artist)
@@ -128,7 +127,7 @@ class SongControllerTest {
                 .releasedDate(date)
                 .build();
 
-        when(service.getSong(1l)).thenReturn(song);
+        when(service.getSong(1L)).thenReturn(song);
 
         mockMvc.perform(get("/songs/1"))
                 .andDo(print())
@@ -151,19 +150,19 @@ class SongControllerTest {
                             }
                         """));
 
-        verify(service).getSong(1l);
+        verify(service).getSong(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getSongPathNotFound() throws Exception{
-        when(service.getSong(1l)).thenReturn(null);
+        when(service.getSong(1L)).thenReturn(null);
 
         mockMvc.perform(get("/songs/1"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getSong(1l);
+        verify(service).getSong(1L);
     }
 
     @Test
@@ -178,7 +177,7 @@ class SongControllerTest {
                 .build();
 
         CreateSingleSongResponseDTO response = CreateSingleSongResponseDTO.builder()
-                .singleSongID(1l)
+                .singleSongID(1L)
                 .build();
 
         when(service.addSingleSong(song)).thenReturn(response);
@@ -221,7 +220,7 @@ class SongControllerTest {
                 .build();
 
         CreateAlbumSongResponseDTO response = CreateAlbumSongResponseDTO.builder()
-                .albumSongID(1l)
+                .albumSongID(1L)
                 .build();
 
         when(service.addAlbumSong(song)).thenReturn(response);
@@ -283,7 +282,7 @@ class SongControllerTest {
                 .andExpect(status().isNoContent());
 
         SingleSongDTO song = SingleSongDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Lost Stars")
                 .artist(artist)
                 .genre(genre)

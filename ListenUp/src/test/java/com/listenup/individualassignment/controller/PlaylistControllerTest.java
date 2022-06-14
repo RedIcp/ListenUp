@@ -39,18 +39,18 @@ class PlaylistControllerTest {
     @MockBean
     private PlaylistService service;
 
-    Customer customer = new Customer(1l,"Yellow", "yellow@gmail.com", "123Yellow");
+    Customer customer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void getAllPlaylists() throws Exception{
         PlaylistDTO playlist1 = PlaylistDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();
         PlaylistDTO playlist2 = PlaylistDTO.builder()
-                .id(2l)
+                .id(2L)
                 .name("Workout")
                 .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();
@@ -109,12 +109,12 @@ class PlaylistControllerTest {
     @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void getPlaylistPath() throws Exception{
         PlaylistSongListDTO playlist = PlaylistSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .songs(Collections.emptyList())
                 .build();
 
-        when(service.getPlaylistSong(1l)).thenReturn(playlist);
+        when(service.getPlaylistSong(1L)).thenReturn(playlist);
 
         mockMvc.perform(get("/playlists/1"))
                 .andDo(print())
@@ -128,19 +128,19 @@ class PlaylistControllerTest {
                             }                    
                         """));
 
-        verify(service).getPlaylistSong(1l);
+        verify(service).getPlaylistSong(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void getPlaylistPathNotFound() throws Exception{
-        when(service.getPlaylistSong(1l)).thenReturn(null);
+        when(service.getPlaylistSong(1L)).thenReturn(null);
 
         mockMvc.perform(get("/playlists/1"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getPlaylistSong(1l);
+        verify(service).getPlaylistSong(1L);
     }
 
     @Test
@@ -152,7 +152,7 @@ class PlaylistControllerTest {
                 .build();
 
         CreatePlaylistResponseDTO response = CreatePlaylistResponseDTO.builder()
-                .playlistID(1l)
+                .playlistID(1L)
                 .build();
 
         when(service.addPlaylist(playlist)).thenReturn(response);
@@ -196,7 +196,7 @@ class PlaylistControllerTest {
                 .andExpect(status().isNoContent());
 
         AddRemoveSongToPlaylistDTO playlist = AddRemoveSongToPlaylistDTO.builder()
-                .playlistID(1l)
+                .playlistID(1L)
                 .song(null)
                 .build();
 
@@ -218,7 +218,7 @@ class PlaylistControllerTest {
                 .andExpect(status().isNoContent());
 
         AddRemoveSongToPlaylistDTO playlist = AddRemoveSongToPlaylistDTO.builder()
-                .playlistID(1l)
+                .playlistID(1L)
                 .song(null)
                 .build();
 
@@ -246,7 +246,7 @@ class PlaylistControllerTest {
                 .andExpect(status().isNoContent());
 
         PlaylistDTO playlist = PlaylistDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();

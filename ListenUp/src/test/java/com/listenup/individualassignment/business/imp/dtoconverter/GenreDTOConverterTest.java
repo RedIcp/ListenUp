@@ -14,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GenreDTOConverterTest {
     Genre expectedModel = Genre.builder()
-            .id(1l)
+            .id(1L)
             .name("Pop")
             .songs(Collections.emptyList())
             .build();
 
     GenreDTO expectedDTO = GenreDTO.builder()
-            .id(1l)
+            .id(1L)
             .name("Pop")
             .build();
 
@@ -46,7 +46,7 @@ class GenreDTOConverterTest {
                 .build();
 
         Genre actualModel = GenreDTOConverter.convertToModelForCreate(dto);
-        actualModel.setId(1l);
+        actualModel.setId(1L);
         actualModel.setSongs(Collections.emptyList());
 
         assertEquals(actualModel, expectedModel);
@@ -55,7 +55,7 @@ class GenreDTOConverterTest {
     @Test
     void convertToDTOForSong() {
         GenreSongListDTO actualDTO = GenreSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Pop")
                 .songs(Collections.emptyList())
                 .build();
@@ -68,12 +68,12 @@ class GenreDTOConverterTest {
     @Test
     void convertToDTOList() {
         Genre genre1 = Genre.builder()
-                .id(1l)
+                .id(1L)
                 .name("Pop")
                 .songs(Collections.emptyList())
                 .build();
         Genre genre2 = Genre.builder()
-                .id(1l)
+                .id(1L)
                 .name("Hip-hop")
                 .songs(Collections.emptyList())
                 .build();

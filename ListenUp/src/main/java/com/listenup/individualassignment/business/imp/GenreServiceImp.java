@@ -23,7 +23,6 @@ import org.springframework.context.annotation.Primary;
 public class GenreServiceImp implements GenreService {
     private final GenreRepository db;
 
-    @Async
     @Override
     public CreateGenreResponseDTO addGenre(CreateGenreRequestDTO genre){
         Genre savedGenre = db.save(GenreDTOConverter.convertToModelForCreate(genre));
@@ -33,19 +32,16 @@ public class GenreServiceImp implements GenreService {
                 .build();
     }
 
-    @Async
     @Override
     public List<GenreDTO> getGenres(){
         return GenreDTOConverter.convertToDTOList(db.findAll());
     }
 
-    @Async
     @Override
     public GenreSongListDTO getGenreSongs(long id){
         return GenreDTOConverter.convertToDTOForSong(db.getById(id));
     }
 
-    @Async
     @Override
     public GenreDTO editGenre(GenreDTO genre){
         if(!db.existsById(genre.getId())){
@@ -55,7 +51,6 @@ public class GenreServiceImp implements GenreService {
         return genre;
     }
 
-    @Async
     @Override
     public boolean deleteGenre(long id){
         boolean result = false;

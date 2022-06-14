@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -41,11 +40,11 @@ class GenreControllerTest {
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllGenres() throws  Exception{
         GenreDTO genre1 = GenreDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Pop")
                 .build();
         GenreDTO genre2 = GenreDTO.builder()
-                .id(2l)
+                .id(2L)
                 .name("Hip-hop")
                 .build();
 
@@ -91,12 +90,12 @@ class GenreControllerTest {
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getGenrePath() throws Exception{
         GenreSongListDTO genre = GenreSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Pop")
                 .songs(Collections.emptyList())
                 .build();
 
-        when(service.getGenreSongs(1l)).thenReturn(genre);
+        when(service.getGenreSongs(1L)).thenReturn(genre);
 
         mockMvc.perform(get("/genres/1"))
                 .andDo(print())
@@ -110,19 +109,19 @@ class GenreControllerTest {
                             }                    
                         """));
 
-        verify(service).getGenreSongs(1l);
+        verify(service).getGenreSongs(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getGenrePathNotFound() throws Exception{
-        when(service.getGenreSongs(1l)).thenReturn(null);
+        when(service.getGenreSongs(1L)).thenReturn(null);
 
         mockMvc.perform(get("/genres/1"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getGenreSongs(1l);
+        verify(service).getGenreSongs(1L);
     }
 
     @Test
@@ -133,7 +132,7 @@ class GenreControllerTest {
                 .build();
 
         CreateGenreResponseDTO response = CreateGenreResponseDTO.builder()
-                .genreID(1l)
+                .genreID(1L)
                 .build();
 
         when(service.addGenre(genre)).thenReturn(response);

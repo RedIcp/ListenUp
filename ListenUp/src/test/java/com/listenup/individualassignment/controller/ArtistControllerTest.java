@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -42,11 +41,11 @@ class ArtistControllerTest {
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllArtists() throws Exception {
         ArtistDTO artist1 = ArtistDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .build();
         ArtistDTO artist2 = ArtistDTO.builder()
-                .id(2l)
+                .id(2L)
                 .name("Post Malone")
                 .build();
 
@@ -92,12 +91,12 @@ class ArtistControllerTest {
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getArtistPath() throws Exception{
         ArtistSongListDTO artist = ArtistSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .songs(Collections.emptyList())
                 .build();
 
-        when(service.getArtistSongs(1l)).thenReturn(artist);
+        when(service.getArtistSongs(1L)).thenReturn(artist);
 
         mockMvc.perform(get("/artists/1"))
                 .andDo(print())
@@ -111,31 +110,31 @@ class ArtistControllerTest {
                             }                    
                         """));
 
-        verify(service).getArtistSongs(1l);
+        verify(service).getArtistSongs(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getArtistPathNotFound() throws Exception{
-        when(service.getArtistSongs(1l)).thenReturn(null);
+        when(service.getArtistSongs(1L)).thenReturn(null);
 
         mockMvc.perform(get("/artists/1"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getArtistSongs(1l);
+        verify(service).getArtistSongs(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getArtistAlbumsPath() throws Exception{
         ArtistAlbumListDTO artist = ArtistAlbumListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .albums(Collections.emptyList())
                 .build();
 
-        when(service.getArtistAlbums(1l)).thenReturn(artist);
+        when(service.getArtistAlbums(1L)).thenReturn(artist);
 
         mockMvc.perform(get("/artists/1/albums"))
                 .andDo(print())
@@ -149,19 +148,19 @@ class ArtistControllerTest {
                             }                    
                         """));
 
-        verify(service).getArtistAlbums(1l);
+        verify(service).getArtistAlbums(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getArtistAlbumsPathNotFound() throws Exception{
-        when(service.getArtistAlbums(1l)).thenReturn(null);
+        when(service.getArtistAlbums(1L)).thenReturn(null);
 
         mockMvc.perform(get("/artists/1/albums"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getArtistAlbums(1l);
+        verify(service).getArtistAlbums(1L);
     }
 
     @Test
@@ -172,7 +171,7 @@ class ArtistControllerTest {
                 .build();
 
         CreateArtistResponseDTO response = CreateArtistResponseDTO.builder()
-                .artistID(1l)
+                .artistID(1L)
                 .build();
 
         when(service.addArtist(artist)).thenReturn(response);

@@ -10,11 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -44,7 +42,7 @@ class AlbumControllerTest {
     Date date = new Date(2008,11,26);
 
     ArtistDTO artist = ArtistDTO.builder()
-            .id(1l)
+            .id(1L)
             .name("Maroon 5")
             .build();
 
@@ -52,14 +50,14 @@ class AlbumControllerTest {
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllAlbums() throws Exception {
         AlbumDTO album1 = AlbumDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("V")
                 .artist(artist)
                 .uploadedDate(date)
                 .releasedDate(date)
                 .build();
         AlbumDTO album2 = AlbumDTO.builder()
-                .id(2l)
+                .id(2L)
                 .name("Overexposed")
                 .artist(artist)
                 .uploadedDate(date)
@@ -120,12 +118,12 @@ class AlbumControllerTest {
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAlbumPath() throws Exception{
         AlbumSongListDTO album = AlbumSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("V")
                 .songs(Collections.emptyList())
                 .build();
 
-        when(service.getAlbumSongs(1l)).thenReturn(album);
+        when(service.getAlbumSongs(1L)).thenReturn(album);
 
         mockMvc.perform(get("/albums/1"))
                 .andDo(print())
@@ -139,19 +137,19 @@ class AlbumControllerTest {
                             }                    
                         """));
 
-        verify(service).getAlbumSongs(1l);
+        verify(service).getAlbumSongs(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAlbumPathNotFound() throws Exception{
-        when(service.getAlbumSongs(1l)).thenReturn(null);
+        when(service.getAlbumSongs(1L)).thenReturn(null);
 
         mockMvc.perform(get("/albums/1"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getAlbumSongs(1l);
+        verify(service).getAlbumSongs(1L);
     }
 
     @Test
@@ -165,7 +163,7 @@ class AlbumControllerTest {
                 .build();
 
         CreateAlbumResponseDTO response = CreateAlbumResponseDTO.builder()
-                .albumID(1l)
+                .albumID(1L)
                 .build();
 
         when(service.addAlbum(album)).thenReturn(response);
@@ -214,7 +212,7 @@ class AlbumControllerTest {
                 .andExpect(status().isNoContent());
 
         AlbumDTO album = AlbumDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Red Pills Blues")
                 .artist(artist)
                 .uploadedDate(date)

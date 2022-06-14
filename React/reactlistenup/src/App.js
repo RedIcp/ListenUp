@@ -4,7 +4,7 @@ import {SongDataProvider} from "./Context/SongDataContext";
 import {AlbumDataProvider} from "./Context/AlbumDataContext";
 import {ArtistDataProvider} from "./Context/ArtistDataContext";
 import {GenreDataProvider} from "./Context/GenreDataContext";
-import "./Style/App.css"
+import Login from "./ThirdParty/Login";
 
 function App() {
     return (
@@ -14,7 +14,7 @@ function App() {
                     <ArtistDataProvider>
                         <GenreDataProvider>
                             <AlbumDataProvider>
-                                <NewSong/>
+                                <Login/>
                             </AlbumDataProvider>
                         </GenreDataProvider>
                     </ArtistDataProvider>

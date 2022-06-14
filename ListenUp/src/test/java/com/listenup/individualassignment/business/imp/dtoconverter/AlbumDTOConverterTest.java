@@ -18,12 +18,12 @@ class AlbumDTOConverterTest {
     Date date = new Date(2021,11,27);
 
     Artist artist = Artist.builder()
-            .id(1l)
+            .id(1L)
             .name("Maroon 5")
             .build();
 
     Album expectedModel = Album.builder()
-            .id(1l)
+            .id(1L)
             .name("V")
             .artist(artist)
             .releasedDate(date)
@@ -32,7 +32,7 @@ class AlbumDTOConverterTest {
             .build();
 
     AlbumDTO expectedDTO = AlbumDTO.builder()
-            .id(1l)
+            .id(1L)
             .name("V")
             .artist(ArtistDTOConverter.convertToDTO(artist))
             .releasedDate(date)
@@ -64,7 +64,7 @@ class AlbumDTOConverterTest {
 
         Album actualModel = AlbumDTOConverter.convertToModelForCreate(dto);
         actualModel.setAlbumSongs(Collections.emptyList());
-        actualModel.setId(1l);
+        actualModel.setId(1L);
 
         assertEquals(actualModel, expectedModel);
     }
@@ -72,7 +72,7 @@ class AlbumDTOConverterTest {
     @Test
     void convertToDTOForSong() {
         AlbumSongListDTO expectedDTOForSongs = AlbumSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("V")
                 .songs(Collections.emptyList())
                 .build();
@@ -85,7 +85,7 @@ class AlbumDTOConverterTest {
     @Test
     void convertToDTOList() {
         Album album1 = Album.builder()
-                .id(1l)
+                .id(1L)
                 .name("V")
                 .artist(artist)
                 .releasedDate(date)
@@ -93,7 +93,7 @@ class AlbumDTOConverterTest {
                 .albumSongs(Collections.emptyList())
                 .build();
         Album album2 = Album.builder()
-                .id(2l)
+                .id(2L)
                 .name("Overexposed")
                 .artist(artist)
                 .releasedDate(date)

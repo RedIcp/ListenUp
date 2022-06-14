@@ -15,14 +15,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ArtistDTOConverterTest {
     Artist expectedModel = Artist.builder()
-            .id(1l)
+            .id(1L)
             .name("Maroon 5")
             .albums(Collections.emptyList())
             .songs(Collections.emptyList())
             .build();
 
     ArtistDTO expectedDTO = ArtistDTO.builder()
-            .id(1l)
+            .id(1L)
             .name("Maroon 5")
             .build();
 
@@ -49,7 +49,7 @@ class ArtistDTOConverterTest {
                 .build();
 
         Artist actualModel = ArtistDTOConverter.convertToModelForCreate(dto);
-        actualModel.setId(1l);
+        actualModel.setId(1L);
         actualModel.setAlbums(Collections.emptyList());
         actualModel.setSongs(Collections.emptyList());
 
@@ -59,7 +59,7 @@ class ArtistDTOConverterTest {
     @Test
     void convertToDTOForSong() {
         ArtistSongListDTO expectedDTO = ArtistSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .songs(Collections.emptyList())
                 .build();
@@ -72,7 +72,7 @@ class ArtistDTOConverterTest {
     @Test
     void convertToDTOForAlbum() {
         ArtistAlbumListDTO expectedDTO = ArtistAlbumListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .albums(Collections.emptyList())
                 .build();
@@ -85,13 +85,13 @@ class ArtistDTOConverterTest {
     @Test
     void convertToDTOList() {
         Artist artist1 = Artist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Maroon 5")
                 .albums(Collections.emptyList())
                 .songs(Collections.emptyList())
                 .build();
         Artist artist2 = Artist.builder()
-                .id(2l)
+                .id(2L)
                 .name("Post Malone")
                 .albums(Collections.emptyList())
                 .songs(Collections.emptyList())

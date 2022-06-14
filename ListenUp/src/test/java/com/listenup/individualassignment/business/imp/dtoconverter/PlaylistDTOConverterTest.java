@@ -14,17 +14,17 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlaylistDTOConverterTest {
-    Customer customer = new Customer(1l, "Yellow", "yellow@gmail.com", "123Yellow");
+    Customer customer = new Customer(1L, "Yellow", "yellow@gmail.com", "123Yellow");
 
     Playlist expectedModel = Playlist.builder()
-            .id(1l)
+            .id(1L)
             .name("Chill")
             .customer(customer)
             .songs(Collections.emptyList())
             .build();
 
     PlaylistDTO expectedDTO = PlaylistDTO.builder()
-            .id(1l)
+            .id(1L)
             .name("Chill")
             .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
             .build();
@@ -53,7 +53,7 @@ class PlaylistDTOConverterTest {
 
         Playlist actualModel = PlaylistDTOConverter.convertToModelForCreate(dto);
         actualModel.setSongs(Collections.emptyList());
-        actualModel.setId(1l);
+        actualModel.setId(1L);
 
         assertEquals(actualModel, expectedModel);
     }
@@ -61,7 +61,7 @@ class PlaylistDTOConverterTest {
     @Test
     void convertToDTOForSong() {
         PlaylistSongListDTO expectedDTO = PlaylistSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .songs(Collections.emptyList())
                 .build();
@@ -74,13 +74,13 @@ class PlaylistDTOConverterTest {
     @Test
     void convertToDTOList() {
         Playlist playlist1 = Playlist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .customer(customer)
                 .songs(Collections.emptyList())
                 .build();
         Playlist playlist2 = Playlist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .customer(customer)
                 .songs(Collections.emptyList())
@@ -102,13 +102,13 @@ class PlaylistDTOConverterTest {
     @Test
     void convertToModelList() {
         Playlist playlist1 = Playlist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .customer(customer)
                 .songs(Collections.emptyList())
                 .build();
         Playlist playlist2 = Playlist.builder()
-                .id(1l)
+                .id(1L)
                 .name("Chill")
                 .customer(customer)
                 .songs(Collections.emptyList())

@@ -34,7 +34,7 @@ class GenreServiceImpTest {
                 .name("Pop")
                 .build();
         Genre savedGenre = Genre.builder()
-                .id(1l)
+                .id(1L)
                 .name("Pop")
                 .build();
 
@@ -45,7 +45,7 @@ class GenreServiceImpTest {
                 .build();
 
         CreateGenreResponseDTO expectedDTO = CreateGenreResponseDTO.builder()
-                .genreID(1l)
+                .genreID(1L)
                 .build();
 
         CreateGenreResponseDTO actualDTO = service.addGenre(dto);
@@ -58,11 +58,11 @@ class GenreServiceImpTest {
     @Test
     void getGenres() {
         Genre genre1 = Genre.builder()
-                .id(1l)
+                .id(1L)
                 .name("Pop")
                 .build();
         Genre genre2 = Genre.builder()
-                .id(2l)
+                .id(2L)
                 .name("Hip-hop")
                 .build();
 
@@ -80,39 +80,39 @@ class GenreServiceImpTest {
     @Test
     void getGenreSongs() {
         Genre genre = Genre.builder()
-                .id(1l)
+                .id(1L)
                 .name("Pop")
                 .songs(Collections.emptyList())
                 .build();
 
-        when(repository.getById(1l)).thenReturn(genre);
+        when(repository.getById(1L)).thenReturn(genre);
 
         GenreSongListDTO expectedDTO = GenreSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Pop")
                 .songs(Collections.emptyList())
                 .build();
 
-        GenreSongListDTO actualDTO = service.getGenreSongs(1l);
+        GenreSongListDTO actualDTO = service.getGenreSongs(1L);
 
         assertEquals(actualDTO, expectedDTO);
     }
 
     @Test
     void editGenreValid() {
-        when(repository.existsById(1l)).thenReturn(true);
+        when(repository.existsById(1L)).thenReturn(true);
 
         GenreDTO updateDTO = GenreDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Hip-hop")
                 .build();
 
         service.editGenre(updateDTO);
 
-        verify(repository).existsById(1l);
+        verify(repository).existsById(1L);
 
         Genre actualGenre = Genre.builder()
-                .id(1l)
+                .id(1L)
                 .name("Hip-hop")
                 .build();
 
@@ -121,10 +121,10 @@ class GenreServiceImpTest {
 
     @Test
     void editGenreInvalid() {
-        when(repository.existsById(1l)).thenReturn(false);
+        when(repository.existsById(1L)).thenReturn(false);
 
         GenreDTO updateDTO = GenreDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Hip-hop")
                 .build();
 
@@ -132,27 +132,27 @@ class GenreServiceImpTest {
 
         assertEquals("INVALID_ID", exception.getReason());
 
-        verify(repository).existsById(1l);
+        verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);
     }
 
     @Test
     void deleteGenreValid() {
-        when(repository.existsById(1l)).thenReturn(true);
+        when(repository.existsById(1L)).thenReturn(true);
 
-        service.deleteGenre(1l);
+        service.deleteGenre(1L);
 
-        verify(repository).existsById(1l);
-        verify(repository).deleteById(1l);
+        verify(repository).existsById(1L);
+        verify(repository).deleteById(1L);
     }
 
     @Test
     void deleteGenreInvalid() {
-        when(repository.existsById(1l)).thenReturn(false);
+        when(repository.existsById(1L)).thenReturn(false);
 
-        service.deleteGenre(1l);
+        service.deleteGenre(1L);
 
-        verify(repository).existsById(1l);
+        verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);
     }
 }

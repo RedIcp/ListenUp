@@ -18,10 +18,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerDTOConverterTest {
-    Customer expectedModel = new Customer(1l, "Yellow", "yellow@gmail.com", "123Yellow");
+    Customer expectedModel = new Customer(1L, "Yellow", "yellow@gmail.com", "123Yellow");
 
     UpdateUserDTO expectedDTO = UpdateUserDTO.builder()
-            .id(1l)
+            .id(1L)
             .username("Yellow")
             .email("yellow@gmail.com")
             .password("123Yellow")
@@ -37,7 +37,7 @@ class CustomerDTOConverterTest {
     @Test
     void convertToDTOForView() {
         ViewUserDTO expectedDTO = ViewUserDTO.builder()
-                .id(1l)
+                .id(1L)
                 .username("Yellow")
                 .email("yellow@gmail.com")
                 .build();
@@ -66,7 +66,7 @@ class CustomerDTOConverterTest {
         actualModel.setLikedPlaylists(Collections.emptyList());
         actualModel.setLikedSongs(Collections.emptyList());
         actualModel.setPlaylists(Collections.emptyList());
-        actualModel.setId(1l);
+        actualModel.setId(1L);
 
         assertEquals(actualModel, expectedModel);
     }
@@ -74,7 +74,7 @@ class CustomerDTOConverterTest {
     @Test
     void convertToDTOForLikedSong() {
         CustomerLikedSongListDTO expectedDTO = CustomerLikedSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .likedSongs(Collections.emptyList())
                 .build();
 
@@ -86,7 +86,7 @@ class CustomerDTOConverterTest {
     @Test
     void convertToDTOForPlaylist() {
         CustomerPlaylistListDTO expectedDTO = CustomerPlaylistListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .playlists(Collections.emptyList())
                 .build();
 
@@ -98,7 +98,7 @@ class CustomerDTOConverterTest {
     @Test
     void convertToDTOForLikedPlaylist() {
         CustomerLikedPlaylistListDTO expectedDTO = CustomerLikedPlaylistListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .likedPlaylists(Collections.emptyList())
                 .build();
 
@@ -109,8 +109,8 @@ class CustomerDTOConverterTest {
 
     @Test
     void convertToDTOList() {
-        Customer user1 = new Customer(1l, "Yellow", "yellow@gmail.com", "123Yellow");
-        Admin user2 = new Admin(2l, "Red", "red@gmail.com", "123Red");
+        Customer user1 = new Customer(1L, "Yellow", "yellow@gmail.com", "123Yellow");
+        Admin user2 = new Admin(2L, "Red", "red@gmail.com", "123Red");
         Admin user3 = new Admin("Ash", "ash@gmail.com", "123Ash");
 
         List<User> users = new ArrayList<>();

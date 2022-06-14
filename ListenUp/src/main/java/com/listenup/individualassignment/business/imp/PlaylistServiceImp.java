@@ -29,7 +29,8 @@ public class PlaylistServiceImp implements PlaylistService {
     private final PlaylistRepository db;
     private final AccessTokenDTO requestAccessToken;
 
-    @Async
+    String error = "INVALID_ID";
+
     @Override
     public CreatePlaylistResponseDTO addPlaylist(CreatePlaylistRequestDTO playlist){
         Playlist savedPlaylist = db.save(PlaylistDTOConverter.convertToModelForCreate(playlist));
@@ -39,48 +40,44 @@ public class PlaylistServiceImp implements PlaylistService {
                 .build();
     }
 
-    @Async
     @Override
     public List<PlaylistDTO> getPlaylists(){
         return PlaylistDTOConverter.convertToDTOList(db.findAll());
     }
 
-    @Async
     @Override
     public PlaylistSongListDTO getPlaylistSong(long id){
         return PlaylistDTOConverter.convertToDTOForSong(db.getById(id));
     }
 
-    @Async
     @Override
     public PlaylistDTO editPlaylist(PlaylistDTO playlist){
+        isAuthorised(playlist.getCustomer().getId());
         if(!db.existsById(playlist.getId())){
-            throw new InvalidPlaylistException("INVALID_ID");
+            throw new InvalidPlaylistException(error);
         }
         db.save(PlaylistDTOConverter.convertToModelForUpdate(playlist));
         return playlist;
     }
 
-    @Async
     @Override
     public void addSongToPlaylist(AddRemoveSongToPlaylistDTO song){
         Playlist old = db.getById(song.getPlaylistID());
         isAuthorised(song.getCustomerID());
         if(!db.existsById(song.getPlaylistID())){
-            throw new InvalidPlaylistException("INVALID_ID");
+            throw new InvalidPlaylistException(error);
         }
         old.getSongs().add(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));
 
         db.save(old);
     }
 
-    @Async
     @Override
     public void removeSongFromPlaylist(AddRemoveSongToPlaylistDTO song){
         Playlist old = db.getById(song.getPlaylistID());
         isAuthorised(song.getCustomerID());
         if(!db.existsById(song.getPlaylistID())){
-            throw new InvalidPlaylistException("INVALID_ID");
+            throw new InvalidPlaylistException(error);
         }
         old.getSongs().remove(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));
 
@@ -93,7 +90,6 @@ public class PlaylistServiceImp implements PlaylistService {
         }
     }
 
-    @Async
     @Override
     public boolean deletePlaylist(long id){
         boolean result = false;

@@ -43,7 +43,7 @@ class UserControllerTest {
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllUsers() throws Exception{
         ViewUserDTO user = ViewUserDTO.builder()
-                .id(1l)
+                .id(1L)
                 .username("Blue")
                 .email("blue@gmail.com")
                 .build();
@@ -86,13 +86,13 @@ class UserControllerTest {
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getUserPath() throws Exception{
         UpdateUserDTO user = UpdateUserDTO.builder()
-                .id(1l)
+                .id(1L)
                 .username("Blue")
                 .email("blue@gmail.com")
                 .password("123Blue")
                 .build();
 
-        when(service.getUser(1l)).thenReturn(user);
+        when(service.getUser(1L)).thenReturn(user);
 
         mockMvc.perform(get("/users/1/profile"))
                 .andDo(print())
@@ -107,30 +107,30 @@ class UserControllerTest {
                             }                       
                         """));
 
-        verify(service).getUser(1l);
+        verify(service).getUser(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getUserPathNotFound() throws Exception{
-        when(service.getUser(1l)).thenReturn(null);
+        when(service.getUser(1L)).thenReturn(null);
 
         mockMvc.perform(get("/users/1/profile"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getUser(1l);
+        verify(service).getUser(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerPlaylistsPath() throws Exception{
         CustomerPlaylistListDTO user = CustomerPlaylistListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .playlists(Collections.emptyList())
                 .build();
 
-        when(service.getCustomerPlaylists(1l)).thenReturn(user);
+        when(service.getCustomerPlaylists(1L)).thenReturn(user);
 
         mockMvc.perform(get("/users/1/playlists"))
                 .andDo(print())
@@ -143,30 +143,30 @@ class UserControllerTest {
                             }                      
                         """));
 
-        verify(service).getCustomerPlaylists(1l);
+        verify(service).getCustomerPlaylists(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerPlaylistsPathNotFound() throws Exception{
-        when(service.getCustomerPlaylists(1l)).thenReturn(null);
+        when(service.getCustomerPlaylists(1L)).thenReturn(null);
 
         mockMvc.perform(get("/users/1/playlists"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getCustomerPlaylists(1l);
+        verify(service).getCustomerPlaylists(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerLikedSongsPath() throws Exception{
         CustomerLikedSongListDTO user = CustomerLikedSongListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .likedSongs(Collections.emptyList())
                 .build();
 
-        when(service.getCustomerCollection(1l)).thenReturn(user);
+        when(service.getCustomerCollection(1L)).thenReturn(user);
 
         mockMvc.perform(get("/users/1/collection"))
                 .andDo(print())
@@ -179,30 +179,30 @@ class UserControllerTest {
                             }                      
                         """));
 
-        verify(service).getCustomerCollection(1l);
+        verify(service).getCustomerCollection(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerLikedSongsPathNotFound() throws Exception{
-        when(service.getCustomerCollection(1l)).thenReturn(null);
+        when(service.getCustomerCollection(1L)).thenReturn(null);
 
         mockMvc.perform(get("/users/1/collection"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getCustomerCollection(1l);
+        verify(service).getCustomerCollection(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerLikedPlaylistsPath() throws Exception{
         CustomerLikedPlaylistListDTO user = CustomerLikedPlaylistListDTO.builder()
-                .id(1l)
+                .id(1L)
                 .likedPlaylists(Collections.emptyList())
                 .build();
 
-        when(service.getCustomerLikedPlaylists(1l)).thenReturn(user);
+        when(service.getCustomerLikedPlaylists(1L)).thenReturn(user);
 
         mockMvc.perform(get("/users/1/likedplaylists"))
                 .andDo(print())
@@ -215,19 +215,19 @@ class UserControllerTest {
                             }                      
                         """));
 
-        verify(service).getCustomerLikedPlaylists(1l);
+        verify(service).getCustomerLikedPlaylists(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerLikedPlaylistsPathNotFound() throws Exception{
-        when(service.getCustomerLikedPlaylists(1l)).thenReturn(null);
+        when(service.getCustomerLikedPlaylists(1L)).thenReturn(null);
 
         mockMvc.perform(get("/users/1/likedplaylists"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getCustomerLikedPlaylists(1l);
+        verify(service).getCustomerLikedPlaylists(1L);
     }
 
     @Test
@@ -247,7 +247,7 @@ class UserControllerTest {
                 .andExpect(status().isNoContent());
 
         UpdateUserDTO user = UpdateUserDTO.builder()
-                .id(1l)
+                .id(1L)
                 .username("Yellow")
                 .email("yellow@gmail.com")
                 .password("123Yellow")
@@ -271,7 +271,7 @@ class UserControllerTest {
                 .andExpect(status().isNoContent());
 
         AddRemoveSongToCollectionDTO user = AddRemoveSongToCollectionDTO.builder()
-                .customerID(1l)
+                .customerID(1L)
                 .song(null)
                 .build();
 
@@ -293,7 +293,7 @@ class UserControllerTest {
                 .andExpect(status().isNoContent());
 
         AddRemoveSongToCollectionDTO user = AddRemoveSongToCollectionDTO.builder()
-                .customerID(1l)
+                .customerID(1L)
                 .song(null)
                 .build();
 
@@ -315,7 +315,7 @@ class UserControllerTest {
                 .andExpect(status().isNoContent());
 
         AddRemoveLikedPlaylistDTO user = AddRemoveLikedPlaylistDTO.builder()
-                .customerID(1l)
+                .customerID(1L)
                 .playlist(null)
                 .build();
 
@@ -337,7 +337,7 @@ class UserControllerTest {
                 .andExpect(status().isNoContent());
 
         AddRemoveLikedPlaylistDTO user = AddRemoveLikedPlaylistDTO.builder()
-                .customerID(1l)
+                .customerID(1L)
                 .playlist(null)
                 .build();
 

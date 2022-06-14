@@ -42,7 +42,6 @@ public class UserServiceImp implements UserService {
 
     String error = "INVALID_ID";
 
-    @Async
     @Override
     public CreateUserResponseDTO createAccount(CreateUserRequestDTO user){
         if(db.existsByEmail(user.getEmail())){
@@ -69,7 +68,6 @@ public class UserServiceImp implements UserService {
                 .build();
     }
 
-    @Async
     @Override
     public LoginResponseDTO login(LoginRequestDTO request){
         if(!db.existsByEmail(request.getEmail())){
@@ -88,7 +86,6 @@ public class UserServiceImp implements UserService {
                 .build();
     }
 
-    @Async
     public String generateAccessToken(User user) {
         List<String> roles = user.getUserRoles().stream()
                 .map(userRole -> userRole.getRole().toString())
@@ -102,32 +99,27 @@ public class UserServiceImp implements UserService {
                         .build());
     }
 
-    @Async
     @Override
     public List<ViewUserDTO> getUsers(){
         return CustomerDTOConverter.convertToDTOList(db.findAll());
     }
 
-    @Async
     @Override
     public UpdateUserDTO getUser(long id){
         isAuthorised(id);
         return CustomerDTOConverter.convertToDTOForUpdate(db.getById(id));
     }
 
-    @Async
     @Override
     public CustomerLikedSongListDTO getCustomerCollection(long id){
         return CustomerDTOConverter.convertToDTOForLikedSong((Customer) db.getById(id));
     }
 
-    @Async
     @Override
     public CustomerPlaylistListDTO getCustomerPlaylists(long id){
         return CustomerDTOConverter.convertToDTOForPlaylist((Customer) db.getById(id));
     }
 
-    @Async
     @Override
     public CustomerLikedPlaylistListDTO getCustomerLikedPlaylists(long id){
         return CustomerDTOConverter.convertToDTOForLikedPlaylist((Customer) db.getById(id));
@@ -139,7 +131,6 @@ public class UserServiceImp implements UserService {
         }
     }
 
-    @Async
     @Override
     public UpdateUserDTO updateAccount(UpdateUserDTO user){
         User old = db.getById(user.getId());
@@ -159,7 +150,6 @@ public class UserServiceImp implements UserService {
         return user;
     }
 
-    @Async
     @Override
     public void addSongToCollection(AddRemoveSongToCollectionDTO song){
         Customer old = (Customer) db.getById(song.getCustomerID());
@@ -175,7 +165,6 @@ public class UserServiceImp implements UserService {
         db.save(old);
     }
 
-    @Async
     @Override
     public void removeSongFromCollection(AddRemoveSongToCollectionDTO song){
         Customer old = (Customer) db.getById(song.getCustomerID());
@@ -191,7 +180,6 @@ public class UserServiceImp implements UserService {
         db.save(old);
     }
 
-    @Async
     @Override
     public void addLikedPlaylist(AddRemoveLikedPlaylistDTO playlist){
         Customer old = (Customer) db.getById(playlist.getCustomerID());
@@ -207,7 +195,6 @@ public class UserServiceImp implements UserService {
         db.save(old);
     }
 
-    @Async
     @Override
     public void removeLikedPlaylist(AddRemoveLikedPlaylistDTO playlist){
         Customer old = (Customer) db.getById(playlist.getCustomerID());
@@ -223,7 +210,6 @@ public class UserServiceImp implements UserService {
         db.save(old);
     }
 
-    @Async
     @Override
     public boolean deleteAccount(long id){
         boolean result = false;

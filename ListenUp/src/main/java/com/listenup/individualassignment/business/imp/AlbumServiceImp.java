@@ -26,7 +26,6 @@ import javax.transaction.Transactional;
 public class AlbumServiceImp implements AlbumService {
     private final AlbumRepository db;
 
-    @Async
     @Override
     public CreateAlbumResponseDTO addAlbum(CreateAlbumRequestDTO album){
         Album savedAlbum = db.save(AlbumDTOConverter.convertToModelForCreate(album));
@@ -36,19 +35,16 @@ public class AlbumServiceImp implements AlbumService {
                 .build();
     }
 
-    @Async
     @Override
     public List<AlbumDTO> getAlbums(){
         return AlbumDTOConverter.convertToDTOList(db.findAll());
     }
 
-    @Async
     @Override
     public AlbumSongListDTO getAlbumSongs(long id){
         return AlbumDTOConverter.convertToDTOForSong(db.getById(id));
     }
 
-    @Async
     @Override
     public AlbumDTO editAlbum(AlbumDTO album){
         if(!db.existsById(album.getId())){
@@ -58,7 +54,6 @@ public class AlbumServiceImp implements AlbumService {
         return album;
     }
 
-    @Async
     @Override
     public boolean deleteAlbum(long id){
         boolean result = false;

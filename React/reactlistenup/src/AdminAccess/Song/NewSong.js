@@ -22,7 +22,12 @@ const NewSong = () => {
     const handleAlbumSongSubmit = async (e) => {
         e.preventDefault();
 
-        const newSong = {name: name, genre: genre, album: album};
+        const newSong = {
+            name: name,
+            genre: genre,
+            album: album
+        };
+
         try {
             const response = await axios.post('http://localhost:8080/songs/singlesong', newSong);
 
@@ -38,16 +43,37 @@ const NewSong = () => {
     const handleSingleSongSubmit = async (e) => {
         e.preventDefault();
 
-        const datetime = format(new Date(), 'MMMM dd, yyyy pp');
-
-        const newSong = {name: name, genre: genre, artist: artist, releasedDate: datetime, uploadedDate: datetime};
+        const datetime = format(new Date(), 'dd/MM/yyyy');
         try {
-            const response = await axios.post('http://localhost:8080/songs/albumsong', newSong);
+            if (isSingleSong) {
+                const newSong = {
+                    name: name,
+                    genre: genre,
+                    artist: artist,
+                    releasedDate: new Date(),
+                    uploadedDate: new Date()
+                };
 
-            setName('');
-            setArtist(null);
-            setAlbum(null);
-            setGenre(null);
+                const response = await axios.post('http://localhost:8080/songs/singlesong', newSong);
+
+                setName('');
+                setArtist(null);
+                setAlbum(null);
+                setGenre(null);
+
+                console.log(response)
+            } else {
+                const newSong = {name: name, genre: genre, album: album}
+
+                const response = await axios.post('http://localhost:8080/songs/albumsong', newSong);
+
+                setName('');
+                setArtist(null);
+                setAlbum(null);
+                setGenre(null);
+
+                console.log(response.status)
+            }
         } catch (err) {
             console.log(`Error: ${err.message}`);
         }
@@ -57,9 +83,19 @@ const NewSong = () => {
         <main>
             <div className="form-container">
                 <h2>New Song</h2>
-                <div className="radio-button">
-                    <input type="radio"/><label>Single Song</label>
-                    <input type="radio"/><label>Album Song</label>
+                <div className="radio-button" >
+                    <input
+                        type="radio"
+                        checked={isSingleSong}
+                        onClick={() => setIsSingleSong(true)}
+                    />
+                    <label onClick={() => setIsSingleSong(true)}>Single Song</label>
+                    <input
+                        type="radio"
+                        checked={!isSingleSong}
+                        onClick={() => setIsSingleSong(false)}
+                    />
+                    <label onClick={() => setIsSingleSong(false)}>Album Song</label>
                 </div>
                 <form onSubmit={handleSingleSongSubmit}>
                     <div className="row">
@@ -114,24 +150,6 @@ const NewSong = () => {
             </div>
             <div className="list-container">
                 <div className="list">
-                    <h3>Artist</h3>
-                    <input
-                        className="search-bar"
-                        type="text"
-                        required
-                        value={searchArtist}
-                        placeholder="Search artist"
-                        onChange={(e) => setSearchArtist(e.target.value)}
-                    />
-                    <>
-                        {searchArtistsResults.map(artist => (
-                            <li key={artist.id} onClick={() => {
-                                setArtist(artist)
-                            }}>{artist.name}</li>
-                        ))}
-                    </>
-                </div>
-                <div className="list">
                     <h3>Genre</h3>
                     <input
                         className="search-bar"
@@ -168,6 +186,27 @@ const NewSong = () => {
                         ))}
                     </>
                 </div>
+                {isSingleSong ? <div className="list">
+                        <h3>Artist</h3>
+                        <input
+                            className="search-bar"
+                            type="text"
+                            required
+                            value={searchArtist}
+                            placeholder="Search artist"
+                            onChange={(e) => setSearchArtist(e.target.value)}
+                        />
+                        <>
+                            {searchArtistsResults.map(artist => (
+                                <li key={artist.id} onClick={() => {
+                                    setArtist(artist)
+                                }}>{artist.name}</li>
+                            ))}
+                        </>
+                    </div> :
+                    <div></div>
+                }
+
             </div>
         </main>
 

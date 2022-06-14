@@ -51,16 +51,14 @@ public class SongController {
         }
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
+
     @PostMapping("/singlesong")
     public ResponseEntity<CreateSingleSongResponseDTO> createSingleSong(@RequestBody @Valid CreateSingleSongRequestDTO songDTO) {
         CreateSingleSongResponseDTO song = management.addSingleSong(songDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(song);
     }
 
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN"})
+
     @PostMapping("/albumsong")
     public ResponseEntity<CreateAlbumSongResponseDTO> createAlbumSong(@RequestBody @Valid CreateAlbumSongRequestDTO songDTO) {
         CreateAlbumSongResponseDTO song = management.addAlbumSong(songDTO);

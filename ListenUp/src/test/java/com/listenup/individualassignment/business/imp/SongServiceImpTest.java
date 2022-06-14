@@ -34,12 +34,12 @@ class SongServiceImpTest {
     private SongServiceImp service;
 
     Artist artist = Artist.builder()
-            .id(1l)
+            .id(1L)
             .name("Maroon 5")
             .build();
 
     Album album = Album.builder()
-            .id(1l)
+            .id(1L)
             .name("V")
             .artist(artist)
             .releasedDate(null)
@@ -47,7 +47,7 @@ class SongServiceImpTest {
             .build();
 
     Genre genre = Genre.builder()
-            .id(1l)
+            .id(1L)
             .name("Pop")
             .build();
 
@@ -57,7 +57,7 @@ class SongServiceImpTest {
     void addSingleSong() {
         Song song = new SingleSong("Sugar", artist, genre, date, date);
 
-        Song savedSong = new SingleSong(1l,"Sugar", artist, genre, date, date);
+        Song savedSong = new SingleSong(1L,"Sugar", artist, genre, date, date);
 
         when(repository.save(song)).thenReturn(savedSong);
 
@@ -70,7 +70,7 @@ class SongServiceImpTest {
                 .build();
 
         CreateSingleSongResponseDTO expectedDTO = CreateSingleSongResponseDTO.builder()
-                .singleSongID(1l)
+                .singleSongID(1L)
                 .build();
 
         CreateSingleSongResponseDTO actualDTO = service.addSingleSong(dto);
@@ -84,7 +84,7 @@ class SongServiceImpTest {
     void addAlbumSong() {
         Song song = new AlbumSong("Map", genre, album);
 
-        Song savedSong = new AlbumSong(1l,"Map", genre, album);
+        Song savedSong = new AlbumSong(1L,"Map", genre, album);
 
         when(repository.save(song)).thenReturn(savedSong);
 
@@ -95,7 +95,7 @@ class SongServiceImpTest {
                 .build();
 
         CreateAlbumSongResponseDTO expectedDTO = CreateAlbumSongResponseDTO.builder()
-                .albumSongID(1l)
+                .albumSongID(1L)
                 .build();
 
         CreateAlbumSongResponseDTO actualDTO = service.addAlbumSong(dto);
@@ -107,8 +107,8 @@ class SongServiceImpTest {
 
     @Test
     void getSongs() {
-        Song song1 = new SingleSong(1l,"Sugar", artist, genre, date, date);
-        Song song2 = new AlbumSong(1l,"Map", genre, album);
+        Song song1 = new SingleSong(1L,"Sugar", artist, genre, date, date);
+        Song song2 = new AlbumSong(1L,"Map", genre, album);
 
         when(repository.findAll()).thenReturn(List.of(song1, song2));
 
@@ -123,12 +123,12 @@ class SongServiceImpTest {
 
     @Test
     void getSong() {
-        Song song = new SingleSong(1l,"Sugar", artist, genre, date, date);
+        Song song = new SingleSong(1L,"Sugar", artist, genre, date, date);
 
-        when(repository.getById(1l)).thenReturn(song);
+        when(repository.getById(1L)).thenReturn(song);
 
         SingleSongDTO expectedDTO = SingleSongDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Sugar")
                 .genre(GenreDTOConverter.convertToDTO(genre))
                 .artist(ArtistDTOConverter.convertToDTO(artist))
@@ -136,17 +136,17 @@ class SongServiceImpTest {
                 .releasedDate(date)
                 .build();
 
-        SingleSongDTO actualDTO = service.getSong(1l);
+        SingleSongDTO actualDTO = service.getSong(1L);
 
         assertEquals(actualDTO, expectedDTO);
     }
 
     @Test
     void editSongValid() {
-        when(repository.existsById(1l)).thenReturn(true);
+        when(repository.existsById(1L)).thenReturn(true);
 
         SingleSongDTO updateDTO = SingleSongDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Lost Stars")
                 .genre(GenreDTOConverter.convertToDTO(genre))
                 .artist(ArtistDTOConverter.convertToDTO(artist))
@@ -156,17 +156,17 @@ class SongServiceImpTest {
 
         service.editSong(updateDTO);
 
-        Song actualSong = new SingleSong(1l,"Lost Stars", artist, genre, date, date);
+        Song actualSong = new SingleSong(1L,"Lost Stars", artist, genre, date, date);
 
         verify(repository).save(actualSong);
     }
 
     @Test
     void editSongInvalid() {
-        when(repository.existsById(1l)).thenReturn(false);
+        when(repository.existsById(1L)).thenReturn(false);
 
         SingleSongDTO updateDTO = SingleSongDTO.builder()
-                .id(1l)
+                .id(1L)
                 .name("Lost Stars")
                 .genre(GenreDTOConverter.convertToDTO(genre))
                 .artist(ArtistDTOConverter.convertToDTO(artist))
@@ -178,27 +178,27 @@ class SongServiceImpTest {
 
         assertEquals("INVALID_ID", exception.getReason());
 
-        verify(repository).existsById(1l);
+        verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);
     }
 
     @Test
     void deleteSongValid() {
-        when(repository.existsById(1l)).thenReturn(true);
+        when(repository.existsById(1L)).thenReturn(true);
 
-        service.deleteSong(1l);
+        service.deleteSong(1L);
 
-        verify(repository).existsById(1l);
-        verify(repository).deleteById(1l);
+        verify(repository).existsById(1L);
+        verify(repository).deleteById(1L);
     }
 
     @Test
     void deleteSongInvalid() {
-        when(repository.existsById(1l)).thenReturn(false);
+        when(repository.existsById(1L)).thenReturn(false);
 
-        service.deleteSong(1l);
+        service.deleteSong(1L);
 
-        verify(repository).existsById(1l);
+        verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);
     }
 }
