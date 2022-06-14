@@ -25,7 +25,6 @@ export const GenreDataProvider = ({ children }) => {
         <GenreDataContext.Provider value={{
             searchGenre, setSearchGenre,
             searchGenresResults, fetchError, isLoading,
-            genres, setGenres
         }}>
             {children}
         </GenreDataContext.Provider>

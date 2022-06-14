@@ -25,7 +25,6 @@ export const ArtistDataProvider = ({ children }) => {
         <ArtistDataContext.Provider value={{
             searchArtist, setSearchArtist,
             searchArtistsResults, fetchError, isLoading,
-            artists, setArtists
         }}>
             {children}
         </ArtistDataContext.Provider>

@@ -16,6 +16,9 @@ import SongPage from "./AdminAccess/Song/SongPage";
 import GenrePage from "./AdminAccess/Genre/GenrePage";
 import ArtistPage from "./AdminAccess/Artist/ArtistPage";
 import AlbumPage from "./AdminAccess/Album/AlbumPage";
+import AlbumSongsPage from "./CustomerAccess/AllCustomer/AlbumSongsPage";
+import ArtistSongsPage from "./CustomerAccess/AllCustomer/ArtistSongsPage";
+import GenreSongsPage from "./CustomerAccess/AllCustomer/GenreSongsPage";
 
 function App() {
     return (
@@ -30,6 +33,10 @@ function App() {
                 <Route path="creator/genre" element={<GenrePage/>}/>
                 <Route path="creator/artist" element={<ArtistPage/>}/>
                 <Route path="creator/album" element={<AlbumPage/>}/>
+                <Route path="albums/:id" element={<AlbumSongsPage/>}/>
+                <Route path="artists/:id" element={<ArtistSongsPage/>}/>
+                <Route path="genres/:id" element={<GenreSongsPage/>}/>
+                <Route path="playlists/:id" element={<ArtistSongsPage/>}/>
 
 
                 {/* we want to protect these routes */}

@@ -25,7 +25,6 @@ export const AlbumDataProvider = ({ children }) => {
         <AlbumDataContext.Provider value={{
             searchAlbum, setSearchAlbum,
             searchAlbumsResults, fetchError, isLoading,
-            albums, setAlbums
         }}>
             {children}
         </AlbumDataContext.Provider>
