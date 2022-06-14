@@ -66,7 +66,7 @@ const Artist = () => {
                             />
                         </div>
                     </div>
-                    {isUpdate ? <button>Update Genre</button> :
+                    {isUpdate ? <button>Update Artist</button> :
                         <button>Create Artist</button>
                     }
                     {isUpdate ? <div onClick={() => {
@@ -85,7 +85,7 @@ const Artist = () => {
                         type="text"
                         required
                         value={searchArtist}
-                        placeholder="Search genre"
+                        placeholder="Search artist"
                         onChange={(e) => setSearchArtist(e.target.value)}
                     />
                     <>

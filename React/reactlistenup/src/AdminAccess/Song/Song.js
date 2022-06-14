@@ -96,7 +96,8 @@ const Song = () => {
                         </div>
                         <div className="col-75">
                             <input
-                                disabled id="genre"
+                                disabled
+                                id="genre"
                                 type="text"
                                 value={genre != null ? genre.name : "Select a genre"}/>
                         </div>
@@ -107,7 +108,8 @@ const Song = () => {
                         </div>
                         <div className="col-75">
                             <input
-                                disabled id="album"
+                                disabled
+                                id="album"
                                 type="text"
                                 value={album != null ? album.name : "Select a album"}/>
                         </div>
@@ -119,7 +121,8 @@ const Song = () => {
                             </div>
                             <div className="col-75">
                                 <input
-                                    disabled id="artist"
+                                    disabled
+                                    id="artist"
                                     type="text"
                                     value={artist != null ? artist.name : "Select a artist"}
                                 />

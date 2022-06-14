@@ -15,6 +15,7 @@ import Home from "./ThirdParty/Home";
 import SongPage from "./AdminAccess/Song/SongPage";
 import GenrePage from "./AdminAccess/Genre/GenrePage";
 import ArtistPage from "./AdminAccess/Artist/ArtistPage";
+import AlbumPage from "./AdminAccess/Album/AlbumPage";
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                 <Route path="creator/song" element={<SongPage/>}/>
                 <Route path="creator/genre" element={<GenrePage/>}/>
                 <Route path="creator/artist" element={<ArtistPage/>}/>
+                <Route path="creator/album" element={<AlbumPage/>}/>
 
 
                 {/* we want to protect these routes */}
