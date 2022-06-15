@@ -58,12 +58,15 @@ public class SongServiceImp implements SongService {
         return dtoList;
     }
 
-    private boolean isLiked(long songID){
+    public boolean isLiked(long songID){
         Customer customer = (Customer) userDB.getById(requestAccessToken.getUserID());
-        for(Song song : customer.getLikedSongs()){
-            if(song.getId() == songID){
-                return true;
+        if(userDB.existsById(requestAccessToken.getUserID())){
+            for(Song song : customer.getLikedSongs()){
+                if(song.getId() == songID){
+                    return true;
+                }
             }
+            return false;
         }
         return false;
     }
