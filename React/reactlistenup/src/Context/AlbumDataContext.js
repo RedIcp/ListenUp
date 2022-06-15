@@ -8,7 +8,7 @@ export const AlbumDataProvider = ({ children }) => {
     const [searchAlbum, setSearchAlbum] = useState('');
     const [searchAlbumsResults, setSearchAlbumsResults] = useState([]);
 
-    const { data, fetchError, isLoading } = useAxiosFetch('http://localhost:8080/albums');
+    const { setUpdate, data, fetchError, isLoading } = useAxiosFetch('http://localhost:8080/albums');
 
     useEffect(() => {
         setAlbums(data);
@@ -24,7 +24,7 @@ export const AlbumDataProvider = ({ children }) => {
     return (
         <AlbumDataContext.Provider value={{
             searchAlbum, setSearchAlbum,
-            searchAlbumsResults, fetchError, isLoading,
+            searchAlbumsResults, fetchError, isLoading, setUpdate
         }}>
             {children}
         </AlbumDataContext.Provider>

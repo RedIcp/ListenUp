@@ -1,12 +1,16 @@
 import {useState, useEffect, useContext} from 'react';
-import AuthContext from "../Context/AuthProvider";
 import "../Style/Form.css"
 import jwt_decode from "jwt-decode";
-
 import axios from 'axios';
+import useAuth from "../Hooks/useAuth";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const Login = () => {
-    const {setAuth} = useContext(AuthContext);
+    const { setAuth } = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
@@ -28,18 +32,20 @@ const Login = () => {
 
             const response = await axios.post('http://localhost:8080/login', request);
 
-            console.log(response?.data);
-
             const accessToken = response?.data?.accessToken;
-            const decodedAccessToken = jwt_decode(accessToken);
+            const decodedAccessToken = jwt_decode(accessToken)
             const roles = decodedAccessToken.roles;
             const id = decodedAccessToken.userID;
 
-            setAuth({id, roles, accessToken});
+            setAuth({ id, roles, accessToken } );
+
             setEmail('');
             setPwd('');
             setErrMsg('');
+
             setSuccess(true);
+
+            navigate(from, { replace: true });
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');

@@ -10,7 +10,7 @@ const Genre = () => {
     const [isUpdate, setIsUpdate] = useState(false);
     const [isValid, setIsValid] = useState(false);
 
-    const {searchGenre, setSearchGenre, searchGenresResults} = useContext(GenreDataContext);
+    const {setUpdate, searchGenre, setSearchGenre, searchGenresResults} = useContext(GenreDataContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,7 +24,7 @@ const Genre = () => {
                 }
 
                 const response = await axios.put(`http://localhost:8080/genres/${id}`, updateGenre);
-
+                setUpdate("Success!")
                 setId(null);
                 setName('');
                 setIsUpdate(false);
@@ -34,13 +34,24 @@ const Genre = () => {
                 const newGenre = {name: name}
 
                 const response = await axios.post('http://localhost:8080/genres', newGenre);
-
+                setUpdate("Success!")
                 setName('');
 
                 console.log(response.status)
             }
 
         } catch (err) {
+            console.log(`Error: ${err.message}`);
+        }
+    }
+
+    const handleDelete = async (genreID) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/genres/${genreID}`);
+            setUpdate("Success!")
+            console.log(response.status)
+        } catch
+            (err) {
             console.log(`Error: ${err.message}`);
         }
     }
@@ -90,12 +101,19 @@ const Genre = () => {
                     />
                     <>
                         {searchGenresResults.map(genre => (
-                            <li key={genre.id} onClick={() => {
-                                setId(genre.id);
-                                setName(genre.name);
-                                setIsUpdate(true);
-                            }}>{genre.name}</li>
+                            <div>
+                                <li key={genre.id} onClick={() => {
+                                    setId(genre.id);
+                                    setName(genre.name);
+                                    setIsUpdate(true);
+                                }}>{genre.name}</li>
+                                <div onClick={() => {
+                                    handleDelete(genre.id)
+                                }}>delete
+                                </div>
+                            </div>
                         ))}
+
                     </>
                 </div>
             </div>

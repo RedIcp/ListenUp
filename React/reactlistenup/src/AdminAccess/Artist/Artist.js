@@ -10,7 +10,7 @@ const Artist = () => {
     const [isUpdate, setIsUpdate] = useState(false);
     const [isValid, setIsValid] = useState(false);
 
-    const {searchArtist, setSearchArtist, searchArtistsResults} = useContext(ArtistDataContext);
+    const {setUpdate, searchArtist, setSearchArtist, searchArtistsResults} = useContext(ArtistDataContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,7 +24,7 @@ const Artist = () => {
                 }
 
                 const response = await axios.put(`http://localhost:8080/artists/${id}`, updateArtist);
-
+                setUpdate("Success!")
                 setId(null);
                 setName('');
                 setIsUpdate(false);
@@ -34,13 +34,24 @@ const Artist = () => {
                 const newArtist = {name: name}
 
                 const response = await axios.post('http://localhost:8080/artists', newArtist);
-
+                setUpdate("Success!")
                 setName('');
 
                 console.log(response.status)
             }
 
         } catch (err) {
+            console.log(`Error: ${err.message}`);
+        }
+    }
+
+    const handleDelete = async (artistID) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/artists/${artistID}`);
+            setUpdate("Success!")
+            console.log(response.status)
+        } catch
+            (err) {
             console.log(`Error: ${err.message}`);
         }
     }
@@ -90,11 +101,17 @@ const Artist = () => {
                     />
                     <>
                         {searchArtistsResults.map(artist => (
-                            <li key={artist.id} onClick={() => {
-                                setId(artist.id);
-                                setName(artist.name);
-                                setIsUpdate(true);
-                            }}>{artist.name}</li>
+                            <div>
+                                <li key={artist.id} onClick={() => {
+                                    setId(artist.id);
+                                    setName(artist.name);
+                                    setIsUpdate(true);
+                                }}>{artist.name}</li>
+                                <div onClick={() => {
+                                    handleDelete(artist.id)
+                                }}>delete
+                                </div>
+                            </div>
                         ))}
                     </>
                 </div>

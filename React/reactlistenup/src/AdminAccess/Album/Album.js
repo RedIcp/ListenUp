@@ -15,7 +15,7 @@ const Album = () => {
     const [isValid, setIsValid] = useState(false);
 
     const {searchArtist, setSearchArtist, searchArtistsResults} = useContext(ArtistDataContext);
-    const {searchAlbum, setSearchAlbum, searchAlbumsResults} = useContext(AlbumDataContext);
+    const {setUpdate, searchAlbum, setSearchAlbum, searchAlbumsResults} = useContext(AlbumDataContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,7 +32,7 @@ const Album = () => {
                 }
 
                 const response = await axios.put(`http://localhost:8080/albums/${id}`, updateAlbum);
-
+                setUpdate("Success!")
                 setId(null);
                 setName('');
                 setArtist(null);
@@ -49,7 +49,7 @@ const Album = () => {
                 }
 
                 const response = await axios.post('http://localhost:8080/albums', newAlbum);
-
+                setUpdate("Success!")
                 setName('');
                 setArtist(null);
                 setReleasedDate(null);
@@ -58,6 +58,17 @@ const Album = () => {
             }
 
         } catch (err) {
+            console.log(`Error: ${err.message}`);
+        }
+    }
+
+    const handleDelete = async (albumID) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/albums/${albumID}`);
+            setUpdate("Success!")
+            console.log(response.status)
+        } catch
+            (err) {
             console.log(`Error: ${err.message}`);
         }
     }
@@ -136,12 +147,18 @@ const Album = () => {
                     />
                     <>
                         {searchAlbumsResults.map(album => (
-                            <li key={album.id} onClick={() => {
-                                setId(album.id);
-                                setName(album.name);
-                                setArtist(album.artist);
-                                setIsUpdate(true);
-                            }}>{album.name}</li>
+                            <div>
+                                <li key={album.id} onClick={() => {
+                                    setId(album.id);
+                                    setName(album.name);
+                                    setArtist(album.artist);
+                                    setIsUpdate(true);
+                                }}>{album.name}</li>
+                                <div onClick={() => {
+                                    handleDelete(album.id)
+                                }}>delete
+                                </div>
+                            </div>
                         ))}
                     </>
                 </div>

@@ -38,7 +38,7 @@ public class Playlist {
     @Column(name = "liked_users")
     private long likedUsers;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "playlist_song",
             joinColumns = @JoinColumn(name = "playlist_id"),

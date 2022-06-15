@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import useAxiosFetch from '../Hooks/useAxiosFetch.js';
 import {useParams} from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
 
 const ArtistSongDataContext = createContext({});
 
@@ -9,6 +10,7 @@ export const ArtistSongDataProvider = ({ children }) => {
     const [songs, setSongs] = useState([]);
     const [searchSong, setSearchSong] = useState('');
     const [searchSongResults, setSearchSongResults] = useState([]);
+    const {auth} = useAuth();
 
     const { id } = useParams();
 

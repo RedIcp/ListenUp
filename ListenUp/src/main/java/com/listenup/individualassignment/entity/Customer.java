@@ -12,17 +12,17 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @Table(name = "customer")
 public class Customer extends User{
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "liked_song",
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id"))
     private List<Song> likedSongs;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Playlist> playlists;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "liked_playlist",
             joinColumns = @JoinColumn(name = "customer_id"),

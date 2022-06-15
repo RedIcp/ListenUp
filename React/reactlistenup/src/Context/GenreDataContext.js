@@ -8,7 +8,7 @@ export const GenreDataProvider = ({ children }) => {
     const [searchGenre, setSearchGenre] = useState('');
     const [searchGenresResults, setSearchGenresResults] = useState([]);
 
-    const { data, fetchError, isLoading } = useAxiosFetch('http://localhost:8080/genres');
+    const { setUpdate, data, fetchError, isLoading } = useAxiosFetch('http://localhost:8080/genres');
 
     useEffect(() => {
         setGenres(data);
@@ -24,7 +24,7 @@ export const GenreDataProvider = ({ children }) => {
     return (
         <GenreDataContext.Provider value={{
             searchGenre, setSearchGenre,
-            searchGenresResults, fetchError, isLoading,
+            searchGenresResults, fetchError, isLoading, setUpdate
         }}>
             {children}
         </GenreDataContext.Provider>
