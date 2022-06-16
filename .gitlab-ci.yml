@@ -28,7 +28,7 @@ sonarqube:
       - .sonar/cache
   script:
     - cd ListenUp 
-    - gradle sonarqube
+    - ./gradlew sonarqube
     - ./gradlew.bat --stop
   allow_failure: true
   only:
