@@ -132,10 +132,11 @@ fabric.properties
 hs_err_pid*
 
 ### Gradle ###
+!ListenUp-0.0.1-SNAPSHOT.jar
 .gradle
 build/
-!build/libs
-.idea
+
+
 
 # Ignore Gradle GUI config
 gradle-app.setting
