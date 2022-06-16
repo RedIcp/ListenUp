@@ -2,6 +2,7 @@ stages:
 - build
 - test
 - sonarqube
+- docker
 
 build:
   stage: build
@@ -33,4 +34,9 @@ sonarqube:
   allow_failure: true
   only:
     - main
+
+docker:
+  stage: docker
+  script:
+    - docker-compose up -d -build   
 
