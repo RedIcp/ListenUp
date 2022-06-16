@@ -25,7 +25,7 @@ function App() {
                 <Route path="/" element={<Layout/>}>
                     <Route path="login" element={<Login/>}/>
                     <Route path="register" element={<Register/>}/>
-                    <Route path="unauthorized" element={<Unauthorized/>}/>
+                    <Route path="unauthorizedd" element={<Unauthorized/>}/>
 
                     <Route element={<RequireAuth allowedRoles={["ADMIN"]}/>}>
 
