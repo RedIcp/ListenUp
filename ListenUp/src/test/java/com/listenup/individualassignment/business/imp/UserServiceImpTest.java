@@ -240,7 +240,7 @@ class UserServiceImpTest {
     void getCustomerLikedPlaylists() {
         Customer customer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
         
-        when(repository.getById(1L)).thenReturn(customer);;
+        when(repository.getById(1L)).thenReturn(customer);
 
         CustomerLikedPlaylistListDTO expectedDTO = CustomerLikedPlaylistListDTO.builder()
                 .id(1L)

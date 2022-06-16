@@ -52,7 +52,7 @@ class LoginControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
-                            { 
+                            {
                                     "accessToken":  "h22hhs"
                             }
                         """));

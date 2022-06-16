@@ -1,12 +1,12 @@
 import {useState, useEffect, useContext} from 'react';
-import "../Style/Form.css"
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
-import useAuth from "../Hooks/useAuth";
 import {useLocation, useNavigate} from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
+import "../Style/form.css"
 
 const Login = () => {
-    const { setAuth } = useAuth();
+    const {setAuth} = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -37,7 +37,7 @@ const Login = () => {
             const roles = decodedAccessToken.roles;
             const id = decodedAccessToken.userID;
 
-            setAuth({ id, roles, accessToken } );
+            setAuth({id, roles, accessToken});
 
             setEmail('');
             setPwd('');
@@ -45,7 +45,7 @@ const Login = () => {
 
             setSuccess(true);
 
-            navigate(from, { replace: true });
+            navigate(from, {replace: true});
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -71,38 +71,40 @@ const Login = () => {
                         </p>
                     </section>
                 ) : (
-                    <section>
-                        <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                        <h1>Login</h1>
-                        <form onSubmit={handleSubmit}>
-                            <label htmlFor="email">Email:</label>
-                            <input
-                                type="text"
-                                id="email"
-                                autoComplete="off"
-                                onChange={(e) => setEmail(e.target.value)}
-                                value={email}
-                                required
-                            />
+                    <div className="form">
+                        <section>
+                            <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                            <h1>Login</h1>
+                            <form onSubmit={handleSubmit}>
+                                <label htmlFor="email">Email:</label>
+                                <input
+                                    type="text"
+                                    id="email"
+                                    autoComplete="off"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={email}
+                                    required
+                                />
 
-                            <label htmlFor="password">Password:</label>
-                            <input
-                                type="password"
-                                id="password"
-                                onChange={(e) => setPwd(e.target.value)}
-                                value={pwd}
-                                required
-                            />
-                            <button>Login</button>
-                        </form>
-                        <p>
-                            Need an Account?<br/>
-                            <span className="line">
+                                <label htmlFor="password">Password:</label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    onChange={(e) => setPwd(e.target.value)}
+                                    value={pwd}
+                                    required
+                                />
+                                <button>Login</button>
+                            </form>
+                            <p>
+                                Need an Account?<br/>
+                                <span className="line">
                             {/*put router link here*/}
-                                <a href="#">Sign Up</a>
+                                    <a href="#">Sign Up</a>
                         </span>
-                        </p>
-                    </section>
+                            </p>
+                        </section>
+                    </div>
                 )}
             </>
         </div>

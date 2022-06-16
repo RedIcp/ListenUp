@@ -25,7 +25,7 @@ class ArtistRepositoryTest {
     @Autowired
     private ArtistRepository repository;
 
-    Date date = new Date(2021,11,27);
+    final Date date = new Date(2021,11,27);
 
     @Test
     void save(){

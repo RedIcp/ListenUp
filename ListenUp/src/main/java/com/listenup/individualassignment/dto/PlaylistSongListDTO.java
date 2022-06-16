@@ -16,5 +16,6 @@ import lombok.AllArgsConstructor;
 public class PlaylistSongListDTO {
     private long id;
     private String name;
+    private String customer;
     private List<SingleSongDTO> songs;
 }

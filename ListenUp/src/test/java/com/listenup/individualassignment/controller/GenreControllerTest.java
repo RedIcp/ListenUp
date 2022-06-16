@@ -62,13 +62,13 @@ class GenreControllerTest {
                             [
                                 {
                                     "id": 1,
-                                    "name": "Pop"                  
+                                    "name": "Pop"
                                 },
                                 {
                                     "id": 2,
-                                    "name": "Hip-hop"  
+                                    "name": "Hip-hop"
                                 }
-                            ]                          
+                            ]
                         """));
 
         verify(service).getGenres();
@@ -106,7 +106,7 @@ class GenreControllerTest {
                                        "id": 1,
                                        "name": "Pop",
                                        "songs": []
-                            }                    
+                            }
                         """));
 
         verify(service).getGenreSongs(1L);

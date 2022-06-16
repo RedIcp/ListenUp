@@ -39,9 +39,9 @@ class AlbumControllerTest {
     @MockBean
     private AlbumService service;
 
-    Date date = new Date(2008,11,26);
+    final Date date = new Date(2008,11,26);
 
-    ArtistDTO artist = ArtistDTO.builder()
+    final ArtistDTO artist = ArtistDTO.builder()
             .id(1L)
             .name("Maroon 5")
             .build();
@@ -96,7 +96,7 @@ class AlbumControllerTest {
                                     "releasedDate": "3908-12-25T23:00:00.000+00:00",
                                     "uploadedDate": "3908-12-25T23:00:00.000+00:00"
                                 }
-                            ]                          
+                            ]
                         """));
 
         verify(service).getAlbums();
@@ -134,7 +134,7 @@ class AlbumControllerTest {
                                        "id": 1,
                                        "name": "V",
                                        "songs": []
-                            }                    
+                            }
                         """));
 
         verify(service).getAlbumSongs(1L);

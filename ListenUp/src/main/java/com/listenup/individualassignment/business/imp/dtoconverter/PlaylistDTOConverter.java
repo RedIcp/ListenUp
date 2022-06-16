@@ -36,6 +36,7 @@ public class PlaylistDTOConverter {
         return PlaylistSongListDTO.builder()
                 .id(playlist.getId())
                 .name(playlist.getName())
+                .customer(playlist.getCustomer().getUsername())
                 .songs(SongDTOConverter.convertToSingleSongDTOList(playlist.getSongs()))
                 .build();
     }

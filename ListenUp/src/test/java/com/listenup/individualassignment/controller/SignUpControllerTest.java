@@ -50,15 +50,15 @@ class SignUpControllerTest {
                                 {
                                         "username": "Yellow",
                                         "email": "yellow@gmail.com",
-                                        "password": "123Yellow"                   
-                            }  
+                                        "password": "123Yellow"
+                            }
                                 """))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().json("""
                             {
-                                        "userID": 1               
-                            }  
+                                        "userID": 1
+                            }
                         """));
 
         verify(service).createAccount(user);

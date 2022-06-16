@@ -40,14 +40,14 @@ class SongControllerTest {
     @MockBean
     private SongService service;
 
-    Date date = new Date(2021,11,27);
+    final Date date = new Date(2021,11,27);
 
-    ArtistDTO artist = ArtistDTO.builder()
+    final ArtistDTO artist = ArtistDTO.builder()
             .id(1L)
             .name("Maroon 5")
             .build();
 
-    AlbumDTO album = AlbumDTO.builder()
+    final AlbumDTO album = AlbumDTO.builder()
             .id(1L)
             .name("V")
             .artist(artist)
@@ -55,7 +55,7 @@ class SongControllerTest {
             .uploadedDate(date)
             .build();
 
-    GenreDTO genre = GenreDTO.builder()
+    final GenreDTO genre = GenreDTO.builder()
             .id(1L)
             .name("Pop")
             .build();
@@ -97,7 +97,7 @@ class SongControllerTest {
                                          "releasedDate": "3921-12-26T23:00:00.000+00:00",
                                          "uploadedDate": "3921-12-26T23:00:00.000+00:00"
                                      }
-                            ]                          
+                            ]
                         """));
 
         verify(service).getSongs();

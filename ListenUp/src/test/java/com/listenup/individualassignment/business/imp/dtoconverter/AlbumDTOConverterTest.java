@@ -15,14 +15,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AlbumDTOConverterTest {
-    Date date = new Date(2021,11,27);
+    final Date date = new Date(2021,11,27);
 
-    Artist artist = Artist.builder()
+    final Artist artist = Artist.builder()
             .id(1L)
             .name("Maroon 5")
             .build();
 
-    Album expectedModel = Album.builder()
+    final Album expectedModel = Album.builder()
             .id(1L)
             .name("V")
             .artist(artist)
@@ -31,7 +31,7 @@ class AlbumDTOConverterTest {
             .albumSongs(Collections.emptyList())
             .build();
 
-    AlbumDTO expectedDTO = AlbumDTO.builder()
+    final AlbumDTO expectedDTO = AlbumDTO.builder()
             .id(1L)
             .name("V")
             .artist(ArtistDTOConverter.convertToDTO(artist))

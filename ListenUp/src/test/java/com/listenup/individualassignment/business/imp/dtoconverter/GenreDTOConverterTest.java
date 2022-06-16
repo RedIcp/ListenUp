@@ -13,13 +13,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GenreDTOConverterTest {
-    Genre expectedModel = Genre.builder()
+    final Genre expectedModel = Genre.builder()
             .id(1L)
             .name("Pop")
             .songs(Collections.emptyList())
             .build();
 
-    GenreDTO expectedDTO = GenreDTO.builder()
+    final GenreDTO expectedDTO = GenreDTO.builder()
             .id(1L)
             .name("Pop")
             .build();

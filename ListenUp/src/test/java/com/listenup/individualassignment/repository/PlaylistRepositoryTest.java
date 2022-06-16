@@ -24,9 +24,9 @@ class PlaylistRepositoryTest {
     @Autowired
     private PlaylistRepository repository;
 
-    Date date = new Date(2021,11,27);
+    final Date date = new Date(2021,11,27);
 
-    Customer customer = new Customer("Yellow", "yellow@gmail.com", "123Yellow");
+    final Customer customer = new Customer("Yellow", "yellow@gmail.com", "123Yellow");
 
     @Test
     void save(){

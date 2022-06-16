@@ -14,16 +14,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlaylistDTOConverterTest {
-    Customer customer = new Customer(1L, "Yellow", "yellow@gmail.com", "123Yellow");
+    final Customer customer = new Customer(1L, "Yellow", "yellow@gmail.com", "123Yellow");
 
-    Playlist expectedModel = Playlist.builder()
+    final Playlist expectedModel = Playlist.builder()
             .id(1L)
             .name("Chill")
             .customer(customer)
             .songs(Collections.emptyList())
             .build();
 
-    PlaylistDTO expectedDTO = PlaylistDTO.builder()
+    final PlaylistDTO expectedDTO = PlaylistDTO.builder()
             .id(1L)
             .name("Chill")
             .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))

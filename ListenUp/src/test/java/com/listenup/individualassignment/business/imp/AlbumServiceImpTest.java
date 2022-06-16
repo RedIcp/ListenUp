@@ -28,9 +28,9 @@ class AlbumServiceImpTest {
     @InjectMocks
     private AlbumServiceImp service;
 
-    private Date date = new Date(2021,11,27);
+    private final Date date = new Date(2021,11,27);
 
-    private Artist artist = Artist.builder()
+    private final Artist artist = Artist.builder()
             .id(1L)
             .name("Maroon 5")
             .build();

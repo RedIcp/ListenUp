@@ -62,9 +62,9 @@ class UserControllerTest {
                                 {
                                         "id": 1,
                                         "username": "Blue",
-                                        "email": "blue@gmail.com"       
+                                        "email": "blue@gmail.com"
                                 }
-                            ]                          
+                            ]
                         """));
 
         verify(service).getUsers();
@@ -103,8 +103,8 @@ class UserControllerTest {
                                         "id": 1,
                                         "username": "Blue",
                                         "email": "blue@gmail.com",
-                                        "password": "123Blue"                   
-                            }                       
+                                        "password": "123Blue"
+                            }
                         """));
 
         verify(service).getUser(1L);
@@ -139,8 +139,8 @@ class UserControllerTest {
                 .andExpect(content().json("""
                             {
                                         "id": 1,
-                                        "playlists": []                 
-                            }                      
+                                        "playlists": []
+                            }
                         """));
 
         verify(service).getCustomerPlaylists(1L);
@@ -175,8 +175,8 @@ class UserControllerTest {
                 .andExpect(content().json("""
                             {
                                         "id": 1,
-                                        "likedSongs": []                 
-                            }                      
+                                        "likedSongs": []
+                            }
                         """));
 
         verify(service).getCustomerCollection(1L);
@@ -211,8 +211,8 @@ class UserControllerTest {
                 .andExpect(content().json("""
                             {
                                         "id": 1,
-                                        "likedPlaylists": []                 
-                            }                      
+                                        "likedPlaylists": []
+                            }
                         """));
 
         verify(service).getCustomerLikedPlaylists(1L);
@@ -240,8 +240,8 @@ class UserControllerTest {
                                         "id": 1,
                                         "username": "Yellow",
                                         "email": "yellow@gmail.com",
-                                        "password": "123Yellow"                   
-                                } 
+                                        "password": "123Yellow"
+                                }
                                 """))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -264,8 +264,8 @@ class UserControllerTest {
                         .content("""
                                 {
                                         "id": 1,
-                                        "song": null                 
-                                } 
+                                        "song": null
+                                }
                                 """))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -286,8 +286,8 @@ class UserControllerTest {
                         .content("""
                                 {
                                         "id": 1,
-                                        "song": null                 
-                                } 
+                                        "song": null
+                                }
                                 """))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -308,8 +308,8 @@ class UserControllerTest {
                         .content("""
                                 {
                                         "id": 1,
-                                        "playlist": null                       
-                                } 
+                                        "playlist": null
+                                }
                                 """))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -330,8 +330,8 @@ class UserControllerTest {
                         .content("""
                                 {
                                         "id": 1,
-                                        "playlist": null                       
-                                } 
+                                        "playlist": null
+                                }
                                 """))
                 .andDo(print())
                 .andExpect(status().isNoContent());

@@ -18,9 +18,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerDTOConverterTest {
-    Customer expectedModel = new Customer(1L, "Yellow", "yellow@gmail.com", "123Yellow");
+    final Customer expectedModel = new Customer(1L, "Yellow", "yellow@gmail.com", "123Yellow");
 
-    UpdateUserDTO expectedDTO = UpdateUserDTO.builder()
+    final UpdateUserDTO expectedDTO = UpdateUserDTO.builder()
             .id(1L)
             .username("Yellow")
             .email("yellow@gmail.com")

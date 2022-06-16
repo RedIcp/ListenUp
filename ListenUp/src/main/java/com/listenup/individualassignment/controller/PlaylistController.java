@@ -2,7 +2,6 @@ package com.listenup.individualassignment.controller;
 
 import java.util.List;
 
-import com.listenup.individualassignment.configuration.security.isauthenticated.IsAuthenticated;
 import com.listenup.individualassignment.dto.createdto.AddRemoveSongToPlaylistDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
@@ -16,7 +15,6 @@ import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
 
 import lombok.RequiredArgsConstructor;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @RestController

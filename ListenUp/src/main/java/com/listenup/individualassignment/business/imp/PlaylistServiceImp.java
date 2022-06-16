@@ -18,7 +18,6 @@ import com.listenup.individualassignment.entity.RoleEnum;
 import com.listenup.individualassignment.repository.PlaylistRepository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Primary;
 
@@ -29,7 +28,7 @@ public class PlaylistServiceImp implements PlaylistService {
     private final PlaylistRepository db;
     private final AccessTokenDTO requestAccessToken;
 
-    String error = "INVALID_ID";
+    final String error = "INVALID_ID";
 
     @Override
     public CreatePlaylistResponseDTO addPlaylist(CreatePlaylistRequestDTO playlist){

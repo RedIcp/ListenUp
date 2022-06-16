@@ -2,7 +2,6 @@ package com.listenup.individualassignment.controller;
 
 import java.util.List;
 
-import com.listenup.individualassignment.configuration.security.isauthenticated.IsAuthenticated;
 import com.listenup.individualassignment.dto.createdto.CreateArtistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateArtistResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,6 @@ import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
 
 import lombok.RequiredArgsConstructor;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @RestController

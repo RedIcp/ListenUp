@@ -14,7 +14,6 @@ import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 import com.listenup.individualassignment.business.SongService;
 import com.listenup.individualassignment.entity.Customer;
 import com.listenup.individualassignment.entity.Song;
-import com.listenup.individualassignment.entity.User;
 import com.listenup.individualassignment.repository.SongRepository;
 
 import com.listenup.individualassignment.repository.UserRepository;

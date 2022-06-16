@@ -1,0 +1,211 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1rem 0.5rem;
+}
+
+.form section {
+    width: 100%;
+    max-width: 420px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+    color: white;
+}
+
+.form form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding-bottom: 1rem;
+}
+
+.form input[type="text"], input[type="date"],
+button{
+    font-family: 'Brush Script MT', cursive;
+    font-size: 15px;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+}
+
+.form label,
+button {
+    margin-top: 1rem;
+}
+
+.form button {
+    padding: 0.5rem;
+}
+
+.form button:hover {
+    background-color: orange;
+}
+
+html, body {
+    background-color: black;
+    color: white;
+    height: 100%;
+    margin: 0;
+    font-family: 'Brush Script MT', cursive;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+main {
+    overflow: hidden;
+    display: flex;
+}
+
+.content {
+    overflow: auto;
+    min-height: 500px;
+}
+
+aside {
+    background-color: orange;
+    color: black;
+    width: 200px;
+    flex: 0 0 200px;
+}
+
+.logo {
+    padding: 6px 50px;
+    cursor: pointer;
+    color: black;
+    font-size: 5rem;
+    text-decoration: none;
+    margin-top: 8px;
+}
+
+li {
+    cursor: pointer;
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+}
+
+.box li{
+    font-size: 15px;
+}
+
+
+hr {
+    color: black;
+    border: solid black 1px;
+}
+
+.list:hover {
+    background-color: orange;
+    color: black;
+    border-radius: 15px;
+}
+
+article {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+header,
+aside,
+.content,
+footer {
+    border: 1px solid black;
+    padding: 1rem;
+}
+
+header {
+    border-bottom: solid orange 1px;
+    font-size: 25px;
+}
+
+header button {
+    float: right;
+    background-color: white;
+    font-family: 'Brush Script MT', cursive;
+    font-size: 18px;
+    border-radius: 15px;
+}
+
+header button:hover{
+    background-color: red;
+}
+
+footer {
+
+}
+
+label {
+    font-size: 20px;
+}
+
+.search {
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Brush Script MT', cursive;
+    width: 60%;
+    height: 25px;
+}
+
+.list-container {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    min-height: 16vh;
+    background-color: black;
+}
+
+.box {
+    font-size: 20px;
+}
+
+.box h3 {
+    color: orange;
+}
+
+.delete {
+    font-size: 15px;
+    float: right;
+}
+
+.delete:hover {
+    color: red;
+}
+
+.add-new {
+    color: orange;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.add-new:hover {
+    border-radius: 20px;
+    background-color: orange;
+    color: black;
+}
+
+h1 {
+    font-size: 25px;
+    color: orange;
+}
+
+
+
+
+

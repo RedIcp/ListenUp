@@ -24,20 +24,20 @@ class SongRepositoryTest {
     @Autowired
     private SongRepository repository;
 
-    Date date = new Date(2021,11,27);
+    final Date date = new Date(2021,11,27);
 
-    Artist artist = Artist.builder()
+    final Artist artist = Artist.builder()
             .name("Maroon 5")
             .build();
 
-    Album album = Album.builder()
+    final Album album = Album.builder()
             .name("V")
             .artist(artist)
             .releasedDate(date)
             .uploadedDate(date)
             .build();
 
-    Genre genre = Genre.builder()
+    final Genre genre = Genre.builder()
             .name("Pop")
             .build();
     @Test

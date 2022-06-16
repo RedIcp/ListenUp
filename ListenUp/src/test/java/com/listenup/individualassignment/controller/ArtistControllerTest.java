@@ -63,13 +63,13 @@ class ArtistControllerTest {
                             [
                                 {
                                     "id": 1,
-                                    "name": "Maroon 5"                  
+                                    "name": "Maroon 5"
                                 },
                                 {
                                     "id": 2,
-                                    "name": "Post Malone"  
+                                    "name": "Post Malone"
                                 }
-                            ]                          
+                            ]
                         """));
 
         verify(service).getArtists();
@@ -107,7 +107,7 @@ class ArtistControllerTest {
                                        "id": 1,
                                        "name": "Maroon 5",
                                        "songs": []
-                            }                    
+                            }
                         """));
 
         verify(service).getArtistSongs(1L);
@@ -145,7 +145,7 @@ class ArtistControllerTest {
                                        "id": 1,
                                        "name": "Maroon 5",
                                        "albums": []
-                            }                    
+                            }
                         """));
 
         verify(service).getArtistAlbums(1L);

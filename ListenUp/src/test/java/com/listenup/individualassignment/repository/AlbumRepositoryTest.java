@@ -24,7 +24,7 @@ class AlbumRepositoryTest {
     @Autowired
     private AlbumRepository repository;
 
-    Date date = new Date(2021,11,27);
+    final Date date = new Date(2021,11,27);
 
     private Artist saveArtist(String name) {
         Artist artist = Artist.builder()

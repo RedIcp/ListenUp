@@ -39,7 +39,7 @@ class PlaylistControllerTest {
     @MockBean
     private PlaylistService service;
 
-    Customer customer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
+    final Customer customer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
@@ -74,8 +74,8 @@ class PlaylistControllerTest {
                                         "id": 1,
                                         "username": "Yellow",
                                         "email": "yellow@gmail.com",
-                                        "password": "123Yellow" 
-                                    }                   
+                                        "password": "123Yellow"
+                                    }
                                 },
                                 {
                                     "id": 2,
@@ -84,10 +84,10 @@ class PlaylistControllerTest {
                                         "id": 1,
                                         "username": "Yellow",
                                         "email": "yellow@gmail.com",
-                                        "password": "123Yellow" 
-                                    }  
+                                        "password": "123Yellow"
+                                    }
                                 }
-                            ]                          
+                            ]
                         """));
 
         verify(service).getPlaylists();
@@ -125,7 +125,7 @@ class PlaylistControllerTest {
                                        "id": 1,
                                        "name": "Chill",
                                        "songs": []
-                            }                    
+                            }
                         """));
 
         verify(service).getPlaylistSong(1L);
@@ -166,15 +166,15 @@ class PlaylistControllerTest {
                                              "id": 1,
                                              "username": "Yellow",
                                              "email": "yellow@gmail.com",
-                                             "password": "123Yellow" 
-                                    }  
+                                             "password": "123Yellow"
+                                    }
                                 }
                                 """))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().json("""
                             {
-                                        "playlistID": 1  
+                                        "playlistID": 1
                             }
                         """));
 
@@ -189,7 +189,7 @@ class PlaylistControllerTest {
                         .content("""
                                 {
                                         "id": 1,
-                                        "song": null  
+                                        "song": null
                                 }
                                 """))
                 .andDo(print())
@@ -211,7 +211,7 @@ class PlaylistControllerTest {
                         .content("""
                                 {
                                         "id": 1,
-                                        "song": null  
+                                        "song": null
                                 }
                                 """))
                 .andDo(print())
@@ -238,8 +238,8 @@ class PlaylistControllerTest {
                                              "id": 1,
                                              "username": "Yellow",
                                              "email": "yellow@gmail.com",
-                                             "password": "123Yellow" 
-                                    }  
+                                             "password": "123Yellow"
+                                    }
                                 }
                                 """))
                 .andDo(print())

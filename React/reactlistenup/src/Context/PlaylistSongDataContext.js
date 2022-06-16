@@ -15,7 +15,7 @@ export const PlaylistSongDataProvider = ({ children }) => {
     const { data, fetchError, isLoading } = useAxiosFetch(`http://localhost:8080/playlists/${id}`);
 
     useEffect(() => {
-        setSongs(data.songs);
+        setSongs(data?.songs);
     }, [data])
 
     useEffect(() => {

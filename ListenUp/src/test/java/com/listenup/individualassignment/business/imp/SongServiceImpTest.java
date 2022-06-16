@@ -39,12 +39,12 @@ class SongServiceImpTest {
     @InjectMocks
     private SongServiceImp service;
 
-    Artist artist = Artist.builder()
+    final Artist artist = Artist.builder()
             .id(1L)
             .name("Maroon 5")
             .build();
 
-    Album album = Album.builder()
+    final Album album = Album.builder()
             .id(1L)
             .name("V")
             .artist(artist)
@@ -52,12 +52,12 @@ class SongServiceImpTest {
             .uploadedDate(null)
             .build();
 
-    Genre genre = Genre.builder()
+    final Genre genre = Genre.builder()
             .id(1L)
             .name("Pop")
             .build();
 
-    Date date = new Date(2021,11,27);
+    final Date date = new Date(2021,11,27);
 
     @Test
     void addSingleSong() {

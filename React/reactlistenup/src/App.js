@@ -5,14 +5,16 @@ import Layout from "./Component/Layout";
 import Unauthorized from "./ThirdParty/Unauthorized";
 import RequireAuth from "./Component/RequireAuth";
 import Missing from "./ThirdParty/Missing";
-import SongPage from "./AdminAccess/Song/SongPage";
-import GenrePage from "./AdminAccess/Genre/GenrePage";
-import ArtistPage from "./AdminAccess/Artist/ArtistPage";
-import AlbumPage from "./AdminAccess/Album/AlbumPage";
-import AlbumSongsPage from "./CustomerAccess/AllCustomer/AlbumSongsPage";
-import ArtistSongsPage from "./CustomerAccess/AllCustomer/ArtistSongsPage";
-import GenreSongsPage from "./CustomerAccess/AllCustomer/GenreSongsPage";
-import PlaylistSongsPage from "./CustomerAccess/AllCustomer/PlaylistSongsPage";
+import SongPage from "./AdminAccess/Action/Song/SongPage";
+import GenrePage from "./AdminAccess/Action/Genre/GenrePage";
+import ArtistPage from "./AdminAccess/Action/Artist/ArtistPage";
+import AlbumPage from "./AdminAccess/Action/Album/AlbumPage";
+import AlbumSongsPage from "./CustomerAccess/AllCustomer/Action/Album/AlbumSongsPage";
+import ArtistSongsPage from "./CustomerAccess/AllCustomer/Action/Artist/ArtistSongsPage";
+import GenreSongsPage from "./CustomerAccess/AllCustomer/Action/Genre/GenreSongsPage";
+import PlaylistSongsPage from "./CustomerAccess/AllCustomer/Action/Playlist/PlaylistSongsPage";
+import Main from "./CustomerAccess/Component/Main";
+import "./Style/app.css"
 
 function App() {
     return (
@@ -36,6 +38,8 @@ function App() {
                 <Route path="artists/:id" element={<ArtistSongsPage/>}/>
                 <Route path="genres/:id" element={<GenreSongsPage/>}/>
                 <Route path="playlists/:id" element={<PlaylistSongsPage/>}/>
+
+                <Route path="/" element={<Main/>}/>
 
                 <Route element={<RequireAuth allowedRoles={["CUSTOMER"]}/>}>
 

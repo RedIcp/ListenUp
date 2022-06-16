@@ -39,7 +39,7 @@ class PlaylistServiceImpTest {
     @InjectMocks
     private PlaylistServiceImp service;
 
-    Customer customer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
+    final Customer customer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
 
     @Test
     void addPlaylist() {

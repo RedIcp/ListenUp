@@ -2,7 +2,6 @@ package com.listenup.individualassignment.controller;
 
 import java.util.List;
 
-import com.listenup.individualassignment.configuration.security.isauthenticated.IsAuthenticated;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumSongRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumSongResponseDTO;
 import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDTO;
@@ -16,7 +15,6 @@ import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 
 import lombok.RequiredArgsConstructor;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @RestController

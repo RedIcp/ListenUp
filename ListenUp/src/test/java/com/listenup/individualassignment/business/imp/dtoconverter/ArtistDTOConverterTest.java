@@ -14,14 +14,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArtistDTOConverterTest {
-    Artist expectedModel = Artist.builder()
+    final Artist expectedModel = Artist.builder()
             .id(1L)
             .name("Maroon 5")
             .albums(Collections.emptyList())
             .songs(Collections.emptyList())
             .build();
 
-    ArtistDTO expectedDTO = ArtistDTO.builder()
+    final ArtistDTO expectedDTO = ArtistDTO.builder()
             .id(1L)
             .name("Maroon 5")
             .build();

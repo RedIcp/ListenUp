@@ -13,7 +13,6 @@ import com.listenup.individualassignment.entity.Genre;
 import com.listenup.individualassignment.repository.GenreRepository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Primary;
 

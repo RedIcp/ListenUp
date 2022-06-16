@@ -13,12 +13,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SongDTOConverterTest {
-    Artist artist = Artist.builder()
+    final Artist artist = Artist.builder()
             .id(1L)
             .name("Maroon 5")
             .build();
 
-    Album album = Album.builder()
+    final Album album = Album.builder()
             .id(1L)
             .name("V")
             .artist(artist)
@@ -26,14 +26,14 @@ class SongDTOConverterTest {
             .uploadedDate(null)
             .build();
 
-    Genre genre = Genre.builder()
+    final Genre genre = Genre.builder()
             .id(1L)
             .name("Pop")
             .build();
 
-    Song expectedSingleSongModel = new SingleSong(1L, "Sugar", artist, genre, null, null);
+    final Song expectedSingleSongModel = new SingleSong(1L, "Sugar", artist, genre, null, null);
 
-    SingleSongDTO expectedSingleSongDTO = SingleSongDTO.builder()
+    final SingleSongDTO expectedSingleSongDTO = SingleSongDTO.builder()
             .id(1L)
             .name("Sugar")
             .genre(GenreDTOConverter.convertToDTO(genre))
@@ -42,9 +42,9 @@ class SongDTOConverterTest {
             .uploadedDate(null)
             .build();
 
-    Song expectedAlbumSongModel = new AlbumSong(1L, "Map", genre, album);
+    final Song expectedAlbumSongModel = new AlbumSong(1L, "Map", genre, album);
 
-    AlbumSongDTO expectedAlbumSongDTO = AlbumSongDTO.builder()
+    final AlbumSongDTO expectedAlbumSongDTO = AlbumSongDTO.builder()
             .id(1L)
             .name("Map")
             .genre(GenreDTOConverter.convertToDTO(genre))
