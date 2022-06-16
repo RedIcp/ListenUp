@@ -46,7 +46,7 @@ const Login = () => {
             setSuccess(true);
 
             //navigate(from, {replace: true});
-            //roles?.include("CUSTOMER") ? <Navigate to={}/>: roles?.include("ADMIN") ? navigate("/")
+            navigate("/creator/home")
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -61,53 +61,42 @@ const Login = () => {
     }
 
     return (
-        <div className="form">
-            <>
-                {success ? (
-                    <section>
-                        <h1>You are logged in!</h1>
-                        <br/>
-                        <p>
-                            <a href="#">Go to Home</a>
-                        </p>
-                    </section>
-                ) : (
-                    <div className="form">
-                        <section>
-                            <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                            <h1>Login</h1>
-                            <form onSubmit={handleSubmit}>
-                                <label htmlFor="email">Email:</label>
-                                <input
-                                    type="text"
-                                    id="email"
-                                    autoComplete="off"
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    value={email}
-                                    required
-                                />
+        <div className="form-container">
+            <div className="single-form">
+                <section>
+                    <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                    <h1>Login</h1>
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="text"
+                            id="email"
+                            autoComplete="off"
+                            onChange={(e) => setEmail(e.target.value)}
+                            value={email}
+                            required
+                        />
 
-                                <label htmlFor="password">Password:</label>
-                                <input
-                                    type="password"
-                                    id="password"
-                                    onChange={(e) => setPwd(e.target.value)}
-                                    value={pwd}
-                                    required
-                                />
-                                <button>Login</button>
-                            </form>
-                            <p>
-                                Need an Account?<br/>
-                                <span className="line">
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            onChange={(e) => setPwd(e.target.value)}
+                            value={pwd}
+                            required
+                        />
+                        <button>Login</button>
+                    </form>
+                    <p>
+                        Need an Account?<br/>
+                        <span className="line">
                             {/*put router link here*/}
-                                    <a href="#">Sign Up</a>
+                            <a href="#">Sign Up</a>
                         </span>
-                            </p>
-                        </section>
-                    </div>
-                )}
-            </>
+                    </p>
+                </section>
+            </div>
+            }
         </div>
     )
 }

@@ -28,7 +28,7 @@ public class PlaylistServiceImp implements PlaylistService {
     private final PlaylistRepository db;
     private final AccessTokenDTO requestAccessToken;
 
-    final String error = "INVALID_ID";
+    private final static String error = "INVALID_ID";
 
     @Override
     public CreatePlaylistResponseDTO addPlaylist(CreatePlaylistRequestDTO playlist){

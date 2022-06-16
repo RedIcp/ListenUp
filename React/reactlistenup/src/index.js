@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {AuthProvider} from "./Context/AuthProvider";
-import Main from "./AdminAccess/Component/Main";
+import AdminMain from "./AdminAccess/Component/AdminMain";
+import CustomerMain from "./CustomerAccess/Component/CustomerMain";
+import App from "./App";
 
 
 ReactDOM.render(
@@ -10,7 +12,7 @@ ReactDOM.render(
       <BrowserRouter>
           <AuthProvider>
               <Routes>
-                  <Route path="/*" element={<Main />} />
+                  <Route path="/*" element={<App />} />
               </Routes>
           </AuthProvider>
       </BrowserRouter>

@@ -1,4 +1,4 @@
-.form {
+.single-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -7,7 +7,7 @@
     padding: 1rem 0.5rem;
 }
 
-.form section {
+.single-form section {
     width: 100%;
     max-width: 420px;
     min-height: 400px;
@@ -17,10 +17,9 @@
     padding: 1rem;
     background-color: orange;
     color: black;
-    box-shadow: 5px 5px 15px orange;
 }
 
-.form form {
+.single-form form {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -28,26 +27,22 @@
     padding-bottom: 1rem;
 }
 
-.form input[type="text"],
-input[type="password"],
-.form button{
-    font-family: 'Brush Script MT', cursive;
+.single-form input[type="text"],
+.single-form input[type="password"],
+.single-form button {
+    font-family: 'Nunito', sans-serif;
     font-size: 22px;
     padding: 0.25rem;
     border-radius: 0.5rem;
 }
 
-.form label,
-.form button {
+label,
+button {
     margin-top: 1rem;
 }
 
-.form button {
+.single-form button {
     padding: 0.5rem;
-}
-
-.form button:hover {
-    box-shadow: 5px 5px 10px black;
 }
 
 .instructions {
@@ -89,4 +84,15 @@ input[type="password"],
     font-weight: bold;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
+}
+
+.line {
+    display: inline-block;
+}
+
+.flexGrow {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
 }

@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  db:
+    image: mysql
+    container_name: db
+    ports:
+      - '3308:3306'
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '00000000'
+      MYSQL_DATABASE: 'listen_up'
+  backend:
+    image: backenddocker
+    container_name: backendcontainer
+    restart: always
+    build: ListenUp\.
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/listen_up
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=00000000
+  React_website:
+    image: frontenddocker
+    container_name: frontendcontainer
+    ports:
+      - '3000:3000'
+    build: React\reactlistenup\.
+    depends_on:
+      - backend

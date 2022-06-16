@@ -13,28 +13,35 @@ import AlbumSongsPage from "./CustomerAccess/AllCustomer/Action/Album/AlbumSongs
 import ArtistSongsPage from "./CustomerAccess/AllCustomer/Action/Artist/ArtistSongsPage";
 import GenreSongsPage from "./CustomerAccess/AllCustomer/Action/Genre/GenreSongsPage";
 import PlaylistSongsPage from "./CustomerAccess/AllCustomer/Action/Playlist/PlaylistSongsPage";
-import Main from "./CustomerAccess/Component/Main";
-import "./Style/app.css"
+import AdminHome from "./AdminAccess/AdminHome";
+import React from "react";
+import CustomerMain from "./CustomerAccess/Component/CustomerMain";
+import AdminMain from "./AdminAccess/Component/AdminMain";
 
 function App() {
     return (
-        <Routes>
-            <Route path="/" element={<Layout/>}>
-                <Route path="login" element={<Login/>}/>
-                <Route path="register" element={<Register/>}/>
-                <Route path="unauthorized" element={<Unauthorized/>}/>
+        <div>
+            <Routes>
+                <Route path="/" element={<Layout/>}>
+                    <Route path="login" element={<Login/>}/>
+                    <Route path="register" element={<Register/>}/>
+                    <Route path="unauthorized" element={<Unauthorized/>}/>
 
-                <Route element={<RequireAuth allowedRoles={["ADMIN"]}/>}>
+                    <Route element={<RequireAuth allowedRoles={["ADMIN"]}/>}>
 
+                    </Route>
+                    <Route path="/*" element={<AdminMain/>}/>
+
+
+                    <Route element={<RequireAuth allowedRoles={["CUSTOMER"]}/>}>
+
+                    </Route>
+                    <Route path="/*" element={<CustomerMain/>}/>
+
+                    <Route path="*" element={<Missing/>}/>
                 </Route>
-
-                <Route element={<RequireAuth allowedRoles={["CUSTOMER"]}/>}>
-
-                </Route>
-
-                <Route path="*" element={<Missing/>}/>
-            </Route>
-        </Routes>
+            </Routes>
+        </div>
     )
 }
 

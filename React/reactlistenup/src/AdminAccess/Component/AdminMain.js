@@ -11,10 +11,10 @@ import "../../Style/admin.css"
 import SongPage from "../Action/Song/SongPage";
 
 
-function Main() {
+function AdminMain() {
     return (
         <div className="container">
-            <main>
+            <main className="main">
                 <Sidebar/>
                 <article>
                     <Header/>
@@ -34,4 +34,4 @@ function Main() {
     )
 }
 
-export default Main;
+export default AdminMain;

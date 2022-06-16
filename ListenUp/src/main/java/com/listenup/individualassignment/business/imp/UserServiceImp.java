@@ -39,7 +39,7 @@ public class UserServiceImp implements UserService {
     private final AccessTokenEncoder accessTokenEncoder;
     private final AccessTokenDTO requestAccessToken;
 
-    final String error = "INVALID_ID";
+    private final static String error = "INVALID_ID";
 
     @Override
     public CreateUserResponseDTO createAccount(CreateUserRequestDTO user){

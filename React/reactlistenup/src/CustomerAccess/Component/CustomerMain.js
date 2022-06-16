@@ -11,7 +11,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import CustomerHome from "../CustomerHome";
 
-function Main() {
+
+function CustomerMain() {
     return (
         <div className="container">
             <main>
@@ -20,7 +21,7 @@ function Main() {
                     <Header/>
                     <div className="content">
                         <Routes>
-                            <Route path="home" element={<CustomerHome/>}/>
+                            <Route path="customer/home" element={<CustomerHome/>}/>
                             <Route path="albums/:id" element={<AlbumSongsPage/>}/>
                             <Route path="artists/:id" element={<ArtistSongsPage/>}/>
                             <Route path="genres/:id" element={<GenreSongsPage/>}/>
@@ -34,4 +35,4 @@ function Main() {
     )
 }
 
-export default Main;
+export default CustomerMain;
