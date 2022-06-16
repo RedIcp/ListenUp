@@ -62,6 +62,7 @@ class PlaylistDTOConverterTest {
     void convertToDTOForSong() {
         PlaylistSongListDTO expectedDTO = PlaylistSongListDTO.builder()
                 .id(1L)
+                .customer("Yellow")
                 .name("Chill")
                 .songs(Collections.emptyList())
                 .build();

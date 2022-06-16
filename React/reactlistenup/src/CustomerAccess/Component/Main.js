@@ -9,7 +9,7 @@ import PlaylistSongsPage from "../AllCustomer/Action/Playlist/PlaylistSongsPage"
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import Footer from "./Footer";
-import Home from "../Home";
+import CustomerHome from "../CustomerHome";
 
 function Main() {
     return (
@@ -20,7 +20,7 @@ function Main() {
                     <Header/>
                     <div className="content">
                         <Routes>
-                            <Route path="home" element={<Home/>}/>
+                            <Route path="home" element={<CustomerHome/>}/>
                             <Route path="albums/:id" element={<AlbumSongsPage/>}/>
                             <Route path="artists/:id" element={<ArtistSongsPage/>}/>
                             <Route path="genres/:id" element={<GenreSongsPage/>}/>

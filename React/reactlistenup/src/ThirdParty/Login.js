@@ -9,8 +9,8 @@ const Login = () => {
     const {setAuth} = useAuth();
 
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
+    //const location = useLocation();
+    //const from = location.state?.from?.pathname || "/";
 
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
@@ -45,7 +45,8 @@ const Login = () => {
 
             setSuccess(true);
 
-            navigate(from, {replace: true});
+            //navigate(from, {replace: true});
+            roles?.include("CUSTOMER") ? navigate("/"): roles?.include("ADMIN") ? navigate("/")
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');

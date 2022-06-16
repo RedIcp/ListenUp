@@ -3,7 +3,7 @@ import {Link, Route, Routes} from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import Footer from "./Footer";
-import Home from "../Home";
+import AdminHome from "../AdminHome";
 import AlbumPage from "../Action/Album/AlbumPage";
 import ArtistPage from "../Action/Artist/ArtistPage";
 import GenrePage from "../Action/Genre/GenrePage";
@@ -20,7 +20,7 @@ function Main() {
                     <Header/>
                     <div className="content">
                         <Routes>
-                            <Route path="home" element={<Home/>}/>
+                            <Route path="creator/home" element={<AdminHome/>}/>
                             <Route path="creator/albums" element={<AlbumPage/>}/>
                             <Route path="creator/artists" element={<ArtistPage/>}/>
                             <Route path="creator/genres" element={<GenrePage/>}/>

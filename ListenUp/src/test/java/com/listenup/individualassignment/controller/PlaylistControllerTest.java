@@ -110,6 +110,7 @@ class PlaylistControllerTest {
     void getPlaylistPath() throws Exception{
         PlaylistSongListDTO playlist = PlaylistSongListDTO.builder()
                 .id(1L)
+                .customer("Yellow")
                 .name("Chill")
                 .songs(Collections.emptyList())
                 .build();
@@ -123,6 +124,7 @@ class PlaylistControllerTest {
                 .andExpect(content().json("""
                             {
                                        "id": 1,
+                                       "customer": "Yellow",
                                        "name": "Chill",
                                        "songs": []
                             }

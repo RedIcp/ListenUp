@@ -20,29 +20,15 @@ function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout/>}>
-
-                {/*public routes */}
                 <Route path="login" element={<Login/>}/>
                 <Route path="register" element={<Register/>}/>
                 <Route path="unauthorized" element={<Unauthorized/>}/>
 
-                {/* we want to protect these routes */}
                 <Route element={<RequireAuth allowedRoles={["ADMIN"]}/>}>
-                    <Route path="creator/song" element={<SongPage/>}/>
-                    <Route path="creator/genre" element={<GenrePage/>}/>
-                    <Route path="creator/artist" element={<ArtistPage/>}/>
-                    <Route path="creator/album" element={<AlbumPage/>}/>
+
                 </Route>
 
-                <Route path="albums/:id" element={<AlbumSongsPage/>}/>
-                <Route path="artists/:id" element={<ArtistSongsPage/>}/>
-                <Route path="genres/:id" element={<GenreSongsPage/>}/>
-                <Route path="playlists/:id" element={<PlaylistSongsPage/>}/>
-
-                <Route path="/" element={<Main/>}/>
-
                 <Route element={<RequireAuth allowedRoles={["CUSTOMER"]}/>}>
-
 
                 </Route>
 

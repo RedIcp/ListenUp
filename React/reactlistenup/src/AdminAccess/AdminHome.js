@@ -1,4 +1,4 @@
-function Home() {
+function AdminHome() {
     return (
         <div className="home-list">
             Admin Home
@@ -6,4 +6,4 @@ function Home() {
     )
 }
 
-export default Home;
+export default AdminHome;

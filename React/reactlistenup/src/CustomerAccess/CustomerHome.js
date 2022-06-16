@@ -2,7 +2,7 @@ import AlbumPage from "./AllCustomer/Action/Album/AlbumPage";
 import GenrePage from "./AllCustomer/Action/Genre/GenrePage";
 import ArtistPage from "./AllCustomer/Action/Artist/ArtistPage";
 
-function Home() {
+function CustomerHome() {
     return (
         <div className="home-list">
             <div >
@@ -25,4 +25,4 @@ function Home() {
     )
 }
 
-export default Home;
+export default CustomerHome;
