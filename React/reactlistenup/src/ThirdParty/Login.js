@@ -46,7 +46,7 @@ const Login = () => {
             setSuccess(true);
 
             //navigate(from, {replace: true});
-            roles?.include("CUSTOMER") ? navigate("/"): roles?.include("ADMIN") ? navigate("/")
+            //roles?.include("CUSTOMER") ? <Navigate to={}/>: roles?.include("ADMIN") ? navigate("/")
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
