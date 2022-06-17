@@ -76,6 +76,8 @@ class ArtistServiceImpTest {
         List<ArtistDTO> actualList = service.getArtists();
 
         assertEquals(actualList, expectedList);
+
+        verify(repository).findAll();
     }
 
     @Test
@@ -97,6 +99,8 @@ class ArtistServiceImpTest {
         ArtistSongListDTO actualDTO = service.getArtistSongs(1L);
 
         assertEquals(actualDTO, expectedDTO);
+
+        verify(repository).getById(1L);
     }
 
     @Test
@@ -118,6 +122,8 @@ class ArtistServiceImpTest {
         ArtistAlbumListDTO actualDTO = service.getArtistAlbums(1L);
 
         assertEquals(actualDTO, expectedDTO);
+
+        verify(repository).getById(1L);
     }
 
     @Test

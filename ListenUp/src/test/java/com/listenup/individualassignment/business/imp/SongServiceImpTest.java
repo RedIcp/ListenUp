@@ -128,6 +128,8 @@ class SongServiceImpTest {
         List<SingleSongDTO> actualList = service.getSongs();
 
         assertEquals(actualList, expectedList);
+
+        verify(repository).findAll();
     }
 
     @Test
@@ -148,6 +150,8 @@ class SongServiceImpTest {
         SingleSongDTO actualDTO = service.getSong(1L);
 
         assertEquals(actualDTO, expectedDTO);
+
+        verify(repository).getById(1L);
     }
 
     @Test
@@ -167,6 +171,7 @@ class SongServiceImpTest {
 
         Song actualSong = new SingleSong(1L,"Lost Stars", artist, genre, date, date);
 
+        verify(repository).existsById(1L);
         verify(repository).save(actualSong);
     }
 

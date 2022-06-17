@@ -75,6 +75,8 @@ class GenreServiceImpTest {
         List<GenreDTO> actualList = service.getGenres();
 
         assertEquals(actualList, expectedList);
+
+        verify(repository).findAll();
     }
 
     @Test
@@ -96,6 +98,8 @@ class GenreServiceImpTest {
         GenreSongListDTO actualDTO = service.getGenreSongs(1L);
 
         assertEquals(actualDTO, expectedDTO);
+
+        verify(repository).getById(1L);
     }
 
     @Test

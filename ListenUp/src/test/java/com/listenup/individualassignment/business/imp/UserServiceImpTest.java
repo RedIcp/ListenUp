@@ -188,6 +188,8 @@ class UserServiceImpTest {
         UpdateUserDTO actualDTO = service.getUser(1L);
 
         assertEquals(actualDTO, expectedDTO);
+
+        verify(repository).getById(1L);
     }
 
     @Test
@@ -202,6 +204,8 @@ class UserServiceImpTest {
         List<ViewUserDTO> actualList = service.getUsers();
 
         assertEquals(actualList, expectedList);
+
+        verify(repository).findAll();
     }
 
     @Test
@@ -218,6 +222,8 @@ class UserServiceImpTest {
         CustomerLikedSongListDTO actualDTO = service.getCustomerCollection(1L);
 
         assertEquals(actualDTO, expectedDTO);
+
+        verify(repository).getById(1L);
     }
 
     @Test
@@ -234,6 +240,8 @@ class UserServiceImpTest {
         CustomerPlaylistListDTO actualDTO = service.getCustomerPlaylists(1L);
 
         assertEquals(actualDTO, expectedDTO);
+
+        verify(repository).getById(1L);
     }
 
     @Test
@@ -250,6 +258,8 @@ class UserServiceImpTest {
         CustomerLikedPlaylistListDTO actualDTO = service.getCustomerLikedPlaylists(1L);
 
         assertEquals(actualDTO, expectedDTO);
+
+        verify(repository).getById(1L);
     }
 
     @Test
@@ -273,6 +283,8 @@ class UserServiceImpTest {
         Customer actualCustomer = new Customer(1L,"Blue", "blue@gmail.com", "123Blue");
 
         verify(repository).existsByEmail("blue@gmail.com");
+        verify(repository).getById(1L);
+        verify(repository).existsById(1L);
         verify(repository).save(actualCustomer);
     }
 
@@ -295,6 +307,8 @@ class UserServiceImpTest {
 
         Customer actualCustomer = new Customer(1L,"Blue", "yellow@gmail.com", "123Blue");
 
+        verify(repository).getById(1L);
+        verify(repository).existsById(1L);
         verify(repository).save(actualCustomer);
     }
 
@@ -402,6 +416,8 @@ class UserServiceImpTest {
         Customer actualCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
         actualCustomer.setLikedSongs(List.of(SongDTOConverter.convertToSingleSongModelForUpdate(song)));
 
+        verify(repository).getById(1L);
+        verify(repository).existsById(1L);
         verify(repository).save(actualCustomer);
     }
 
@@ -449,6 +465,8 @@ class UserServiceImpTest {
         Customer actualCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
         actualCustomer.setLikedPlaylists(List.of(PlaylistDTOConverter.convertToModelForUpdate(playlist)));
 
+        verify(repository).getById(1L);
+        verify(repository).existsById(1L);
         verify(repository).save(actualCustomer);
     }
 
@@ -466,8 +484,7 @@ class UserServiceImpTest {
 
         assertEquals("INVALID_ID", exception.getReason());
 
-        verify(repository).getById(1L);
-        verifyNoMoreInteractions(repository);
+        verify(repository).existsById(1L);
     }
 
     @Test
@@ -507,6 +524,8 @@ class UserServiceImpTest {
         Customer actualCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
         actualCustomer.setLikedSongs(Collections.emptyList());
 
+        verify(repository).getById(1L);
+        verify(repository).existsById(1L);
         verify(repository).save(actualCustomer);
     }
 
@@ -554,6 +573,8 @@ class UserServiceImpTest {
         Customer actualCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
         actualCustomer.setLikedPlaylists(Collections.emptyList());
 
+        verify(repository).getById(1L);
+        verify(repository).existsById(1L);
         verify(repository).save(actualCustomer);
     }
 

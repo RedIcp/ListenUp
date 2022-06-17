@@ -17,5 +17,6 @@ public class PlaylistSongListDTO {
     private long id;
     private String name;
     private String customer;
+    private long likedNumber;
     private List<SingleSongDTO> songs;
 }

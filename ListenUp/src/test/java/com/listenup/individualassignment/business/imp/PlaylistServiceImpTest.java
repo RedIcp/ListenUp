@@ -116,6 +116,8 @@ class PlaylistServiceImpTest {
         PlaylistSongListDTO actualDTO = service.getPlaylistSong(1L);
 
         assertEquals(actualDTO, expectedDTO);
+
+        verify(repository).getById(1L);
     }
 
     @Test
@@ -221,6 +223,8 @@ class PlaylistServiceImpTest {
                 .songs(List.of(SongDTOConverter.convertToSingleSongModelForUpdate(song)))
                 .build();
 
+        verify(repository).getById(1L);
+        verify(repository).existsById(1L);
         verify(repository).save(actualPlaylist);
     }
 
@@ -285,6 +289,8 @@ class PlaylistServiceImpTest {
                 .songs(Collections.emptyList())
                 .build();
 
+        verify(repository).getById(1L);
+        verify(repository).existsById(1L);
         verify(repository).save(actualPlaylist);
     }
 

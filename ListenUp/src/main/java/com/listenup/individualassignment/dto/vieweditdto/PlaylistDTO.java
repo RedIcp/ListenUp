@@ -13,4 +13,5 @@ public class PlaylistDTO {
     private long id;
     private String name;
     private UpdateUserDTO customer;
+    private long likedNumber;
 }

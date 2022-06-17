@@ -17,6 +17,7 @@ public class PlaylistDTOConverter {
                 .id(playlist.getId())
                 .name(playlist.getName())
                 .customer(CustomerDTOConverter.convertToDTOForUpdate(playlist.getCustomer()))
+                .likedNumber(playlist.getLikedUsers())
                 .build();
     }
     public static Playlist convertToModelForUpdate(PlaylistDTO playlist){
@@ -37,6 +38,7 @@ public class PlaylistDTOConverter {
                 .id(playlist.getId())
                 .name(playlist.getName())
                 .customer(playlist.getCustomer().getUsername())
+                .likedNumber(playlist.getLikedUsers())
                 .songs(SongDTOConverter.convertToSingleSongDTOList(playlist.getSongs()))
                 .build();
     }
