@@ -10,7 +10,7 @@ const Genre = () => {
     const [name, setName] = useState('');
 
     const [isUpdate, setIsUpdate] = useState(false);
-    const [auth] = useAuth();
+    const {auth} = useAuth();
     const config = {
         headers: {
             Authorization: `Bearer ${auth.accessToken}`

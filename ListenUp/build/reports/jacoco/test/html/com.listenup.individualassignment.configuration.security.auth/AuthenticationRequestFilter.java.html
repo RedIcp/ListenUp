@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-<span class="nc" id="L22">public class AuthenticationRequestFilter extends OncePerRequestFilter {</span>
+<span class="fc" id="L22">public class AuthenticationRequestFilter extends OncePerRequestFilter {</span>
 
     private final static String SPRING_SECURITY_ROLE_PREFIX = &quot;ROLE_&quot;;
 
@@ -30,11 +30,11 @@ import java.io.IOException;
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-<span class="nc" id="L33">        final String requestTokenHeader = request.getHeader(&quot;Authorization&quot;);</span>
+<span class="fc" id="L33">        final String requestTokenHeader = request.getHeader(&quot;Authorization&quot;);</span>
 
-<span class="nc bnc" id="L35" title="All 4 branches missed.">        if (requestTokenHeader == null || !requestTokenHeader.startsWith(&quot;Bearer &quot;)) {</span>
-<span class="nc" id="L36">            chain.doFilter(request, response);</span>
-<span class="nc" id="L37">            return;</span>
+<span class="pc bpc" id="L35" title="3 of 4 branches missed.">        if (requestTokenHeader == null || !requestTokenHeader.startsWith(&quot;Bearer &quot;)) {</span>
+<span class="fc" id="L36">            chain.doFilter(request, response);</span>
+<span class="fc" id="L37">            return;</span>
         }
 
 <span class="nc" id="L40">        String accessToken = requestTokenHeader.substring(7);</span>

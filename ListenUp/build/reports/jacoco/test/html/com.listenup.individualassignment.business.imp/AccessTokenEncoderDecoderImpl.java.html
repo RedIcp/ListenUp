@@ -26,10 +26,10 @@ import java.util.Map;
 public class AccessTokenEncoderDecoderImpl implements AccessTokenEncoder, AccessTokenDecoder {
     private final Key key;
 
-<span class="nc" id="L29">    public AccessTokenEncoderDecoderImpl(@Value(&quot;${jwt.secret}&quot;) String secretKey) {</span>
-<span class="nc" id="L30">        byte[] keyBytes = Decoders.BASE64.decode(secretKey);</span>
-<span class="nc" id="L31">        this.key = Keys.hmacShaKeyFor(keyBytes);</span>
-<span class="nc" id="L32">    }</span>
+<span class="fc" id="L29">    public AccessTokenEncoderDecoderImpl(@Value(&quot;${jwt.secret}&quot;) String secretKey) {</span>
+<span class="fc" id="L30">        byte[] keyBytes = Decoders.BASE64.decode(secretKey);</span>
+<span class="fc" id="L31">        this.key = Keys.hmacShaKeyFor(keyBytes);</span>
+<span class="fc" id="L32">    }</span>
 
     @Override
     public String encode(AccessTokenDTO accessTokenDTO) {

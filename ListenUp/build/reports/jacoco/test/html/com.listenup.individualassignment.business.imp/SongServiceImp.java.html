@@ -45,12 +45,12 @@ public class SongServiceImp implements SongService {
 
     @Override
     public List&lt;SingleSongDTO&gt; getSongs(){
-<span class="fc" id="L48">        List&lt;SingleSongDTO&gt; dtoList = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L49" title="All 2 branches covered.">        for (Song song : db.findAll()){</span>
-<span class="fc" id="L50">            SingleSongDTO dto = SongDTOConverter.convertToSingleSongDTO(song);</span>
-<span class="fc" id="L51">            dtoList.add(dto);</span>
-<span class="fc" id="L52">        }</span>
-<span class="fc" id="L53">        return dtoList;</span>
+<span class="nc" id="L48">        List&lt;SingleSongDTO&gt; dtoList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        for (Song song : db.findAll()){</span>
+<span class="nc" id="L50">            SingleSongDTO dto = SongDTOConverter.convertToSingleSongDTO(song);</span>
+<span class="nc" id="L51">            dtoList.add(dto);</span>
+<span class="nc" id="L52">        }</span>
+<span class="nc" id="L53">        return dtoList;</span>
     }
 
     @Override

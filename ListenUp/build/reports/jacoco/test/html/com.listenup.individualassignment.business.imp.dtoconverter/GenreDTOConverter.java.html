@@ -13,10 +13,10 @@ public class GenreDTOConverter {
 
     }
     public static GenreDTO convertToDTO(Genre genre){
-<span class="fc" id="L16">        return GenreDTO.builder()</span>
-<span class="fc" id="L17">                .id(genre.getId())</span>
-<span class="fc" id="L18">                .name(genre.getName())</span>
-<span class="fc" id="L19">                .build();</span>
+<span class="nc" id="L16">        return GenreDTO.builder()</span>
+<span class="nc" id="L17">                .id(genre.getId())</span>
+<span class="nc" id="L18">                .name(genre.getName())</span>
+<span class="nc" id="L19">                .build();</span>
     }
     public static Genre convertToModelForUpdate(GenreDTO genre){
 <span class="nc" id="L22">        return Genre.builder()</span>

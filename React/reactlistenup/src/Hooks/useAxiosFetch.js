@@ -7,7 +7,7 @@ const useAxiosFetch = (dataUrl) => {
     const [data, setData] = useState([]);
     const [fetchError, setFetchError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [auth] = useAuth();
+    const {auth} = useAuth();
     const config = {
         headers: {
             Authorization: `Bearer ${auth.accessToken}`
@@ -19,6 +19,7 @@ const useAxiosFetch = (dataUrl) => {
         const source = axios.CancelToken.source();
 
         const fetchData = async (url) => {
+            console.log(auth.accessToken)
             setIsLoading(true);
             try {
                 const response = await axios.get(url, config);

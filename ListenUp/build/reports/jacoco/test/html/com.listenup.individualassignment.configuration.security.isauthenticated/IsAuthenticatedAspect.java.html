@@ -19,9 +19,9 @@ import org.springframework.web.server.ResponseStatusException;
 @Aspect
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 @Component
-<span class="nc" id="L22">public class IsAuthenticatedAspect {</span>
+<span class="fc" id="L22">public class IsAuthenticatedAspect {</span>
 
-<span class="nc" id="L24">    private final static Logger LOGGER = LoggerFactory.getLogger(IsAuthenticatedAspect.class);</span>
+<span class="fc" id="L24">    private final static Logger LOGGER = LoggerFactory.getLogger(IsAuthenticatedAspect.class);</span>
 
     @Pointcut(&quot;@annotation(com.listenup.individualassignment.configuration.security.isauthenticated.IsAuthenticated)&quot;)
     public void annotatedMethod() {
@@ -33,19 +33,19 @@ import org.springframework.web.server.ResponseStatusException;
 
     @Around(&quot;(annotatedMethod() || annotatedClass()) &amp;&amp; execution(* *(..))&quot;)
     public Object interceptMethod(final ProceedingJoinPoint interceptedMethod) throws Throwable {
-<span class="nc" id="L36">        final SecurityContext context = SecurityContextHolder.getContext();</span>
-<span class="nc bnc" id="L37" title="All 2 branches missed.">        if (context == null) {</span>
+<span class="fc" id="L36">        final SecurityContext context = SecurityContextHolder.getContext();</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (context == null) {</span>
 <span class="nc" id="L38">            LOGGER.error(&quot;No security context found. No user authenticated.&quot;);</span>
 <span class="nc" id="L39">            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);</span>
         }
 
-<span class="nc" id="L42">        final Authentication authentication = context.getAuthentication();</span>
-<span class="nc bnc" id="L43" title="All 4 branches missed.">        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {</span>
+<span class="fc" id="L42">        final Authentication authentication = context.getAuthentication();</span>
+<span class="pc bpc" id="L43" title="2 of 4 branches missed.">        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {</span>
 <span class="nc" id="L44">            LOGGER.error(&quot;Authentication token null. No user authenticated.&quot;);</span>
 <span class="nc" id="L45">            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);</span>
         }
 
-<span class="nc" id="L48">        return interceptedMethod.proceed();</span>
+<span class="fc" id="L48">        return interceptedMethod.proceed();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

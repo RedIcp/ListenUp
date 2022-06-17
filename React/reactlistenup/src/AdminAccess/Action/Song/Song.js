@@ -25,7 +25,7 @@ const Song = () => {
 
     const [isSingleSong, setIsSingleSong] = useState(true);
 
-    const [auth] = useAuth();
+    const {auth} = useAuth();
     const config = {
         headers: {
             Authorization: `Bearer ${auth.accessToken}`

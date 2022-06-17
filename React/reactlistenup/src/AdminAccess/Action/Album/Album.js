@@ -19,7 +19,7 @@ const Album = () => {
     const {searchArtist, setSearchArtist, searchArtistsResults} = useContext(ArtistDataContext);
     const {setUpdate, searchAlbum, setSearchAlbum, searchAlbumsResults} = useContext(AlbumDataContext);
 
-    const [auth] = useAuth();
+    const {auth} = useAuth();
     const config = {
         headers: {
             Authorization: `Bearer ${auth.accessToken}`

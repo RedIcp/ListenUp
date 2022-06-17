@@ -8,16 +8,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-<span class="nc" id="L11">public class JsonMapperConfig {</span>
+<span class="fc" id="L11">public class JsonMapperConfig {</span>
 
     @Bean
     public ObjectMapper getObjectMapper() {
 
-<span class="nc" id="L16">        return new ObjectMapper()</span>
-<span class="nc" id="L17">                .registerModule(new JavaTimeModule())</span>
-<span class="nc" id="L18">                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)</span>
-<span class="nc" id="L19">                .disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE)</span>
-<span class="nc" id="L20">                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);</span>
+<span class="fc" id="L16">        return new ObjectMapper()</span>
+<span class="fc" id="L17">                .registerModule(new JavaTimeModule())</span>
+<span class="fc" id="L18">                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)</span>
+<span class="fc" id="L19">                .disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE)</span>
+<span class="fc" id="L20">                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

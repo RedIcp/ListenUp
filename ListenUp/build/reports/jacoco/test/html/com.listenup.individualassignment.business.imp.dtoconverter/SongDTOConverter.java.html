@@ -16,14 +16,14 @@ public class SongDTOConverter {
 
     }
     public static SingleSongDTO convertToSingleSongDTO(Song song){
-<span class="fc" id="L19">        return SingleSongDTO.builder()</span>
-<span class="fc" id="L20">                .id(song.getId())</span>
-<span class="fc" id="L21">                .name(song.getName())</span>
-<span class="fc" id="L22">                .artist(ArtistDTOConverter.convertToDTO(song.getArtist()))</span>
-<span class="fc" id="L23">                .genre(GenreDTOConverter.convertToDTO(song.getGenre()))</span>
-<span class="fc" id="L24">                .releasedDate(song.getReleasedDate())</span>
-<span class="fc" id="L25">                .uploadedDate(song.getUploadedDate())</span>
-<span class="fc" id="L26">                .build();</span>
+<span class="nc" id="L19">        return SingleSongDTO.builder()</span>
+<span class="nc" id="L20">                .id(song.getId())</span>
+<span class="nc" id="L21">                .name(song.getName())</span>
+<span class="nc" id="L22">                .artist(ArtistDTOConverter.convertToDTO(song.getArtist()))</span>
+<span class="nc" id="L23">                .genre(GenreDTOConverter.convertToDTO(song.getGenre()))</span>
+<span class="nc" id="L24">                .releasedDate(song.getReleasedDate())</span>
+<span class="nc" id="L25">                .uploadedDate(song.getUploadedDate())</span>
+<span class="nc" id="L26">                .build();</span>
     }
     public static AlbumSongDTO convertToAlbumSongDTO(AlbumSong song){
 <span class="nc" id="L29">        return AlbumSongDTO.builder()</span>
