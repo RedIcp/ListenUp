@@ -10,7 +10,7 @@ function Sidebar() {
                 <FontAwesomeIcon icon={faHeadphones}/>
             </div>
             <div>
-                <Link to="/home">
+                <Link to="/creator/home">
                     <li><FontAwesomeIcon icon={faHome}/> Home</li>
                 </Link>
                 <Link to="/creator/albums">

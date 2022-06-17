@@ -15,7 +15,7 @@ const Song = () => {
     const [artist, setArtist] = useState(null);
     const [album, setAlbum] = useState(null);
 
-    const [isSingleSong, setIsSingleSong] = useState(false);
+    const [isSingleSong, setIsSingleSong] = useState(true);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
