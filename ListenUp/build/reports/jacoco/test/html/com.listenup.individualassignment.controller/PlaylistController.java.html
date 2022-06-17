@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlaylistController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ListenUp</a> &gt; <a href="index.source.html" class="el_package">com.listenup.individualassignment.controller</a> &gt; <span class="el_source">PlaylistController.java</span></div><h1>PlaylistController.java</h1><pre class="source lang-java linenums">package com.listenup.individualassignment.controller;
+
+import java.util.List;
+
+import com.listenup.individualassignment.dto.createdto.AddRemoveSongToPlaylistDTO;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.listenup.individualassignment.dto.PlaylistSongListDTO;
+import com.listenup.individualassignment.business.PlaylistService;
+import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
+
+import lombok.RequiredArgsConstructor;
+
+import javax.validation.Valid;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping(&quot;/playlists&quot;)
+@CrossOrigin(origins = &quot;http://localhost:3000&quot;)
+public class PlaylistController {
+    private final PlaylistService management;
+
+    @GetMapping
+    public ResponseEntity&lt;List&lt;PlaylistDTO&gt;&gt; getAllPlaylists() {
+<span class="fc" id="L29">        List&lt;PlaylistDTO&gt; playlists = management.getPlaylists();</span>
+
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if(playlists != null) {</span>
+<span class="fc" id="L32">            return ResponseEntity.ok().body(playlists);</span>
+        } else {
+<span class="fc" id="L34">            return ResponseEntity.notFound().build();</span>
+        }
+    }
+
+    @GetMapping(&quot;{id}&quot;)
+    public ResponseEntity&lt;PlaylistSongListDTO&gt; getPlaylistPath(@PathVariable(value = &quot;id&quot;) long id) {
+<span class="fc" id="L40">        PlaylistSongListDTO playlist = management.getPlaylistSong(id);</span>
+
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if(playlist != null) {</span>
+<span class="fc" id="L43">            return ResponseEntity.ok().body(playlist);</span>
+        } else {
+<span class="fc" id="L45">            return ResponseEntity.notFound().build();</span>
+        }
+    }
+
+    @PostMapping()
+    public ResponseEntity&lt;CreatePlaylistResponseDTO&gt; createPlaylist(@RequestBody @Valid CreatePlaylistRequestDTO playlistDTO) {
+<span class="fc" id="L51">        CreatePlaylistResponseDTO playlist = management.addPlaylist(playlistDTO);</span>
+<span class="fc" id="L52">        return ResponseEntity.status(HttpStatus.CREATED).body(playlist);</span>
+    }
+
+    @PutMapping(&quot;{id}/songs/add&quot;)
+    public ResponseEntity&lt;PlaylistSongListDTO&gt; addSongToPlaylist(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid AddRemoveSongToPlaylistDTO song) {
+<span class="fc" id="L57">        song.setPlaylistID(id);</span>
+<span class="fc" id="L58">        management.addSongToPlaylist(song);</span>
+<span class="fc" id="L59">        return ResponseEntity.noContent().build();</span>
+    }
+
+    @PutMapping(&quot;{id}/songs/remove&quot;)
+    public ResponseEntity&lt;PlaylistSongListDTO&gt; removeSongToPlaylist(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid AddRemoveSongToPlaylistDTO song) {
+<span class="fc" id="L64">        song.setPlaylistID(id);</span>
+<span class="fc" id="L65">        management.removeSongFromPlaylist(song);</span>
+<span class="fc" id="L66">        return ResponseEntity.noContent().build();</span>
+    }
+
+    @PutMapping(&quot;{id}&quot;)
+    public ResponseEntity&lt;PlaylistDTO&gt; updatePlaylist(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid PlaylistDTO playlistDTO) {
+<span class="fc" id="L71">        playlistDTO.setId(id);</span>
+<span class="fc" id="L72">        management.editPlaylist(playlistDTO);</span>
+<span class="fc" id="L73">        return ResponseEntity.noContent().build();</span>
+    }
+
+    @DeleteMapping(&quot;{id}&quot;)
+    public ResponseEntity&lt;Object&gt; deletePlaylist(@PathVariable long id) {
+<span class="fc" id="L78">        management.deletePlaylist(id);</span>
+<span class="fc" id="L79">        return ResponseEntity.ok().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

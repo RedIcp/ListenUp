@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.listenup.individualassignment.controller.SignUpControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-06-17T01:42:41" hostname="REDICR" time="0.136">
+  <properties/>
+  <testcase name="createUser()" classname="com.listenup.individualassignment.controller.SignUpControllerTest" time="0.136"/>
+  <system-out><![CDATA[2022-06-17 03:42:40.975  INFO 11420 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.listenup.individualassignment.controller.SignUpControllerTest], using SpringBootContextLoader
+2022-06-17 03:42:40.986  INFO 11420 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.listenup.individualassignment.controller.SignUpControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2022-06-17 03:42:40.986  INFO 11420 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.listenup.individualassignment.controller.SignUpControllerTest]: SignUpControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2022-06-17 03:42:40.990  INFO 11420 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.listenup.individualassignment.ListenUpApplication for test class com.listenup.individualassignment.controller.SignUpControllerTest
+2022-06-17 03:42:40.990  INFO 11420 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2022-06-17 03:42:41.002  INFO 11420 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@3ed2295, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@2363630a, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@3f892229, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@77b81dbd, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@1dab6055, org.springframework.test.context.support.DirtiesContextTestExecutionListener@25e83bd9, org.springframework.test.context.transaction.TransactionalTestExecutionListener@5386dd27, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@6464771f, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@220b0a0e, org.springframework.test.context.event.EventPublishingTestExecutionListener@46d9cb65, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@23d3597c, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@64c81e96, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@1ee9337b, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@16635120, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@2f42f229, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@b5a65f9, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@5c7ffd02]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /signup
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"119"]
+             Body =     {
+            "username": "Yellow",
+            "email": "yellow@gmail.com",
+            "password": "123Yellow"
+}
+
+    Session Attrs = {}
+
+Handler:
+             Type = com.listenup.individualassignment.controller.SignUpController
+           Method = com.listenup.individualassignment.controller.SignUpController#createUser(CreateUserRequestDTO)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"userID":1}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

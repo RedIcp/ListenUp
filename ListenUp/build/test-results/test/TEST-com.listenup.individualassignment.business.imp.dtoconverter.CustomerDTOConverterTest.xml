@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverterTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2022-06-17T01:40:56" hostname="REDICR" time="0.008">
+  <properties/>
+  <testcase name="convertToDTOList()" classname="com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverterTest" time="0.001"/>
+  <testcase name="convertToDTOForUpdate()" classname="com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverterTest" time="0.0"/>
+  <testcase name="convertToDTOForLikedPlaylist()" classname="com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverterTest" time="0.0"/>
+  <testcase name="convertToDTOForLikedSong()" classname="com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverterTest" time="0.001"/>
+  <testcase name="convertToDTOForPlaylist()" classname="com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverterTest" time="0.001"/>
+  <testcase name="convertToModelForCreate()" classname="com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverterTest" time="0.001"/>
+  <testcase name="convertToModelForUpdate()" classname="com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverterTest" time="0.0"/>
+  <testcase name="convertToDTOForView()" classname="com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverterTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

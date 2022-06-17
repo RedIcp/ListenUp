@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - PlaylistRepositoryTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>PlaylistRepositoryTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.listenup.individualassignment.repository.html">com.listenup.individualassignment.repository</a> &gt; PlaylistRepositoryTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">3</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.161s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">getAllPlaylists()</td>
+<td class="success">0.039s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getPlaylistSongs()</td>
+<td class="success">0.103s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">save()</td>
+<td class="success">0.019s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2022-06-17 03:42:55.611  INFO 11420 --- [    Test worker] b.t.a.o.j.DataJpaTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.listenup.individualassignment.repository.PlaylistRepositoryTest], using SpringBootContextLoader
+2022-06-17 03:42:55.611  INFO 11420 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.listenup.individualassignment.repository.PlaylistRepositoryTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2022-06-17 03:42:55.611  INFO 11420 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.listenup.individualassignment.repository.PlaylistRepositoryTest]: PlaylistRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2022-06-17 03:42:55.617  INFO 11420 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.listenup.individualassignment.ListenUpApplication for test class com.listenup.individualassignment.repository.PlaylistRepositoryTest
+2022-06-17 03:42:55.617  INFO 11420 --- [    Test worker] b.t.a.o.j.DataJpaTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2022-06-17 03:42:55.617  INFO 11420 --- [    Test worker] b.t.a.o.j.DataJpaTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@fc2074f, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@23e493b7, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@f6db419, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@37cad9d7, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@282d481e, org.springframework.test.context.support.DirtiesContextTestExecutionListener@2fd30f87, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4dfcbb18, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@2c19c711, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@6eb61734, org.springframework.test.context.event.EventPublishingTestExecutionListener@59ae9252, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@71a2c604, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@1361a66e, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@4d300c81, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@60212b77, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@7d44391, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@1918d7d3, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@54018475]
+2022-06-17 03:42:55.636  INFO 11420 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@790ddc86 testClass = PlaylistRepositoryTest, testInstance = com.listenup.individualassignment.repository.PlaylistRepositoryTest@4e5b4be6, testMethod = getPlaylistSongs@PlaylistRepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@125d7285 testClass = PlaylistRepositoryTest, locations = '{}', classes = '{class com.listenup.individualassignment.ListenUpApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@513e7fdc, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@73e93c3a, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@15c080c3, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@323eecf8, [ImportsContextCustomizer@2914dc99 key = [org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@21ab919c, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@414d2821, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@0], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@353ea2f9]; rollback [true]
+Hibernate: insert into user (id, email, password, username) values (null, ?, ?, ?)
+Hibernate: insert into customer (id) values (?)
+Hibernate: insert into artist (id, name) values (null, ?)
+Hibernate: insert into genre (id, name) values (null, ?)
+Hibernate: insert into song (id, artist_id, genre_id, name, released_date, uploaded_date) values (null, ?, ?, ?, ?, ?)
+Hibernate: insert into single_song (id) values (?)
+Hibernate: insert into playlist (id, customer_id, is_public, liked_users, name) values (null, ?, ?, ?, ?)
+Hibernate: insert into playlist_song (playlist_id, song_id) values (?, ?)
+Hibernate: select playlist0_.id as id1_9_0_, playlist0_.customer_id as customer5_9_0_, playlist0_.is_public as is_publi2_9_0_, playlist0_.liked_users as liked_us3_9_0_, playlist0_.name as name4_9_0_, customer1_.id as id1_13_1_, customer1_1_.email as email2_13_1_, customer1_1_.password as password3_13_1_, customer1_1_.username as username4_13_1_, userroles2_.user_id as user_id3_14_2_, userroles2_.id as id1_14_2_, userroles2_.id as id1_14_3_, userroles2_.role_name as role_nam2_14_3_, userroles2_.user_id as user_id3_14_3_ from playlist playlist0_ left outer join customer customer1_ on playlist0_.customer_id=customer1_.id left outer join user customer1_1_ on customer1_.id=customer1_1_.id left outer join user_role userroles2_ on customer1_.id=userroles2_.user_id where playlist0_.id=?
+Hibernate: select songs0_.playlist_id as playlist1_10_0_, songs0_.song_id as song_id2_10_0_, song1_.id as id1_12_1_, song1_.artist_id as artist_i5_12_1_, song1_.genre_id as genre_id6_12_1_, song1_.name as name2_12_1_, song1_.released_date as released3_12_1_, song1_.uploaded_date as uploaded4_12_1_, song1_1_.album_id as album_id2_2_1_, case when song1_1_.id is not null then 1 when song1_2_.id is not null then 2 when song1_.id is not null then 0 end as clazz_1_, artist2_.id as id1_3_2_, artist2_.name as name2_3_2_, genre3_.id as id1_6_3_, genre3_.name as name2_6_3_, album4_.id as id1_1_4_, album4_.artist_id as artist_i5_1_4_, album4_.name as name2_1_4_, album4_.released_date as released3_1_4_, album4_.uploaded_date as uploaded4_1_4_, artist5_.id as id1_3_5_, artist5_.name as name2_3_5_ from playlist_song songs0_ inner join song song1_ on songs0_.song_id=song1_.id left outer join album_song song1_1_ on song1_.id=song1_1_.id left outer join single_song song1_2_ on song1_.id=song1_2_.id left outer join artist artist2_ on song1_.artist_id=artist2_.id left outer join genre genre3_ on song1_.genre_id=genre3_.id left outer join album album4_ on song1_1_.album_id=album4_.id left outer join artist artist5_ on album4_.artist_id=artist5_.id where songs0_.playlist_id=?
+2022-06-17 03:42:55.734  INFO 11420 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@790ddc86 testClass = PlaylistRepositoryTest, testInstance = com.listenup.individualassignment.repository.PlaylistRepositoryTest@4e5b4be6, testMethod = getPlaylistSongs@PlaylistRepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@125d7285 testClass = PlaylistRepositoryTest, locations = '{}', classes = '{class com.listenup.individualassignment.ListenUpApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@513e7fdc, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@73e93c3a, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@15c080c3, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@323eecf8, [ImportsContextCustomizer@2914dc99 key = [org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@21ab919c, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@414d2821, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@0], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]
+2022-06-17 03:42:55.738  INFO 11420 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@790ddc86 testClass = PlaylistRepositoryTest, testInstance = com.listenup.individualassignment.repository.PlaylistRepositoryTest@134d1759, testMethod = save@PlaylistRepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@125d7285 testClass = PlaylistRepositoryTest, locations = '{}', classes = '{class com.listenup.individualassignment.ListenUpApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@513e7fdc, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@73e93c3a, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@15c080c3, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@323eecf8, [ImportsContextCustomizer@2914dc99 key = [org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@21ab919c, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@414d2821, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@0], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@353ea2f9]; rollback [true]
+Hibernate: insert into user (id, email, password, username) values (null, ?, ?, ?)
+Hibernate: insert into customer (id) values (?)
+Hibernate: insert into playlist (id, customer_id, is_public, liked_users, name) values (null, ?, ?, ?, ?)
+2022-06-17 03:42:55.748  INFO 11420 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@790ddc86 testClass = PlaylistRepositoryTest, testInstance = com.listenup.individualassignment.repository.PlaylistRepositoryTest@134d1759, testMethod = save@PlaylistRepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@125d7285 testClass = PlaylistRepositoryTest, locations = '{}', classes = '{class com.listenup.individualassignment.ListenUpApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@513e7fdc, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@73e93c3a, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@15c080c3, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@323eecf8, [ImportsContextCustomizer@2914dc99 key = [org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@21ab919c, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@414d2821, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@0], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]
+2022-06-17 03:42:55.748  INFO 11420 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@790ddc86 testClass = PlaylistRepositoryTest, testInstance = com.listenup.individualassignment.repository.PlaylistRepositoryTest@14824eec, testMethod = getAllPlaylists@PlaylistRepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@125d7285 testClass = PlaylistRepositoryTest, locations = '{}', classes = '{class com.listenup.individualassignment.ListenUpApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@513e7fdc, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@73e93c3a, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@15c080c3, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@323eecf8, [ImportsContextCustomizer@2914dc99 key = [org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@21ab919c, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@414d2821, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@0], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@353ea2f9]; rollback [true]
+Hibernate: insert into user (id, email, password, username) values (null, ?, ?, ?)
+Hibernate: insert into customer (id) values (?)
+Hibernate: insert into playlist (id, customer_id, is_public, liked_users, name) values (null, ?, ?, ?, ?)
+Hibernate: insert into playlist (id, customer_id, is_public, liked_users, name) values (null, ?, ?, ?, ?)
+Hibernate: select playlist0_.id as id1_9_, playlist0_.customer_id as customer5_9_, playlist0_.is_public as is_publi2_9_, playlist0_.liked_users as liked_us3_9_, playlist0_.name as name4_9_ from playlist playlist0_
+2022-06-17 03:42:55.795  INFO 11420 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@790ddc86 testClass = PlaylistRepositoryTest, testInstance = com.listenup.individualassignment.repository.PlaylistRepositoryTest@14824eec, testMethod = getAllPlaylists@PlaylistRepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@125d7285 testClass = PlaylistRepositoryTest, locations = '{}', classes = '{class com.listenup.individualassignment.ListenUpApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@513e7fdc, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@73e93c3a, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@15c080c3, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@323eecf8, [ImportsContextCustomizer@2914dc99 key = [org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@21ab919c, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@414d2821, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@0], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.4</a> at Jun. 17, 2022, 3:42:57 a.m.</p>
+</div>
+</div>
+</body>
+</html>

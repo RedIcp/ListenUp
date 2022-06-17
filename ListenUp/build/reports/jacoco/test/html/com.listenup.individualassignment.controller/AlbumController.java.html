@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AlbumController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ListenUp</a> &gt; <a href="index.source.html" class="el_package">com.listenup.individualassignment.controller</a> &gt; <span class="el_source">AlbumController.java</span></div><h1>AlbumController.java</h1><pre class="source lang-java linenums">package com.listenup.individualassignment.controller;
+
+import java.util.List;
+
+import com.listenup.individualassignment.dto.createdto.CreateAlbumRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateAlbumResponseDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.listenup.individualassignment.dto.AlbumSongListDTO;
+import com.listenup.individualassignment.business.AlbumService;
+import com.listenup.individualassignment.dto.vieweditdto.AlbumDTO;
+
+import lombok.RequiredArgsConstructor;
+
+import javax.validation.Valid;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping(&quot;/albums&quot;)
+@CrossOrigin(origins = &quot;http://localhost:3000&quot;)
+public class AlbumController {
+    private final AlbumService management;
+
+
+
+    @GetMapping
+    public ResponseEntity&lt;List&lt;AlbumDTO&gt;&gt; getAllAlbums() {
+<span class="fc" id="L30">        List&lt;AlbumDTO&gt; albums = management.getAlbums();</span>
+
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if(albums != null) {</span>
+<span class="fc" id="L33">            return ResponseEntity.ok().body(albums);</span>
+        } else {
+<span class="fc" id="L35">            return ResponseEntity.notFound().build();</span>
+        }
+    }
+
+    @GetMapping(&quot;{id}&quot;)
+    public ResponseEntity&lt;AlbumSongListDTO&gt; getAlbumPath(@PathVariable(value = &quot;id&quot;) long id) {
+<span class="fc" id="L41">        AlbumSongListDTO album = management.getAlbumSongs(id);</span>
+
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if(album != null) {</span>
+<span class="fc" id="L44">            return ResponseEntity.ok().body(album);</span>
+        } else {
+<span class="fc" id="L46">            return ResponseEntity.notFound().build();</span>
+        }
+    }
+
+    @PostMapping()
+    public ResponseEntity&lt;CreateAlbumResponseDTO&gt; createAlbum(@RequestBody @Valid CreateAlbumRequestDTO albumDTO) {
+<span class="fc" id="L52">        CreateAlbumResponseDTO album = management.addAlbum(albumDTO);</span>
+<span class="fc" id="L53">        return ResponseEntity.status(HttpStatus.CREATED).body(album);</span>
+    }
+
+    @PutMapping(&quot;{id}&quot;)
+    public ResponseEntity&lt;AlbumDTO&gt; updateAlbum(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid AlbumDTO albumDTO) {
+<span class="fc" id="L58">        albumDTO.setId(id);</span>
+<span class="fc" id="L59">        management.editAlbum(albumDTO);</span>
+<span class="fc" id="L60">        return ResponseEntity.noContent().build();</span>
+    }
+
+    @DeleteMapping(&quot;{id}&quot;)
+    public ResponseEntity&lt;Object&gt; deleteAlbum(@PathVariable long id) {
+<span class="fc" id="L65">        management.deleteAlbum(id);</span>
+<span class="fc" id="L66">        return ResponseEntity.ok().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

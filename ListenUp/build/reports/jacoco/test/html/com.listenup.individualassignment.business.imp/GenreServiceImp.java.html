@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GenreServiceImp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ListenUp</a> &gt; <a href="index.source.html" class="el_package">com.listenup.individualassignment.business.imp</a> &gt; <span class="el_source">GenreServiceImp.java</span></div><h1>GenreServiceImp.java</h1><pre class="source lang-java linenums">package com.listenup.individualassignment.business.imp;
+
+import java.util.List;
+
+import com.listenup.individualassignment.business.exception.InvalidGenreException;
+import com.listenup.individualassignment.business.imp.dtoconverter.GenreDTOConverter;
+import com.listenup.individualassignment.dto.GenreSongListDTO;
+import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
+import com.listenup.individualassignment.dto.createdto.CreateGenreResponseDTO;
+import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
+import com.listenup.individualassignment.business.GenreService;
+import com.listenup.individualassignment.entity.Genre;
+import com.listenup.individualassignment.repository.GenreRepository;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Primary;
+
+@Service
+@Primary
+@RequiredArgsConstructor
+public class GenreServiceImp implements GenreService {
+    private final GenreRepository db;
+
+    @Override
+    public CreateGenreResponseDTO addGenre(CreateGenreRequestDTO genre){
+<span class="fc" id="L27">        Genre savedGenre = db.save(GenreDTOConverter.convertToModelForCreate(genre));</span>
+
+<span class="fc" id="L29">        return CreateGenreResponseDTO.builder()</span>
+<span class="fc" id="L30">                .genreID(savedGenre.getId())</span>
+<span class="fc" id="L31">                .build();</span>
+    }
+
+    @Override
+    public List&lt;GenreDTO&gt; getGenres(){
+<span class="fc" id="L36">        return GenreDTOConverter.convertToDTOList(db.findAll());</span>
+    }
+
+    @Override
+    public GenreSongListDTO getGenreSongs(long id){
+<span class="fc" id="L41">        return GenreDTOConverter.convertToDTOForSong(db.getById(id));</span>
+    }
+
+    @Override
+    public GenreDTO editGenre(GenreDTO genre){
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if(!db.existsById(genre.getId())){</span>
+<span class="fc" id="L47">            throw new InvalidGenreException(&quot;INVALID_ID&quot;);</span>
+        }
+<span class="fc" id="L49">        db.save(GenreDTOConverter.convertToModelForUpdate(genre));</span>
+<span class="fc" id="L50">        return genre;</span>
+    }
+
+    @Override
+    public boolean deleteGenre(long id){
+<span class="fc" id="L55">        boolean result = false;</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if(db.existsById(id)){</span>
+<span class="fc" id="L57">            db.deleteById(id);</span>
+<span class="fc" id="L58">            result = true;</span>
+        }
+<span class="fc" id="L60">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

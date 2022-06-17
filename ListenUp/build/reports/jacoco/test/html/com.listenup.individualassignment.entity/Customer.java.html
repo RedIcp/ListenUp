@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Customer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ListenUp</a> &gt; <a href="index.source.html" class="el_package">com.listenup.individualassignment.entity</a> &gt; <span class="el_source">Customer.java</span></div><h1>Customer.java</h1><pre class="source lang-java linenums">package com.listenup.individualassignment.entity;
+
+import lombok.*;
+import java.util.List;
+import javax.persistence.*;
+import java.util.ArrayList;
+
+@Data
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = &quot;customer&quot;)
+public class Customer extends User{
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = &quot;liked_song&quot;,
+            joinColumns = @JoinColumn(name = &quot;customer_id&quot;),
+            inverseJoinColumns = @JoinColumn(name = &quot;song_id&quot;))
+    private List&lt;Song&gt; likedSongs;
+
+    @OneToMany(mappedBy = &quot;customer&quot;, cascade = CascadeType.ALL)
+    private List&lt;Playlist&gt; playlists;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = &quot;liked_playlist&quot;,
+            joinColumns = @JoinColumn(name = &quot;customer_id&quot;),
+            inverseJoinColumns = @JoinColumn(name = &quot;playlist_id&quot;))
+    private List&lt;Playlist&gt; likedPlaylists;
+
+    public Customer(String username, String email, String password){
+<span class="fc" id="L33">        super(username, email, password);</span>
+
+<span class="fc" id="L35">        this.likedSongs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L36">        this.playlists = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L37">        this.likedPlaylists = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L38">    }</span>
+    public Customer(long id, String username, String email, String password){
+<span class="fc" id="L40">        super(id, username, email, password);</span>
+
+<span class="fc" id="L42">        this.likedSongs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L43">        this.playlists = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L44">        this.likedPlaylists = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L45">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
