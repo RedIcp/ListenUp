@@ -1,12 +1,12 @@
 import {ArtistDataProvider} from "../../../../Context/ArtistDataContext";
-import ArtistList from "./ArtistList";
+import ArtistFull from "./ArtistFull";
 
-function ArtistPage() {
+function ArtistFullPage() {
     return (
         <ArtistDataProvider>
-            <ArtistList/>
+            <ArtistFull/>
         </ArtistDataProvider>
     )
 }
 
-export default ArtistPage;
+export default ArtistFullPage;

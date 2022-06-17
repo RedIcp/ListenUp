@@ -1,12 +1,12 @@
 import {GenreDataProvider} from "../../../../Context/GenreDataContext";
-import GenreList from "./GenreList";
+import GenreFull from "./GenreFull";
 
-function GenrePage() {
+function GenreFullPage() {
     return (
         <GenreDataProvider>
-            <GenreList/>
+            <GenreFull/>
         </GenreDataProvider>
     )
 }
 
-export default GenrePage;
+export default GenreFullPage;

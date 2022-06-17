@@ -1,12 +1,12 @@
 import {useState, useEffect, useContext} from 'react';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import "../Style/form.css"
 
 const Login = () => {
-    const {setAuth} = useAuth();
+    const {auth, setAuth} = useAuth();
 
     const navigate = useNavigate();
     //const location = useLocation();
@@ -45,8 +45,13 @@ const Login = () => {
 
             setSuccess(true);
 
-            //navigate(from, {replace: true});
-            navigate("/creator/home")
+            if(roles.includes("ADMIN")){
+                navigate("/creator/home")
+            }
+            else if (roles.includes("CUSTOMER")){
+                navigate("/customer/home")
+            }
+
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -91,7 +96,7 @@ const Login = () => {
                         Need an Account?<br/>
                         <span className="line">
                             {/*put router link here*/}
-                            <a href="#">Sign Up</a>
+                            <Link to="/register">Sign Up</Link>
                         </span>
                     </p>
                 </section>

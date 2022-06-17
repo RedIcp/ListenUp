@@ -3,6 +3,7 @@ import axios from "axios";
 import ArtistDataContext from "../../../Context/ArtistDataContext";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import useAuth from "../../../Hooks/useAuth";
 
 const Artist = () => {
     const [id, setId] = useState(0);
@@ -11,6 +12,13 @@ const Artist = () => {
     const [isUpdate, setIsUpdate] = useState(false);
 
     const {setUpdate, searchArtist, setSearchArtist, searchArtistsResults} = useContext(ArtistDataContext);
+
+    const [auth] = useAuth();
+    const config = {
+        headers: {
+            Authorization: `Bearer ${auth.accessToken}`
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,7 +31,7 @@ const Artist = () => {
                     name: name
                 }
 
-                const response = await axios.put(`http://localhost:8080/artists/${id}`, updateArtist);
+                const response = await axios.put(`http://localhost:8080/artists/${id}`, updateArtist, config);
                 setUpdate(prev => !prev)
                 setId(null);
                 setName('');
@@ -33,7 +41,7 @@ const Artist = () => {
             } else {
                 const newArtist = {name: name}
 
-                const response = await axios.post('http://localhost:8080/artists', newArtist);
+                const response = await axios.post('http://localhost:8080/artists', newArtist, config);
                 setUpdate(prev => !prev)
                 setName('');
 
@@ -47,7 +55,7 @@ const Artist = () => {
 
     const handleDelete = async (artistID) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/artists/${artistID}`);
+            const response = await axios.delete(`http://localhost:8080/artists/${artistID}`, config);
             setUpdate(prev => !prev)
         } catch
             (err) {

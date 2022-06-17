@@ -2,7 +2,7 @@ import {useContext} from "react";
 import ArtistDataContext from "../../../../Context/ArtistDataContext";
 import {Link} from "react-router-dom";
 
-function ArtistList() {
+function ArtistHome() {
     const {searchArtistsResults} = useContext(ArtistDataContext);
 
     return (
@@ -22,4 +22,4 @@ function ArtistList() {
     )
 }
 
-export default ArtistList;
+export default ArtistHome;

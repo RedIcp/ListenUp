@@ -10,6 +10,7 @@ import "../Style/form.css"
 import "../Style/admin.css"
 import AdminMain from "../AdminAccess/AdminMain";
 import CustomerMain from "../CustomerAccess/CustomerMain";
+import Home from "../ThirdParty/Home";
 
 function Sidebar() {
     const {auth} = useAuth();
@@ -19,18 +20,17 @@ function Sidebar() {
                 auth?.roles?.includes("ADMIN") ?
                     <>
                         <AdminMain/>
-
                     </>
 
                     : auth?.roles?.includes("CUSTOMER") ?
                         <>
                             <CustomerMain/>
-
                         </> : (
                             <>
                                 <div>
                                     <Routes>
-                                        <Route path="/" element={<Login/>}/>
+                                        <Route path="/" element={<Home/>}/>
+                                        <Route path="/login" element={<Login/>}/>
                                         <Route path="register" element={<Register/>}/>
                                         <Route path="unauthorized" element={<Unauthorized/>}/>
                                         <Route path="*" element={<Missing/>}/>

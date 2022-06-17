@@ -2,7 +2,7 @@ import {useContext} from "react";
 import GenreDataContext from "../../../../Context/GenreDataContext";
 import {Link} from "react-router-dom";
 
-function GenreList() {
+function GenreHome() {
     const {searchGenresResults} = useContext(GenreDataContext);
 
     return (
@@ -24,4 +24,4 @@ function GenreList() {
     )
 }
 
-export default GenreList;
+export default GenreHome;

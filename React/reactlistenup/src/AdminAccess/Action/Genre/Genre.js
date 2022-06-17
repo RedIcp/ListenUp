@@ -3,12 +3,19 @@ import axios from "axios";
 import GenreDataContext from "../../../Context/GenreDataContext";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import useAuth from "../../../Hooks/useAuth";
 
 const Genre = () => {
     const [id, setId] = useState(0);
     const [name, setName] = useState('');
 
     const [isUpdate, setIsUpdate] = useState(false);
+    const [auth] = useAuth();
+    const config = {
+        headers: {
+            Authorization: `Bearer ${auth.accessToken}`
+        }
+    }
 
     const {setUpdate, searchGenre, setSearchGenre, searchGenresResults} = useContext(GenreDataContext);
 
@@ -23,7 +30,7 @@ const Genre = () => {
                     name: name
                 }
 
-                const response = await axios.put(`http://localhost:8080/genres/${id}`, updateGenre);
+                const response = await axios.put(`http://localhost:8080/genres/${id}`, updateGenre, config);
                 setUpdate(prev => !prev)
                 setId(null);
                 setName('');
@@ -33,7 +40,7 @@ const Genre = () => {
             } else {
                 const newGenre = {name: name}
 
-                const response = await axios.post('http://localhost:8080/genres', newGenre);
+                const response = await axios.post('http://localhost:8080/genres', newGenre, config);
                 setUpdate(prev => !prev)
                 setName('');
 
@@ -47,7 +54,7 @@ const Genre = () => {
 
     const handleDelete = async (genreID) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/genres/${genreID}`);
+            const response = await axios.delete(`http://localhost:8080/genres/${genreID}`, config);
             setUpdate(prev => !prev)
             console.log(response.status)
         } catch

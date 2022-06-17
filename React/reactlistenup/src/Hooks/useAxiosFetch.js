@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import axios from 'axios';
 import useAuth from "./useAuth";
 
@@ -7,6 +7,12 @@ const useAxiosFetch = (dataUrl) => {
     const [data, setData] = useState([]);
     const [fetchError, setFetchError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [auth] = useAuth();
+    const config = {
+        headers: {
+            Authorization: `Bearer ${auth.accessToken}`
+        }
+    }
 
     useEffect(() => {
         let isMounted = true;
@@ -15,7 +21,7 @@ const useAxiosFetch = (dataUrl) => {
         const fetchData = async (url) => {
             setIsLoading(true);
             try {
-                const response = await axios.get(url);
+                const response = await axios.get(url, config);
                 if (isMounted) {
                     setData(response.data);
                     setFetchError(null);
@@ -40,7 +46,7 @@ const useAxiosFetch = (dataUrl) => {
         return cleanUp;
     }, [update, dataUrl]);
 
-    return { setUpdate, data, fetchError, isLoading };
+    return {setUpdate, data, fetchError, isLoading};
 }
 
 export default useAxiosFetch;

@@ -3,7 +3,10 @@ import axios from "axios";
 import ArtistDataContext from "../../../Context/ArtistDataContext";
 import AlbumDataContext from "../../../Context/AlbumDataContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faTrash} from '@fortawesome/free-solid-svg-icons'
+import {faTrash} from '@fortawesome/free-solid-svg-icons';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
+import useAuth from "../../../Hooks/useAuth";
 
 const Album = () => {
     const [id, setId] = useState(0);
@@ -15,6 +18,39 @@ const Album = () => {
 
     const {searchArtist, setSearchArtist, searchArtistsResults} = useContext(ArtistDataContext);
     const {setUpdate, searchAlbum, setSearchAlbum, searchAlbumsResults} = useContext(AlbumDataContext);
+
+    const [auth] = useAuth();
+    const config = {
+        headers: {
+            Authorization: `Bearer ${auth.accessToken}`
+        }
+    }
+
+
+    const [stompClient, setStompClient] = useState(null);
+
+    useEffect(() => {
+        const socket = SockJS("http://localhost:8080/ws");
+        const stompClient = Stomp.over(socket);
+        stompClient.connect({}, () => {
+            stompClient.subscribe('/topic/greetings', (data) => {
+                console.log(data);
+                onMessageReceived(data);
+            });
+        });
+        setStompClient(stompClient);
+    }, []);
+
+    function sendMessage(data) {
+        stompClient.send("/app/hello", {}, JSON.stringify(data));
+
+    };
+
+    function onMessageReceived(data)
+    {
+        const result=  JSON.parse(data.body);
+        alert(result.content)
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,7 +66,7 @@ const Album = () => {
                     uploadedDate: new Date()
                 }
 
-                const response = await axios.put(`http://localhost:8080/albums/${id}`, updateAlbum);
+                const response = await axios.put(`http://localhost:8080/albums/${id}`, updateAlbum, config);
                 setUpdate(prev => !prev)
                 setId(null);
                 setName('');
@@ -47,11 +83,12 @@ const Album = () => {
                     uploadedDate: new Date()
                 }
 
-                const response = await axios.post('http://localhost:8080/albums', newAlbum);
+                const response = await axios.post('http://localhost:8080/albums', newAlbum, config);
                 setUpdate(prev => !prev)
                 setName('');
                 setArtist(null);
                 setReleasedDate(null);
+                sendMessage(newAlbum)
 
                 console.log(response.status)
             }
@@ -63,7 +100,7 @@ const Album = () => {
 
     const handleDelete = async (albumID) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/albums/${albumID}`);
+            const response = await axios.delete(`http://localhost:8080/albums/${albumID}`, config);
             setUpdate(prev => !prev)
             console.log(response.status)
         } catch

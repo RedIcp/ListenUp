@@ -2,7 +2,7 @@ import {useContext} from "react";
 import AlbumDataContext from "../../../../Context/AlbumDataContext";
 import {Link} from "react-router-dom";
 
-function AlbumList() {
+function AlbumHome() {
     const {searchAlbumsResults} = useContext(AlbumDataContext);
 
     return (
@@ -24,4 +24,4 @@ function AlbumList() {
     )
 }
 
-export default AlbumList;
+export default AlbumHome;

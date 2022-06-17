@@ -178,3 +178,11 @@ label {
 .view:hover {
     font-size: 30px;
 }
+
+.link {
+    color: white;
+}
+
+.link:hover {
+    color: black;
+}

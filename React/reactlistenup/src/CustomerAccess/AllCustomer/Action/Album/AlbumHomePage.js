@@ -1,12 +1,12 @@
 import {AlbumDataProvider} from "../../../../Context/AlbumDataContext";
-import AlbumList from "./AlbumList";
+import AlbumHome from "./AlbumHome";
 
-function AlbumPage() {
+function AlbumHomePage() {
     return (
         <AlbumDataProvider>
-            <AlbumList/>
+            <AlbumHome/>
         </AlbumDataProvider>
     )
 }
 
-export default AlbumPage;
+export default AlbumHomePage;

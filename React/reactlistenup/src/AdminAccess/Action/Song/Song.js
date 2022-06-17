@@ -6,6 +6,7 @@ import AlbumDataContext from '../../../Context/AlbumDataContext';
 import SongDataContext from "../../../Context/SongDataContext";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import useAuth from "../../../Hooks/useAuth";
 
 const Song = () => {
     const [id, setId] = useState(0);
@@ -24,6 +25,13 @@ const Song = () => {
 
     const [isSingleSong, setIsSingleSong] = useState(true);
 
+    const [auth] = useAuth();
+    const config = {
+        headers: {
+            Authorization: `Bearer ${auth.accessToken}`
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -39,7 +47,7 @@ const Song = () => {
                         uploadedDate: new Date()
                     }
 
-                    const response = await axios.put(`http://localhost:8080/singlesong/${id}`, updateSong);
+                    const response = await axios.put(`http://localhost:8080/singlesong/${id}`, updateSong, config);
 
                     cleanup()
 
@@ -53,7 +61,7 @@ const Song = () => {
                         uploadedDate: new Date()
                     };
 
-                    const response = await axios.post('http://localhost:8080/songs/singlesong', newSong);
+                    const response = await axios.post('http://localhost:8080/songs/singlesong', newSong, config);
 
                     cleanup()
 
@@ -67,7 +75,7 @@ const Song = () => {
                         genre: genre,
                         album: album
                     }
-                    const response = await axios.put(`http://localhost:8080/albumsong/${id}`, updateSong);
+                    const response = await axios.put(`http://localhost:8080/albumsong/${id}`, updateSong, config);
 
                     cleanup()
 
@@ -79,7 +87,7 @@ const Song = () => {
                         album: album
                     }
 
-                    const response = await axios.post('http://localhost:8080/songs/albumsong', newSong);
+                    const response = await axios.post('http://localhost:8080/songs/albumsong', newSong, config);
 
                     cleanup()
 
@@ -91,7 +99,7 @@ const Song = () => {
         }
     }
 
-    const cleanup= () => {
+    const cleanup = () => {
         setUpdate(prev => !prev)
         setId(null);
         setName('');
@@ -102,7 +110,7 @@ const Song = () => {
 
     const handleDelete = async (songID) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/songs/${songID}`);
+            const response = await axios.delete(`http://localhost:8080/songs/${songID}`, config);
             setUpdate(prev => !prev)
             console.log(response.status)
         } catch
@@ -241,7 +249,26 @@ const Song = () => {
                     </div> :
                     <div></div>
                 }
-
+                <div className="admin-box">
+                    <h3>Songs</h3>
+                    <input
+                        className="search"
+                        type="text"
+                        required
+                        value={searchSong}
+                        placeholder="Search song"
+                        onChange={(e) => setSearchSong(e.target.value)}
+                    />
+                    <ul>
+                        <>
+                            {searchSongsResults.map(song => (
+                                <div className="admin-list">
+                                    <li key={song.id}>{song.name}</li>
+                                </div>
+                            ))}
+                        </>
+                    </ul>
+                </div>
             </div>
         </main>
 
