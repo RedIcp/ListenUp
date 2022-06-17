@@ -9,7 +9,6 @@ const Artist = () => {
     const [name, setName] = useState('');
 
     const [isUpdate, setIsUpdate] = useState(false);
-    const [isValid, setIsValid] = useState(false);
 
     const {setUpdate, searchArtist, setSearchArtist, searchArtistsResults} = useContext(ArtistDataContext);
 
@@ -25,7 +24,7 @@ const Artist = () => {
                 }
 
                 const response = await axios.put(`http://localhost:8080/artists/${id}`, updateArtist);
-                setUpdate("Success!")
+                setUpdate(prev => !prev)
                 setId(null);
                 setName('');
                 setIsUpdate(false);
@@ -35,7 +34,7 @@ const Artist = () => {
                 const newArtist = {name: name}
 
                 const response = await axios.post('http://localhost:8080/artists', newArtist);
-                setUpdate("Success!")
+                setUpdate(prev => !prev)
                 setName('');
 
                 console.log(response.status)
@@ -49,7 +48,7 @@ const Artist = () => {
     const handleDelete = async (artistID) => {
         try {
             const response = await axios.delete(`http://localhost:8080/artists/${artistID}`);
-            setUpdate("Success!")
+            setUpdate(prev => !prev)
         } catch
             (err) {
             console.log(`Error: ${err.message}`);
@@ -84,8 +83,8 @@ const Artist = () => {
                     </form>
                 </section>
             </div>
-            <div className="list-container">
-                <div className="box">
+            <div className="admin-list-container">
+                <div className="admin-box">
                     <h3>Click a artist to update it</h3>
                     <input
                         className="search"
@@ -98,7 +97,7 @@ const Artist = () => {
                     <ul>
                         <>
                             {searchArtistsResults.map(artist => (
-                                <div className="list">
+                                <div className="admin-list">
                                     <div className="delete" onClick={() => {
                                         handleDelete(artist.id)
                                     }}><FontAwesomeIcon icon={faTrash}/>

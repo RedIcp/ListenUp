@@ -8,7 +8,7 @@ export const SongDataProvider = ({ children }) => {
     const [searchSong, setSearchSong] = useState('');
     const [searchSongsResults, setSearchSongsResults] = useState([]);
 
-    const { data, fetchError, isLoading } = useAxiosFetch('http://localhost:8080/songs');
+    const { setUpdate, data, fetchError, isLoading } = useAxiosFetch('http://localhost:8080/songs');
 
     useEffect(() => {
         setSongs(data);
@@ -24,7 +24,7 @@ export const SongDataProvider = ({ children }) => {
     return (
         <SongDataContext.Provider value={{
             searchSong, setSearchSong,
-            searchSongsResults, fetchError, isLoading,
+            searchSongsResults, fetchError, isLoading, setUpdate
         }}>
             {children}
         </SongDataContext.Provider>

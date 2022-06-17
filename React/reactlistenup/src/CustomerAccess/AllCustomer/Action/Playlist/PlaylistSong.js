@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 import PlaylistSongDataContext from "../../../../Context/PlaylistSongDataContext";
-import footer from "../../../Component/Footer";
+import footer from "../../../../Component/Footer";
 
 const PlaylistSongs = () => {
     const {playlist, searchSong, setSearchSong, searchSongResults} = useContext(PlaylistSongDataContext);

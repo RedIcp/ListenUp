@@ -1,19 +1,26 @@
-import {useState, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import axios from "axios";
 import GenreDataContext from '../../../Context/GenreDataContext';
 import ArtistDataContext from '../../../Context/ArtistDataContext';
 import AlbumDataContext from '../../../Context/AlbumDataContext';
+import SongDataContext from "../../../Context/SongDataContext";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
 
 const Song = () => {
+    const [id, setId] = useState(0);
     const [name, setName] = useState('');
+    const [genre, setGenre] = useState(null);
+    const [artist, setArtist] = useState(null);
+    const [album, setAlbum] = useState(null);
 
+    const [isUpdate, setIsUpdate] = useState(false);
+
+    const {setUpdate, searchSong, setSearchSong, searchSongsResults} = useContext(SongDataContext);
     const {searchGenre, setSearchGenre, searchGenresResults} = useContext(GenreDataContext);
     const {searchArtist, setSearchArtist, searchArtistsResults} = useContext(ArtistDataContext);
     const {searchAlbum, setSearchAlbum, searchAlbumsResults} = useContext(AlbumDataContext);
 
-    const [genre, setGenre] = useState(null);
-    const [artist, setArtist] = useState(null);
-    const [album, setAlbum] = useState(null);
 
     const [isSingleSong, setIsSingleSong] = useState(true);
 
@@ -22,35 +29,84 @@ const Song = () => {
 
         try {
             if (isSingleSong) {
-                const newSong = {
-                    name: name,
-                    genre: genre,
-                    artist: artist,
-                    releasedDate: new Date(),
-                    uploadedDate: new Date()
-                };
+                if (isUpdate) {
+                    const updateSong = {
+                        id: id,
+                        name: name,
+                        genre: genre,
+                        artist: artist,
+                        releasedDate: new Date(),
+                        uploadedDate: new Date()
+                    }
 
-                const response = await axios.post('http://localhost:8080/songs/singlesong', newSong);
+                    const response = await axios.put(`http://localhost:8080/singlesong/${id}`, updateSong);
 
-                setName('');
-                setArtist(null);
-                setAlbum(null);
-                setGenre(null);
+                    cleanup()
 
-                console.log(response)
+                    console.log(response.status)
+                } else {
+                    const newSong = {
+                        name: name,
+                        genre: genre,
+                        artist: artist,
+                        releasedDate: new Date(),
+                        uploadedDate: new Date()
+                    };
+
+                    const response = await axios.post('http://localhost:8080/songs/singlesong', newSong);
+
+                    cleanup()
+
+                    console.log(response)
+                }
             } else {
-                const newSong = {name: name, genre: genre, album: album}
+                if (isUpdate) {
+                    const updateSong = {
+                        id: id,
+                        name: name,
+                        genre: genre,
+                        album: album
+                    }
+                    const response = await axios.put(`http://localhost:8080/albumsong/${id}`, updateSong);
 
-                const response = await axios.post('http://localhost:8080/songs/albumsong', newSong);
+                    cleanup()
 
-                setName('');
-                setArtist(null);
-                setAlbum(null);
-                setGenre(null);
+                    console.log(response.status)
+                } else {
+                    const newSong = {
+                        name: name,
+                        genre: genre,
+                        album: album
+                    }
 
-                console.log(response.status)
+                    const response = await axios.post('http://localhost:8080/songs/albumsong', newSong);
+
+                    cleanup()
+
+                    console.log(response.status)
+                }
             }
         } catch (err) {
+            console.log(`Error: ${err.message}`);
+        }
+    }
+
+    const cleanup= () => {
+        setUpdate(prev => !prev)
+        setId(null);
+        setName('');
+        setGenre(null);
+        setArtist(null);
+        setIsUpdate(false);
+    }
+
+    const handleDelete = async (songID) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/songs/${songID}`);
+            setUpdate(prev => !prev)
+            console.log(response.status)
+        } catch
+            (err) {
             console.log(`Error: ${err.message}`);
         }
     }
@@ -114,8 +170,8 @@ const Song = () => {
                     </form>
                 </section>
             </div>
-            <div className="list-container">
-                <div className="box">
+            <div className="admin-list-container">
+                <div className="admin-box">
                     <h3>Genre</h3>
                     <input
                         className="search"
@@ -128,7 +184,7 @@ const Song = () => {
                     <ul>
                         <>
                             {searchGenresResults.map(genre => (
-                                <div className="list">
+                                <div className="admin-list">
                                     <li key={genre.id} onClick={() => {
                                         setGenre(genre)
                                     }}>{genre.name}</li>
@@ -137,7 +193,7 @@ const Song = () => {
                         </>
                     </ul>
                 </div>
-                {!isSingleSong ? <div className="box">
+                {!isSingleSong ? <div className="admin-box">
                         <h3>Album</h3>
                         <input
                             className="search"
@@ -151,7 +207,7 @@ const Song = () => {
                         <ul>
                             <>
                                 {searchAlbumsResults.map(album => (
-                                    <div className="list">
+                                    <div className="admin-list">
                                         <li key={album.id} onClick={() => {
                                             setAlbum(album)
                                         }}>{album.name}</li>
@@ -161,7 +217,7 @@ const Song = () => {
                         </ul>
                     </div> :
                     <div></div>}
-                {isSingleSong ? <div className="box">
+                {isSingleSong ? <div className="admin-box">
                         <h3>Artist</h3>
                         <input
                             className="search"
@@ -174,7 +230,7 @@ const Song = () => {
                         <ul>
                             <>
                                 {searchArtistsResults.map(artist => (
-                                    <div className="list">
+                                    <div className="admin-list">
                                         <li key={artist.id} onClick={() => {
                                             setArtist(artist)
                                         }}>{artist.name}</li>

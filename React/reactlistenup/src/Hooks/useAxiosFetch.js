@@ -3,7 +3,7 @@ import axios from 'axios';
 import useAuth from "./useAuth";
 
 const useAxiosFetch = (dataUrl) => {
-    const [update, setUpdate] = useState('');
+    const [update, setUpdate] = useState(true);
     const [data, setData] = useState([]);
     const [fetchError, setFetchError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);

@@ -9,7 +9,6 @@ const Genre = () => {
     const [name, setName] = useState('');
 
     const [isUpdate, setIsUpdate] = useState(false);
-    const [isValid, setIsValid] = useState(false);
 
     const {setUpdate, searchGenre, setSearchGenre, searchGenresResults} = useContext(GenreDataContext);
 
@@ -25,7 +24,7 @@ const Genre = () => {
                 }
 
                 const response = await axios.put(`http://localhost:8080/genres/${id}`, updateGenre);
-                setUpdate("Success!")
+                setUpdate(prev => !prev)
                 setId(null);
                 setName('');
                 setIsUpdate(false);
@@ -35,7 +34,7 @@ const Genre = () => {
                 const newGenre = {name: name}
 
                 const response = await axios.post('http://localhost:8080/genres', newGenre);
-                setUpdate("Success!")
+                setUpdate(prev => !prev)
                 setName('');
 
                 console.log(response.status)
@@ -49,7 +48,7 @@ const Genre = () => {
     const handleDelete = async (genreID) => {
         try {
             const response = await axios.delete(`http://localhost:8080/genres/${genreID}`);
-            setUpdate("Success!")
+            setUpdate(prev => !prev)
             console.log(response.status)
         } catch
             (err) {
@@ -85,8 +84,8 @@ const Genre = () => {
                     </form>
                 </section>
             </div>
-            <div className="list-container">
-                <div className="box">
+            <div className="admin-list-container">
+                <div className="admin-box">
                     <h3>Click a genre to update it</h3>
                     <input
                         className="search"
@@ -104,7 +103,7 @@ const Genre = () => {
                                         handleDelete(genre.id)
                                     }}><FontAwesomeIcon icon={faTrash}/>
                                     </div>
-                                    <li className="list" key={genre.id} onClick={() => {
+                                    <li className="admin-list" key={genre.id} onClick={() => {
                                         setId(genre.id);
                                         setName(genre.name);
                                         setIsUpdate(true);

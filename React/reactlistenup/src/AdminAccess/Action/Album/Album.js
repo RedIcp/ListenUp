@@ -12,7 +12,6 @@ const Album = () => {
     const [releasedDate, setReleasedDate] = useState(null);
 
     const [isUpdate, setIsUpdate] = useState(false);
-    const [isValid, setIsValid] = useState(false);
 
     const {searchArtist, setSearchArtist, searchArtistsResults} = useContext(ArtistDataContext);
     const {setUpdate, searchAlbum, setSearchAlbum, searchAlbumsResults} = useContext(AlbumDataContext);
@@ -32,7 +31,7 @@ const Album = () => {
                 }
 
                 const response = await axios.put(`http://localhost:8080/albums/${id}`, updateAlbum);
-                setUpdate("Success!")
+                setUpdate(prev => !prev)
                 setId(null);
                 setName('');
                 setArtist(null);
@@ -49,7 +48,7 @@ const Album = () => {
                 }
 
                 const response = await axios.post('http://localhost:8080/albums', newAlbum);
-                setUpdate("Success!")
+                setUpdate(prev => !prev)
                 setName('');
                 setArtist(null);
                 setReleasedDate(null);
@@ -65,7 +64,7 @@ const Album = () => {
     const handleDelete = async (albumID) => {
         try {
             const response = await axios.delete(`http://localhost:8080/albums/${albumID}`);
-            setUpdate("Success!")
+            setUpdate(prev => !prev)
             console.log(response.status)
         } catch
             (err) {
@@ -96,7 +95,7 @@ const Album = () => {
                             type="text"
                             value={artist != null ? artist.name : "Select a artist"}
                         />
-                        <label htmlFor="releasedDate">Artist: </label>
+                        <label htmlFor="releasedDate">Released Date: </label>
                         <input
                             id="releasedDate"
                             type="date"
@@ -119,8 +118,8 @@ const Album = () => {
                 </section>
             </div>
 
-            <div className="list-container">
-                <div className="box">
+            <div className="admin-list-container">
+                <div className="admin-box">
                     <h3>Click a album to update it</h3>
                     <input
                         className="search"
@@ -133,7 +132,7 @@ const Album = () => {
                     <ul>
                         <>
                             {searchAlbumsResults.map(album => (
-                                <div className="list">
+                                <div className="admin-list">
                                     <div className="delete" onClick={() => {
                                         handleDelete(album.id)
                                     }}><FontAwesomeIcon icon={faTrash}/>
@@ -150,7 +149,7 @@ const Album = () => {
                         </>
                     </ul>
                 </div>
-                <div className="box">
+                <div className="admin-box">
                     <h3>Artist</h3>
                     <input
                         className="search"
@@ -163,7 +162,7 @@ const Album = () => {
                     <ul>
                         <>
                             {searchArtistsResults.map(artist => (
-                                <div className="list">
+                                <div className="admin-list">
                                     <li key={artist.id} onClick={() => {
                                         setArtist(artist);
                                     }}>{artist.name}</li>
