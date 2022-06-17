@@ -31,10 +31,6 @@ import static org.mockito.Mockito.*;
 class SongServiceImpTest {
     @Mock
     private SongRepository repository;
-    @Mock
-    private AccessTokenDTO requestAccessToken;
-    @Mock
-    private UserRepository userRepository;
 
     @InjectMocks
     private SongServiceImp service;
@@ -117,9 +113,6 @@ class SongServiceImpTest {
         Song song2 = new AlbumSong(1L,"Map", genre, album);
 
         when(repository.findAll()).thenReturn(List.of(song1, song2));
-        when(userRepository.existsById(1l)).thenReturn(true);
-        when(requestAccessToken.getUserID()).thenReturn(1l);
-        when(userRepository.getById(1l)).thenReturn(new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow"));
 
         List<SingleSongDTO> expectedList = new ArrayList<>();
         expectedList.add(SongDTOConverter.convertToSingleSongDTO(song1));

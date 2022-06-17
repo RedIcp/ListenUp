@@ -12,7 +12,6 @@ import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDT
 import com.listenup.individualassignment.dto.createdto.CreateSingleSongResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 import com.listenup.individualassignment.business.SongService;
-import com.listenup.individualassignment.entity.Customer;
 import com.listenup.individualassignment.entity.Song;
 import com.listenup.individualassignment.repository.SongRepository;
 
@@ -26,72 +25,56 @@ import org.springframework.context.annotation.Primary;
 @RequiredArgsConstructor
 public class SongServiceImp implements SongService {
     private final SongRepository db;
-    private final UserRepository userDB;
-    private final AccessTokenDTO requestAccessToken;
 
     @Override
     public CreateSingleSongResponseDTO addSingleSong(CreateSingleSongRequestDTO song){
-<span class="fc" id="L34">        Song savedSong = db.save(SongDTOConverter.convertToSingleSongModelForCreate(song));</span>
+<span class="nc" id="L31">        Song savedSong = db.save(SongDTOConverter.convertToSingleSongModelForCreate(song));</span>
 
-<span class="fc" id="L36">        return CreateSingleSongResponseDTO.builder()</span>
-<span class="fc" id="L37">                .singleSongID(savedSong.getId())</span>
-<span class="fc" id="L38">                .build();</span>
+<span class="nc" id="L33">        return CreateSingleSongResponseDTO.builder()</span>
+<span class="nc" id="L34">                .singleSongID(savedSong.getId())</span>
+<span class="nc" id="L35">                .build();</span>
     }
 
     @Override
     public CreateAlbumSongResponseDTO addAlbumSong(CreateAlbumSongRequestDTO song){
-<span class="fc" id="L43">        Song savedSong = db.save(SongDTOConverter.convertToAlbumSongModelForCreate(song));</span>
-<span class="fc" id="L44">        return CreateAlbumSongResponseDTO.builder()</span>
-<span class="fc" id="L45">                .albumSongID(savedSong.getId())</span>
-<span class="fc" id="L46">                .build();</span>
+<span class="nc" id="L40">        Song savedSong = db.save(SongDTOConverter.convertToAlbumSongModelForCreate(song));</span>
+<span class="nc" id="L41">        return CreateAlbumSongResponseDTO.builder()</span>
+<span class="nc" id="L42">                .albumSongID(savedSong.getId())</span>
+<span class="nc" id="L43">                .build();</span>
     }
 
     @Override
     public List&lt;SingleSongDTO&gt; getSongs(){
-<span class="fc" id="L51">        List&lt;SingleSongDTO&gt; dtoList = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L52" title="All 2 branches covered.">        for (Song song : db.findAll()){</span>
-<span class="fc" id="L53">            SingleSongDTO dto = SongDTOConverter.convertToSingleSongDTO(song);</span>
-<span class="fc" id="L54">            dto.setLiked(isLiked(song.getId()));</span>
-<span class="fc" id="L55">            dtoList.add(dto);</span>
-<span class="fc" id="L56">        }</span>
-<span class="fc" id="L57">        return dtoList;</span>
-    }
-
-    public boolean isLiked(long songID){
-<span class="fc" id="L61">        Customer customer = (Customer) userDB.getById(requestAccessToken.getUserID());</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if(userDB.existsById(requestAccessToken.getUserID())){</span>
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">            for(Song song : customer.getLikedSongs()){</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">                if(song.getId() == songID){</span>
-<span class="nc" id="L65">                    return true;</span>
-                }
-<span class="nc" id="L67">            }</span>
-<span class="fc" id="L68">            return false;</span>
-        }
-<span class="nc" id="L70">        return false;</span>
+<span class="fc" id="L48">        List&lt;SingleSongDTO&gt; dtoList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        for (Song song : db.findAll()){</span>
+<span class="fc" id="L50">            SingleSongDTO dto = SongDTOConverter.convertToSingleSongDTO(song);</span>
+<span class="fc" id="L51">            dtoList.add(dto);</span>
+<span class="fc" id="L52">        }</span>
+<span class="fc" id="L53">        return dtoList;</span>
     }
 
     @Override
     public SingleSongDTO getSong(long id){
-<span class="fc" id="L75">        return SongDTOConverter.convertToSingleSongDTO(db.getById(id));</span>
+<span class="nc" id="L58">        return SongDTOConverter.convertToSingleSongDTO(db.getById(id));</span>
     }
 
     @Override
     public SingleSongDTO editSong(SingleSongDTO song){
-<span class="fc bfc" id="L80" title="All 2 branches covered.">        if(!db.existsById(song.getId())){</span>
-<span class="fc" id="L81">            throw new InvalidSongException(&quot;INVALID_ID&quot;);</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if(!db.existsById(song.getId())){</span>
+<span class="nc" id="L64">            throw new InvalidSongException(&quot;INVALID_ID&quot;);</span>
         }
-<span class="fc" id="L83">        db.save(SongDTOConverter.convertToSingleSongModelForUpdate(song));</span>
-<span class="fc" id="L84">        return song;</span>
+<span class="nc" id="L66">        db.save(SongDTOConverter.convertToSingleSongModelForUpdate(song));</span>
+<span class="nc" id="L67">        return song;</span>
     }
 
     @Override
     public boolean deleteSong(long id){
-<span class="fc" id="L89">        boolean result = false;</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">        if(db.existsById(id)){</span>
-<span class="fc" id="L91">            db.deleteById(id);</span>
-<span class="fc" id="L92">            result = true;</span>
+<span class="nc" id="L72">        boolean result = false;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        if(db.existsById(id)){</span>
+<span class="nc" id="L74">            db.deleteById(id);</span>
+<span class="nc" id="L75">            result = true;</span>
         }
-<span class="fc" id="L94">        return result;</span>
+<span class="nc" id="L77">        return result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

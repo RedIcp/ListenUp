@@ -39,188 +39,188 @@ public class UserServiceImp implements UserService {
     private final AccessTokenEncoder accessTokenEncoder;
     private final AccessTokenDTO requestAccessToken;
 
-    private final static String error = &quot;INVALID_ID&quot;;
+    String error = &quot;INVALID_ID&quot;;
 
     @Override
     public CreateUserResponseDTO createAccount(CreateUserRequestDTO user){
-<span class="fc bfc" id="L46" title="All 2 branches covered.">        if(db.existsByEmail(user.getEmail())){</span>
-<span class="fc" id="L47">            throw new InvalidCustomerEmailException(&quot;EMAIL_EXIST&quot;);</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if(db.existsByEmail(user.getEmail())){</span>
+<span class="nc" id="L47">            throw new InvalidCustomerEmailException(&quot;EMAIL_EXIST&quot;);</span>
         }
 
-<span class="fc" id="L50">        String encodedPassword = passwordEncoder.encode(user.getPassword());</span>
+<span class="nc" id="L50">        String encodedPassword = passwordEncoder.encode(user.getPassword());</span>
 
-<span class="fc" id="L52">        User newUser = CustomerDTOConverter.convertToModelForCreate(user);</span>
+<span class="nc" id="L52">        User newUser = CustomerDTOConverter.convertToModelForCreate(user);</span>
 
-<span class="fc" id="L54">        newUser.setPassword(encodedPassword);</span>
-<span class="fc" id="L55">        newUser.setUserRoles(Set.of(</span>
-<span class="fc" id="L56">                UserRole.builder()</span>
-<span class="fc" id="L57">                        .user(newUser)</span>
-<span class="fc" id="L58">                        .role(RoleEnum.CUSTOMER)</span>
-<span class="fc" id="L59">                        .build()</span>
+<span class="nc" id="L54">        newUser.setPassword(encodedPassword);</span>
+<span class="nc" id="L55">        newUser.setUserRoles(Set.of(</span>
+<span class="nc" id="L56">                UserRole.builder()</span>
+<span class="nc" id="L57">                        .user(newUser)</span>
+<span class="nc" id="L58">                        .role(RoleEnum.CUSTOMER)</span>
+<span class="nc" id="L59">                        .build()</span>
 
         ));
 
-<span class="fc" id="L63">        User savedUser = db.save(newUser);</span>
+<span class="nc" id="L63">        User savedUser = db.save(newUser);</span>
 
-<span class="fc" id="L65">        return CreateUserResponseDTO.builder()</span>
-<span class="fc" id="L66">                .userID(savedUser.getId())</span>
-<span class="fc" id="L67">                .build();</span>
+<span class="nc" id="L65">        return CreateUserResponseDTO.builder()</span>
+<span class="nc" id="L66">                .userID(savedUser.getId())</span>
+<span class="nc" id="L67">                .build();</span>
     }
 
     @Override
     public LoginResponseDTO login(LoginRequestDTO request){
-<span class="fc bfc" id="L72" title="All 2 branches covered.">        if(!db.existsByEmail(request.getEmail())){</span>
-<span class="fc" id="L73">            throw new InvalidCustomerEmailException(&quot;EMAIL_DOES_NOT_EXIST&quot;);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if(!db.existsByEmail(request.getEmail())){</span>
+<span class="nc" id="L73">            throw new InvalidCustomerEmailException(&quot;EMAIL_DOES_NOT_EXIST&quot;);</span>
         }
-<span class="fc" id="L75">        User user = db.getByEmail(request.getEmail());</span>
+<span class="nc" id="L75">        User user = db.getByEmail(request.getEmail());</span>
 
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){</span>
-<span class="fc" id="L78">            throw new InvalidCredentialsException();</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){</span>
+<span class="nc" id="L78">            throw new InvalidCredentialsException();</span>
         }
 
-<span class="fc" id="L81">        String accessToken = generateAccessToken(user);</span>
+<span class="nc" id="L81">        String accessToken = generateAccessToken(user);</span>
 
-<span class="fc" id="L83">        return LoginResponseDTO.builder()</span>
-<span class="fc" id="L84">                .accessToken(accessToken)</span>
-<span class="fc" id="L85">                .build();</span>
+<span class="nc" id="L83">        return LoginResponseDTO.builder()</span>
+<span class="nc" id="L84">                .accessToken(accessToken)</span>
+<span class="nc" id="L85">                .build();</span>
     }
 
     public String generateAccessToken(User user) {
-<span class="fc" id="L89">        List&lt;String&gt; roles = user.getUserRoles().stream()</span>
-<span class="fc" id="L90">                .map(userRole -&gt; userRole.getRole().toString())</span>
-<span class="fc" id="L91">                .toList();</span>
+<span class="nc" id="L89">        List&lt;String&gt; roles = user.getUserRoles().stream()</span>
+<span class="nc" id="L90">                .map(userRole -&gt; userRole.getRole().toString())</span>
+<span class="nc" id="L91">                .toList();</span>
 
-<span class="fc" id="L93">        return accessTokenEncoder.encode(</span>
-<span class="fc" id="L94">                AccessTokenDTO.builder()</span>
-<span class="fc" id="L95">                        .email(user.getEmail())</span>
-<span class="fc" id="L96">                        .roles(roles)</span>
-<span class="fc" id="L97">                        .userID(user.getId())</span>
-<span class="fc" id="L98">                        .build());</span>
+<span class="nc" id="L93">        return accessTokenEncoder.encode(</span>
+<span class="nc" id="L94">                AccessTokenDTO.builder()</span>
+<span class="nc" id="L95">                        .email(user.getEmail())</span>
+<span class="nc" id="L96">                        .roles(roles)</span>
+<span class="nc" id="L97">                        .userID(user.getId())</span>
+<span class="nc" id="L98">                        .build());</span>
     }
 
     @Override
     public List&lt;ViewUserDTO&gt; getUsers(){
-<span class="fc" id="L103">        return CustomerDTOConverter.convertToDTOList(db.findAll());</span>
+<span class="nc" id="L103">        return CustomerDTOConverter.convertToDTOList(db.findAll());</span>
     }
 
     @Override
     public UpdateUserDTO getUser(long id){
-<span class="fc" id="L108">        isAuthorised(id);</span>
-<span class="fc" id="L109">        return CustomerDTOConverter.convertToDTOForUpdate(db.getById(id));</span>
+<span class="nc" id="L108">        isAuthorised(id);</span>
+<span class="nc" id="L109">        return CustomerDTOConverter.convertToDTOForUpdate(db.getById(id));</span>
     }
 
     @Override
     public CustomerLikedSongListDTO getCustomerCollection(long id){
-<span class="fc" id="L114">        return CustomerDTOConverter.convertToDTOForLikedSong((Customer) db.getById(id));</span>
+<span class="nc" id="L114">        return CustomerDTOConverter.convertToDTOForLikedSong((Customer) db.getById(id));</span>
     }
 
     @Override
     public CustomerPlaylistListDTO getCustomerPlaylists(long id){
-<span class="fc" id="L119">        return CustomerDTOConverter.convertToDTOForPlaylist((Customer) db.getById(id));</span>
+<span class="nc" id="L119">        return CustomerDTOConverter.convertToDTOForPlaylist((Customer) db.getById(id));</span>
     }
 
     @Override
     public CustomerLikedPlaylistListDTO getCustomerLikedPlaylists(long id){
-<span class="fc" id="L124">        return CustomerDTOConverter.convertToDTOForLikedPlaylist((Customer) db.getById(id));</span>
+<span class="nc" id="L124">        return CustomerDTOConverter.convertToDTOForLikedPlaylist((Customer) db.getById(id));</span>
     }
 
     private void isAuthorised(long id){
-<span class="pc bpc" id="L128" title="1 of 4 branches missed.">        if (!requestAccessToken.hasRole(RoleEnum.ADMIN.name()) &amp;&amp; requestAccessToken.getUserID() != id) {</span>
-<span class="fc" id="L129">            throw new UnauthorizedDataAccessException(&quot;USER_ID_NOT_FROM_LOGGED_IN_USER&quot;);</span>
+<span class="nc bnc" id="L128" title="All 4 branches missed.">        if (!requestAccessToken.hasRole(RoleEnum.ADMIN.name()) &amp;&amp; requestAccessToken.getUserID() != id) {</span>
+<span class="nc" id="L129">            throw new UnauthorizedDataAccessException(&quot;USER_ID_NOT_FROM_LOGGED_IN_USER&quot;);</span>
         }
-<span class="fc" id="L131">    }</span>
+<span class="nc" id="L131">    }</span>
 
     @Override
     public UpdateUserDTO updateAccount(UpdateUserDTO user){
-<span class="fc" id="L135">        User old = db.getById(user.getId());</span>
-<span class="fc" id="L136">        isAuthorised(user.getId());</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">        if(!db.existsById(user.getId())){</span>
-<span class="fc" id="L138">            throw new InvalidCustomerException(error);</span>
+<span class="nc" id="L135">        User old = db.getById(user.getId());</span>
+<span class="nc" id="L136">        isAuthorised(user.getId());</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        if(!db.existsById(user.getId())){</span>
+<span class="nc" id="L138">            throw new InvalidCustomerException(error);</span>
         }
-<span class="fc bfc" id="L140" title="All 2 branches covered.">        if(user.getEmail().equals(old.getEmail())){</span>
-<span class="fc" id="L141">            db.save(CustomerDTOConverter.convertToModelForUpdate(user));</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">        if(user.getEmail().equals(old.getEmail())){</span>
+<span class="nc" id="L141">            db.save(CustomerDTOConverter.convertToModelForUpdate(user));</span>
         }
         else {
-<span class="fc bfc" id="L144" title="All 2 branches covered.">            if(db.existsByEmail(user.getEmail())){</span>
-<span class="fc" id="L145">                throw new InvalidCustomerEmailException(&quot;EMAIL_EXIST&quot;);</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">            if(db.existsByEmail(user.getEmail())){</span>
+<span class="nc" id="L145">                throw new InvalidCustomerEmailException(&quot;EMAIL_EXIST&quot;);</span>
             }
-<span class="fc" id="L147">            db.save(CustomerDTOConverter.convertToModelForUpdate(user));</span>
+<span class="nc" id="L147">            db.save(CustomerDTOConverter.convertToModelForUpdate(user));</span>
         }
-<span class="fc" id="L149">        return user;</span>
+<span class="nc" id="L149">        return user;</span>
     }
 
     @Override
     public void addSongToCollection(AddRemoveSongToCollectionDTO song){
-<span class="fc" id="L154">        Customer old = (Customer) db.getById(song.getCustomerID());</span>
+<span class="nc" id="L154">        Customer old = (Customer) db.getById(song.getCustomerID());</span>
 
-<span class="fc" id="L156">        isAuthorised(song.getCustomerID());</span>
+<span class="nc" id="L156">        isAuthorised(song.getCustomerID());</span>
 
-<span class="fc bfc" id="L158" title="All 2 branches covered.">        if(!db.existsById(song.getCustomerID())){</span>
-<span class="fc" id="L159">            throw new InvalidCustomerException(error);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">        if(!db.existsById(song.getCustomerID())){</span>
+<span class="nc" id="L159">            throw new InvalidCustomerException(error);</span>
         }
 
-<span class="fc" id="L162">        old.getLikedSongs().add(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));</span>
+<span class="nc" id="L162">        old.getLikedSongs().add(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));</span>
 
-<span class="fc" id="L164">        db.save(old);</span>
-<span class="fc" id="L165">    }</span>
+<span class="nc" id="L164">        db.save(old);</span>
+<span class="nc" id="L165">    }</span>
 
     @Override
     public void removeSongFromCollection(AddRemoveSongToCollectionDTO song){
-<span class="fc" id="L169">        Customer old = (Customer) db.getById(song.getCustomerID());</span>
+<span class="nc" id="L169">        Customer old = (Customer) db.getById(song.getCustomerID());</span>
 
-<span class="fc" id="L171">        isAuthorised(song.getCustomerID());</span>
+<span class="nc" id="L171">        isAuthorised(song.getCustomerID());</span>
 
-<span class="fc bfc" id="L173" title="All 2 branches covered.">        if(!db.existsById(song.getCustomerID())){</span>
-<span class="fc" id="L174">            throw new InvalidCustomerException(error);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        if(!db.existsById(song.getCustomerID())){</span>
+<span class="nc" id="L174">            throw new InvalidCustomerException(error);</span>
         }
 
-<span class="fc" id="L177">        old.getLikedSongs().remove(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));</span>
+<span class="nc" id="L177">        old.getLikedSongs().remove(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));</span>
 
-<span class="fc" id="L179">        db.save(old);</span>
-<span class="fc" id="L180">    }</span>
+<span class="nc" id="L179">        db.save(old);</span>
+<span class="nc" id="L180">    }</span>
 
     @Override
     public void addLikedPlaylist(AddRemoveLikedPlaylistDTO playlist){
-<span class="fc" id="L184">        Customer old = (Customer) db.getById(playlist.getCustomerID());</span>
+<span class="nc" id="L184">        Customer old = (Customer) db.getById(playlist.getCustomerID());</span>
 
-<span class="fc" id="L186">        isAuthorised(playlist.getCustomerID());</span>
+<span class="nc" id="L186">        isAuthorised(playlist.getCustomerID());</span>
 
-<span class="fc bfc" id="L188" title="All 2 branches covered.">        if(!db.existsById(playlist.getCustomerID())){</span>
-<span class="fc" id="L189">            throw new InvalidCustomerException(error);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        if(!db.existsById(playlist.getCustomerID())){</span>
+<span class="nc" id="L189">            throw new InvalidCustomerException(error);</span>
         }
 
-<span class="fc" id="L192">        old.getLikedPlaylists().add(PlaylistDTOConverter.convertToModelForUpdate(playlist.getPlaylist()));</span>
+<span class="nc" id="L192">        old.getLikedPlaylists().add(PlaylistDTOConverter.convertToModelForUpdate(playlist.getPlaylist()));</span>
 
-<span class="fc" id="L194">        db.save(old);</span>
-<span class="fc" id="L195">    }</span>
+<span class="nc" id="L194">        db.save(old);</span>
+<span class="nc" id="L195">    }</span>
 
     @Override
     public void removeLikedPlaylist(AddRemoveLikedPlaylistDTO playlist){
-<span class="fc" id="L199">        Customer old = (Customer) db.getById(playlist.getCustomerID());</span>
+<span class="nc" id="L199">        Customer old = (Customer) db.getById(playlist.getCustomerID());</span>
 
-<span class="fc" id="L201">        isAuthorised(playlist.getCustomerID());</span>
+<span class="nc" id="L201">        isAuthorised(playlist.getCustomerID());</span>
 
-<span class="fc bfc" id="L203" title="All 2 branches covered.">        if(!db.existsById(playlist.getCustomerID())){</span>
-<span class="fc" id="L204">            throw new InvalidCustomerException(error);</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">        if(!db.existsById(playlist.getCustomerID())){</span>
+<span class="nc" id="L204">            throw new InvalidCustomerException(error);</span>
         }
 
-<span class="fc" id="L207">        old.getLikedPlaylists().remove(PlaylistDTOConverter.convertToModelForUpdate(playlist.getPlaylist()));</span>
+<span class="nc" id="L207">        old.getLikedPlaylists().remove(PlaylistDTOConverter.convertToModelForUpdate(playlist.getPlaylist()));</span>
 
-<span class="fc" id="L209">        db.save(old);</span>
-<span class="fc" id="L210">    }</span>
+<span class="nc" id="L209">        db.save(old);</span>
+<span class="nc" id="L210">    }</span>
 
     @Override
     public boolean deleteAccount(long id){
-<span class="fc" id="L214">        boolean result = false;</span>
+<span class="nc" id="L214">        boolean result = false;</span>
 
-<span class="fc" id="L216">        isAuthorised(id);</span>
+<span class="nc" id="L216">        isAuthorised(id);</span>
 
-<span class="fc bfc" id="L218" title="All 2 branches covered.">        if(db.existsById(id)){</span>
-<span class="fc" id="L219">            db.deleteById(id);</span>
-<span class="fc" id="L220">            result = true;</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">        if(db.existsById(id)){</span>
+<span class="nc" id="L219">            db.deleteById(id);</span>
+<span class="nc" id="L220">            result = true;</span>
         }
 
-<span class="fc" id="L223">        return result;</span>
+<span class="nc" id="L223">        return result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

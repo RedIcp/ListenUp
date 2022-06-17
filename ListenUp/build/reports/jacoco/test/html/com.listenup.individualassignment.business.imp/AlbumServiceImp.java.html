@@ -27,40 +27,40 @@ public class AlbumServiceImp implements AlbumService {
 
     @Override
     public CreateAlbumResponseDTO addAlbum(CreateAlbumRequestDTO album){
-<span class="fc" id="L30">        Album savedAlbum = db.save(AlbumDTOConverter.convertToModelForCreate(album));</span>
+<span class="nc" id="L30">        Album savedAlbum = db.save(AlbumDTOConverter.convertToModelForCreate(album));</span>
 
-<span class="fc" id="L32">        return CreateAlbumResponseDTO.builder()</span>
-<span class="fc" id="L33">                .albumID(savedAlbum.getId())</span>
-<span class="fc" id="L34">                .build();</span>
+<span class="nc" id="L32">        return CreateAlbumResponseDTO.builder()</span>
+<span class="nc" id="L33">                .albumID(savedAlbum.getId())</span>
+<span class="nc" id="L34">                .build();</span>
     }
 
     @Override
     public List&lt;AlbumDTO&gt; getAlbums(){
-<span class="fc" id="L39">        return AlbumDTOConverter.convertToDTOList(db.findAll());</span>
+<span class="nc" id="L39">        return AlbumDTOConverter.convertToDTOList(db.findAll());</span>
     }
 
     @Override
     public AlbumSongListDTO getAlbumSongs(long id){
-<span class="fc" id="L44">        return AlbumDTOConverter.convertToDTOForSong(db.getById(id));</span>
+<span class="nc" id="L44">        return AlbumDTOConverter.convertToDTOForSong(db.getById(id));</span>
     }
 
     @Override
     public AlbumDTO editAlbum(AlbumDTO album){
-<span class="fc bfc" id="L49" title="All 2 branches covered.">        if(!db.existsById(album.getId())){</span>
-<span class="fc" id="L50">            throw new InvalidAlbumException(&quot;INVALID_ALBUM&quot;);</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if(!db.existsById(album.getId())){</span>
+<span class="nc" id="L50">            throw new InvalidAlbumException(&quot;INVALID_ALBUM&quot;);</span>
         }
-<span class="fc" id="L52">        db.save(AlbumDTOConverter.convertToModelForUpdate(album));</span>
-<span class="fc" id="L53">        return album;</span>
+<span class="nc" id="L52">        db.save(AlbumDTOConverter.convertToModelForUpdate(album));</span>
+<span class="nc" id="L53">        return album;</span>
     }
 
     @Override
     public boolean deleteAlbum(long id){
-<span class="fc" id="L58">        boolean result = false;</span>
-<span class="fc bfc" id="L59" title="All 2 branches covered.">        if(db.existsById(id)){</span>
-<span class="fc" id="L60">            db.deleteById(id);</span>
-<span class="fc" id="L61">            result = true;</span>
+<span class="nc" id="L58">        boolean result = false;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        if(db.existsById(id)){</span>
+<span class="nc" id="L60">            db.deleteById(id);</span>
+<span class="nc" id="L61">            result = true;</span>
         }
-<span class="fc" id="L63">        return result;</span>
+<span class="nc" id="L63">        return result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

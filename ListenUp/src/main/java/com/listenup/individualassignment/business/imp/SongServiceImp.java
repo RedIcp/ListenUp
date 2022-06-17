@@ -12,7 +12,6 @@ import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDT
 import com.listenup.individualassignment.dto.createdto.CreateSingleSongResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 import com.listenup.individualassignment.business.SongService;
-import com.listenup.individualassignment.entity.Customer;
 import com.listenup.individualassignment.entity.Song;
 import com.listenup.individualassignment.repository.SongRepository;
 
@@ -26,8 +25,6 @@ import org.springframework.context.annotation.Primary;
 @RequiredArgsConstructor
 public class SongServiceImp implements SongService {
     private final SongRepository db;
-    private final UserRepository userDB;
-    private final AccessTokenDTO requestAccessToken;
 
     @Override
     public CreateSingleSongResponseDTO addSingleSong(CreateSingleSongRequestDTO song){
@@ -51,23 +48,9 @@ public class SongServiceImp implements SongService {
         List<SingleSongDTO> dtoList = new ArrayList<>();
         for (Song song : db.findAll()){
             SingleSongDTO dto = SongDTOConverter.convertToSingleSongDTO(song);
-            dto.setLiked(isLiked(song.getId()));
             dtoList.add(dto);
         }
         return dtoList;
-    }
-
-    public boolean isLiked(long songID){
-        Customer customer = (Customer) userDB.getById(requestAccessToken.getUserID());
-        if(userDB.existsById(requestAccessToken.getUserID())){
-            for(Song song : customer.getLikedSongs()){
-                if(song.getId() == songID){
-                    return true;
-                }
-            }
-            return false;
-        }
-        return false;
     }
 
     @Override

@@ -19,9 +19,9 @@ import org.springframework.web.server.ResponseStatusException;
 @Aspect
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 @Component
-<span class="fc" id="L22">public class IsAuthenticatedAspect {</span>
+<span class="nc" id="L22">public class IsAuthenticatedAspect {</span>
 
-<span class="fc" id="L24">    private final static Logger LOGGER = LoggerFactory.getLogger(IsAuthenticatedAspect.class);</span>
+<span class="nc" id="L24">    private final static Logger LOGGER = LoggerFactory.getLogger(IsAuthenticatedAspect.class);</span>
 
     @Pointcut(&quot;@annotation(com.listenup.individualassignment.configuration.security.isauthenticated.IsAuthenticated)&quot;)
     public void annotatedMethod() {

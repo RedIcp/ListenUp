@@ -26,32 +26,32 @@ import java.util.Map;
 public class AccessTokenEncoderDecoderImpl implements AccessTokenEncoder, AccessTokenDecoder {
     private final Key key;
 
-<span class="fc" id="L29">    public AccessTokenEncoderDecoderImpl(@Value(&quot;${jwt.secret}&quot;) String secretKey) {</span>
-<span class="fc" id="L30">        byte[] keyBytes = Decoders.BASE64.decode(secretKey);</span>
-<span class="fc" id="L31">        this.key = Keys.hmacShaKeyFor(keyBytes);</span>
-<span class="fc" id="L32">    }</span>
+<span class="nc" id="L29">    public AccessTokenEncoderDecoderImpl(@Value(&quot;${jwt.secret}&quot;) String secretKey) {</span>
+<span class="nc" id="L30">        byte[] keyBytes = Decoders.BASE64.decode(secretKey);</span>
+<span class="nc" id="L31">        this.key = Keys.hmacShaKeyFor(keyBytes);</span>
+<span class="nc" id="L32">    }</span>
 
     @Override
     public String encode(AccessTokenDTO accessTokenDTO) {
-<span class="fc" id="L36">        Map&lt;String, Object&gt; claimsMap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L36">        Map&lt;String, Object&gt; claimsMap = new HashMap&lt;&gt;();</span>
 
-<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (!CollectionUtils.isEmpty(accessTokenDTO.getRoles())) {</span>
-<span class="fc" id="L39">            claimsMap.put(&quot;roles&quot;, accessTokenDTO.getRoles());</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (!CollectionUtils.isEmpty(accessTokenDTO.getRoles())) {</span>
+<span class="nc" id="L39">            claimsMap.put(&quot;roles&quot;, accessTokenDTO.getRoles());</span>
         }
 
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (accessTokenDTO.getUserID() != null) {</span>
-<span class="fc" id="L43">            claimsMap.put(&quot;userID&quot;, accessTokenDTO.getUserID());</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (accessTokenDTO.getUserID() != null) {</span>
+<span class="nc" id="L43">            claimsMap.put(&quot;userID&quot;, accessTokenDTO.getUserID());</span>
         }
 
-<span class="fc" id="L46">        Instant now = Instant.now();</span>
+<span class="nc" id="L46">        Instant now = Instant.now();</span>
 
-<span class="fc" id="L48">        return Jwts.builder()</span>
-<span class="fc" id="L49">                .setSubject(accessTokenDTO.getEmail())</span>
-<span class="fc" id="L50">                .setIssuedAt(Date.from(now))</span>
-<span class="fc" id="L51">                .setExpiration(Date.from(now.plus(30, ChronoUnit.MINUTES)))</span>
-<span class="fc" id="L52">                .addClaims(claimsMap)</span>
-<span class="fc" id="L53">                .signWith(key)</span>
-<span class="fc" id="L54">                .compact();</span>
+<span class="nc" id="L48">        return Jwts.builder()</span>
+<span class="nc" id="L49">                .setSubject(accessTokenDTO.getEmail())</span>
+<span class="nc" id="L50">                .setIssuedAt(Date.from(now))</span>
+<span class="nc" id="L51">                .setExpiration(Date.from(now.plus(30, ChronoUnit.MINUTES)))</span>
+<span class="nc" id="L52">                .addClaims(claimsMap)</span>
+<span class="nc" id="L53">                .signWith(key)</span>
+<span class="nc" id="L54">                .compact();</span>
     }
 
     @Override
