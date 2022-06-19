@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.24.0",
     "babel-plugin-macros": "^3.1.0",
+    "cypress": "^10.1.0",
     "date-fns": "^2.28.0",
     "jwt-decode": "^3.1.2",
     "net": "^1.0.2",
@@ -27,7 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -49,6 +50,6 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^10.1.0"
+    "eslint-plugin-cypress": "^2.12.1"
   }
 }

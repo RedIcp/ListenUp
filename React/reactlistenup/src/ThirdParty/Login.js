@@ -56,7 +56,7 @@ const Login = () => {
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } else if (err.response?.status === 400) {
-                setErrMsg('Missing Username or Password');
+                setErrMsg('Invalid Credential');
             } else if (err.response?.status === 401) {
                 setErrMsg('Unauthorized');
             } else {
@@ -69,7 +69,7 @@ const Login = () => {
         <div className="form-container">
             <div className="single-form">
                 <section>
-                    <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                    <p id="errmsg" className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Login</h1>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="email">Email:</label>
@@ -90,7 +90,7 @@ const Login = () => {
                             value={pwd}
                             required
                         />
-                        <button>Login</button>
+                        <button id="login">Login</button>
                     </form>
                     <p>
                         Need an Account?<br/>
