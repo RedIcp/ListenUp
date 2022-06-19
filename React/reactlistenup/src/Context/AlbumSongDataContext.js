@@ -23,7 +23,7 @@ export const AlbumSongDataProvider = ({ children }) => {
     }, [data])
 
     useEffect(() => {
-        const filteredResults = songs!=null?songs.filter((song) =>
+        const filteredResults = songs!=null?songs?.filter((song) =>
             ((song.name).toLowerCase()).includes(searchSong.toLowerCase())):[];
 
         setSearchSongResults(filteredResults.reverse());

@@ -52,11 +52,11 @@ public class UserController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping(&quot;{id}/playlists&quot;)
     public ResponseEntity&lt;CustomerPlaylistListDTO&gt; getCustomerPlaylistsPath(@PathVariable(value = &quot;id&quot;) long id) {
-<span class="fc" id="L55">        CustomerPlaylistListDTO dto = management.getCustomerPlaylists(id);</span>
-<span class="fc bfc" id="L56" title="All 2 branches covered.">        if(dto != null) {</span>
-<span class="fc" id="L57">            return ResponseEntity.ok().body(dto);</span>
+<span class="nc" id="L55">        CustomerPlaylistListDTO dto = management.getCustomerPlaylists(id);</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if(dto != null) {</span>
+<span class="nc" id="L57">            return ResponseEntity.ok().body(dto);</span>
         } else {
-<span class="fc" id="L59">            return ResponseEntity.notFound().build();</span>
+<span class="nc" id="L59">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -65,10 +65,10 @@ public class UserController {
     @GetMapping(&quot;{id}/collection&quot;)
     public ResponseEntity&lt;CustomerLikedSongListDTO&gt; getCustomerLikedSongsPath(@PathVariable(value = &quot;id&quot;) long id) {
 <span class="fc" id="L67">        CustomerLikedSongListDTO dto = management.getCustomerCollection(id);</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">        if(dto != null) {</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if(dto != null) {</span>
 <span class="fc" id="L69">            return ResponseEntity.ok().body(dto);</span>
         } else {
-<span class="fc" id="L71">            return ResponseEntity.notFound().build();</span>
+<span class="nc" id="L71">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -77,10 +77,10 @@ public class UserController {
     @GetMapping(&quot;{id}/likedplaylists&quot;)
     public ResponseEntity&lt;CustomerLikedPlaylistListDTO&gt; getCustomerLikedPlaylistsPath(@PathVariable(value = &quot;id&quot;) long id) {
 <span class="fc" id="L79">        CustomerLikedPlaylistListDTO dto = management.getCustomerLikedPlaylists(id);</span>
-<span class="fc bfc" id="L80" title="All 2 branches covered.">        if(dto != null) {</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        if(dto != null) {</span>
 <span class="fc" id="L81">            return ResponseEntity.ok().body(dto);</span>
         } else {
-<span class="fc" id="L83">            return ResponseEntity.notFound().build();</span>
+<span class="nc" id="L83">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -133,8 +133,8 @@ public class UserController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @DeleteMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;Object&gt; deleteUser(@PathVariable long id) {
-<span class="fc" id="L136">        management.deleteAccount(id);</span>
-<span class="fc" id="L137">        return ResponseEntity.ok().build();</span>
+<span class="nc" id="L136">        management.deleteAccount(id);</span>
+<span class="nc" id="L137">        return ResponseEntity.ok().build();</span>
 
     }
 }

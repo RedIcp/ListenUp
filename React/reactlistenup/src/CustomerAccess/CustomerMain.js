@@ -1,5 +1,5 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAdd, faBook, faHeadphones, faHeart, faHome, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {faList, faBook, faHeadphones, faHeart, faHome, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {Link, Route, Routes} from "react-router-dom";
 import Header from "../Component/Header";
 import React, {useEffect, useState} from "react";
@@ -15,11 +15,13 @@ import AlbumFullPage from "./AllCustomer/Action/Album/AlbumFullPage";
 import SearchSongPage from "./AllCustomer/SearchSongPage";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
+import CustomerPlaylistPage from "./PrivateCustomer/Action/CustomerPlaylist/CustomerPlaylistPage";
+import CustomerLikedSongPage from "./PrivateCustomer/Action/CustomerLikedSong/CustomerLikedSongPage";
+import CustomerLikedPlaylistPage from "./PrivateCustomer/Action/CustomerLikedPlaylist/CustomerLikedPlaylistPage";
 
 function CustomerMain() {
 
     const [stompClient, setStompClient] = useState(null);
-
     useEffect(() => {
         const socket = SockJS("http://localhost:8080/ws");
         const stompClient = Stomp.over(socket);
@@ -31,10 +33,12 @@ function CustomerMain() {
         });
         setStompClient(stompClient);
     }, []);
+
     function onMessageReceived(data)
     {
         const result=  JSON.parse(data.body);
-        alert(result)
+        console.log(result.text);
+        alert(result.text)
     };
 
     return (
@@ -50,15 +54,14 @@ function CustomerMain() {
                     <Link to="/search">
                         <li><FontAwesomeIcon icon={faSearch}/> Search</li>
                     </Link>
-                    <Link to="/genre/1">
+                    <Link to="/library">
                         <li><FontAwesomeIcon icon={faBook}/> Your Library</li>
                     </Link>
-                    <br/>
-                    <Link to="/artists/4">
-                        <li><FontAwesomeIcon icon={faAdd}/> Create Playlist</li>
-                    </Link>
-                    <Link to="/home">
+                    <Link to="/collection">
                         <li><FontAwesomeIcon icon={faHeart}/> Liked Songs</li>
+                    </Link>
+                    <Link to="/likedplaylists">
+                        <li><FontAwesomeIcon icon={faList}/> Liked Playlists</li>
                     </Link>
                     <hr/>
                 </div>
@@ -77,6 +80,9 @@ function CustomerMain() {
                         <Route path="playlists" element={<PlaylistFullPage/>}/>
                         <Route path="playlists/:id" element={<PlaylistSongsPage/>}/>
                         <Route path="search" element={<SearchSongPage/>}/>
+                        <Route path="library" element={<CustomerPlaylistPage/>}/>
+                        <Route path="collection" element={<CustomerLikedSongPage/>}/>
+                        <Route path="likedplaylists" element={<CustomerLikedPlaylistPage/>}/>
                     </Routes>
                 </div>
             </article>

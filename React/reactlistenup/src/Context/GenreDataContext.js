@@ -15,10 +15,10 @@ export const GenreDataProvider = ({ children }) => {
     }, [data])
 
     useEffect(() => {
-        const filteredResults = genres.filter((genre) =>
+        const filteredResults = genres?.filter((genre) =>
             ((genre.name).toLowerCase()).includes(searchGenre.toLowerCase()));
 
-        setSearchGenresResults(filteredResults.reverse());
+        setSearchGenresResults(filteredResults?.reverse());
     }, [genres, searchGenre])
 
     return (

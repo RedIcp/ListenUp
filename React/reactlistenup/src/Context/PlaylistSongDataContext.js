@@ -26,7 +26,7 @@ export const PlaylistSongDataProvider = ({ children }) => {
         const filteredResults = songs!=null?songs.filter((song) =>
             ((song.name).toLowerCase()).includes(searchSong.toLowerCase())):[];
 
-        setSearchSongResults(filteredResults.reverse());
+        setSearchSongResults(filteredResults?.reverse());
     }, [songs, searchSong])
 
 

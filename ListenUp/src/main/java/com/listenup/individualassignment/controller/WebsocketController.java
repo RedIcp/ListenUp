@@ -13,7 +13,7 @@ public class WebsocketController {
     @SendTo("/topic/greetings")
     public MessageDTO greeting(CreateAlbumRequestDTO message) throws Exception {
         return MessageDTO.builder()
-                .message("New album is created:" + message.getName())
+                .text("New album is created:" + message.getName())
                 .build();
     }
 

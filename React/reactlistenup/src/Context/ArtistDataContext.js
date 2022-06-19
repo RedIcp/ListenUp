@@ -15,10 +15,10 @@ export const ArtistDataProvider = ({ children }) => {
     }, [data])
 
     useEffect(() => {
-        const filteredResults = artists.filter((artist) =>
+        const filteredResults = artists?.filter((artist) =>
             ((artist.name).toLowerCase()).includes(searchArtist.toLowerCase()));
 
-        setSearchArtistsResults(filteredResults.reverse());
+        setSearchArtistsResults(filteredResults?.reverse());
     }, [artists, searchArtist])
 
     return (

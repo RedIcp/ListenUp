@@ -43,13 +43,13 @@ const Album = () => {
 
     function sendMessage(data) {
         stompClient.send("/app/hello", {}, JSON.stringify(data));
-
     };
 
     function onMessageReceived(data)
     {
         const result=  JSON.parse(data.body);
-        alert(result.content)
+        console.log(result.text);
+        alert(result.text)
     };
 
     const handleSubmit = async (e) => {

@@ -20,7 +20,7 @@ const GenreSongs = () => {
                 />
                 <ul>
                     <>
-                        {searchSongResults.map(song => (
+                        {searchSongResults?.map(song => (
                             <div className="list">
                                 <li key={song.id}>{song.name}<div className="artist-name">{song.artist?.name}</div></li>
                             </div>

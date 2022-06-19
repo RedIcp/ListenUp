@@ -75,7 +75,7 @@ class CustomerDTOConverterTest {
     void convertToDTOForLikedSong() {
         CustomerLikedSongListDTO expectedDTO = CustomerLikedSongListDTO.builder()
                 .id(1L)
-                .likedSongs(Collections.emptyList())
+                .songs(Collections.emptyList())
                 .build();
 
         CustomerLikedSongListDTO actualDTO = CustomerDTOConverter.convertToDTOForLikedSong(expectedModel);
@@ -99,7 +99,7 @@ class CustomerDTOConverterTest {
     void convertToDTOForLikedPlaylist() {
         CustomerLikedPlaylistListDTO expectedDTO = CustomerLikedPlaylistListDTO.builder()
                 .id(1L)
-                .likedPlaylists(Collections.emptyList())
+                .playlists(Collections.emptyList())
                 .build();
 
         CustomerLikedPlaylistListDTO actualDTO = CustomerDTOConverter.convertToDTOForLikedPlaylist(expectedModel);

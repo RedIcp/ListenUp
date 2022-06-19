@@ -15,10 +15,10 @@ export const AlbumDataProvider = ({ children }) => {
     }, [data])
 
     useEffect(() => {
-        const filteredResults = albums.filter((album) =>
+        const filteredResults = albums?.filter((album) =>
             ((album.name).toLowerCase()).includes(searchAlbum.toLowerCase()));
 
-        setSearchAlbumsResults(filteredResults.reverse());
+        setSearchAlbumsResults(filteredResults?.reverse());
     }, [albums, searchAlbum])
 
     return (

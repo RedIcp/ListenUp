@@ -18,11 +18,9 @@ import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.UpdateUserDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ViewUserDTO;
-import com.listenup.individualassignment.entity.Customer;
-import com.listenup.individualassignment.entity.RoleEnum;
-import com.listenup.individualassignment.entity.User;
+import com.listenup.individualassignment.entity.*;
 import com.listenup.individualassignment.business.UserService;
-import com.listenup.individualassignment.entity.UserRole;
+import com.listenup.individualassignment.repository.PlaylistRepository;
 import com.listenup.individualassignment.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -111,17 +109,17 @@ public class UserServiceImp implements UserService {
 
     @Override
     public CustomerLikedSongListDTO getCustomerCollection(long id){
-        return CustomerDTOConverter.convertToDTOForLikedSong((Customer) db.getById(id));
+        return CustomerDTOConverter.convertToDTOForLikedSong(db.getUserById(id));
     }
 
     @Override
     public CustomerPlaylistListDTO getCustomerPlaylists(long id){
-        return CustomerDTOConverter.convertToDTOForPlaylist((Customer) db.getById(id));
+        return CustomerDTOConverter.convertToDTOForPlaylist( db.getUserById(id));
     }
 
     @Override
     public CustomerLikedPlaylistListDTO getCustomerLikedPlaylists(long id){
-        return CustomerDTOConverter.convertToDTOForLikedPlaylist((Customer) db.getById(id));
+        return CustomerDTOConverter.convertToDTOForLikedPlaylist(db.getUserById(id));
     }
 
     private void isAuthorised(long id){
@@ -151,7 +149,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void addSongToCollection(AddRemoveSongToCollectionDTO song){
-        Customer old = (Customer) db.getById(song.getCustomerID());
+        Customer old = db.getUserById(song.getCustomerID());
 
         isAuthorised(song.getCustomerID());
 
@@ -166,7 +164,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void removeSongFromCollection(AddRemoveSongToCollectionDTO song){
-        Customer old = (Customer) db.getById(song.getCustomerID());
+        Customer old = db.getUserById(song.getCustomerID());
 
         isAuthorised(song.getCustomerID());
 
@@ -181,7 +179,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void addLikedPlaylist(AddRemoveLikedPlaylistDTO playlist){
-        Customer old = (Customer) db.getById(playlist.getCustomerID());
+        Customer old = db.getUserById(playlist.getCustomerID());
 
         isAuthorised(playlist.getCustomerID());
 
@@ -196,7 +194,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void removeLikedPlaylist(AddRemoveLikedPlaylistDTO playlist){
-        Customer old = (Customer) db.getById(playlist.getCustomerID());
+        Customer old = db.getUserById(playlist.getCustomerID());
 
         isAuthorised(playlist.getCustomerID());
 
@@ -204,7 +202,9 @@ public class UserServiceImp implements UserService {
             throw new InvalidCustomerException(error);
         }
 
-        old.getLikedPlaylists().remove(PlaylistDTOConverter.convertToModelForUpdate(playlist.getPlaylist()));
+        List<Playlist> likedPlaylists = old.getLikedPlaylists();
+        likedPlaylists.remove(PlaylistDTOConverter.convertToModelForUpdate(playlist.getPlaylist()));
+        old.setLikedPlaylists(likedPlaylists);
 
         db.save(old);
     }

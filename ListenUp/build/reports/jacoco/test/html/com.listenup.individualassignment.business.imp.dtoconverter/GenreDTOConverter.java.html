@@ -19,10 +19,10 @@ public class GenreDTOConverter {
 <span class="nc" id="L19">                .build();</span>
     }
     public static Genre convertToModelForUpdate(GenreDTO genre){
-<span class="nc" id="L22">        return Genre.builder()</span>
-<span class="nc" id="L23">                .id(genre.getId())</span>
-<span class="nc" id="L24">                .name(genre.getName())</span>
-<span class="nc" id="L25">                .build();</span>
+<span class="fc" id="L22">        return Genre.builder()</span>
+<span class="fc" id="L23">                .id(genre.getId())</span>
+<span class="fc" id="L24">                .name(genre.getName())</span>
+<span class="fc" id="L25">                .build();</span>
     }
     public static Genre convertToModelForCreate(CreateGenreRequestDTO genre){
 <span class="nc" id="L28">        return Genre.builder()</span>

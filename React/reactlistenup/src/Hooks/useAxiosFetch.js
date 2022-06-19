@@ -19,7 +19,6 @@ const useAxiosFetch = (dataUrl) => {
         const source = axios.CancelToken.source();
 
         const fetchData = async (url) => {
-            console.log(auth.accessToken)
             setIsLoading(true);
             try {
                 const response = await axios.get(url, config);

@@ -21,11 +21,11 @@ public class PlaylistDTOConverter {
 <span class="nc" id="L21">                .build();</span>
     }
     public static Playlist convertToModelForUpdate(PlaylistDTO playlist){
-<span class="nc" id="L24">        return Playlist.builder()</span>
-<span class="nc" id="L25">                .id(playlist.getId())</span>
-<span class="nc" id="L26">                .name(playlist.getName())</span>
-<span class="nc" id="L27">                .customer(CustomerDTOConverter.convertToModelForUpdate(playlist.getCustomer()))</span>
-<span class="nc" id="L28">                .build();</span>
+<span class="fc" id="L24">        return Playlist.builder()</span>
+<span class="fc" id="L25">                .id(playlist.getId())</span>
+<span class="fc" id="L26">                .name(playlist.getName())</span>
+<span class="fc" id="L27">                .customer(CustomerDTOConverter.convertToModelForUpdate(playlist.getCustomer()))</span>
+<span class="fc" id="L28">                .build();</span>
     }
     public static Playlist convertToModelForCreate(CreatePlaylistRequestDTO playlist){
 <span class="nc" id="L31">        return Playlist.builder()</span>
@@ -43,11 +43,11 @@ public class PlaylistDTOConverter {
 <span class="nc" id="L43">                .build();</span>
     }
     public static List&lt;PlaylistDTO&gt; convertToDTOList(List&lt;Playlist&gt; playlists){
-<span class="nc" id="L46">        List&lt;PlaylistDTO&gt; dtoList = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L47" title="All 2 branches missed.">        for(Playlist playlist : playlists){</span>
+<span class="fc" id="L46">        List&lt;PlaylistDTO&gt; dtoList = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        for(Playlist playlist : playlists){</span>
 <span class="nc" id="L48">            dtoList.add(convertToDTO(playlist));</span>
 <span class="nc" id="L49">        }</span>
-<span class="nc" id="L50">        return dtoList;</span>
+<span class="fc" id="L50">        return dtoList;</span>
     }
     public static List&lt;Playlist&gt; convertToModelList(List&lt;PlaylistDTO&gt; playlists){
 <span class="nc" id="L53">        List&lt;Playlist&gt; playlistList = new ArrayList&lt;&gt;();</span>

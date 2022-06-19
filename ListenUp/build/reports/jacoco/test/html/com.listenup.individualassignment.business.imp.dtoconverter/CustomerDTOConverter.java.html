@@ -17,12 +17,12 @@ public class CustomerDTOConverter {
 
     }
     public static UpdateUserDTO convertToDTOForUpdate(User user){
-<span class="nc" id="L20">        return UpdateUserDTO.builder()</span>
-<span class="nc" id="L21">                .id(user.getId())</span>
-<span class="nc" id="L22">                .username(user.getUsername())</span>
-<span class="nc" id="L23">                .email(user.getEmail())</span>
-<span class="nc" id="L24">                .password(user.getPassword())</span>
-<span class="nc" id="L25">                .build();</span>
+<span class="fc" id="L20">        return UpdateUserDTO.builder()</span>
+<span class="fc" id="L21">                .id(user.getId())</span>
+<span class="fc" id="L22">                .username(user.getUsername())</span>
+<span class="fc" id="L23">                .email(user.getEmail())</span>
+<span class="fc" id="L24">                .password(user.getPassword())</span>
+<span class="fc" id="L25">                .build();</span>
     }
     public static ViewUserDTO convertToDTOForView(User user){
 <span class="nc" id="L28">        return ViewUserDTO.builder()</span>
@@ -32,28 +32,28 @@ public class CustomerDTOConverter {
 <span class="nc" id="L32">                .build();</span>
     }
     public static Customer convertToModelForUpdate(UpdateUserDTO user){
-<span class="nc" id="L35">        return new Customer(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());</span>
+<span class="fc" id="L35">        return new Customer(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());</span>
     }
     public static Customer convertToModelForCreate(CreateUserRequestDTO user){
 <span class="nc" id="L38">        return new Customer(user.getUsername(), user.getEmail(), user.getPassword());</span>
     }
     public static CustomerLikedSongListDTO convertToDTOForLikedSong(Customer user){
-<span class="nc" id="L41">        return CustomerLikedSongListDTO.builder()</span>
-<span class="nc" id="L42">                .id(user.getId())</span>
-<span class="nc" id="L43">                .likedSongs(SongDTOConverter.convertToSingleSongDTOList(user.getLikedSongs()))</span>
-<span class="nc" id="L44">                .build();</span>
+<span class="fc" id="L41">        return CustomerLikedSongListDTO.builder()</span>
+<span class="fc" id="L42">                .id(user.getId())</span>
+<span class="fc" id="L43">                .songs(SongDTOConverter.convertToSingleSongDTOList(user.getLikedSongs()))</span>
+<span class="fc" id="L44">                .build();</span>
     }
     public static CustomerPlaylistListDTO convertToDTOForPlaylist(Customer user){
-<span class="nc" id="L47">        return CustomerPlaylistListDTO.builder()</span>
-<span class="nc" id="L48">                .id(user.getId())</span>
-<span class="nc" id="L49">                .playlists(PlaylistDTOConverter.convertToDTOList(user.getPlaylists()))</span>
-<span class="nc" id="L50">                .build();</span>
+<span class="fc" id="L47">        return CustomerPlaylistListDTO.builder()</span>
+<span class="fc" id="L48">                .id(user.getId())</span>
+<span class="fc" id="L49">                .playlists(PlaylistDTOConverter.convertToDTOList(user.getPlaylists()))</span>
+<span class="fc" id="L50">                .build();</span>
     }
     public static CustomerLikedPlaylistListDTO convertToDTOForLikedPlaylist(Customer user){
-<span class="nc" id="L53">        return CustomerLikedPlaylistListDTO.builder()</span>
-<span class="nc" id="L54">                .id(user.getId())</span>
-<span class="nc" id="L55">                .likedPlaylists(PlaylistDTOConverter.convertToDTOList(user.getLikedPlaylists()))</span>
-<span class="nc" id="L56">                .build();</span>
+<span class="fc" id="L53">        return CustomerLikedPlaylistListDTO.builder()</span>
+<span class="fc" id="L54">                .id(user.getId())</span>
+<span class="fc" id="L55">                .playlists(PlaylistDTOConverter.convertToDTOList(user.getLikedPlaylists()))</span>
+<span class="fc" id="L56">                .build();</span>
     }
     public static List&lt;ViewUserDTO&gt; convertToDTOList(List&lt;User&gt; users){
 <span class="nc" id="L59">        List&lt;ViewUserDTO&gt; dtoList = new ArrayList&lt;&gt;();</span>

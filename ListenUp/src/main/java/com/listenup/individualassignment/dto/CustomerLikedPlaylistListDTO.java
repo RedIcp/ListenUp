@@ -15,5 +15,5 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CustomerLikedPlaylistListDTO {
     private long id;
-    private List<PlaylistDTO> likedPlaylists;
+    private List<PlaylistDTO> playlists;
 }

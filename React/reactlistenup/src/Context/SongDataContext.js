@@ -18,7 +18,7 @@ export const SongDataProvider = ({ children }) => {
         const filteredResults = songs.filter((song) =>
             ((song.name).toLowerCase()).includes(searchSong.toLowerCase()));
 
-        setSearchSongsResults(filteredResults.reverse());
+        setSearchSongsResults(filteredResults?.reverse());
     }, [songs, searchSong])
 
     return (

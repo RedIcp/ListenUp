@@ -20,10 +20,10 @@ public class ArtistDTOConverter {
 <span class="nc" id="L20">                .build();</span>
     }
     public static Artist convertToModelForUpdate(ArtistDTO artist){
-<span class="nc" id="L23">        return Artist.builder()</span>
-<span class="nc" id="L24">                .id(artist.getId())</span>
-<span class="nc" id="L25">                .name(artist.getName())</span>
-<span class="nc" id="L26">                .build();</span>
+<span class="fc" id="L23">        return Artist.builder()</span>
+<span class="fc" id="L24">                .id(artist.getId())</span>
+<span class="fc" id="L25">                .name(artist.getName())</span>
+<span class="fc" id="L26">                .build();</span>
     }
     public static Artist convertToModelForCreate(CreateArtistRequestDTO artist){
 <span class="nc" id="L29">        return Artist.builder()</span>

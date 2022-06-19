@@ -212,25 +212,25 @@ class UserServiceImpTest {
     void getCustomerCollection() {
         Customer customer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
 
-        when(repository.getById(1L)).thenReturn(customer);
+        when(repository.getUserById(1L)).thenReturn(customer);
 
         CustomerLikedSongListDTO expectedDTO = CustomerLikedSongListDTO.builder()
                 .id(1L)
-                .likedSongs(Collections.emptyList())
+                .songs(Collections.emptyList())
                 .build();
 
         CustomerLikedSongListDTO actualDTO = service.getCustomerCollection(1L);
 
         assertEquals(actualDTO, expectedDTO);
 
-        verify(repository).getById(1L);
+        verify(repository).getUserById(1L);
     }
 
     @Test
     void getCustomerPlaylists() {
         Customer customer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
 
-        when(repository.getById(1L)).thenReturn(customer);
+        when(repository.getUserById(1L)).thenReturn(customer);
 
         CustomerPlaylistListDTO expectedDTO = CustomerPlaylistListDTO.builder()
                 .id(1L)
@@ -241,25 +241,25 @@ class UserServiceImpTest {
 
         assertEquals(actualDTO, expectedDTO);
 
-        verify(repository).getById(1L);
+        verify(repository).getUserById(1L);
     }
 
     @Test
     void getCustomerLikedPlaylists() {
         Customer customer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
         
-        when(repository.getById(1L)).thenReturn(customer);
+        when(repository.getUserById(1L)).thenReturn(customer);
 
         CustomerLikedPlaylistListDTO expectedDTO = CustomerLikedPlaylistListDTO.builder()
                 .id(1L)
-                .likedPlaylists(Collections.emptyList())
+                .playlists(Collections.emptyList())
                 .build();
 
         CustomerLikedPlaylistListDTO actualDTO = service.getCustomerLikedPlaylists(1L);
 
         assertEquals(actualDTO, expectedDTO);
 
-        verify(repository).getById(1L);
+        verify(repository).getUserById(1L);
     }
 
     @Test
@@ -384,7 +384,7 @@ class UserServiceImpTest {
         Customer beforeUpdateCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
 
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
-        when(repository.getById(1L)).thenReturn(beforeUpdateCustomer);
+        when(repository.getUserById(1L)).thenReturn(beforeUpdateCustomer);
         when(repository.existsById(1L)).thenReturn(true);
 
         ArtistDTO artist = ArtistDTO.builder()
@@ -416,7 +416,7 @@ class UserServiceImpTest {
         Customer actualCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
         actualCustomer.setLikedSongs(List.of(SongDTOConverter.convertToSingleSongModelForUpdate(song)));
 
-        verify(repository).getById(1L);
+        verify(repository).getUserById(1L);
         verify(repository).existsById(1L);
         verify(repository).save(actualCustomer);
     }
@@ -435,7 +435,7 @@ class UserServiceImpTest {
 
         assertEquals("INVALID_ID", exception.getReason());
 
-        verify(repository).getById(1L);
+        verify(repository).getUserById(1L);
         verifyNoMoreInteractions(repository);
     }
 
@@ -446,7 +446,7 @@ class UserServiceImpTest {
         Customer beforeUpdateCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
 
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
-        when(repository.getById(1L)).thenReturn(beforeUpdateCustomer);
+        when(repository.getUserById(1L)).thenReturn(beforeUpdateCustomer);
         when(repository.existsById(1L)).thenReturn(true);
 
         PlaylistDTO playlist = PlaylistDTO.builder()
@@ -465,7 +465,7 @@ class UserServiceImpTest {
         Customer actualCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
         actualCustomer.setLikedPlaylists(List.of(PlaylistDTOConverter.convertToModelForUpdate(playlist)));
 
-        verify(repository).getById(1L);
+        verify(repository).getUserById(1L);
         verify(repository).existsById(1L);
         verify(repository).save(actualCustomer);
     }
@@ -492,7 +492,7 @@ class UserServiceImpTest {
         Customer beforeUpdateCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
 
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
-        when(repository.getById(1L)).thenReturn(beforeUpdateCustomer);
+        when(repository.getUserById(1L)).thenReturn(beforeUpdateCustomer);
         when(repository.existsById(1L)).thenReturn(true);
 
         ArtistDTO artist = ArtistDTO.builder()
@@ -524,7 +524,7 @@ class UserServiceImpTest {
         Customer actualCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
         actualCustomer.setLikedSongs(Collections.emptyList());
 
-        verify(repository).getById(1L);
+        verify(repository).getUserById(1L);
         verify(repository).existsById(1L);
         verify(repository).save(actualCustomer);
     }
@@ -543,7 +543,7 @@ class UserServiceImpTest {
 
         assertEquals("INVALID_ID", exception.getReason());
 
-        verify(repository).getById(1L);
+        verify(repository).getUserById(1L);
         verifyNoMoreInteractions(repository);
     }
 
@@ -554,7 +554,7 @@ class UserServiceImpTest {
         Customer beforeUpdateCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
 
         when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(true);
-        when(repository.getById(1L)).thenReturn(beforeUpdateCustomer);
+        when(repository.getUserById(1L)).thenReturn(beforeUpdateCustomer);
         when(repository.existsById(1L)).thenReturn(true);
 
         PlaylistDTO playlist = PlaylistDTO.builder()
@@ -573,7 +573,7 @@ class UserServiceImpTest {
         Customer actualCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
         actualCustomer.setLikedPlaylists(Collections.emptyList());
 
-        verify(repository).getById(1L);
+        verify(repository).getUserById(1L);
         verify(repository).existsById(1L);
         verify(repository).save(actualCustomer);
     }
@@ -592,7 +592,7 @@ class UserServiceImpTest {
 
         assertEquals("INVALID_ID", exception.getReason());
 
-        verify(repository).getById(1L);
+        verify(repository).getUserById(1L);
         verifyNoMoreInteractions(repository);
     }
 

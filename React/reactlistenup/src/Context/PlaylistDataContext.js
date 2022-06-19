@@ -15,10 +15,10 @@ export const PlaylistDataProvider = ({ children }) => {
     }, [data])
 
     useEffect(() => {
-        const filteredResults = playlists.filter((genre) =>
-            ((genre.name).toLowerCase()).includes(searchPlaylist.toLowerCase()));
+        const filteredResults = playlists?.filter((playlist) =>
+            ((playlist.name).toLowerCase()).includes(searchPlaylist.toLowerCase()));
 
-        setSearchPlaylistsResults(filteredResults.reverse());
+        setSearchPlaylistsResults(filteredResults?.reverse());
     }, [playlists, searchPlaylist])
 
     return (

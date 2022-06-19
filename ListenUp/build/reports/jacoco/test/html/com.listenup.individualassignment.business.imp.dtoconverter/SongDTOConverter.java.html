@@ -34,7 +34,7 @@ public class SongDTOConverter {
 <span class="nc" id="L34">                .build();</span>
     }
     public static SingleSong convertToSingleSongModelForUpdate(SingleSongDTO song){
-<span class="nc" id="L37">        return new SingleSong(song.getId(), song.getName(), ArtistDTOConverter.convertToModelForUpdate(song.getArtist()), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), song.getReleasedDate(), song.getUploadedDate());</span>
+<span class="fc" id="L37">        return new SingleSong(song.getId(), song.getName(), ArtistDTOConverter.convertToModelForUpdate(song.getArtist()), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), song.getReleasedDate(), song.getUploadedDate());</span>
     }
     public static SingleSong convertToSingleSongModelForCreate(CreateSingleSongRequestDTO song){
 <span class="nc" id="L40">        return new SingleSong(song.getName(), ArtistDTOConverter.convertToModelForUpdate(song.getArtist()), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), song.getReleasedDate(), song.getUploadedDate());</span>
@@ -46,11 +46,11 @@ public class SongDTOConverter {
 <span class="nc" id="L46">        return new AlbumSong(song.getName(), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), AlbumDTOConverter.convertToModelForUpdate(song.getAlbum()));</span>
     }
     public static List&lt;SingleSongDTO&gt; convertToSingleSongDTOList(List&lt;Song&gt; songs){
-<span class="nc" id="L49">        List&lt;SingleSongDTO&gt; dtoList = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L50" title="All 2 branches missed.">        for (Song song : songs){</span>
+<span class="fc" id="L49">        List&lt;SingleSongDTO&gt; dtoList = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        for (Song song : songs){</span>
 <span class="nc" id="L51">            dtoList.add(convertToSingleSongDTO(song));</span>
 <span class="nc" id="L52">        }</span>
-<span class="nc" id="L53">        return dtoList;</span>
+<span class="fc" id="L53">        return dtoList;</span>
     }
     public static List&lt;AlbumSongDTO&gt; convertToAlbumSongDTOList(List&lt;AlbumSong&gt; songs){
 <span class="nc" id="L56">        List&lt;AlbumSongDTO&gt; dtoList = new ArrayList&lt;&gt;();</span>

@@ -163,7 +163,7 @@ class UserControllerTest {
     void getCustomerLikedSongsPath() throws Exception{
         CustomerLikedSongListDTO user = CustomerLikedSongListDTO.builder()
                 .id(1L)
-                .likedSongs(Collections.emptyList())
+                .songs(Collections.emptyList())
                 .build();
 
         when(service.getCustomerCollection(1L)).thenReturn(user);
@@ -175,7 +175,7 @@ class UserControllerTest {
                 .andExpect(content().json("""
                             {
                                         "id": 1,
-                                        "likedSongs": []
+                                        "songs": []
                             }
                         """));
 
@@ -199,7 +199,7 @@ class UserControllerTest {
     void getCustomerLikedPlaylistsPath() throws Exception{
         CustomerLikedPlaylistListDTO user = CustomerLikedPlaylistListDTO.builder()
                 .id(1L)
-                .likedPlaylists(Collections.emptyList())
+                .playlists(Collections.emptyList())
                 .build();
 
         when(service.getCustomerLikedPlaylists(1L)).thenReturn(user);
@@ -211,7 +211,7 @@ class UserControllerTest {
                 .andExpect(content().json("""
                             {
                                         "id": 1,
-                                        "likedPlaylists": []
+                                        "playlists": []
                             }
                         """));
 
