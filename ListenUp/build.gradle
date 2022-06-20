@@ -56,6 +56,14 @@ jacocoTestReport {
 	reports {
 		xml.enabled true
 	}
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: [
+					"com/listenup/individualassignment/configuration",
+					"com/listenup/individualassignment/business/impl/AccessTokenEncoderDecoderImpl.class"
+			])
+		}))
+	}
 }
 test.finalizedBy jacocoTestReport
 
@@ -68,5 +76,6 @@ sonarqube {
 	properties {
 		property "sonar.projectKey", "IndividualAssignment"
 		property "sonar.qualitygate.wait", true
+		property "sonar.exclusions", "**/com/listenup/individualassignment/configuration/**"
 	}
 }
