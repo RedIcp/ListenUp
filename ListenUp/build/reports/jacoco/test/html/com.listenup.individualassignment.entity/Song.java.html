@@ -55,15 +55,15 @@ public abstract class Song{
             inverseJoinColumns = @JoinColumn(name = &quot;artist_id&quot;))
     private List&lt;Artist&gt; features;
 
-<span class="nc" id="L58">    protected Song(String name, Artist artist, Genre genre, Date releasedDate, Date uploadedDate){</span>
-<span class="nc" id="L59">        this.name = name;</span>
-<span class="nc" id="L60">        this.artist = artist;</span>
-<span class="nc" id="L61">        this.genre = genre;</span>
-<span class="nc" id="L62">        this.releasedDate = releasedDate;</span>
-<span class="nc" id="L63">        this.uploadedDate = uploadedDate;</span>
+<span class="fc" id="L58">    protected Song(String name, Artist artist, Genre genre, Date releasedDate, Date uploadedDate){</span>
+<span class="fc" id="L59">        this.name = name;</span>
+<span class="fc" id="L60">        this.artist = artist;</span>
+<span class="fc" id="L61">        this.genre = genre;</span>
+<span class="fc" id="L62">        this.releasedDate = releasedDate;</span>
+<span class="fc" id="L63">        this.uploadedDate = uploadedDate;</span>
 
-<span class="nc" id="L65">        this.features = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L66">    }</span>
+<span class="fc" id="L65">        this.features = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L66">    }</span>
 <span class="fc" id="L67">    protected Song(long id, String name, Artist artist, Genre genre, Date releasedDate, Date uploadedDate){</span>
 <span class="fc" id="L68">        this.id = id;</span>
 <span class="fc" id="L69">        this.name = name;</span>

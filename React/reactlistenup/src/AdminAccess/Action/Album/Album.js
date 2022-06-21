@@ -32,12 +32,7 @@ const Album = () => {
     useEffect(() => {
         const socket = SockJS("http://localhost:8080/ws");
         const stompClient = Stomp.over(socket);
-        stompClient.connect({}, () => {
-            stompClient.subscribe('/topic/greetings', (data) => {
-                console.log(data);
-                onMessageReceived(data);
-            });
-        });
+
         setStompClient(stompClient);
     }, []);
 
@@ -45,12 +40,7 @@ const Album = () => {
         stompClient.send("/app/hello", {}, JSON.stringify(data));
     };
 
-    function onMessageReceived(data)
-    {
-        const result=  JSON.parse(data.body);
-        console.log(result.text);
-        alert(result.text)
-    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();

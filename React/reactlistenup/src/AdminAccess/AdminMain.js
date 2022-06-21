@@ -20,17 +20,17 @@ function AdminMain() {
                     <Link to="/creator/home">
                         <li><FontAwesomeIcon icon={faHome}/> Home</li>
                     </Link>
-                    <Link to="/creator/albums">
-                        <li>Album</li>
-                    </Link>
                     <Link to="/creator/artists">
-                        <li>Artist</li>
+                        <li id="artist">Artist</li>
                     </Link>
                     <Link to="/creator/genres">
-                        <li>Genre</li>
+                        <li id="genre">Genre</li>
+                    </Link>
+                    <Link to="/creator/albums">
+                        <li id="album">Album</li>
                     </Link>
                     <Link to="/creator/songs">
-                        <li>Songs</li>
+                        <li id="song">Songs</li>
                     </Link>
                     <hr/>
                 </div>

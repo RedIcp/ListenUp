@@ -30,12 +30,12 @@ public class AlbumController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping
     public ResponseEntity&lt;List&lt;AlbumDTO&gt;&gt; getAllAlbums() {
-<span class="nc" id="L33">        List&lt;AlbumDTO&gt; albums = management.getAlbums();</span>
+<span class="fc" id="L33">        List&lt;AlbumDTO&gt; albums = management.getAlbums();</span>
 
-<span class="nc bnc" id="L35" title="All 2 branches missed.">        if(albums != null) {</span>
-<span class="nc" id="L36">            return ResponseEntity.ok().body(albums);</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        if(albums != null) {</span>
+<span class="fc" id="L36">            return ResponseEntity.ok().body(albums);</span>
         } else {
-<span class="nc" id="L38">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L38">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -43,12 +43,12 @@ public class AlbumController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;AlbumSongListDTO&gt; getAlbumPath(@PathVariable(value = &quot;id&quot;) long id) {
-<span class="nc" id="L46">        AlbumSongListDTO album = management.getAlbumSongs(id);</span>
+<span class="fc" id="L46">        AlbumSongListDTO album = management.getAlbumSongs(id);</span>
 
-<span class="nc bnc" id="L48" title="All 2 branches missed.">        if(album != null) {</span>
-<span class="nc" id="L49">            return ResponseEntity.ok().body(album);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if(album != null) {</span>
+<span class="fc" id="L49">            return ResponseEntity.ok().body(album);</span>
         } else {
-<span class="nc" id="L51">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L51">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -56,25 +56,25 @@ public class AlbumController {
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @PostMapping()
     public ResponseEntity&lt;CreateAlbumResponseDTO&gt; createAlbum(@RequestBody @Valid CreateAlbumRequestDTO albumDTO) {
-<span class="nc" id="L59">        CreateAlbumResponseDTO album = management.addAlbum(albumDTO);</span>
-<span class="nc" id="L60">        return ResponseEntity.status(HttpStatus.CREATED).body(album);</span>
+<span class="fc" id="L59">        CreateAlbumResponseDTO album = management.addAlbum(albumDTO);</span>
+<span class="fc" id="L60">        return ResponseEntity.status(HttpStatus.CREATED).body(album);</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @PutMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;AlbumDTO&gt; updateAlbum(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid AlbumDTO albumDTO) {
-<span class="nc" id="L67">        albumDTO.setId(id);</span>
-<span class="nc" id="L68">        management.editAlbum(albumDTO);</span>
-<span class="nc" id="L69">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L67">        albumDTO.setId(id);</span>
+<span class="fc" id="L68">        management.editAlbum(albumDTO);</span>
+<span class="fc" id="L69">        return ResponseEntity.noContent().build();</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @DeleteMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;Object&gt; deleteAlbum(@PathVariable long id) {
-<span class="nc" id="L76">        management.deleteAlbum(id);</span>
-<span class="nc" id="L77">        return ResponseEntity.ok().build();</span>
+<span class="fc" id="L76">        management.deleteAlbum(id);</span>
+<span class="fc" id="L77">        return ResponseEntity.ok().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -24,40 +24,40 @@ public class GenreServiceImp implements GenreService {
 
     @Override
     public CreateGenreResponseDTO addGenre(CreateGenreRequestDTO genre){
-<span class="nc" id="L27">        Genre savedGenre = db.save(GenreDTOConverter.convertToModelForCreate(genre));</span>
+<span class="fc" id="L27">        Genre savedGenre = db.save(GenreDTOConverter.convertToModelForCreate(genre));</span>
 
-<span class="nc" id="L29">        return CreateGenreResponseDTO.builder()</span>
-<span class="nc" id="L30">                .genreID(savedGenre.getId())</span>
-<span class="nc" id="L31">                .build();</span>
+<span class="fc" id="L29">        return CreateGenreResponseDTO.builder()</span>
+<span class="fc" id="L30">                .genreID(savedGenre.getId())</span>
+<span class="fc" id="L31">                .build();</span>
     }
 
     @Override
     public List&lt;GenreDTO&gt; getGenres(){
-<span class="nc" id="L36">        return GenreDTOConverter.convertToDTOList(db.findAll());</span>
+<span class="fc" id="L36">        return GenreDTOConverter.convertToDTOList(db.findAll());</span>
     }
 
     @Override
     public GenreSongListDTO getGenreSongs(long id){
-<span class="nc" id="L41">        return GenreDTOConverter.convertToDTOForSong(db.getById(id));</span>
+<span class="fc" id="L41">        return GenreDTOConverter.convertToDTOForSong(db.getById(id));</span>
     }
 
     @Override
     public GenreDTO editGenre(GenreDTO genre){
-<span class="nc bnc" id="L46" title="All 2 branches missed.">        if(!db.existsById(genre.getId())){</span>
-<span class="nc" id="L47">            throw new InvalidGenreException(&quot;INVALID_ID&quot;);</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if(!db.existsById(genre.getId())){</span>
+<span class="fc" id="L47">            throw new InvalidGenreException(&quot;INVALID_ID&quot;);</span>
         }
-<span class="nc" id="L49">        db.save(GenreDTOConverter.convertToModelForUpdate(genre));</span>
-<span class="nc" id="L50">        return genre;</span>
+<span class="fc" id="L49">        db.save(GenreDTOConverter.convertToModelForUpdate(genre));</span>
+<span class="fc" id="L50">        return genre;</span>
     }
 
     @Override
     public boolean deleteGenre(long id){
-<span class="nc" id="L55">        boolean result = false;</span>
-<span class="nc bnc" id="L56" title="All 2 branches missed.">        if(db.existsById(id)){</span>
-<span class="nc" id="L57">            db.deleteById(id);</span>
-<span class="nc" id="L58">            result = true;</span>
+<span class="fc" id="L55">        boolean result = false;</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if(db.existsById(id)){</span>
+<span class="fc" id="L57">            db.deleteById(id);</span>
+<span class="fc" id="L58">            result = true;</span>
         }
-<span class="nc" id="L60">        return result;</span>
+<span class="fc" id="L60">        return result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

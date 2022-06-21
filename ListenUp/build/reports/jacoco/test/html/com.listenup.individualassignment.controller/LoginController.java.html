@@ -18,8 +18,8 @@ public class LoginController {
 
     @PostMapping
     public ResponseEntity&lt;LoginResponseDTO&gt; login(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
-<span class="nc" id="L21">        LoginResponseDTO loginResponseDTO = management.login(loginRequestDTO);</span>
-<span class="nc" id="L22">        return ResponseEntity.ok(loginResponseDTO);</span>
+<span class="fc" id="L21">        LoginResponseDTO loginResponseDTO = management.login(loginRequestDTO);</span>
+<span class="fc" id="L22">        return ResponseEntity.ok(loginResponseDTO);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

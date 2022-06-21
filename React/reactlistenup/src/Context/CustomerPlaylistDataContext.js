@@ -10,7 +10,7 @@ export const CustomerPlaylistDataProvider = ({ children }) => {
     const [searchPlaylistsResults, setSearchPlaylistsResults] = useState([]);
     const {auth} = useAuth();
 
-    const { data, fetchError, isLoading } = useAxiosFetch(`http://localhost:8080/users/${auth.id}/playlists`);
+    const { setUpdate, data, fetchError, isLoading } = useAxiosFetch(`http://localhost:8080/users/${auth.id}/playlists`);
 
     useEffect(() => {
         setPlaylists(data?.playlists);
@@ -26,7 +26,7 @@ export const CustomerPlaylistDataProvider = ({ children }) => {
     return (
         <CustomerPlaylistDataContext.Provider value={{
             searchPlaylist, setSearchPlaylist,
-            searchPlaylistsResults, fetchError, isLoading,
+            searchPlaylistsResults, fetchError, isLoading, setUpdate
         }}>
             {children}
         </CustomerPlaylistDataContext.Provider>

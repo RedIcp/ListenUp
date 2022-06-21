@@ -29,12 +29,12 @@ public class GenreController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping
     public ResponseEntity&lt;List&lt;GenreDTO&gt;&gt; getAllGenres() {
-<span class="nc" id="L32">        List&lt;GenreDTO&gt; genres = management.getGenres();</span>
+<span class="fc" id="L32">        List&lt;GenreDTO&gt; genres = management.getGenres();</span>
 
-<span class="nc bnc" id="L34" title="All 2 branches missed.">        if(genres != null) {</span>
-<span class="nc" id="L35">            return ResponseEntity.ok().body(genres);</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if(genres != null) {</span>
+<span class="fc" id="L35">            return ResponseEntity.ok().body(genres);</span>
         } else {
-<span class="nc" id="L37">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L37">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -42,12 +42,12 @@ public class GenreController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;GenreSongListDTO&gt; getGenrePath(@PathVariable(value = &quot;id&quot;) long id) {
-<span class="nc" id="L45">        GenreSongListDTO genre = management.getGenreSongs(id);</span>
+<span class="fc" id="L45">        GenreSongListDTO genre = management.getGenreSongs(id);</span>
 
-<span class="nc bnc" id="L47" title="All 2 branches missed.">        if(genre != null) {</span>
-<span class="nc" id="L48">            return ResponseEntity.ok().body(genre);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if(genre != null) {</span>
+<span class="fc" id="L48">            return ResponseEntity.ok().body(genre);</span>
         } else {
-<span class="nc" id="L50">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L50">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -55,25 +55,25 @@ public class GenreController {
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @PostMapping()
     public ResponseEntity&lt;CreateGenreResponseDTO&gt; createGenre(@RequestBody @Valid CreateGenreRequestDTO genreDTO) {
-<span class="nc" id="L58">        CreateGenreResponseDTO genre = management.addGenre(genreDTO);</span>
-<span class="nc" id="L59">        return ResponseEntity.status(HttpStatus.CREATED).body(genre);</span>
+<span class="fc" id="L58">        CreateGenreResponseDTO genre = management.addGenre(genreDTO);</span>
+<span class="fc" id="L59">        return ResponseEntity.status(HttpStatus.CREATED).body(genre);</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @PutMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;GenreDTO&gt; updateGenre(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid GenreDTO genreDTO) {
-<span class="nc" id="L66">        genreDTO.setId(id);</span>
-<span class="nc" id="L67">        management.editGenre(genreDTO);</span>
-<span class="nc" id="L68">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L66">        genreDTO.setId(id);</span>
+<span class="fc" id="L67">        management.editGenre(genreDTO);</span>
+<span class="fc" id="L68">        return ResponseEntity.noContent().build();</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @DeleteMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;Object&gt; deleteGenre(@PathVariable int id) {
-<span class="nc" id="L75">        management.deleteGenre(id);</span>
-<span class="nc" id="L76">        return ResponseEntity.ok().build();</span>
+<span class="fc" id="L75">        management.deleteGenre(id);</span>
+<span class="fc" id="L76">        return ResponseEntity.ok().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

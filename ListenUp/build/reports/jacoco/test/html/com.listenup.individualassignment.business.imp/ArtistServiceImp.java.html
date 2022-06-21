@@ -25,45 +25,45 @@ public class ArtistServiceImp implements ArtistService {
 
     @Override
     public CreateArtistResponseDTO addArtist(CreateArtistRequestDTO artist){
-<span class="nc" id="L28">        Artist savedArtist = db.save(ArtistDTOConverter.convertToModelForCreate(artist));</span>
+<span class="fc" id="L28">        Artist savedArtist = db.save(ArtistDTOConverter.convertToModelForCreate(artist));</span>
 
-<span class="nc" id="L30">        return CreateArtistResponseDTO.builder()</span>
-<span class="nc" id="L31">                .artistID(savedArtist.getId())</span>
-<span class="nc" id="L32">                .build();</span>
+<span class="fc" id="L30">        return CreateArtistResponseDTO.builder()</span>
+<span class="fc" id="L31">                .artistID(savedArtist.getId())</span>
+<span class="fc" id="L32">                .build();</span>
     }
 
     @Override
     public List&lt;ArtistDTO&gt; getArtists(){
-<span class="nc" id="L37">        return ArtistDTOConverter.convertToDTOList(db.findAll());</span>
+<span class="fc" id="L37">        return ArtistDTOConverter.convertToDTOList(db.findAll());</span>
     }
 
     @Override
     public ArtistSongListDTO getArtistSongs(long id){
-<span class="nc" id="L42">        return ArtistDTOConverter.convertToDTOForSong(db.getById(id));</span>
+<span class="fc" id="L42">        return ArtistDTOConverter.convertToDTOForSong(db.getById(id));</span>
     }
 
     @Override
     public ArtistAlbumListDTO getArtistAlbums(long id){
-<span class="nc" id="L47">        return ArtistDTOConverter.convertToDTOForAlbum(db.getById(id));</span>
+<span class="fc" id="L47">        return ArtistDTOConverter.convertToDTOForAlbum(db.getById(id));</span>
     }
 
     @Override
     public ArtistDTO editArtist(ArtistDTO artist){
-<span class="nc bnc" id="L52" title="All 2 branches missed.">        if(!db.existsById(artist.getId())){</span>
-<span class="nc" id="L53">            throw new InvalidArtistException(&quot;INVALID_ARTIST&quot;);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if(!db.existsById(artist.getId())){</span>
+<span class="fc" id="L53">            throw new InvalidArtistException(&quot;INVALID_ARTIST&quot;);</span>
         }
-<span class="nc" id="L55">        db.save(ArtistDTOConverter.convertToModelForUpdate(artist));</span>
-<span class="nc" id="L56">        return artist;</span>
+<span class="fc" id="L55">        db.save(ArtistDTOConverter.convertToModelForUpdate(artist));</span>
+<span class="fc" id="L56">        return artist;</span>
     }
 
     @Override
     public boolean deleteArtist(long id){
-<span class="nc" id="L61">        boolean result = false;</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">        if(db.existsById(id)){</span>
-<span class="nc" id="L63">            db.deleteById(id);</span>
-<span class="nc" id="L64">            result = true;</span>
+<span class="fc" id="L61">        boolean result = false;</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if(db.existsById(id)){</span>
+<span class="fc" id="L63">            db.deleteById(id);</span>
+<span class="fc" id="L64">            result = true;</span>
         }
-<span class="nc" id="L66">        return result;</span>
+<span class="fc" id="L66">        return result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

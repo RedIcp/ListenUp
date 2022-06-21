@@ -2,9 +2,15 @@ import React, {useContext} from 'react';
 import CustomerLikedPlaylistDataContext from "../../../../Context/CustomerLikedPlaylistContext";
 import axios from "axios";
 import useAuth from "../../../../Hooks/useAuth";
+import {Link} from "react-router-dom";
 
 const CustomerPlaylist = () => {
-    const { setUpdate, searchPlaylist, setSearchPlaylist, searchPlaylistsResults } = useContext(CustomerLikedPlaylistDataContext);
+    const {
+        setUpdate,
+        searchPlaylist,
+        setSearchPlaylist,
+        searchPlaylistsResults
+    } = useContext(CustomerLikedPlaylistDataContext);
 
     const {auth} = useAuth();
     const config = {
@@ -30,11 +36,11 @@ const CustomerPlaylist = () => {
                     <>
                         {searchPlaylistsResults?.map(playlist => (
                             <div className="lists">
-
+                                <Link to={`/playlists/${playlist?.id}`}>
                                     <li key={playlist.id} className="obj-card">{playlist.name}
                                         <div className="artist-name">{playlist.customer?.username}</div>
                                     </li>
-
+                                </Link>
                             </div>
                         ))}
                     </>

@@ -16,62 +16,62 @@ public class SongDTOConverter {
 
     }
     public static SingleSongDTO convertToSingleSongDTO(Song song){
-<span class="nc" id="L19">        return SingleSongDTO.builder()</span>
-<span class="nc" id="L20">                .id(song.getId())</span>
-<span class="nc" id="L21">                .name(song.getName())</span>
-<span class="nc" id="L22">                .artist(ArtistDTOConverter.convertToDTO(song.getArtist()))</span>
-<span class="nc" id="L23">                .genre(GenreDTOConverter.convertToDTO(song.getGenre()))</span>
-<span class="nc" id="L24">                .releasedDate(song.getReleasedDate())</span>
-<span class="nc" id="L25">                .uploadedDate(song.getUploadedDate())</span>
-<span class="nc" id="L26">                .build();</span>
+<span class="fc" id="L19">        return SingleSongDTO.builder()</span>
+<span class="fc" id="L20">                .id(song.getId())</span>
+<span class="fc" id="L21">                .name(song.getName())</span>
+<span class="fc" id="L22">                .artist(ArtistDTOConverter.convertToDTO(song.getArtist()))</span>
+<span class="fc" id="L23">                .genre(GenreDTOConverter.convertToDTO(song.getGenre()))</span>
+<span class="fc" id="L24">                .releasedDate(song.getReleasedDate())</span>
+<span class="fc" id="L25">                .uploadedDate(song.getUploadedDate())</span>
+<span class="fc" id="L26">                .build();</span>
     }
     public static AlbumSongDTO convertToAlbumSongDTO(AlbumSong song){
-<span class="nc" id="L29">        return AlbumSongDTO.builder()</span>
-<span class="nc" id="L30">                .id(song.getId())</span>
-<span class="nc" id="L31">                .name(song.getName())</span>
-<span class="nc" id="L32">                .album(AlbumDTOConverter.convertToDTO(song.getAlbum()))</span>
-<span class="nc" id="L33">                .genre(GenreDTOConverter.convertToDTO(song.getGenre()))</span>
-<span class="nc" id="L34">                .build();</span>
+<span class="fc" id="L29">        return AlbumSongDTO.builder()</span>
+<span class="fc" id="L30">                .id(song.getId())</span>
+<span class="fc" id="L31">                .name(song.getName())</span>
+<span class="fc" id="L32">                .album(AlbumDTOConverter.convertToDTO(song.getAlbum()))</span>
+<span class="fc" id="L33">                .genre(GenreDTOConverter.convertToDTO(song.getGenre()))</span>
+<span class="fc" id="L34">                .build();</span>
     }
     public static SingleSong convertToSingleSongModelForUpdate(SingleSongDTO song){
 <span class="fc" id="L37">        return new SingleSong(song.getId(), song.getName(), ArtistDTOConverter.convertToModelForUpdate(song.getArtist()), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), song.getReleasedDate(), song.getUploadedDate());</span>
     }
     public static SingleSong convertToSingleSongModelForCreate(CreateSingleSongRequestDTO song){
-<span class="nc" id="L40">        return new SingleSong(song.getName(), ArtistDTOConverter.convertToModelForUpdate(song.getArtist()), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), song.getReleasedDate(), song.getUploadedDate());</span>
+<span class="fc" id="L40">        return new SingleSong(song.getName(), ArtistDTOConverter.convertToModelForUpdate(song.getArtist()), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), song.getReleasedDate(), song.getUploadedDate());</span>
     }
     public static AlbumSong convertToAlbumSongModelForUpdate(AlbumSongDTO song){
-<span class="nc" id="L43">        return new AlbumSong(song.getId(), song.getName(), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), AlbumDTOConverter.convertToModelForUpdate(song.getAlbum()));</span>
+<span class="fc" id="L43">        return new AlbumSong(song.getId(), song.getName(), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), AlbumDTOConverter.convertToModelForUpdate(song.getAlbum()));</span>
     }
     public static AlbumSong convertToAlbumSongModelForCreate(CreateAlbumSongRequestDTO song){
-<span class="nc" id="L46">        return new AlbumSong(song.getName(), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), AlbumDTOConverter.convertToModelForUpdate(song.getAlbum()));</span>
+<span class="fc" id="L46">        return new AlbumSong(song.getName(), GenreDTOConverter.convertToModelForUpdate(song.getGenre()), AlbumDTOConverter.convertToModelForUpdate(song.getAlbum()));</span>
     }
     public static List&lt;SingleSongDTO&gt; convertToSingleSongDTOList(List&lt;Song&gt; songs){
 <span class="fc" id="L49">        List&lt;SingleSongDTO&gt; dtoList = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        for (Song song : songs){</span>
-<span class="nc" id="L51">            dtoList.add(convertToSingleSongDTO(song));</span>
-<span class="nc" id="L52">        }</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        for (Song song : songs){</span>
+<span class="fc" id="L51">            dtoList.add(convertToSingleSongDTO(song));</span>
+<span class="fc" id="L52">        }</span>
 <span class="fc" id="L53">        return dtoList;</span>
     }
     public static List&lt;AlbumSongDTO&gt; convertToAlbumSongDTOList(List&lt;AlbumSong&gt; songs){
-<span class="nc" id="L56">        List&lt;AlbumSongDTO&gt; dtoList = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">        for (AlbumSong song : songs){</span>
-<span class="nc" id="L58">            dtoList.add(convertToAlbumSongDTO(song));</span>
-<span class="nc" id="L59">        }</span>
-<span class="nc" id="L60">        return dtoList;</span>
+<span class="fc" id="L56">        List&lt;AlbumSongDTO&gt; dtoList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        for (AlbumSong song : songs){</span>
+<span class="fc" id="L58">            dtoList.add(convertToAlbumSongDTO(song));</span>
+<span class="fc" id="L59">        }</span>
+<span class="fc" id="L60">        return dtoList;</span>
     }
     public static List&lt;Song&gt; convertToSingleSongModelList(List&lt;SingleSongDTO&gt; songs){
-<span class="nc" id="L63">        List&lt;Song&gt; songList = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">        for (SingleSongDTO songDTO: songs){</span>
-<span class="nc" id="L65">            songList.add(convertToSingleSongModelForUpdate(songDTO));</span>
-<span class="nc" id="L66">        }</span>
-<span class="nc" id="L67">        return songList;</span>
+<span class="fc" id="L63">        List&lt;Song&gt; songList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        for (SingleSongDTO songDTO: songs){</span>
+<span class="fc" id="L65">            songList.add(convertToSingleSongModelForUpdate(songDTO));</span>
+<span class="fc" id="L66">        }</span>
+<span class="fc" id="L67">        return songList;</span>
     }
     public static List&lt;Song&gt; convertToAlbumSongModelList(List&lt;AlbumSongDTO&gt; songs){
-<span class="nc" id="L70">        List&lt;Song&gt; songList = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">        for (AlbumSongDTO songDTO: songs){</span>
-<span class="nc" id="L72">            songList.add(convertToAlbumSongModelForUpdate(songDTO));</span>
-<span class="nc" id="L73">        }</span>
-<span class="nc" id="L74">        return songList;</span>
+<span class="fc" id="L70">        List&lt;Song&gt; songList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        for (AlbumSongDTO songDTO: songs){</span>
+<span class="fc" id="L72">            songList.add(convertToAlbumSongModelForUpdate(songDTO));</span>
+<span class="fc" id="L73">        }</span>
+<span class="fc" id="L74">        return songList;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

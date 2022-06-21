@@ -45,14 +45,14 @@ public class Playlist {
             inverseJoinColumns = @JoinColumn(name = &quot;song_id&quot;))
     private List&lt;Song&gt; songs;
 
-<span class="nc" id="L48">    public Playlist(long id, String name, Customer customer){</span>
-<span class="nc" id="L49">        this.id = id;</span>
-<span class="nc" id="L50">        this.name = name;</span>
-<span class="nc" id="L51">        this.customer = customer;</span>
+<span class="fc" id="L48">    public Playlist(long id, String name, Customer customer){</span>
+<span class="fc" id="L49">        this.id = id;</span>
+<span class="fc" id="L50">        this.name = name;</span>
+<span class="fc" id="L51">        this.customer = customer;</span>
 
-<span class="nc" id="L53">        isPublic = false;</span>
-<span class="nc" id="L54">        likedUsers = 0;</span>
-<span class="nc" id="L55">        songs = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L56">    }</span>
+<span class="fc" id="L53">        isPublic = false;</span>
+<span class="fc" id="L54">        likedUsers = 0;</span>
+<span class="fc" id="L55">        songs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L56">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

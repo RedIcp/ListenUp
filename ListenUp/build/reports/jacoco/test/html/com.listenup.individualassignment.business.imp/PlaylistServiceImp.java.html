@@ -32,71 +32,71 @@ public class PlaylistServiceImp implements PlaylistService {
 
     @Override
     public CreatePlaylistResponseDTO addPlaylist(CreatePlaylistRequestDTO playlist){
-<span class="nc" id="L35">        Playlist savedPlaylist = db.save(PlaylistDTOConverter.convertToModelForCreate(playlist));</span>
+<span class="fc" id="L35">        Playlist savedPlaylist = db.save(PlaylistDTOConverter.convertToModelForCreate(playlist));</span>
 
-<span class="nc" id="L37">        return CreatePlaylistResponseDTO.builder()</span>
-<span class="nc" id="L38">                .playlistID(savedPlaylist.getId())</span>
-<span class="nc" id="L39">                .build();</span>
+<span class="fc" id="L37">        return CreatePlaylistResponseDTO.builder()</span>
+<span class="fc" id="L38">                .playlistID(savedPlaylist.getId())</span>
+<span class="fc" id="L39">                .build();</span>
     }
 
     @Override
     public List&lt;PlaylistDTO&gt; getPlaylists(){
-<span class="nc" id="L44">        return PlaylistDTOConverter.convertToDTOList(db.findAll());</span>
+<span class="fc" id="L44">        return PlaylistDTOConverter.convertToDTOList(db.findAll());</span>
     }
 
     @Override
     public PlaylistSongListDTO getPlaylistSong(long id){
-<span class="nc" id="L49">        return PlaylistDTOConverter.convertToDTOForSong(db.getById(id));</span>
+<span class="fc" id="L49">        return PlaylistDTOConverter.convertToDTOForSong(db.getById(id));</span>
     }
 
     @Override
     public PlaylistDTO editPlaylist(PlaylistDTO playlist){
-<span class="nc" id="L54">        isAuthorised(playlist.getCustomer().getId());</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">        if(!db.existsById(playlist.getId())){</span>
-<span class="nc" id="L56">            throw new InvalidPlaylistException(error);</span>
+<span class="fc" id="L54">        isAuthorised(playlist.getCustomer().getId());</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if(!db.existsById(playlist.getId())){</span>
+<span class="fc" id="L56">            throw new InvalidPlaylistException(error);</span>
         }
-<span class="nc" id="L58">        db.save(PlaylistDTOConverter.convertToModelForUpdate(playlist));</span>
-<span class="nc" id="L59">        return playlist;</span>
+<span class="fc" id="L58">        db.save(PlaylistDTOConverter.convertToModelForUpdate(playlist));</span>
+<span class="fc" id="L59">        return playlist;</span>
     }
 
     @Override
     public void addSongToPlaylist(AddRemoveSongToPlaylistDTO song){
-<span class="nc" id="L64">        Playlist old = db.getById(song.getPlaylistID());</span>
-<span class="nc" id="L65">        isAuthorised(song.getCustomerID());</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">        if(!db.existsById(song.getPlaylistID())){</span>
-<span class="nc" id="L67">            throw new InvalidPlaylistException(error);</span>
+<span class="fc" id="L64">        Playlist old = db.getById(song.getPlaylistID());</span>
+<span class="fc" id="L65">        isAuthorised(song.getCustomerID());</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if(!db.existsById(song.getPlaylistID())){</span>
+<span class="fc" id="L67">            throw new InvalidPlaylistException(error);</span>
         }
-<span class="nc" id="L69">        old.getSongs().add(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));</span>
+<span class="fc" id="L69">        old.getSongs().add(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));</span>
 
-<span class="nc" id="L71">        db.save(old);</span>
-<span class="nc" id="L72">    }</span>
+<span class="fc" id="L71">        db.save(old);</span>
+<span class="fc" id="L72">    }</span>
 
     @Override
     public void removeSongFromPlaylist(AddRemoveSongToPlaylistDTO song){
-<span class="nc" id="L76">        Playlist old = db.getById(song.getPlaylistID());</span>
-<span class="nc" id="L77">        isAuthorised(song.getCustomerID());</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">        if(!db.existsById(song.getPlaylistID())){</span>
-<span class="nc" id="L79">            throw new InvalidPlaylistException(error);</span>
+<span class="fc" id="L76">        Playlist old = db.getById(song.getPlaylistID());</span>
+<span class="fc" id="L77">        isAuthorised(song.getCustomerID());</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        if(!db.existsById(song.getPlaylistID())){</span>
+<span class="fc" id="L79">            throw new InvalidPlaylistException(error);</span>
         }
-<span class="nc" id="L81">        old.getSongs().remove(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));</span>
+<span class="fc" id="L81">        old.getSongs().remove(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));</span>
 
-<span class="nc" id="L83">        db.save(old);</span>
-<span class="nc" id="L84">    }</span>
+<span class="fc" id="L83">        db.save(old);</span>
+<span class="fc" id="L84">    }</span>
 
     private void isAuthorised(long id){
-<span class="nc bnc" id="L87" title="All 4 branches missed.">        if (!requestAccessToken.hasRole(RoleEnum.ADMIN.name()) &amp;&amp; requestAccessToken.getUserID() != id) {</span>
-<span class="nc" id="L88">            throw new UnauthorizedDataAccessException(&quot;USER_ID_NOT_FROM_LOGGED_IN_USER&quot;);</span>
+<span class="pc bpc" id="L87" title="1 of 4 branches missed.">        if (!requestAccessToken.hasRole(RoleEnum.ADMIN.name()) &amp;&amp; requestAccessToken.getUserID() != id) {</span>
+<span class="fc" id="L88">            throw new UnauthorizedDataAccessException(&quot;USER_ID_NOT_FROM_LOGGED_IN_USER&quot;);</span>
         }
-<span class="nc" id="L90">    }</span>
+<span class="fc" id="L90">    }</span>
 
     @Override
     public boolean deletePlaylist(long id){
-<span class="nc" id="L94">        boolean result = false;</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">        if(db.existsById(id)){</span>
-<span class="nc" id="L96">            db.deleteById(id);</span>
-<span class="nc" id="L97">            result = true;</span>
+<span class="fc" id="L94">        boolean result = false;</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        if(db.existsById(id)){</span>
+<span class="fc" id="L96">            db.deleteById(id);</span>
+<span class="fc" id="L97">            result = true;</span>
         }
-<span class="nc" id="L99">        return result;</span>
+<span class="fc" id="L99">        return result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

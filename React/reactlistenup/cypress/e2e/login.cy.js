@@ -1,6 +1,6 @@
 describe("renders the home page", () => {
   it("renders",() => {
-    cy.visit("http://localhost:3000/login");
+    cy.visit("/login");
     cy.get("#email").should("exist");
     cy.get("#password").should("exist");
   });

@@ -19,8 +19,8 @@ public class SignUpController {
 
     @PostMapping
     public ResponseEntity&lt;CreateUserResponseDTO&gt; createUser(@RequestBody @Valid CreateUserRequestDTO userDTO) {
-<span class="nc" id="L22">        CreateUserResponseDTO user = management.createAccount(userDTO);</span>
-<span class="nc" id="L23">        return ResponseEntity.status(HttpStatus.CREATED).body(user);</span>
+<span class="fc" id="L22">        CreateUserResponseDTO user = management.createAccount(userDTO);</span>
+<span class="fc" id="L23">        return ResponseEntity.status(HttpStatus.CREATED).body(user);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -73,14 +73,14 @@ const Artist = () => {
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="name">Name: </label>
                         <input
-                            id="name"
+                            id="artist-name"
                             type="text"
                             required
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
                         {isUpdate ? <button>Update Artist</button> :
-                            <button>Create Artist</button>
+                            <button id="button">Create Artist</button>
                         }
                         {isUpdate ? <div className="add-new" onClick={() => {
                                 setIsUpdate(false);
@@ -104,13 +104,16 @@ const Artist = () => {
                     />
                     <ul>
                         <>
-                            {searchArtistsResults.map(artist => (
+                            {searchArtistsResults?.map(artist => (
                                 <div className="admin-list">
                                     <div className="delete" onClick={() => {
                                         handleDelete(artist.id)
                                     }}><FontAwesomeIcon icon={faTrash}/>
                                     </div>
-                                    <li key={artist.id} onClick={() => {
+                                    <li
+                                        id={artist.id}
+                                        key={artist.id}
+                                        onClick={() => {
                                         setId(artist.id);
                                         setName(artist.name);
                                         setIsUpdate(true);
