@@ -11,7 +11,7 @@ public class WebsocketController {
 
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
-    public MessageDTO greeting(CreateAlbumRequestDTO message) throws Exception {
+    public MessageDTO greeting(CreateAlbumRequestDTO message){
         return MessageDTO.builder()
                 .text("New album is created:" + message.getName())
                 .build();

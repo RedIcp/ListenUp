@@ -20,7 +20,6 @@ import com.listenup.individualassignment.dto.vieweditdto.UpdateUserDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ViewUserDTO;
 import com.listenup.individualassignment.entity.*;
 import com.listenup.individualassignment.business.UserService;
-import com.listenup.individualassignment.repository.PlaylistRepository;
 import com.listenup.individualassignment.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;

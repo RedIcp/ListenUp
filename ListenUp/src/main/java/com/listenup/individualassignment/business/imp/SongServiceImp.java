@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.listenup.individualassignment.business.exception.InvalidSongException;
 import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
-import com.listenup.individualassignment.dto.AccessTokenDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumSongRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumSongResponseDTO;
 import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDTO;
@@ -15,7 +14,6 @@ import com.listenup.individualassignment.business.SongService;
 import com.listenup.individualassignment.entity.Song;
 import com.listenup.individualassignment.repository.SongRepository;
 
-import com.listenup.individualassignment.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Primary;
