@@ -1,7 +1,9 @@
 package com.listenup.individualassignment.business.imp;
 
+import com.listenup.individualassignment.business.artist.*;
+import com.listenup.individualassignment.business.artist.imp.*;
 import com.listenup.individualassignment.business.exception.InvalidArtistException;
-import com.listenup.individualassignment.business.imp.dtoconverter.ArtistDTOConverter;
+import com.listenup.individualassignment.business.dtoconverter.ArtistDTOConverter;
 import com.listenup.individualassignment.dto.ArtistAlbumListDTO;
 import com.listenup.individualassignment.dto.ArtistSongListDTO;
 import com.listenup.individualassignment.dto.createdto.CreateArtistRequestDTO;
@@ -26,8 +28,19 @@ import static org.mockito.Mockito.*;
 class ArtistServiceImpTest {
     @Mock
     private ArtistRepository repository;
+
     @InjectMocks
-    private ArtistServiceImp service;
+    private CreateArtistUseCaseImp createArtistUseCase;
+    @InjectMocks
+    private GetArtistsUseCaseImp getArtistsUseCase;
+    @InjectMocks
+    private GetArtistSongsUseCaseImp getArtistSongsUseCase;
+    @InjectMocks
+    private GetArtistAlbumsUseCaseImp getArtistAlbumsUseCase;
+    @InjectMocks
+    private DeleteArtistUseCaseImp deleteArtistUseCase;
+    @InjectMocks
+    private UpdateArtistUseCaseImp updateArtistUseCase;
 
     @Test
     void addArtist() {
@@ -49,7 +62,7 @@ class ArtistServiceImpTest {
                 .artistID(1L)
                 .build();
 
-        CreateArtistResponseDTO actualDTO = service.addArtist(dto);
+        CreateArtistResponseDTO actualDTO = createArtistUseCase.addArtist(dto);
 
         assertEquals(actualDTO, expectedDTO);
 
@@ -73,7 +86,7 @@ class ArtistServiceImpTest {
         expectedList.add(ArtistDTOConverter.convertToDTO(artist1));
         expectedList.add(ArtistDTOConverter.convertToDTO(artist2));
 
-        List<ArtistDTO> actualList = service.getArtists();
+        List<ArtistDTO> actualList = getArtistsUseCase.getArtists();
 
         assertEquals(actualList, expectedList);
 
@@ -96,7 +109,7 @@ class ArtistServiceImpTest {
                 .songs(Collections.emptyList())
                 .build();
 
-        ArtistSongListDTO actualDTO = service.getArtistSongs(1L);
+        ArtistSongListDTO actualDTO = getArtistSongsUseCase.getArtistSongs(1L);
 
         assertEquals(actualDTO, expectedDTO);
 
@@ -119,7 +132,7 @@ class ArtistServiceImpTest {
                 .albums(Collections.emptyList())
                 .build();
 
-        ArtistAlbumListDTO actualDTO = service.getArtistAlbums(1L);
+        ArtistAlbumListDTO actualDTO = getArtistAlbumsUseCase.getArtistAlbums(1L);
 
         assertEquals(actualDTO, expectedDTO);
 
@@ -135,7 +148,7 @@ class ArtistServiceImpTest {
                 .name("Post Malone")
                 .build();
 
-        service.editArtist(updateDTO);
+        updateArtistUseCase.editArtist(updateDTO);
 
         verify(repository).existsById(1L);
 
@@ -156,7 +169,7 @@ class ArtistServiceImpTest {
                 .name("Post Malone")
                 .build();
 
-        InvalidArtistException exception = assertThrows(InvalidArtistException.class, () -> service.editArtist(updateDTO));
+        InvalidArtistException exception = assertThrows(InvalidArtistException.class, () -> updateArtistUseCase.editArtist(updateDTO));
 
         assertEquals("INVALID_ARTIST", exception.getReason());
 
@@ -168,7 +181,7 @@ class ArtistServiceImpTest {
     void deleteArtistValid() {
         when(repository.existsById(1L)).thenReturn(true);
 
-        service.deleteArtist(1L);
+        deleteArtistUseCase.deleteArtist(1L);
 
         verify(repository).existsById(1L);
         verify(repository).deleteById(1L);
@@ -178,7 +191,7 @@ class ArtistServiceImpTest {
     void deleteArtistInvalid() {
         when(repository.existsById(1L)).thenReturn(false);
 
-        service.deleteArtist(1L);
+        deleteArtistUseCase.deleteArtist(1L);
 
         verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);

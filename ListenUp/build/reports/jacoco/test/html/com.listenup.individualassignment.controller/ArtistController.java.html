@@ -2,6 +2,7 @@
 
 import java.util.List;
 
+import com.listenup.individualassignment.business.artist.*;
 import com.listenup.individualassignment.configuration.security.isauthenticated.IsAuthenticated;
 import com.listenup.individualassignment.dto.createdto.CreateArtistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateArtistResponseDTO;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.listenup.individualassignment.dto.ArtistSongListDTO;
-import com.listenup.individualassignment.business.ArtistService;
 import com.listenup.individualassignment.dto.ArtistAlbumListDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
 
@@ -24,19 +24,24 @@ import javax.validation.Valid;
 @RequestMapping(&quot;/artists&quot;)
 @CrossOrigin(origins = &quot;http://localhost:3000&quot;)
 public class  ArtistController {
-    private final ArtistService management;
+    private final CreateArtistUseCase createArtistUseCase;
+    private final GetArtistsUseCase getArtistsUseCase;
+    private final GetArtistSongsUseCase getArtistSongsUseCase;
+    private final GetArtistAlbumsUseCase getArtistAlbumsUseCase;
+    private final DeleteArtistUseCase deleteArtistUseCase;
+    private final UpdateArtistUseCase updateArtistUseCase;
 
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping
     public ResponseEntity&lt;List&lt;ArtistDTO&gt;&gt; getAllArtists() {
-<span class="fc" id="L34">        List&lt;ArtistDTO&gt; artists = management.getArtists();</span>
+<span class="fc" id="L39">        List&lt;ArtistDTO&gt; artists = getArtistsUseCase.getArtists();</span>
 
-<span class="fc bfc" id="L36" title="All 2 branches covered.">        if(artists != null) {</span>
-<span class="fc" id="L37">            return ResponseEntity.ok().body(artists);</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if(artists != null) {</span>
+<span class="fc" id="L42">            return ResponseEntity.ok().body(artists);</span>
         } else {
-<span class="fc" id="L39">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L44">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -44,12 +49,12 @@ public class  ArtistController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;ArtistSongListDTO&gt; getArtistPath(@PathVariable(value = &quot;id&quot;) long id) {
-<span class="fc" id="L47">        ArtistSongListDTO artist = management.getArtistSongs(id);</span>
+<span class="fc" id="L52">        ArtistSongListDTO artist = getArtistSongsUseCase.getArtistSongs(id);</span>
 
-<span class="fc bfc" id="L49" title="All 2 branches covered.">        if(artist != null) {</span>
-<span class="fc" id="L50">            return ResponseEntity.ok().body(artist);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if(artist != null) {</span>
+<span class="fc" id="L55">            return ResponseEntity.ok().body(artist);</span>
         } else {
-<span class="fc" id="L52">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L57">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -57,12 +62,12 @@ public class  ArtistController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping(&quot;{id}/albums&quot;)
     public ResponseEntity&lt;ArtistAlbumListDTO&gt; getArtistAlbumsPath(@PathVariable(value = &quot;id&quot;) long id) {
-<span class="fc" id="L60">        ArtistAlbumListDTO artist = management.getArtistAlbums(id);</span>
+<span class="fc" id="L65">        ArtistAlbumListDTO artist = getArtistAlbumsUseCase.getArtistAlbums(id);</span>
 
-<span class="fc bfc" id="L62" title="All 2 branches covered.">        if(artist != null) {</span>
-<span class="fc" id="L63">            return ResponseEntity.ok().body(artist);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if(artist != null) {</span>
+<span class="fc" id="L68">            return ResponseEntity.ok().body(artist);</span>
         } else {
-<span class="fc" id="L65">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L70">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -70,25 +75,25 @@ public class  ArtistController {
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @PostMapping()
     public ResponseEntity&lt;CreateArtistResponseDTO&gt; createArtist(@RequestBody @Valid CreateArtistRequestDTO artistDTO) {
-<span class="fc" id="L73">        CreateArtistResponseDTO artist = management.addArtist(artistDTO);</span>
-<span class="fc" id="L74">        return ResponseEntity.status(HttpStatus.CREATED).body(artist);</span>
+<span class="fc" id="L78">        CreateArtistResponseDTO artist = createArtistUseCase.addArtist(artistDTO);</span>
+<span class="fc" id="L79">        return ResponseEntity.status(HttpStatus.CREATED).body(artist);</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @PutMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;ArtistDTO&gt; updateArtist(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid ArtistDTO artistDTO) {
-<span class="fc" id="L81">        artistDTO.setId(id);</span>
-<span class="fc" id="L82">        management.editArtist(artistDTO);</span>
-<span class="fc" id="L83">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L86">        artistDTO.setId(id);</span>
+<span class="fc" id="L87">        updateArtistUseCase.editArtist(artistDTO);</span>
+<span class="fc" id="L88">        return ResponseEntity.noContent().build();</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @DeleteMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;Object&gt; deleteArtist(@PathVariable long id) {
-<span class="fc" id="L90">        management.deleteArtist(id);</span>
-<span class="fc" id="L91">        return ResponseEntity.ok().build();</span>
+<span class="fc" id="L95">        deleteArtistUseCase.deleteArtist(id);</span>
+<span class="fc" id="L96">        return ResponseEntity.ok().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

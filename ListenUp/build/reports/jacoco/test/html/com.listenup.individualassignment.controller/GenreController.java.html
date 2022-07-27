@@ -2,6 +2,7 @@
 
 import java.util.List;
 
+import com.listenup.individualassignment.business.genre.*;
 import com.listenup.individualassignment.configuration.security.isauthenticated.IsAuthenticated;
 import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateGenreResponseDTO;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.listenup.individualassignment.dto.GenreSongListDTO;
-import com.listenup.individualassignment.business.GenreService;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -23,18 +23,22 @@ import javax.validation.Valid;
 @RequestMapping(&quot;/genres&quot;)
 @CrossOrigin(origins = &quot;http://localhost:3000&quot;)
 public class GenreController {
-    private final GenreService management;
+    private final CreateGenreUseCase createGenreUseCase;
+    private final GetGenresUseCase getGenresUseCase;
+    private final GetGenreSongsUseCase getGenreSongsUseCase;
+    private final DeleteGenreUseCase deleteGenreUseCase;
+    private final UpdateGenreUseCase updateGenreUseCase;
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping
     public ResponseEntity&lt;List&lt;GenreDTO&gt;&gt; getAllGenres() {
-<span class="fc" id="L32">        List&lt;GenreDTO&gt; genres = management.getGenres();</span>
+<span class="fc" id="L36">        List&lt;GenreDTO&gt; genres = getGenresUseCase.getGenres();</span>
 
-<span class="fc bfc" id="L34" title="All 2 branches covered.">        if(genres != null) {</span>
-<span class="fc" id="L35">            return ResponseEntity.ok().body(genres);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if(genres != null) {</span>
+<span class="fc" id="L39">            return ResponseEntity.ok().body(genres);</span>
         } else {
-<span class="fc" id="L37">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L41">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -42,12 +46,12 @@ public class GenreController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;GenreSongListDTO&gt; getGenrePath(@PathVariable(value = &quot;id&quot;) long id) {
-<span class="fc" id="L45">        GenreSongListDTO genre = management.getGenreSongs(id);</span>
+<span class="fc" id="L49">        GenreSongListDTO genre = getGenreSongsUseCase.getGenreSongs(id);</span>
 
-<span class="fc bfc" id="L47" title="All 2 branches covered.">        if(genre != null) {</span>
-<span class="fc" id="L48">            return ResponseEntity.ok().body(genre);</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if(genre != null) {</span>
+<span class="fc" id="L52">            return ResponseEntity.ok().body(genre);</span>
         } else {
-<span class="fc" id="L50">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L54">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -55,25 +59,25 @@ public class GenreController {
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @PostMapping()
     public ResponseEntity&lt;CreateGenreResponseDTO&gt; createGenre(@RequestBody @Valid CreateGenreRequestDTO genreDTO) {
-<span class="fc" id="L58">        CreateGenreResponseDTO genre = management.addGenre(genreDTO);</span>
-<span class="fc" id="L59">        return ResponseEntity.status(HttpStatus.CREATED).body(genre);</span>
+<span class="fc" id="L62">        CreateGenreResponseDTO genre = createGenreUseCase.addGenre(genreDTO);</span>
+<span class="fc" id="L63">        return ResponseEntity.status(HttpStatus.CREATED).body(genre);</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @PutMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;GenreDTO&gt; updateGenre(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid GenreDTO genreDTO) {
-<span class="fc" id="L66">        genreDTO.setId(id);</span>
-<span class="fc" id="L67">        management.editGenre(genreDTO);</span>
-<span class="fc" id="L68">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L70">        genreDTO.setId(id);</span>
+<span class="fc" id="L71">        updateGenreUseCase.editGenre(genreDTO);</span>
+<span class="fc" id="L72">        return ResponseEntity.noContent().build();</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @DeleteMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;Object&gt; deleteGenre(@PathVariable int id) {
-<span class="fc" id="L75">        management.deleteGenre(id);</span>
-<span class="fc" id="L76">        return ResponseEntity.ok().build();</span>
+<span class="fc" id="L79">        deleteGenreUseCase.deleteGenre(id);</span>
+<span class="fc" id="L80">        return ResponseEntity.ok().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,5 +1,6 @@
 package com.listenup.individualassignment.business.imp;
 
+import com.listenup.individualassignment.business.login.imp.AccessTokenEncoderDecoderImp;
 import com.listenup.individualassignment.dto.AccessTokenDTO;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,7 +15,7 @@ class AccessTokenEncoderDecoderImplTest {
     @Mock
     private Key key;
     @InjectMocks
-    private AccessTokenEncoderDecoderImpl accessTokenEncoderDecoder = new AccessTokenEncoderDecoderImpl("E91E158E4C6656F68B1B5D1C311766DE98D2AD6EF3BFB33F78E9CFCDF9");
+    private AccessTokenEncoderDecoderImp accessTokenEncoderDecoder = new AccessTokenEncoderDecoderImp("E91E158E4C6656F68B1B5D1C311766DE98D2AD6EF3BFB33F78E9CFCDF9");
 
     @Test
     void encode() {

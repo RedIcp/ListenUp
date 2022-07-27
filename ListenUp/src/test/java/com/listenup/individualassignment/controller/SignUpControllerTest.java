@@ -1,6 +1,6 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.UserService;
+import com.listenup.individualassignment.business.user.account.CreateAccountUseCase;
 import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class SignUpControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService service;
+    private CreateAccountUseCase service;
 
     @Test
     void createUser() throws Exception{

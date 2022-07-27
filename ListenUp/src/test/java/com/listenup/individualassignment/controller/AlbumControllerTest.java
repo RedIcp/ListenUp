@@ -1,6 +1,6 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.AlbumService;
+import com.listenup.individualassignment.business.album.*;
 import com.listenup.individualassignment.dto.AlbumSongListDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumResponseDTO;
@@ -37,7 +37,15 @@ class AlbumControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private AlbumService service;
+    private CreateAlbumUseCase createAlbumUseCase;
+    @MockBean
+    private GetAlbumsUseCase getAlbumsUseCase;
+    @MockBean
+    private GetAlbumSongsUseCase getAlbumSongsUseCase;
+    @MockBean
+    private DeleteAlbumUseCase deleteAlbumUseCase;
+    @MockBean
+    private UpdateAlbumUseCase updateAlbumUseCase;
 
     final Date date = new Date(2008,11,26);
 
@@ -68,7 +76,7 @@ class AlbumControllerTest {
         albums.add(album1);
         albums.add(album2);
 
-        when(service.getAlbums()).thenReturn(albums);
+        when(getAlbumsUseCase.getAlbums()).thenReturn(albums);
 
         mockMvc.perform(get("/albums"))
                 .andDo(print())
@@ -99,19 +107,19 @@ class AlbumControllerTest {
                             ]
                         """));
 
-        verify(service).getAlbums();
+        verify(getAlbumsUseCase).getAlbums();
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllAlbumsNotFound() throws Exception{
-        when(service.getAlbums()).thenReturn(null);
+        when(getAlbumsUseCase.getAlbums()).thenReturn(null);
 
         mockMvc.perform(get("/albums"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getAlbums();
+        verify(getAlbumsUseCase).getAlbums();
     }
 
     @Test
@@ -123,7 +131,7 @@ class AlbumControllerTest {
                 .songs(Collections.emptyList())
                 .build();
 
-        when(service.getAlbumSongs(1L)).thenReturn(album);
+        when(getAlbumSongsUseCase.getAlbumSongs(1L)).thenReturn(album);
 
         mockMvc.perform(get("/albums/1"))
                 .andDo(print())
@@ -137,19 +145,19 @@ class AlbumControllerTest {
                             }
                         """));
 
-        verify(service).getAlbumSongs(1L);
+        verify(getAlbumSongsUseCase).getAlbumSongs(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAlbumPathNotFound() throws Exception{
-        when(service.getAlbumSongs(1L)).thenReturn(null);
+        when(getAlbumSongsUseCase.getAlbumSongs(1L)).thenReturn(null);
 
         mockMvc.perform(get("/albums/1"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getAlbumSongs(1L);
+        verify(getAlbumSongsUseCase).getAlbumSongs(1L);
     }
 
     @Test
@@ -166,7 +174,7 @@ class AlbumControllerTest {
                 .albumID(1L)
                 .build();
 
-        when(service.addAlbum(album)).thenReturn(response);
+        when(createAlbumUseCase.addAlbum(album)).thenReturn(response);
 
         mockMvc.perform(post("/albums")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -189,7 +197,7 @@ class AlbumControllerTest {
                             }
                         """));
 
-        verify(service).addAlbum(album);
+        verify(createAlbumUseCase).addAlbum(album);
     }
 
     @Test
@@ -219,7 +227,7 @@ class AlbumControllerTest {
                 .releasedDate(date)
                 .build();
 
-        verify(service).editAlbum(album);
+        verify(updateAlbumUseCase).editAlbum(album);
     }
 
     @Test
@@ -229,6 +237,6 @@ class AlbumControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        verify(service).deleteAlbum(1L);
+        verify(deleteAlbumUseCase).deleteAlbum(1L);
     }
 }

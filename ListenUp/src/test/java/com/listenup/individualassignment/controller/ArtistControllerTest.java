@@ -1,6 +1,6 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.ArtistService;
+import com.listenup.individualassignment.business.artist.*;
 import com.listenup.individualassignment.dto.ArtistAlbumListDTO;
 import com.listenup.individualassignment.dto.ArtistSongListDTO;
 import com.listenup.individualassignment.dto.createdto.CreateArtistRequestDTO;
@@ -35,7 +35,17 @@ class ArtistControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ArtistService service;
+    private CreateArtistUseCase createArtistUseCase;
+    @MockBean
+    private GetArtistsUseCase getArtistsUseCase;
+    @MockBean
+    private GetArtistSongsUseCase getArtistSongsUseCase;
+    @MockBean
+    private GetArtistAlbumsUseCase getArtistAlbumsUseCase;
+    @MockBean
+    private DeleteArtistUseCase deleteArtistUseCase;
+    @MockBean
+    private UpdateArtistUseCase updateArtistUseCase;
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
@@ -53,7 +63,7 @@ class ArtistControllerTest {
         artists.add(artist1);
         artists.add(artist2);
 
-        when(service.getArtists()).thenReturn(artists);
+        when(getArtistsUseCase.getArtists()).thenReturn(artists);
 
         mockMvc.perform(get("/artists"))
                 .andDo(print())
@@ -72,19 +82,19 @@ class ArtistControllerTest {
                             ]
                         """));
 
-        verify(service).getArtists();
+        verify(getArtistsUseCase).getArtists();
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllArtistsNotFound() throws Exception {
-        when(service.getArtists()).thenReturn(null);
+        when(getArtistsUseCase.getArtists()).thenReturn(null);
 
         mockMvc.perform(get("/artists"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getArtists();
+        verify(getArtistsUseCase).getArtists();
     }
 
     @Test
@@ -96,7 +106,7 @@ class ArtistControllerTest {
                 .songs(Collections.emptyList())
                 .build();
 
-        when(service.getArtistSongs(1L)).thenReturn(artist);
+        when(getArtistSongsUseCase.getArtistSongs(1L)).thenReturn(artist);
 
         mockMvc.perform(get("/artists/1"))
                 .andDo(print())
@@ -110,19 +120,19 @@ class ArtistControllerTest {
                             }
                         """));
 
-        verify(service).getArtistSongs(1L);
+        verify(getArtistSongsUseCase).getArtistSongs(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getArtistPathNotFound() throws Exception{
-        when(service.getArtistSongs(1L)).thenReturn(null);
+        when(getArtistSongsUseCase.getArtistSongs(1L)).thenReturn(null);
 
         mockMvc.perform(get("/artists/1"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getArtistSongs(1L);
+        verify(getArtistSongsUseCase).getArtistSongs(1L);
     }
 
     @Test
@@ -134,7 +144,7 @@ class ArtistControllerTest {
                 .albums(Collections.emptyList())
                 .build();
 
-        when(service.getArtistAlbums(1L)).thenReturn(artist);
+        when(getArtistAlbumsUseCase.getArtistAlbums(1L)).thenReturn(artist);
 
         mockMvc.perform(get("/artists/1/albums"))
                 .andDo(print())
@@ -148,19 +158,19 @@ class ArtistControllerTest {
                             }
                         """));
 
-        verify(service).getArtistAlbums(1L);
+        verify(getArtistAlbumsUseCase).getArtistAlbums(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getArtistAlbumsPathNotFound() throws Exception{
-        when(service.getArtistAlbums(1L)).thenReturn(null);
+        when(getArtistAlbumsUseCase.getArtistAlbums(1L)).thenReturn(null);
 
         mockMvc.perform(get("/artists/1/albums"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getArtistAlbums(1L);
+        verify(getArtistAlbumsUseCase).getArtistAlbums(1L);
     }
 
     @Test
@@ -174,7 +184,7 @@ class ArtistControllerTest {
                 .artistID(1L)
                 .build();
 
-        when(service.addArtist(artist)).thenReturn(response);
+        when(createArtistUseCase.addArtist(artist)).thenReturn(response);
 
         mockMvc.perform(post("/artists")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -191,7 +201,7 @@ class ArtistControllerTest {
                             }
                         """));
 
-        verify(service).addArtist(artist);
+        verify(createArtistUseCase).addArtist(artist);
     }
 
     @Test
@@ -213,7 +223,7 @@ class ArtistControllerTest {
                 .name("Maroon 5")
                 .build();
 
-        verify(service).editArtist(artist);
+        verify(updateArtistUseCase).editArtist(artist);
     }
 
     @Test
@@ -223,6 +233,6 @@ class ArtistControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        verify(service).deleteArtist(1L);
+        verify(deleteArtistUseCase).deleteArtist(1L);
     }
 }

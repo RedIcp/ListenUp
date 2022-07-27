@@ -1,6 +1,6 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.SongService;
+import com.listenup.individualassignment.business.song.*;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumSongRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumSongResponseDTO;
 import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDTO;
@@ -38,7 +38,17 @@ class SongControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private SongService service;
+    private CreateSingleSongUseCase createSingleSongUseCase;
+    @MockBean
+    private CreateAlbumSongUseCase createAlbumSongUseCase;
+    @MockBean
+    private DeleteSongUseCase deleteSongUseCase;
+    @MockBean
+    private UpdateSongUseCase updateSongUseCase;
+    @MockBean
+    private GetSongUseCase getSongUseCase;
+    @MockBean
+    private GetSongsUseCase getSongsUseCase;
 
     final Date date = new Date(2021,11,27);
 
@@ -75,7 +85,7 @@ class SongControllerTest {
         List<SingleSongDTO> songs = new ArrayList<>();
         songs.add(song);
 
-        when(service.getSongs()).thenReturn(songs);
+        when(getSongsUseCase.getSongs()).thenReturn(songs);
 
         mockMvc.perform(get("/songs"))
                 .andDo(print())
@@ -100,19 +110,19 @@ class SongControllerTest {
                             ]
                         """));
 
-        verify(service).getSongs();
+        verify(getSongsUseCase).getSongs();
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllSongsNotFound() throws Exception {
-        when(service.getSongs()).thenReturn(null);
+        when(getSongsUseCase.getSongs()).thenReturn(null);
 
         mockMvc.perform(get("/songs"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getSongs();
+        verify(getSongsUseCase).getSongs();
     }
 
     @Test
@@ -127,7 +137,7 @@ class SongControllerTest {
                 .releasedDate(date)
                 .build();
 
-        when(service.getSong(1L)).thenReturn(song);
+        when(getSongUseCase.getSong(1L)).thenReturn(song);
 
         mockMvc.perform(get("/songs/1"))
                 .andDo(print())
@@ -150,19 +160,19 @@ class SongControllerTest {
                             }
                         """));
 
-        verify(service).getSong(1L);
+        verify(getSongUseCase).getSong(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getSongPathNotFound() throws Exception{
-        when(service.getSong(1L)).thenReturn(null);
+        when(getSongUseCase.getSong(1L)).thenReturn(null);
 
         mockMvc.perform(get("/songs/1"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getSong(1L);
+        verify(getSongUseCase).getSong(1L);
     }
 
     @Test
@@ -180,7 +190,7 @@ class SongControllerTest {
                 .singleSongID(1L)
                 .build();
 
-        when(service.addSingleSong(song)).thenReturn(response);
+        when(createSingleSongUseCase.addSingleSong(song)).thenReturn(response);
 
         mockMvc.perform(post("/songs/singlesong")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -207,7 +217,7 @@ class SongControllerTest {
                             }
                         """));
 
-        verify(service).addSingleSong(song);
+        verify(createSingleSongUseCase).addSingleSong(song);
     }
 
     @Test
@@ -223,7 +233,7 @@ class SongControllerTest {
                 .albumSongID(1L)
                 .build();
 
-        when(service.addAlbumSong(song)).thenReturn(response);
+        when(createAlbumSongUseCase.addAlbumSong(song)).thenReturn(response);
 
         mockMvc.perform(post("/songs/albumsong")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -254,7 +264,7 @@ class SongControllerTest {
                             }
                         """));
 
-        verify(service).addAlbumSong(song);
+        verify(createAlbumSongUseCase).addAlbumSong(song);
     }
 
     @Test
@@ -290,7 +300,7 @@ class SongControllerTest {
                 .releasedDate(date)
                 .build();
 
-        verify(service).editSong(song);
+        verify(updateSongUseCase).editSong(song);
     }
 
     @Test
@@ -300,6 +310,6 @@ class SongControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        verify(service).deleteSong(1L);
+        verify(deleteSongUseCase).deleteSong(1L);
     }
 }

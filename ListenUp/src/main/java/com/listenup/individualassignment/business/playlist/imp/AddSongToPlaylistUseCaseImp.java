@@ -1,0 +1,34 @@
+package com.listenup.individualassignment.business.playlist.imp;
+
+import com.listenup.individualassignment.business.dtoconverter.SongDTOConverter;
+import com.listenup.individualassignment.business.exception.InvalidPlaylistException;
+import com.listenup.individualassignment.business.playlist.AddSongToPlaylistUseCase;
+import com.listenup.individualassignment.business.user.IsAuthorised;
+import com.listenup.individualassignment.dto.createdto.AddRemoveSongToPlaylistDTO;
+import com.listenup.individualassignment.entity.Playlist;
+import com.listenup.individualassignment.repository.PlaylistRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+
+@Service
+@Primary
+@RequiredArgsConstructor
+public class AddSongToPlaylistUseCaseImp implements AddSongToPlaylistUseCase {
+    private final PlaylistRepository db;
+    private final IsAuthorised authorised;
+
+    @Override
+    public void addSongToPlaylist(AddRemoveSongToPlaylistDTO song){
+        Playlist old = db.getById(song.getPlaylistID());
+
+        authorised.isAuthorised(song.getCustomerID());
+
+        if(!db.existsById(song.getPlaylistID())){
+            throw new InvalidPlaylistException("INVALID_ID");
+        }
+        old.getSongs().add(SongDTOConverter.convertToSingleSongModelForUpdate(song.getSong()));
+
+        db.save(old);
+    }
+}

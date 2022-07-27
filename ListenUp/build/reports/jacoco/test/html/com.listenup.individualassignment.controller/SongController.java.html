@@ -2,6 +2,7 @@
 
 import java.util.List;
 
+import com.listenup.individualassignment.business.song.*;
 import com.listenup.individualassignment.configuration.security.isauthenticated.IsAuthenticated;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumSongRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumSongResponseDTO;
@@ -11,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.listenup.individualassignment.business.SongService;
 import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -24,18 +24,23 @@ import javax.validation.Valid;
 @RequestMapping(&quot;/songs&quot;)
 @CrossOrigin(origins = &quot;http://localhost:3000&quot;)
 public class SongController {
-    private final SongService management;
+    private final CreateSingleSongUseCase createSingleSongUseCase;
+    private final CreateAlbumSongUseCase createAlbumSongUseCase;
+    private final DeleteSongUseCase deleteSongUseCase;
+    private final UpdateSongUseCase updateSongUseCase;
+    private final GetSongUseCase getSongUseCase;
+    private final GetSongsUseCase getSongsUseCase;
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping
     public ResponseEntity&lt;List&lt;SingleSongDTO&gt;&gt; getAllSongs() {
-<span class="fc" id="L33">        List&lt;SingleSongDTO&gt; songs = management.getSongs();</span>
+<span class="fc" id="L38">        List&lt;SingleSongDTO&gt; songs = getSongsUseCase.getSongs();</span>
 
-<span class="fc bfc" id="L35" title="All 2 branches covered.">        if(songs != null) {</span>
-<span class="fc" id="L36">            return ResponseEntity.ok().body(songs);</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if(songs != null) {</span>
+<span class="fc" id="L41">            return ResponseEntity.ok().body(songs);</span>
         } else {
-<span class="fc" id="L38">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L43">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -43,12 +48,12 @@ public class SongController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;SingleSongDTO&gt; getSongPath(@PathVariable(value = &quot;id&quot;) long id) {
-<span class="fc" id="L46">        SingleSongDTO song = management.getSong(id);</span>
+<span class="fc" id="L51">        SingleSongDTO song = getSongUseCase.getSong(id);</span>
 
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        if(song != null) {</span>
-<span class="fc" id="L49">            return ResponseEntity.ok().body(song);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if(song != null) {</span>
+<span class="fc" id="L54">            return ResponseEntity.ok().body(song);</span>
         } else {
-<span class="fc" id="L51">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L56">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -56,33 +61,33 @@ public class SongController {
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @PostMapping(&quot;/singlesong&quot;)
     public ResponseEntity&lt;CreateSingleSongResponseDTO&gt; createSingleSong(@RequestBody @Valid CreateSingleSongRequestDTO songDTO) {
-<span class="fc" id="L59">        CreateSingleSongResponseDTO song = management.addSingleSong(songDTO);</span>
-<span class="fc" id="L60">        return ResponseEntity.status(HttpStatus.CREATED).body(song);</span>
+<span class="fc" id="L64">        CreateSingleSongResponseDTO song = createSingleSongUseCase.addSingleSong(songDTO);</span>
+<span class="fc" id="L65">        return ResponseEntity.status(HttpStatus.CREATED).body(song);</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @PostMapping(&quot;/albumsong&quot;)
     public ResponseEntity&lt;CreateAlbumSongResponseDTO&gt; createAlbumSong(@RequestBody @Valid CreateAlbumSongRequestDTO songDTO) {
-<span class="fc" id="L67">        CreateAlbumSongResponseDTO song = management.addAlbumSong(songDTO);</span>
-<span class="fc" id="L68">        return ResponseEntity.status(HttpStatus.CREATED).body(song);</span>
+<span class="fc" id="L72">        CreateAlbumSongResponseDTO song = createAlbumSongUseCase.addAlbumSong(songDTO);</span>
+<span class="fc" id="L73">        return ResponseEntity.status(HttpStatus.CREATED).body(song);</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @PutMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;SingleSongDTO&gt; updateSong(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid SingleSongDTO songDTO) {
-<span class="fc" id="L75">        songDTO.setId(id);</span>
-<span class="fc" id="L76">        management.editSong(songDTO);</span>
-<span class="fc" id="L77">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L80">        songDTO.setId(id);</span>
+<span class="fc" id="L81">        updateSongUseCase.editSong(songDTO);</span>
+<span class="fc" id="L82">        return ResponseEntity.noContent().build();</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_ADMIN&quot;})
     @DeleteMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;Object&gt; deleteSong(@PathVariable int id) {
-<span class="fc" id="L84">        management.deleteSong(id);</span>
-<span class="fc" id="L85">        return ResponseEntity.ok().build();</span>
+<span class="fc" id="L89">        deleteSongUseCase.deleteSong(id);</span>
+<span class="fc" id="L90">        return ResponseEntity.ok().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

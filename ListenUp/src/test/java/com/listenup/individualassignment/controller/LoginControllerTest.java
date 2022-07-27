@@ -1,6 +1,6 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.UserService;
+import com.listenup.individualassignment.business.login.LoginUseCase;
 import com.listenup.individualassignment.dto.LoginRequestDTO;
 import com.listenup.individualassignment.dto.LoginResponseDTO;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class LoginControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService service;
+    private LoginUseCase service;
 
     @Test
     void login() throws Exception{

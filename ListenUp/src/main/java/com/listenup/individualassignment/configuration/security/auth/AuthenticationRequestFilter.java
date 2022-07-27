@@ -1,6 +1,6 @@
 package com.listenup.individualassignment.configuration.security.auth;
 
-import com.listenup.individualassignment.business.AccessTokenDecoder;
+import com.listenup.individualassignment.business.login.AccessTokenDecoder;
 import com.listenup.individualassignment.business.exception.InvalidAccessTokenException;
 import com.listenup.individualassignment.dto.AccessTokenDTO;
 import org.springframework.beans.factory.annotation.Autowired;

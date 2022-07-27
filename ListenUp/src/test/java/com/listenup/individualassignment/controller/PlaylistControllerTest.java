@@ -1,7 +1,7 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.PlaylistService;
-import com.listenup.individualassignment.business.imp.dtoconverter.CustomerDTOConverter;
+import com.listenup.individualassignment.business.dtoconverter.CustomerDTOConverter;
+import com.listenup.individualassignment.business.playlist.*;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
 import com.listenup.individualassignment.dto.createdto.AddRemoveSongToPlaylistDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
@@ -37,7 +37,19 @@ class PlaylistControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private PlaylistService service;
+    private CreatePlaylistUseCase createPlaylistUseCase;
+    @MockBean
+    private GetPlaylistsUseCase getPlaylistsUseCase;
+    @MockBean
+    private GetPlaylistSongsUseCase getPlaylistSongsUseCase;
+    @MockBean
+    private DeletePlaylistUseCase deletePlaylistUseCase;
+    @MockBean
+    private UpdatePlaylistUseCase updatePlaylistUseCase;
+    @MockBean
+    private AddSongToPlaylistUseCase addSongToPlaylistUseCase;
+    @MockBean
+    private RemoveSongFromPlaylistUseCase removeSongFromPlaylistUseCase;
 
     final Customer customer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
 
@@ -59,7 +71,7 @@ class PlaylistControllerTest {
         playlists.add(playlist1);
         playlists.add(playlist2);
 
-        when(service.getPlaylists()).thenReturn(playlists);
+        when(getPlaylistsUseCase.getPlaylists()).thenReturn(playlists);
 
         mockMvc.perform(get("/playlists"))
                 .andDo(print())
@@ -90,19 +102,19 @@ class PlaylistControllerTest {
                             ]
                         """));
 
-        verify(service).getPlaylists();
+        verify(getPlaylistsUseCase).getPlaylists();
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void getAllPlaylistsNotFound() throws Exception {
-        when(service.getPlaylists()).thenReturn(null);
+        when(getPlaylistsUseCase.getPlaylists()).thenReturn(null);
 
         mockMvc.perform(get("/playlists"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getPlaylists();
+        verify(getPlaylistsUseCase).getPlaylists();
     }
 
     @Test
@@ -115,7 +127,7 @@ class PlaylistControllerTest {
                 .songs(Collections.emptyList())
                 .build();
 
-        when(service.getPlaylistSong(1L)).thenReturn(playlist);
+        when(getPlaylistSongsUseCase.getPlaylistSongs(1L)).thenReturn(playlist);
 
         mockMvc.perform(get("/playlists/1"))
                 .andDo(print())
@@ -130,19 +142,19 @@ class PlaylistControllerTest {
                             }
                         """));
 
-        verify(service).getPlaylistSong(1L);
+        verify(getPlaylistSongsUseCase).getPlaylistSongs(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void getPlaylistPathNotFound() throws Exception{
-        when(service.getPlaylistSong(1L)).thenReturn(null);
+        when(getPlaylistSongsUseCase.getPlaylistSongs(1L)).thenReturn(null);
 
         mockMvc.perform(get("/playlists/1"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getPlaylistSong(1L);
+        verify(getPlaylistSongsUseCase).getPlaylistSongs(1L);
     }
 
     @Test
@@ -157,7 +169,7 @@ class PlaylistControllerTest {
                 .playlistID(1L)
                 .build();
 
-        when(service.addPlaylist(playlist)).thenReturn(response);
+        when(createPlaylistUseCase.addPlaylist(playlist)).thenReturn(response);
 
         mockMvc.perform(post("/playlists")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -180,7 +192,7 @@ class PlaylistControllerTest {
                             }
                         """));
 
-        verify(service).addPlaylist(playlist);
+        verify(createPlaylistUseCase).addPlaylist(playlist);
     }
 
     @Test
@@ -202,7 +214,7 @@ class PlaylistControllerTest {
                 .song(null)
                 .build();
 
-        verify(service).addSongToPlaylist(playlist);
+        verify(addSongToPlaylistUseCase).addSongToPlaylist(playlist);
     }
 
     @Test
@@ -224,7 +236,7 @@ class PlaylistControllerTest {
                 .song(null)
                 .build();
 
-        verify(service).removeSongFromPlaylist(playlist);
+        verify(removeSongFromPlaylistUseCase).removeSongFromPlaylist(playlist);
     }
 
     @Test
@@ -253,7 +265,7 @@ class PlaylistControllerTest {
                 .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
                 .build();
 
-        verify(service).editPlaylist(playlist);
+        verify(updatePlaylistUseCase).editPlaylist(playlist);
     }
 
     @Test
@@ -263,6 +275,6 @@ class PlaylistControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        verify(service).deletePlaylist(1L);
+        verify(deletePlaylistUseCase).deletePlaylist(1L);
     }
 }

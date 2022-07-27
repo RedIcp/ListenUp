@@ -1,6 +1,6 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.GenreService;
+import com.listenup.individualassignment.business.genre.*;
 import com.listenup.individualassignment.dto.GenreSongListDTO;
 import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateGenreResponseDTO;
@@ -34,7 +34,15 @@ class GenreControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private GenreService service;
+    private CreateGenreUseCase createGenreUseCase;
+    @MockBean
+    private GetGenresUseCase getGenresUseCase;
+    @MockBean
+    private GetGenreSongsUseCase getGenreSongsUseCase;
+    @MockBean
+    private DeleteGenreUseCase deleteGenreUseCase;
+    @MockBean
+    private UpdateGenreUseCase updateGenreUseCase;
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
@@ -52,7 +60,7 @@ class GenreControllerTest {
         genres.add(genre1);
         genres.add(genre2);
 
-        when(service.getGenres()).thenReturn(genres);
+        when(getGenresUseCase.getGenres()).thenReturn(genres);
 
         mockMvc.perform(get("/genres"))
                 .andDo(print())
@@ -71,19 +79,19 @@ class GenreControllerTest {
                             ]
                         """));
 
-        verify(service).getGenres();
+        verify(getGenresUseCase).getGenres();
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllGenresNotFound() throws Exception {
-        when(service.getGenres()).thenReturn(null);
+        when(getGenresUseCase.getGenres()).thenReturn(null);
 
         mockMvc.perform(get("/genres"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getGenres();
+        verify(getGenresUseCase).getGenres();
     }
 
     @Test
@@ -95,7 +103,7 @@ class GenreControllerTest {
                 .songs(Collections.emptyList())
                 .build();
 
-        when(service.getGenreSongs(1L)).thenReturn(genre);
+        when(getGenreSongsUseCase.getGenreSongs(1L)).thenReturn(genre);
 
         mockMvc.perform(get("/genres/1"))
                 .andDo(print())
@@ -109,19 +117,19 @@ class GenreControllerTest {
                             }
                         """));
 
-        verify(service).getGenreSongs(1L);
+        verify(getGenreSongsUseCase).getGenreSongs(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getGenrePathNotFound() throws Exception{
-        when(service.getGenreSongs(1L)).thenReturn(null);
+        when(getGenreSongsUseCase.getGenreSongs(1L)).thenReturn(null);
 
         mockMvc.perform(get("/genres/1"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getGenreSongs(1L);
+        verify(getGenreSongsUseCase).getGenreSongs(1L);
     }
 
     @Test
@@ -135,7 +143,7 @@ class GenreControllerTest {
                 .genreID(1L)
                 .build();
 
-        when(service.addGenre(genre)).thenReturn(response);
+        when(createGenreUseCase.addGenre(genre)).thenReturn(response);
 
         mockMvc.perform(post("/genres")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -152,7 +160,7 @@ class GenreControllerTest {
                             }
                         """));
 
-        verify(service).addGenre(genre);
+        verify(createGenreUseCase).addGenre(genre);
     }
 
     @Test
@@ -174,7 +182,7 @@ class GenreControllerTest {
                 .name("Pop")
                 .build();
 
-        verify(service).editGenre(genre);
+        verify(updateGenreUseCase).editGenre(genre);
     }
 
     @Test
@@ -184,6 +192,6 @@ class GenreControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        verify(service).deleteGenre(1L);
+        verify(deleteGenreUseCase).deleteGenre(1L);
     }
 }

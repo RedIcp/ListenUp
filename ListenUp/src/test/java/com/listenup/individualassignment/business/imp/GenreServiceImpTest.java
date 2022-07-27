@@ -1,7 +1,9 @@
 package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.exception.InvalidGenreException;
-import com.listenup.individualassignment.business.imp.dtoconverter.GenreDTOConverter;
+import com.listenup.individualassignment.business.dtoconverter.GenreDTOConverter;
+import com.listenup.individualassignment.business.genre.*;
+import com.listenup.individualassignment.business.genre.imp.*;
 import com.listenup.individualassignment.dto.GenreSongListDTO;
 import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateGenreResponseDTO;
@@ -26,7 +28,15 @@ class GenreServiceImpTest {
     @Mock
     private GenreRepository repository;
     @InjectMocks
-    private GenreServiceImp service;
+    private CreateGenreUseCaseImp createGenreUseCase;
+    @InjectMocks
+    private GetGenresUseCaseImp getGenresUseCase;
+    @InjectMocks
+    private GetGenreSongsUseCaseImp getGenreSongsUseCase;
+    @InjectMocks
+    private DeleteGenreUseCaseImp deleteGenreUseCase;
+    @InjectMocks
+    private UpdateGenreUseCaseImp updateGenreUseCase;
 
     @Test
     void addGenre() {
@@ -48,7 +58,7 @@ class GenreServiceImpTest {
                 .genreID(1L)
                 .build();
 
-        CreateGenreResponseDTO actualDTO = service.addGenre(dto);
+        CreateGenreResponseDTO actualDTO = createGenreUseCase.addGenre(dto);
 
         assertEquals(actualDTO, expectedDTO);
 
@@ -72,7 +82,7 @@ class GenreServiceImpTest {
         expectedList.add(GenreDTOConverter.convertToDTO(genre1));
         expectedList.add(GenreDTOConverter.convertToDTO(genre2));
 
-        List<GenreDTO> actualList = service.getGenres();
+        List<GenreDTO> actualList = getGenresUseCase.getGenres();
 
         assertEquals(actualList, expectedList);
 
@@ -95,7 +105,7 @@ class GenreServiceImpTest {
                 .songs(Collections.emptyList())
                 .build();
 
-        GenreSongListDTO actualDTO = service.getGenreSongs(1L);
+        GenreSongListDTO actualDTO = getGenreSongsUseCase.getGenreSongs(1L);
 
         assertEquals(actualDTO, expectedDTO);
 
@@ -111,7 +121,7 @@ class GenreServiceImpTest {
                 .name("Hip-hop")
                 .build();
 
-        service.editGenre(updateDTO);
+        updateGenreUseCase.editGenre(updateDTO);
 
         verify(repository).existsById(1L);
 
@@ -132,7 +142,7 @@ class GenreServiceImpTest {
                 .name("Hip-hop")
                 .build();
 
-        InvalidGenreException exception = assertThrows(InvalidGenreException.class, () -> service.editGenre(updateDTO));
+        InvalidGenreException exception = assertThrows(InvalidGenreException.class, () -> updateGenreUseCase.editGenre(updateDTO));
 
         assertEquals("INVALID_ID", exception.getReason());
 
@@ -144,7 +154,7 @@ class GenreServiceImpTest {
     void deleteGenreValid() {
         when(repository.existsById(1L)).thenReturn(true);
 
-        service.deleteGenre(1L);
+        deleteGenreUseCase.deleteGenre(1L);
 
         verify(repository).existsById(1L);
         verify(repository).deleteById(1L);
@@ -154,7 +164,7 @@ class GenreServiceImpTest {
     void deleteGenreInvalid() {
         when(repository.existsById(1L)).thenReturn(false);
 
-        service.deleteGenre(1L);
+        deleteGenreUseCase.deleteGenre(1L);
 
         verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);

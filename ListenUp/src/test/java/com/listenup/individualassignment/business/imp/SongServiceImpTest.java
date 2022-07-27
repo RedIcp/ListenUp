@@ -1,11 +1,12 @@
 package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.exception.InvalidSongException;
-import com.listenup.individualassignment.business.imp.dtoconverter.AlbumDTOConverter;
-import com.listenup.individualassignment.business.imp.dtoconverter.ArtistDTOConverter;
-import com.listenup.individualassignment.business.imp.dtoconverter.GenreDTOConverter;
-import com.listenup.individualassignment.business.imp.dtoconverter.SongDTOConverter;
-import com.listenup.individualassignment.dto.AccessTokenDTO;
+import com.listenup.individualassignment.business.dtoconverter.AlbumDTOConverter;
+import com.listenup.individualassignment.business.dtoconverter.ArtistDTOConverter;
+import com.listenup.individualassignment.business.dtoconverter.GenreDTOConverter;
+import com.listenup.individualassignment.business.dtoconverter.SongDTOConverter;
+import com.listenup.individualassignment.business.song.*;
+import com.listenup.individualassignment.business.song.imp.*;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumSongRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumSongResponseDTO;
 import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDTO;
@@ -13,7 +14,6 @@ import com.listenup.individualassignment.dto.createdto.CreateSingleSongResponseD
 import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 import com.listenup.individualassignment.entity.*;
 import com.listenup.individualassignment.repository.SongRepository;
-import com.listenup.individualassignment.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,7 +33,17 @@ class SongServiceImpTest {
     private SongRepository repository;
 
     @InjectMocks
-    private SongServiceImp service;
+    private CreateSingleSongUseCaseImp createSingleSongUseCase;
+    @InjectMocks
+    private CreateAlbumSongUseCaseImp createAlbumSongUseCase;
+    @InjectMocks
+    private DeleteSongUseCaseImp deleteSongUseCase;
+    @InjectMocks
+    private UpdateSongUseCaseImp updateSongUseCase;
+    @InjectMocks
+    private GetSongUseCaseImp getSongUseCase;
+    @InjectMocks
+    private GetSongsUseCaseImp getSongsUseCase;
 
     final Artist artist = Artist.builder()
             .id(1L)
@@ -75,7 +85,7 @@ class SongServiceImpTest {
                 .singleSongID(1L)
                 .build();
 
-        CreateSingleSongResponseDTO actualDTO = service.addSingleSong(dto);
+        CreateSingleSongResponseDTO actualDTO = createSingleSongUseCase.addSingleSong(dto);
 
         assertEquals(actualDTO, expectedDTO);
 
@@ -100,7 +110,7 @@ class SongServiceImpTest {
                 .albumSongID(1L)
                 .build();
 
-        CreateAlbumSongResponseDTO actualDTO = service.addAlbumSong(dto);
+        CreateAlbumSongResponseDTO actualDTO = createAlbumSongUseCase.addAlbumSong(dto);
 
         assertEquals(actualDTO, expectedDTO);
 
@@ -118,7 +128,7 @@ class SongServiceImpTest {
         expectedList.add(SongDTOConverter.convertToSingleSongDTO(song1));
         expectedList.add(SongDTOConverter.convertToSingleSongDTO(song2));
 
-        List<SingleSongDTO> actualList = service.getSongs();
+        List<SingleSongDTO> actualList = getSongsUseCase.getSongs();
 
         assertEquals(actualList, expectedList);
 
@@ -140,7 +150,7 @@ class SongServiceImpTest {
                 .releasedDate(date)
                 .build();
 
-        SingleSongDTO actualDTO = service.getSong(1L);
+        SingleSongDTO actualDTO = getSongUseCase.getSong(1L);
 
         assertEquals(actualDTO, expectedDTO);
 
@@ -160,7 +170,7 @@ class SongServiceImpTest {
                 .releasedDate(date)
                 .build();
 
-        service.editSong(updateDTO);
+        updateSongUseCase.editSong(updateDTO);
 
         Song actualSong = new SingleSong(1L,"Lost Stars", artist, genre, date, date);
 
@@ -181,7 +191,7 @@ class SongServiceImpTest {
                 .releasedDate(date)
                 .build();
 
-        InvalidSongException exception = assertThrows(InvalidSongException.class, () -> service.editSong(updateDTO));
+        InvalidSongException exception = assertThrows(InvalidSongException.class, () -> updateSongUseCase.editSong(updateDTO));
 
         assertEquals("INVALID_ID", exception.getReason());
 
@@ -193,7 +203,7 @@ class SongServiceImpTest {
     void deleteSongValid() {
         when(repository.existsById(1L)).thenReturn(true);
 
-        service.deleteSong(1L);
+        deleteSongUseCase.deleteSong(1L);
 
         verify(repository).existsById(1L);
         verify(repository).deleteById(1L);
@@ -203,7 +213,7 @@ class SongServiceImpTest {
     void deleteSongInvalid() {
         when(repository.existsById(1L)).thenReturn(false);
 
-        service.deleteSong(1L);
+        deleteSongUseCase.deleteSong(1L);
 
         verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);

@@ -1,8 +1,10 @@
 package com.listenup.individualassignment.business.imp;
 
+import com.listenup.individualassignment.business.album.*;
+import com.listenup.individualassignment.business.album.imp.*;
 import com.listenup.individualassignment.business.exception.InvalidAlbumException;
-import com.listenup.individualassignment.business.imp.dtoconverter.AlbumDTOConverter;
-import com.listenup.individualassignment.business.imp.dtoconverter.ArtistDTOConverter;
+import com.listenup.individualassignment.business.dtoconverter.AlbumDTOConverter;
+import com.listenup.individualassignment.business.dtoconverter.ArtistDTOConverter;
 import com.listenup.individualassignment.dto.AlbumSongListDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumResponseDTO;
@@ -25,8 +27,17 @@ import static org.mockito.Mockito.*;
 class AlbumServiceImpTest {
     @Mock
     private AlbumRepository repository;
+
     @InjectMocks
-    private AlbumServiceImp service;
+    private CreateAlbumUseCaseImp createAlbumUseCase;
+    @InjectMocks
+    private GetAlbumsUseCaseImp getAlbumsUseCase;
+    @InjectMocks
+    private GetAlbumSongsUseCaseImp getAlbumSongsUseCase;
+    @InjectMocks
+    private DeleteAlbumUseCaseImp deleteAlbumUseCase;
+    @InjectMocks
+    private UpdateAlbumUseCaseImp updateAlbumUseCase;
 
     private final Date date = new Date(2021,11,27);
 
@@ -63,7 +74,7 @@ class AlbumServiceImpTest {
                 .albumID(1L)
                 .build();
 
-        CreateAlbumResponseDTO actualDTO = service.addAlbum(dto);
+        CreateAlbumResponseDTO actualDTO = createAlbumUseCase.addAlbum(dto);
 
         assertEquals(actualDTO, expectedDTO);
 
@@ -93,7 +104,7 @@ class AlbumServiceImpTest {
         expectedList.add(AlbumDTOConverter.convertToDTO(album1));
         expectedList.add(AlbumDTOConverter.convertToDTO(album2));
 
-        List<AlbumDTO> actualList = service.getAlbums();
+        List<AlbumDTO> actualList = getAlbumsUseCase.getAlbums();
 
         assertEquals(actualList, expectedList);
 
@@ -119,7 +130,7 @@ class AlbumServiceImpTest {
                 .songs(Collections.emptyList())
                 .build();
 
-        AlbumSongListDTO actualDTO = service.getAlbumSongs(1L);
+        AlbumSongListDTO actualDTO = getAlbumSongsUseCase.getAlbumSongs(1L);
 
         assertEquals(actualDTO, expectedDTO);
 
@@ -138,7 +149,7 @@ class AlbumServiceImpTest {
                 .uploadedDate(date)
                 .build();
 
-        service.editAlbum(updateDTO);
+        updateAlbumUseCase.editAlbum(updateDTO);
 
         verify(repository).existsById(1L);
 
@@ -164,7 +175,7 @@ class AlbumServiceImpTest {
                 .uploadedDate(date)
                 .build();
 
-        InvalidAlbumException exception = assertThrows(InvalidAlbumException.class, () -> service.editAlbum(updateDTO));
+        InvalidAlbumException exception = assertThrows(InvalidAlbumException.class, () -> updateAlbumUseCase.editAlbum(updateDTO));
 
         assertEquals("INVALID_ALBUM", exception.getReason());
 
@@ -176,7 +187,7 @@ class AlbumServiceImpTest {
     void deleteAlbumValid() {
         when(repository.existsById(10L)).thenReturn(true);
 
-        service.deleteAlbum(10L);
+        deleteAlbumUseCase.deleteAlbum(10L);
 
         verify(repository).existsById(10L);
         verify(repository).deleteById(10L);
@@ -186,7 +197,7 @@ class AlbumServiceImpTest {
     void deleteAlbumInvalid() {
         when(repository.existsById(10L)).thenReturn(false);
 
-        service.deleteAlbum(10L);
+        deleteAlbumUseCase.deleteAlbum(10L);
 
         verify(repository).existsById(10L);
         verifyNoMoreInteractions(repository);

@@ -2,6 +2,7 @@ package com.listenup.individualassignment.controller;
 
 import java.util.List;
 
+import com.listenup.individualassignment.business.artist.*;
 import com.listenup.individualassignment.configuration.security.isauthenticated.IsAuthenticated;
 import com.listenup.individualassignment.dto.createdto.CreateArtistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateArtistResponseDTO;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.listenup.individualassignment.dto.ArtistSongListDTO;
-import com.listenup.individualassignment.business.ArtistService;
 import com.listenup.individualassignment.dto.ArtistAlbumListDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
 
@@ -24,14 +24,19 @@ import javax.validation.Valid;
 @RequestMapping("/artists")
 @CrossOrigin(origins = "http://localhost:3000")
 public class  ArtistController {
-    private final ArtistService management;
+    private final CreateArtistUseCase createArtistUseCase;
+    private final GetArtistsUseCase getArtistsUseCase;
+    private final GetArtistSongsUseCase getArtistSongsUseCase;
+    private final GetArtistAlbumsUseCase getArtistAlbumsUseCase;
+    private final DeleteArtistUseCase deleteArtistUseCase;
+    private final UpdateArtistUseCase updateArtistUseCase;
 
 
     @IsAuthenticated
     @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping
     public ResponseEntity<List<ArtistDTO>> getAllArtists() {
-        List<ArtistDTO> artists = management.getArtists();
+        List<ArtistDTO> artists = getArtistsUseCase.getArtists();
 
         if(artists != null) {
             return ResponseEntity.ok().body(artists);
@@ -44,7 +49,7 @@ public class  ArtistController {
     @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping("{id}")
     public ResponseEntity<ArtistSongListDTO> getArtistPath(@PathVariable(value = "id") long id) {
-        ArtistSongListDTO artist = management.getArtistSongs(id);
+        ArtistSongListDTO artist = getArtistSongsUseCase.getArtistSongs(id);
 
         if(artist != null) {
             return ResponseEntity.ok().body(artist);
@@ -57,7 +62,7 @@ public class  ArtistController {
     @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     @GetMapping("{id}/albums")
     public ResponseEntity<ArtistAlbumListDTO> getArtistAlbumsPath(@PathVariable(value = "id") long id) {
-        ArtistAlbumListDTO artist = management.getArtistAlbums(id);
+        ArtistAlbumListDTO artist = getArtistAlbumsUseCase.getArtistAlbums(id);
 
         if(artist != null) {
             return ResponseEntity.ok().body(artist);
@@ -70,7 +75,7 @@ public class  ArtistController {
     @RolesAllowed({"ROLE_ADMIN"})
     @PostMapping()
     public ResponseEntity<CreateArtistResponseDTO> createArtist(@RequestBody @Valid CreateArtistRequestDTO artistDTO) {
-        CreateArtistResponseDTO artist = management.addArtist(artistDTO);
+        CreateArtistResponseDTO artist = createArtistUseCase.addArtist(artistDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(artist);
     }
 
@@ -79,7 +84,7 @@ public class  ArtistController {
     @PutMapping("{id}")
     public ResponseEntity<ArtistDTO> updateArtist(@PathVariable("id") long id, @RequestBody @Valid ArtistDTO artistDTO) {
         artistDTO.setId(id);
-        management.editArtist(artistDTO);
+        updateArtistUseCase.editArtist(artistDTO);
         return ResponseEntity.noContent().build();
     }
 
@@ -87,7 +92,7 @@ public class  ArtistController {
     @RolesAllowed({"ROLE_ADMIN"})
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteArtist(@PathVariable long id) {
-        management.deleteArtist(id);
+        deleteArtistUseCase.deleteArtist(id);
         return ResponseEntity.ok().build();
     }
 }

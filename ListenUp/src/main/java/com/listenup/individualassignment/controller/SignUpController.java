@@ -1,6 +1,6 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.UserService;
+import com.listenup.individualassignment.business.user.account.CreateAccountUseCase;
 import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +15,11 @@ import javax.validation.Valid;
 @RequestMapping("/signup")
 @CrossOrigin(origins = "http://localhost:3000")
 public class SignUpController {
-    private final UserService management;
+    private final CreateAccountUseCase createAccountUseCase;
 
     @PostMapping
     public ResponseEntity<CreateUserResponseDTO> createUser(@RequestBody @Valid CreateUserRequestDTO userDTO) {
-        CreateUserResponseDTO user = management.createAccount(userDTO);
+        CreateUserResponseDTO user = createAccountUseCase.createAccount(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 }

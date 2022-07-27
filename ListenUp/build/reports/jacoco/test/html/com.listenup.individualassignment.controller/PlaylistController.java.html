@@ -2,6 +2,7 @@
 
 import java.util.List;
 
+import com.listenup.individualassignment.business.playlist.*;
 import com.listenup.individualassignment.configuration.security.isauthenticated.IsAuthenticated;
 import com.listenup.individualassignment.dto.createdto.AddRemoveSongToPlaylistDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
@@ -11,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
-import com.listenup.individualassignment.business.PlaylistService;
 import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -24,18 +24,25 @@ import javax.validation.Valid;
 @RequestMapping(&quot;/playlists&quot;)
 @CrossOrigin(origins = &quot;http://localhost:3000&quot;)
 public class PlaylistController {
-    private final PlaylistService management;
+    private final CreatePlaylistUseCase createPlaylistUseCase;
+    private final GetPlaylistsUseCase getPlaylistsUseCase;
+    private final GetPlaylistSongsUseCase getPlaylistSongsUseCase;
+    private final DeletePlaylistUseCase deletePlaylistUseCase;
+    private final UpdatePlaylistUseCase updatePlaylistUseCase;
+    private final AddSongToPlaylistUseCase addSongToPlaylistUseCase;
+    private final RemoveSongFromPlaylistUseCase removeSongFromPlaylistUseCase;
+
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping
     public ResponseEntity&lt;List&lt;PlaylistDTO&gt;&gt; getAllPlaylists() {
-<span class="fc" id="L33">        List&lt;PlaylistDTO&gt; playlists = management.getPlaylists();</span>
+<span class="fc" id="L40">        List&lt;PlaylistDTO&gt; playlists = getPlaylistsUseCase.getPlaylists();</span>
 
-<span class="fc bfc" id="L35" title="All 2 branches covered.">        if(playlists != null) {</span>
-<span class="fc" id="L36">            return ResponseEntity.ok().body(playlists);</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if(playlists != null) {</span>
+<span class="fc" id="L43">            return ResponseEntity.ok().body(playlists);</span>
         } else {
-<span class="fc" id="L38">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L45">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -43,12 +50,12 @@ public class PlaylistController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;PlaylistSongListDTO&gt; getPlaylistPath(@PathVariable(value = &quot;id&quot;) long id) {
-<span class="fc" id="L46">        PlaylistSongListDTO playlist = management.getPlaylistSong(id);</span>
+<span class="fc" id="L53">        PlaylistSongListDTO playlist = getPlaylistSongsUseCase.getPlaylistSongs(id);</span>
 
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        if(playlist != null) {</span>
-<span class="fc" id="L49">            return ResponseEntity.ok().body(playlist);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if(playlist != null) {</span>
+<span class="fc" id="L56">            return ResponseEntity.ok().body(playlist);</span>
         } else {
-<span class="fc" id="L51">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L58">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -56,43 +63,43 @@ public class PlaylistController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;})
     @PostMapping()
     public ResponseEntity&lt;CreatePlaylistResponseDTO&gt; createPlaylist(@RequestBody @Valid CreatePlaylistRequestDTO playlistDTO) {
-<span class="fc" id="L59">        CreatePlaylistResponseDTO playlist = management.addPlaylist(playlistDTO);</span>
-<span class="fc" id="L60">        return ResponseEntity.status(HttpStatus.CREATED).body(playlist);</span>
+<span class="fc" id="L66">        CreatePlaylistResponseDTO playlist = createPlaylistUseCase.addPlaylist(playlistDTO);</span>
+<span class="fc" id="L67">        return ResponseEntity.status(HttpStatus.CREATED).body(playlist);</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;})
     @PutMapping(&quot;{id}/songs/add&quot;)
     public ResponseEntity&lt;PlaylistSongListDTO&gt; addSongToPlaylist(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid AddRemoveSongToPlaylistDTO song) {
-<span class="fc" id="L67">        song.setPlaylistID(id);</span>
-<span class="fc" id="L68">        management.addSongToPlaylist(song);</span>
-<span class="fc" id="L69">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L74">        song.setPlaylistID(id);</span>
+<span class="fc" id="L75">        addSongToPlaylistUseCase.addSongToPlaylist(song);</span>
+<span class="fc" id="L76">        return ResponseEntity.noContent().build();</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;})
     @PutMapping(&quot;{id}/songs/remove&quot;)
     public ResponseEntity&lt;PlaylistSongListDTO&gt; removeSongToPlaylist(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid AddRemoveSongToPlaylistDTO song) {
-<span class="fc" id="L76">        song.setPlaylistID(id);</span>
-<span class="fc" id="L77">        management.removeSongFromPlaylist(song);</span>
-<span class="fc" id="L78">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L83">        song.setPlaylistID(id);</span>
+<span class="fc" id="L84">        removeSongFromPlaylistUseCase.removeSongFromPlaylist(song);</span>
+<span class="fc" id="L85">        return ResponseEntity.noContent().build();</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;})
     @PutMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;PlaylistDTO&gt; updatePlaylist(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid PlaylistDTO playlistDTO) {
-<span class="fc" id="L85">        playlistDTO.setId(id);</span>
-<span class="fc" id="L86">        management.editPlaylist(playlistDTO);</span>
-<span class="fc" id="L87">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L92">        playlistDTO.setId(id);</span>
+<span class="fc" id="L93">        updatePlaylistUseCase.editPlaylist(playlistDTO);</span>
+<span class="fc" id="L94">        return ResponseEntity.noContent().build();</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;})
     @DeleteMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;Object&gt; deletePlaylist(@PathVariable long id) {
-<span class="fc" id="L94">        management.deletePlaylist(id);</span>
-<span class="fc" id="L95">        return ResponseEntity.ok().build();</span>
+<span class="fc" id="L101">        deletePlaylistUseCase.deletePlaylist(id);</span>
+<span class="fc" id="L102">        return ResponseEntity.ok().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

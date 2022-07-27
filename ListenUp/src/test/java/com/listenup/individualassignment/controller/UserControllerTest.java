@@ -1,6 +1,9 @@
 package com.listenup.individualassignment.controller;
 
-import com.listenup.individualassignment.business.UserService;
+import com.listenup.individualassignment.business.user.account.DeleteAccountUseCase;
+import com.listenup.individualassignment.business.user.account.GetUserUseCase;
+import com.listenup.individualassignment.business.user.account.UpdateProfileUseCase;
+import com.listenup.individualassignment.business.user.action.*;
 import com.listenup.individualassignment.dto.CustomerLikedPlaylistListDTO;
 import com.listenup.individualassignment.dto.CustomerLikedSongListDTO;
 import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
@@ -37,7 +40,27 @@ class UserControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService service;
+    private UpdateProfileUseCase updateProfileUseCase;
+    @MockBean
+    private DeleteAccountUseCase deleteAccountUseCase;
+    @MockBean
+    private GetUserUseCase getUserUseCase;
+    @MockBean
+    private GetUsersUseCase getUsersUseCase;
+    @MockBean
+    private GetUserPlaylistsUseCase getCustomerPlaylistsUseCase;
+    @MockBean
+    private GetUserLikedPlaylistsUseCase getUserLikedPlaylistsUseCase;
+    @MockBean
+    private GetUserLikedSongsUseCase getUserLikedSongsUseCase;
+    @MockBean
+    private AddLikedSongUseCase addLikedSongUseCase;
+    @MockBean
+    private AddLikedPlaylistUseCase addLikedPlaylistUseCase;
+    @MockBean
+    private RemoveLikedSongUseCase removeLikedSongUseCase;
+    @MockBean
+    private RemoveLikedPlaylistUseCase removeLikedPlaylistUseCase;
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
@@ -51,7 +74,7 @@ class UserControllerTest {
         List<ViewUserDTO> users = new ArrayList<>();
         users.add(user);
 
-        when(service.getUsers()).thenReturn(users);
+        when(getUsersUseCase.getUsers()).thenReturn(users);
 
         mockMvc.perform(get("/users"))
                 .andDo(print())
@@ -67,19 +90,19 @@ class UserControllerTest {
                             ]
                         """));
 
-        verify(service).getUsers();
+        verify(getUsersUseCase).getUsers();
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getAllUsersNotFound() throws Exception{
-        when(service.getUsers()).thenReturn(null);
+        when(getUsersUseCase.getUsers()).thenReturn(null);
 
         mockMvc.perform(get("/users"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getUsers();
+        verify(getUsersUseCase).getUsers();
     }
 
     @Test
@@ -92,7 +115,7 @@ class UserControllerTest {
                 .password("123Blue")
                 .build();
 
-        when(service.getUser(1L)).thenReturn(user);
+        when(getUserUseCase.getUser(1L)).thenReturn(user);
 
         mockMvc.perform(get("/users/1/profile"))
                 .andDo(print())
@@ -107,19 +130,19 @@ class UserControllerTest {
                             }
                         """));
 
-        verify(service).getUser(1L);
+        verify(getUserUseCase).getUser(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getUserPathNotFound() throws Exception{
-        when(service.getUser(1L)).thenReturn(null);
+        when(getUserUseCase.getUser(1L)).thenReturn(null);
 
         mockMvc.perform(get("/users/1/profile"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getUser(1L);
+        verify(getUserUseCase).getUser(1L);
     }
 
     @Test
@@ -130,7 +153,7 @@ class UserControllerTest {
                 .playlists(Collections.emptyList())
                 .build();
 
-        when(service.getCustomerPlaylists(1L)).thenReturn(user);
+        when(getCustomerPlaylistsUseCase.getCustomerPlaylists(1L)).thenReturn(user);
 
         mockMvc.perform(get("/users/1/playlists"))
                 .andDo(print())
@@ -143,19 +166,19 @@ class UserControllerTest {
                             }
                         """));
 
-        verify(service).getCustomerPlaylists(1L);
+        verify(getCustomerPlaylistsUseCase).getCustomerPlaylists(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerPlaylistsPathNotFound() throws Exception{
-        when(service.getCustomerPlaylists(1L)).thenReturn(null);
+        when(getCustomerPlaylistsUseCase.getCustomerPlaylists(1L)).thenReturn(null);
 
         mockMvc.perform(get("/users/1/playlists"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getCustomerPlaylists(1L);
+        verify(getCustomerPlaylistsUseCase).getCustomerPlaylists(1L);
     }
 
     @Test
@@ -166,7 +189,7 @@ class UserControllerTest {
                 .songs(Collections.emptyList())
                 .build();
 
-        when(service.getCustomerCollection(1L)).thenReturn(user);
+        when(getUserLikedSongsUseCase.getCustomerCollection(1L)).thenReturn(user);
 
         mockMvc.perform(get("/users/1/collection"))
                 .andDo(print())
@@ -179,19 +202,19 @@ class UserControllerTest {
                             }
                         """));
 
-        verify(service).getCustomerCollection(1L);
+        verify(getUserLikedSongsUseCase).getCustomerCollection(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerLikedSongsPathNotFound() throws Exception{
-        when(service.getCustomerCollection(1L)).thenReturn(null);
+        when(getUserLikedSongsUseCase.getCustomerCollection(1L)).thenReturn(null);
 
         mockMvc.perform(get("/users/1/collection"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getCustomerCollection(1L);
+        verify(getUserLikedSongsUseCase).getCustomerCollection(1L);
     }
 
     @Test
@@ -202,7 +225,7 @@ class UserControllerTest {
                 .playlists(Collections.emptyList())
                 .build();
 
-        when(service.getCustomerLikedPlaylists(1L)).thenReturn(user);
+        when(getUserLikedPlaylistsUseCase.getCustomerLikedPlaylists(1L)).thenReturn(user);
 
         mockMvc.perform(get("/users/1/likedplaylists"))
                 .andDo(print())
@@ -215,19 +238,19 @@ class UserControllerTest {
                             }
                         """));
 
-        verify(service).getCustomerLikedPlaylists(1L);
+        verify(getUserLikedPlaylistsUseCase).getCustomerLikedPlaylists(1L);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
     void getCustomerLikedPlaylistsPathNotFound() throws Exception{
-        when(service.getCustomerLikedPlaylists(1L)).thenReturn(null);
+        when(getUserLikedPlaylistsUseCase.getCustomerLikedPlaylists(1L)).thenReturn(null);
 
         mockMvc.perform(get("/users/1/likedplaylists"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
-        verify(service).getCustomerLikedPlaylists(1L);
+        verify(getUserLikedPlaylistsUseCase).getCustomerLikedPlaylists(1L);
     }
 
     @Test
@@ -253,7 +276,7 @@ class UserControllerTest {
                 .password("123Yellow")
                 .build();
 
-        verify(service).updateAccount(user);
+        verify(updateProfileUseCase).updateAccount(user);
     }
 
     @Test
@@ -275,7 +298,7 @@ class UserControllerTest {
                 .song(null)
                 .build();
 
-        verify(service).addSongToCollection(user);
+        verify(addLikedSongUseCase).addSongToCollection(user);
     }
 
     @Test
@@ -297,7 +320,7 @@ class UserControllerTest {
                 .song(null)
                 .build();
 
-        verify(service).removeSongFromCollection(user);
+        verify(removeLikedSongUseCase).removeSongFromCollection(user);
     }
 
     @Test
@@ -319,7 +342,7 @@ class UserControllerTest {
                 .playlist(null)
                 .build();
 
-        verify(service).addLikedPlaylist(user);
+        verify(addLikedPlaylistUseCase).addLikedPlaylist(user);
     }
 
     @Test
@@ -341,7 +364,7 @@ class UserControllerTest {
                 .playlist(null)
                 .build();
 
-        verify(service).removeLikedPlaylist(user);
+        verify(removeLikedPlaylistUseCase).removeLikedPlaylist(user);
     }
 
     @Test
@@ -351,6 +374,6 @@ class UserControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        verify(service).deleteAccount(1L);
+        verify(deleteAccountUseCase).deleteAccount(1L);
     }
 }
