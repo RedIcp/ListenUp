@@ -1,6 +1,5 @@
 package com.listenup.individualassignment.dto.createdto;
 
-import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

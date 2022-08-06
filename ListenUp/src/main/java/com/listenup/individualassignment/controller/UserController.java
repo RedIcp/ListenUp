@@ -2,7 +2,6 @@ package com.listenup.individualassignment.controller;
 
 import java.util.List;
 
-import com.listenup.individualassignment.business.user.account.CreateAccountUseCase;
 import com.listenup.individualassignment.business.user.account.DeleteAccountUseCase;
 import com.listenup.individualassignment.business.user.account.GetUserUseCase;
 import com.listenup.individualassignment.business.user.account.UpdateProfileUseCase;
