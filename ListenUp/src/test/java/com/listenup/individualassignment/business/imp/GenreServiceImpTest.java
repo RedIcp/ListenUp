@@ -2,13 +2,12 @@ package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.exception.InvalidGenreException;
 import com.listenup.individualassignment.business.dtoconverter.GenreDTOConverter;
-import com.listenup.individualassignment.business.genre.*;
 import com.listenup.individualassignment.business.genre.imp.*;
 import com.listenup.individualassignment.dto.GenreSongListDTO;
 import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateGenreResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
-import com.listenup.individualassignment.entity.Genre;
+import com.listenup.individualassignment.repository.entity.Genre;
 import com.listenup.individualassignment.repository.GenreRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

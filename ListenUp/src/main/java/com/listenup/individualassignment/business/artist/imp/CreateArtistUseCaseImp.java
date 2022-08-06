@@ -4,14 +4,17 @@ import com.listenup.individualassignment.business.artist.CreateArtistUseCase;
 import com.listenup.individualassignment.business.dtoconverter.ArtistDTOConverter;
 import com.listenup.individualassignment.dto.createdto.CreateArtistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateArtistResponseDTO;
-import com.listenup.individualassignment.entity.Artist;
+import com.listenup.individualassignment.repository.entity.Artist;
 import com.listenup.individualassignment.repository.ArtistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @Primary
+@Transactional
 @RequiredArgsConstructor
 public class CreateArtistUseCaseImp implements CreateArtistUseCase {
     private final ArtistRepository db;

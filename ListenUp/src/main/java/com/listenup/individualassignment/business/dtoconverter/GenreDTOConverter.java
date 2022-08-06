@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
-import com.listenup.individualassignment.entity.Genre;
+import com.listenup.individualassignment.repository.entity.Genre;
 import com.listenup.individualassignment.dto.GenreSongListDTO;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
 

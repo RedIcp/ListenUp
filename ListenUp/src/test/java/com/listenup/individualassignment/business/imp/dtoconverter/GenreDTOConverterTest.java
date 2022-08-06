@@ -4,7 +4,7 @@ import com.listenup.individualassignment.business.dtoconverter.GenreDTOConverter
 import com.listenup.individualassignment.dto.GenreSongListDTO;
 import com.listenup.individualassignment.dto.createdto.CreateGenreRequestDTO;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
-import com.listenup.individualassignment.entity.Genre;
+import com.listenup.individualassignment.repository.entity.Genre;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

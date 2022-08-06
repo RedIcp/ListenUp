@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AddRemoveLikedPlaylistDTO {
     private long customerID;
-    private PlaylistDTO playlist;
+    private long playlistID;
 }

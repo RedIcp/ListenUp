@@ -8,8 +8,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @Primary
+@Transactional
 @RequiredArgsConstructor
 public class GetGenreSongsUseCaseImp implements GetGenreSongsUseCase {
     private final GenreRepository db;

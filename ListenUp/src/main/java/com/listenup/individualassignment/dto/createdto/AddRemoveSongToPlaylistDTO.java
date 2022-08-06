@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class AddRemoveSongToPlaylistDTO {
     private long playlistID;
     private long customerID;
-    private SingleSongDTO song;
+    private long songID;
 }

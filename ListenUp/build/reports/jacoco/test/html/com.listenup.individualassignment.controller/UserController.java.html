@@ -34,31 +34,29 @@ public class UserController {
     private final GetUserPlaylistsUseCase getCustomerPlaylistsUseCase;
     private final GetUserLikedPlaylistsUseCase getUserLikedPlaylistsUseCase;
     private final GetUserLikedSongsUseCase getUserLikedSongsUseCase;
-    private final AddLikedSongUseCase addLikedSongUseCase;
-    private final AddLikedPlaylistUseCase addLikedPlaylistUseCase;
-    private final RemoveLikedSongUseCase removeLikedSongUseCase;
-    private final RemoveLikedPlaylistUseCase removeLikedPlaylistUseCase;
+    private final LikeUnlikeSongUseCase likeUnlikeSongUseCase;
+    private final LikeUnlikePlaylistUseCase likeUnlikePlaylistUseCase;
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_ADMIN&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping
     public ResponseEntity&lt;List&lt;ViewUserDTO&gt;&gt; getAllUsers() {
-<span class="fc" id="L46">        List&lt;ViewUserDTO&gt; users = getUsersUseCase.getUsers();</span>
+<span class="fc" id="L44">        List&lt;ViewUserDTO&gt; users = getUsersUseCase.getUsers();</span>
 
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        if(users != null) {</span>
-<span class="fc" id="L49">            return ResponseEntity.ok().body(users);</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if(users != null) {</span>
+<span class="fc" id="L47">            return ResponseEntity.ok().body(users);</span>
         } else {
-<span class="fc" id="L51">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L49">            return ResponseEntity.notFound().build();</span>
         }
     }
 
     @GetMapping(&quot;{id}/profile&quot;)
     public ResponseEntity&lt;UpdateUserDTO&gt; getUserPath(@PathVariable(value = &quot;id&quot;) long id) {
-<span class="fc" id="L57">        UpdateUserDTO dto = getUserUseCase.getUser(id);</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">        if(dto != null) {</span>
-<span class="fc" id="L59">            return ResponseEntity.ok().body(dto);</span>
+<span class="fc" id="L55">        UpdateUserDTO dto = getUserUseCase.getUser(id);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if(dto != null) {</span>
+<span class="fc" id="L57">            return ResponseEntity.ok().body(dto);</span>
         } else {
-<span class="fc" id="L61">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L59">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -66,11 +64,11 @@ public class UserController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping(&quot;{id}/playlists&quot;)
     public ResponseEntity&lt;CustomerPlaylistListDTO&gt; getCustomerPlaylistsPath(@PathVariable(value = &quot;id&quot;) long id) {
-<span class="fc" id="L69">        CustomerPlaylistListDTO dto = getCustomerPlaylistsUseCase.getCustomerPlaylists(id);</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">        if(dto != null) {</span>
-<span class="fc" id="L71">            return ResponseEntity.ok().body(dto);</span>
+<span class="fc" id="L67">        CustomerPlaylistListDTO dto = getCustomerPlaylistsUseCase.getCustomerPlaylists(id);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if(dto != null) {</span>
+<span class="fc" id="L69">            return ResponseEntity.ok().body(dto);</span>
         } else {
-<span class="fc" id="L73">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L71">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -78,11 +76,11 @@ public class UserController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping(&quot;{id}/collection&quot;)
     public ResponseEntity&lt;CustomerLikedSongListDTO&gt; getCustomerLikedSongsPath(@PathVariable(value = &quot;id&quot;) long id) {
-<span class="fc" id="L81">        CustomerLikedSongListDTO dto = getUserLikedSongsUseCase.getCustomerCollection(id);</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        if(dto != null) {</span>
-<span class="fc" id="L83">            return ResponseEntity.ok().body(dto);</span>
+<span class="fc" id="L79">        CustomerLikedSongListDTO dto = getUserLikedSongsUseCase.getCustomerCollection(id);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if(dto != null) {</span>
+<span class="fc" id="L81">            return ResponseEntity.ok().body(dto);</span>
         } else {
-<span class="fc" id="L85">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L83">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -90,11 +88,11 @@ public class UserController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @GetMapping(&quot;{id}/likedplaylists&quot;)
     public ResponseEntity&lt;CustomerLikedPlaylistListDTO&gt; getCustomerLikedPlaylistsPath(@PathVariable(value = &quot;id&quot;) long id) {
-<span class="fc" id="L93">        CustomerLikedPlaylistListDTO dto = getUserLikedPlaylistsUseCase.getCustomerLikedPlaylists(id);</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">        if(dto != null) {</span>
-<span class="fc" id="L95">            return ResponseEntity.ok().body(dto);</span>
+<span class="fc" id="L91">        CustomerLikedPlaylistListDTO dto = getUserLikedPlaylistsUseCase.getCustomerLikedPlaylists(id);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if(dto != null) {</span>
+<span class="fc" id="L93">            return ResponseEntity.ok().body(dto);</span>
         } else {
-<span class="fc" id="L97">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L95">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -102,53 +100,35 @@ public class UserController {
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @PutMapping(&quot;{id}/profile&quot;)
     public ResponseEntity&lt;UpdateUserDTO&gt; updateUser(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid UpdateUserDTO userDTO) {
-<span class="fc" id="L105">        userDTO.setId(id);</span>
-<span class="fc" id="L106">        updateProfileUseCase.updateAccount(userDTO);</span>
-<span class="fc" id="L107">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L103">        userDTO.setId(id);</span>
+<span class="fc" id="L104">        updateProfileUseCase.updateAccount(userDTO);</span>
+<span class="fc" id="L105">        return ResponseEntity.noContent().build();</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
-    @PutMapping(&quot;{id}/collection/add&quot;)
-    public ResponseEntity&lt;CustomerLikedSongListDTO&gt; addSongToCollection(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid AddRemoveSongToCollectionDTO song) {
-<span class="fc" id="L114">        song.setCustomerID(id);</span>
-<span class="fc" id="L115">        addLikedSongUseCase.addSongToCollection(song);</span>
-<span class="fc" id="L116">        return ResponseEntity.noContent().build();</span>
+    @PutMapping(&quot;{id}/collection&quot;)
+    public ResponseEntity&lt;CustomerLikedSongListDTO&gt; likeUnlikeSong(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid AddRemoveSongToCollectionDTO song) {
+<span class="fc" id="L112">        song.setCustomerID(id);</span>
+<span class="fc" id="L113">        likeUnlikeSongUseCase.likeUnlikeSong(song);</span>
+<span class="fc" id="L114">        return ResponseEntity.noContent().build();</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
-    @PutMapping(&quot;{id}/collection/remove&quot;)
-    public ResponseEntity&lt;CustomerLikedSongListDTO&gt; removeSongToCollection(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid AddRemoveSongToCollectionDTO song) {
-<span class="fc" id="L123">        song.setCustomerID(id);</span>
-<span class="fc" id="L124">        removeLikedSongUseCase.removeSongFromCollection(song);</span>
-<span class="fc" id="L125">        return ResponseEntity.noContent().build();</span>
-    }
-
-    @IsAuthenticated
-    @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
-    @PutMapping(&quot;{id}/likedplaylist/add&quot;)
+    @PutMapping(&quot;{id}/library&quot;)
     public ResponseEntity&lt;CustomerLikedPlaylistListDTO&gt; addLikedPlaylist(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid AddRemoveLikedPlaylistDTO playlist) {
-<span class="fc" id="L132">        playlist.setCustomerID(id);</span>
-<span class="fc" id="L133">        addLikedPlaylistUseCase.addLikedPlaylist(playlist);</span>
-<span class="fc" id="L134">        return ResponseEntity.noContent().build();</span>
-    }
-
-    @IsAuthenticated
-    @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
-    @PutMapping(&quot;{id}/likedplaylist/remove&quot;)
-    public ResponseEntity&lt;CustomerLikedPlaylistListDTO&gt; removeLikedPlaylist(@PathVariable(&quot;id&quot;) long id, @RequestBody @Valid AddRemoveLikedPlaylistDTO playlist) {
-<span class="fc" id="L141">        playlist.setCustomerID(id);</span>
-<span class="fc" id="L142">        removeLikedPlaylistUseCase.removeLikedPlaylist(playlist);</span>
-<span class="fc" id="L143">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L121">        playlist.setCustomerID(id);</span>
+<span class="fc" id="L122">        likeUnlikePlaylistUseCase.likeUnlikePlaylist(playlist);</span>
+<span class="fc" id="L123">        return ResponseEntity.noContent().build();</span>
     }
 
     @IsAuthenticated
     @RolesAllowed({&quot;ROLE_CUSTOMER&quot;, &quot;ROLE_ADMIN&quot;})
     @DeleteMapping(&quot;{id}&quot;)
     public ResponseEntity&lt;Object&gt; deleteUser(@PathVariable long id) {
-<span class="fc" id="L150">        deleteAccountUseCase.deleteAccount(id);</span>
-<span class="fc" id="L151">        return ResponseEntity.ok().build();</span>
+<span class="fc" id="L130">        deleteAccountUseCase.deleteAccount(id);</span>
+<span class="fc" id="L131">        return ResponseEntity.ok().build();</span>
 
     }
 }

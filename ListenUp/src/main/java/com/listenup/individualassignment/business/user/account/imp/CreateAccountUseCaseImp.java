@@ -5,19 +5,21 @@ import com.listenup.individualassignment.business.exception.InvalidCustomerEmail
 import com.listenup.individualassignment.business.user.account.CreateAccountUseCase;
 import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
-import com.listenup.individualassignment.entity.RoleEnum;
-import com.listenup.individualassignment.entity.User;
-import com.listenup.individualassignment.entity.UserRole;
+import com.listenup.individualassignment.repository.entity.RoleEnum;
+import com.listenup.individualassignment.repository.entity.User;
+import com.listenup.individualassignment.repository.entity.UserRole;
 import com.listenup.individualassignment.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Set;
 
 @Service
 @Primary
+@Transactional
 @RequiredArgsConstructor
 public class CreateAccountUseCaseImp implements CreateAccountUseCase {
     private final UserRepository db;

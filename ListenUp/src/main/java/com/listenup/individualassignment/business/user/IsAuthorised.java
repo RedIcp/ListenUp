@@ -2,7 +2,7 @@ package com.listenup.individualassignment.business.user;
 
 import com.listenup.individualassignment.business.exception.UnauthorizedDataAccessException;
 import com.listenup.individualassignment.dto.AccessTokenDTO;
-import com.listenup.individualassignment.entity.RoleEnum;
+import com.listenup.individualassignment.repository.entity.RoleEnum;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

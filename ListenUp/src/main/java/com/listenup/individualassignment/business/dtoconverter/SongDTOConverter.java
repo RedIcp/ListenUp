@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 import com.listenup.individualassignment.dto.createdto.CreateAlbumSongRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDTO;
-import com.listenup.individualassignment.entity.Song;
-import com.listenup.individualassignment.entity.AlbumSong;
-import com.listenup.individualassignment.entity.SingleSong;
+import com.listenup.individualassignment.repository.entity.Song;
+import com.listenup.individualassignment.repository.entity.AlbumSong;
+import com.listenup.individualassignment.repository.entity.SingleSong;
 import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 import com.listenup.individualassignment.dto.vieweditdto.AlbumSongDTO;
 

@@ -34,10 +34,8 @@ public class UserController {
     private final GetUserPlaylistsUseCase getCustomerPlaylistsUseCase;
     private final GetUserLikedPlaylistsUseCase getUserLikedPlaylistsUseCase;
     private final GetUserLikedSongsUseCase getUserLikedSongsUseCase;
-    private final AddLikedSongUseCase addLikedSongUseCase;
-    private final AddLikedPlaylistUseCase addLikedPlaylistUseCase;
-    private final RemoveLikedSongUseCase removeLikedSongUseCase;
-    private final RemoveLikedPlaylistUseCase removeLikedPlaylistUseCase;
+    private final LikeUnlikeSongUseCase likeUnlikeSongUseCase;
+    private final LikeUnlikePlaylistUseCase likeUnlikePlaylistUseCase;
 
     @IsAuthenticated
     @RolesAllowed({"ROLE_ADMIN", "ROLE_ADMIN"})
@@ -109,37 +107,19 @@ public class UserController {
 
     @IsAuthenticated
     @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
-    @PutMapping("{id}/collection/add")
-    public ResponseEntity<CustomerLikedSongListDTO> addSongToCollection(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToCollectionDTO song) {
+    @PutMapping("{id}/collection")
+    public ResponseEntity<CustomerLikedSongListDTO> likeUnlikeSong(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToCollectionDTO song) {
         song.setCustomerID(id);
-        addLikedSongUseCase.addSongToCollection(song);
+        likeUnlikeSongUseCase.likeUnlikeSong(song);
         return ResponseEntity.noContent().build();
     }
 
     @IsAuthenticated
     @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
-    @PutMapping("{id}/collection/remove")
-    public ResponseEntity<CustomerLikedSongListDTO> removeSongToCollection(@PathVariable("id") long id, @RequestBody @Valid AddRemoveSongToCollectionDTO song) {
-        song.setCustomerID(id);
-        removeLikedSongUseCase.removeSongFromCollection(song);
-        return ResponseEntity.noContent().build();
-    }
-
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
-    @PutMapping("{id}/likedplaylist/add")
+    @PutMapping("{id}/library")
     public ResponseEntity<CustomerLikedPlaylistListDTO> addLikedPlaylist(@PathVariable("id") long id, @RequestBody @Valid AddRemoveLikedPlaylistDTO playlist) {
         playlist.setCustomerID(id);
-        addLikedPlaylistUseCase.addLikedPlaylist(playlist);
-        return ResponseEntity.noContent().build();
-    }
-
-    @IsAuthenticated
-    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
-    @PutMapping("{id}/likedplaylist/remove")
-    public ResponseEntity<CustomerLikedPlaylistListDTO> removeLikedPlaylist(@PathVariable("id") long id, @RequestBody @Valid AddRemoveLikedPlaylistDTO playlist) {
-        playlist.setCustomerID(id);
-        removeLikedPlaylistUseCase.removeLikedPlaylist(playlist);
+        likeUnlikePlaylistUseCase.likeUnlikePlaylist(playlist);
         return ResponseEntity.noContent().build();
     }
 

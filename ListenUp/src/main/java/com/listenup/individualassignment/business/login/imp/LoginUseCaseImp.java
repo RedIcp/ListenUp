@@ -7,17 +7,19 @@ import com.listenup.individualassignment.business.exception.InvalidCustomerEmail
 import com.listenup.individualassignment.dto.AccessTokenDTO;
 import com.listenup.individualassignment.dto.LoginRequestDTO;
 import com.listenup.individualassignment.dto.LoginResponseDTO;
-import com.listenup.individualassignment.entity.User;
+import com.listenup.individualassignment.repository.entity.User;
 import com.listenup.individualassignment.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @Primary
+@Transactional
 @RequiredArgsConstructor
 public class LoginUseCaseImp implements LoginUseCase {
     private final UserRepository db;

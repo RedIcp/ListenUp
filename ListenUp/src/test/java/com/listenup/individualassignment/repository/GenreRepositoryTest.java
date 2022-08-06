@@ -1,9 +1,9 @@
 package com.listenup.individualassignment.repository;
 
-import com.listenup.individualassignment.entity.Artist;
-import com.listenup.individualassignment.entity.Genre;
-import com.listenup.individualassignment.entity.SingleSong;
-import com.listenup.individualassignment.entity.Song;
+import com.listenup.individualassignment.repository.entity.Artist;
+import com.listenup.individualassignment.repository.entity.Genre;
+import com.listenup.individualassignment.repository.entity.SingleSong;
+import com.listenup.individualassignment.repository.entity.Song;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

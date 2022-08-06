@@ -7,7 +7,7 @@ import com.listenup.individualassignment.dto.createdto.AddRemoveSongToPlaylistDT
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
-import com.listenup.individualassignment.entity.Customer;
+import com.listenup.individualassignment.repository.entity.Customer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -202,8 +202,8 @@ class PlaylistControllerTest {
                         .contentType(APPLICATION_JSON_VALUE)
                         .content("""
                                 {
-                                        "id": 1,
-                                        "song": null
+                                        "playlistID": 1,
+                                        "songID": 1
                                 }
                                 """))
                 .andDo(print())
@@ -211,7 +211,7 @@ class PlaylistControllerTest {
 
         AddRemoveSongToPlaylistDTO playlist = AddRemoveSongToPlaylistDTO.builder()
                 .playlistID(1L)
-                .song(null)
+                .songID(1L)
                 .build();
 
         verify(addSongToPlaylistUseCase).addSongToPlaylist(playlist);
@@ -224,8 +224,8 @@ class PlaylistControllerTest {
                         .contentType(APPLICATION_JSON_VALUE)
                         .content("""
                                 {
-                                        "id": 1,
-                                        "song": null
+                                        "playlistID": 1,
+                                        "songID": 1
                                 }
                                 """))
                 .andDo(print())
@@ -233,7 +233,7 @@ class PlaylistControllerTest {
 
         AddRemoveSongToPlaylistDTO playlist = AddRemoveSongToPlaylistDTO.builder()
                 .playlistID(1L)
-                .song(null)
+                .songID(1L)
                 .build();
 
         verify(removeSongFromPlaylistUseCase).removeSongFromPlaylist(playlist);

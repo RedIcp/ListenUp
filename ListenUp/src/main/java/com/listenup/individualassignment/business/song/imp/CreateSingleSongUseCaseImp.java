@@ -4,14 +4,17 @@ import com.listenup.individualassignment.business.dtoconverter.SongDTOConverter;
 import com.listenup.individualassignment.business.song.CreateSingleSongUseCase;
 import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateSingleSongResponseDTO;
-import com.listenup.individualassignment.entity.Song;
+import com.listenup.individualassignment.repository.entity.Song;
 import com.listenup.individualassignment.repository.SongRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @Primary
+@Transactional
 @RequiredArgsConstructor
 public class CreateSingleSongUseCaseImp implements CreateSingleSongUseCase {
     private final SongRepository db;

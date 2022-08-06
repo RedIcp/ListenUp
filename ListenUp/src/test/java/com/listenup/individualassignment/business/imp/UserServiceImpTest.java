@@ -4,22 +4,17 @@ import com.listenup.individualassignment.business.login.AccessTokenEncoder;
 import com.listenup.individualassignment.business.exception.InvalidCredentialsException;
 import com.listenup.individualassignment.business.exception.InvalidCustomerEmailException;
 import com.listenup.individualassignment.business.exception.InvalidCustomerException;
-import com.listenup.individualassignment.business.exception.UnauthorizedDataAccessException;
 import com.listenup.individualassignment.business.dtoconverter.CustomerDTOConverter;
 import com.listenup.individualassignment.business.dtoconverter.PlaylistDTOConverter;
 import com.listenup.individualassignment.business.dtoconverter.SongDTOConverter;
-import com.listenup.individualassignment.business.login.LoginUseCase;
 import com.listenup.individualassignment.business.login.imp.LoginUseCaseImp;
+import com.listenup.individualassignment.business.playlist.GetPlaylist;
+import com.listenup.individualassignment.business.song.GetSong;
 import com.listenup.individualassignment.business.user.IsAuthorised;
-import com.listenup.individualassignment.business.user.account.CreateAccountUseCase;
-import com.listenup.individualassignment.business.user.account.DeleteAccountUseCase;
-import com.listenup.individualassignment.business.user.account.GetUserUseCase;
-import com.listenup.individualassignment.business.user.account.UpdateProfileUseCase;
 import com.listenup.individualassignment.business.user.account.imp.CreateAccountUseCaseImp;
 import com.listenup.individualassignment.business.user.account.imp.DeleteAccountUseCaseImp;
 import com.listenup.individualassignment.business.user.account.imp.GetUserUseCaseImp;
 import com.listenup.individualassignment.business.user.account.imp.UpdateProfileUseCaseImp;
-import com.listenup.individualassignment.business.user.action.*;
 import com.listenup.individualassignment.business.user.action.imp.*;
 import com.listenup.individualassignment.dto.*;
 import com.listenup.individualassignment.dto.createdto.AddRemoveLikedPlaylistDTO;
@@ -27,9 +22,9 @@ import com.listenup.individualassignment.dto.createdto.AddRemoveSongToCollection
 import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.*;
-import com.listenup.individualassignment.entity.Customer;
-import com.listenup.individualassignment.entity.RoleEnum;
-import com.listenup.individualassignment.entity.UserRole;
+import com.listenup.individualassignment.repository.entity.Customer;
+import com.listenup.individualassignment.repository.entity.RoleEnum;
+import com.listenup.individualassignment.repository.entity.UserRole;
 import com.listenup.individualassignment.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -58,6 +53,10 @@ class UserServiceImpTest {
     private AccessTokenDTO requestAccessToken;
     @Mock
     private IsAuthorised authorised;
+    @Mock
+    private GetPlaylist getPlaylist;
+    @Mock
+    private GetSong getSong;
 
     @InjectMocks
     private UpdateProfileUseCaseImp updateProfileUseCase;
@@ -419,38 +418,15 @@ class UserServiceImpTest {
         when(repository.getUserById(1L)).thenReturn(beforeUpdateCustomer);
         when(repository.existsById(1L)).thenReturn(true);
 
-        ArtistDTO artist = ArtistDTO.builder()
-                .id(1L)
-                .name("Maroon 5")
-                .build();
-
-        GenreDTO genre = GenreDTO.builder()
-                .id(1L)
-                .name("Pop")
-                .build();
-
-        SingleSongDTO song = SingleSongDTO.builder()
-                .id(1L)
-                .name("Payphone")
-                .artist(artist)
-                .genre(genre)
-                .uploadedDate(null)
-                .releasedDate(null)
-                .build();
-
         AddRemoveSongToCollectionDTO updateDTO = AddRemoveSongToCollectionDTO.builder()
                 .customerID(1L)
-                .song(song)
+                .songID(1L)
                 .build();
 
         addLikedSongUseCase.addSongToCollection(updateDTO);
 
-        Customer actualCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
-        actualCustomer.setLikedSongs(List.of(SongDTOConverter.convertToSingleSongModelForUpdate(song)));
-
-        verify(repository).getUserById(1L);
         verify(repository).existsById(1L);
-        verify(repository).save(actualCustomer);
+        verify(repository).getUserById(1L);
     }
 
     @Test
@@ -459,12 +435,12 @@ class UserServiceImpTest {
 
         AddRemoveSongToCollectionDTO updateDTO = AddRemoveSongToCollectionDTO.builder()
                 .customerID(1L)
-                .song(null)
+                .songID(1L)
                 .build();
 
         InvalidCustomerException exception = assertThrows(InvalidCustomerException.class, () -> addLikedSongUseCase.addSongToCollection(updateDTO));
 
-        assertEquals("INVALID_ID", exception.getReason());
+        assertEquals("INVALID_CUSTOMER", exception.getReason());
 
         verify(repository).getUserById(1L);
         verifyNoMoreInteractions(repository);
@@ -472,32 +448,20 @@ class UserServiceImpTest {
 
     @Test
     void addLikedPlaylists() {
-        Customer customer = new Customer(2L,"Blue", "blue@gmail.com", "123Blue");
-
         Customer beforeUpdateCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
 
         when(repository.getUserById(1L)).thenReturn(beforeUpdateCustomer);
         when(repository.existsById(1L)).thenReturn(true);
 
-        PlaylistDTO playlist = PlaylistDTO.builder()
-                .id(1L)
-                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
-                .name("Chill")
-                .build();
-
         AddRemoveLikedPlaylistDTO updateDTO = AddRemoveLikedPlaylistDTO.builder()
                 .customerID(1L)
-                .playlist(playlist)
+                .playlistID(1L)
                 .build();
 
         addLikedPlaylistUseCase.addLikedPlaylist(updateDTO);
 
-        Customer actualCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
-        actualCustomer.setLikedPlaylists(List.of(PlaylistDTOConverter.convertToModelForUpdate(playlist)));
-
-        verify(repository).getUserById(1L);
         verify(repository).existsById(1L);
-        verify(repository).save(actualCustomer);
+        verify(repository).getUserById(1L);
     }
 
     @Test
@@ -506,55 +470,29 @@ class UserServiceImpTest {
 
         AddRemoveLikedPlaylistDTO updateDTO = AddRemoveLikedPlaylistDTO.builder()
                 .customerID(1L)
-                .playlist(null)
+                .playlistID(1L)
                 .build();
 
         InvalidCustomerException exception = assertThrows(InvalidCustomerException.class, () -> addLikedPlaylistUseCase.addLikedPlaylist(updateDTO));
 
-        assertEquals("INVALID_ID", exception.getReason());
+        assertEquals("INVALID_CUSTOMER", exception.getReason());
 
         verify(repository).existsById(1L);
     }
 
     @Test
     void removeSongFromCollection() {
-        Customer beforeUpdateCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
-
-        when(repository.getUserById(1L)).thenReturn(beforeUpdateCustomer);
         when(repository.existsById(1L)).thenReturn(true);
-
-        ArtistDTO artist = ArtistDTO.builder()
-                .id(1L)
-                .name("Maroon 5")
-                .build();
-
-        GenreDTO genre = GenreDTO.builder()
-                .id(1L)
-                .name("Pop")
-                .build();
-
-        SingleSongDTO song = SingleSongDTO.builder()
-                .id(1L)
-                .name("Payphone")
-                .artist(artist)
-                .genre(genre)
-                .uploadedDate(null)
-                .releasedDate(null)
-                .build();
 
         AddRemoveSongToCollectionDTO updateDTO = AddRemoveSongToCollectionDTO.builder()
                 .customerID(1L)
-                .song(song)
+                .songID(1L)
                 .build();
 
         removeLikedSongUseCase.removeSongFromCollection(updateDTO);
 
-        Customer actualCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
-        actualCustomer.setLikedSongs(Collections.emptyList());
-
-        verify(repository).getUserById(1L);
         verify(repository).existsById(1L);
-        verify(repository).save(actualCustomer);
+        verify(repository).removeLikedSong(1L, 1L);
     }
 
     @Test
@@ -563,61 +501,46 @@ class UserServiceImpTest {
 
         AddRemoveSongToCollectionDTO updateDTO = AddRemoveSongToCollectionDTO.builder()
                 .customerID(1L)
-                .song(null)
+                .songID(1L)
                 .build();
 
         InvalidCustomerException exception = assertThrows(InvalidCustomerException.class, () -> removeLikedSongUseCase.removeSongFromCollection(updateDTO));
 
-        assertEquals("INVALID_ID", exception.getReason());
+        assertEquals("INVALID_CUSTOMER", exception.getReason());
 
-        verify(repository).getUserById(1L);
+        verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);
     }
 
     @Test
     void removeLikedPlaylists() {
-        Customer customer = new Customer(2L,"Blue", "blue@gmail.com", "123Blue");
-
-        Customer beforeUpdateCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
-
-        when(repository.getUserById(1L)).thenReturn(beforeUpdateCustomer);
         when(repository.existsById(1L)).thenReturn(true);
-
-        PlaylistDTO playlist = PlaylistDTO.builder()
-                .id(1L)
-                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
-                .name("Chill")
-                .build();
 
         AddRemoveLikedPlaylistDTO updateDTO = AddRemoveLikedPlaylistDTO.builder()
                 .customerID(1L)
-                .playlist(playlist)
+                .playlistID(1L)
                 .build();
 
         removeLikedPlaylistUseCase.removeLikedPlaylist(updateDTO);
 
-        Customer actualCustomer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
-        actualCustomer.setLikedPlaylists(Collections.emptyList());
-
-        verify(repository).getUserById(1L);
         verify(repository).existsById(1L);
-        verify(repository).save(actualCustomer);
+        verify(repository).removeLikedPlaylist(1L, 1L);
     }
 
     @Test
-    void removePlaylistsInvalid(){
+    void removeLikedPlaylistsInvalid(){
         when(repository.existsById(1L)).thenReturn(false);
 
         AddRemoveLikedPlaylistDTO updateDTO = AddRemoveLikedPlaylistDTO.builder()
                 .customerID(1L)
-                .playlist(null)
+                .playlistID(1L)
                 .build();
 
         InvalidCustomerException exception = assertThrows(InvalidCustomerException.class, () -> removeLikedPlaylistUseCase.removeLikedPlaylist(updateDTO));
 
-        assertEquals("INVALID_ID", exception.getReason());
+        assertEquals("INVALID_CUSTOMER", exception.getReason());
 
-        verify(repository).getUserById(1L);
+        verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);
     }
 

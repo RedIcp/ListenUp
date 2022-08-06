@@ -4,7 +4,7 @@ import com.listenup.individualassignment.business.album.CreateAlbumUseCase;
 import com.listenup.individualassignment.business.dtoconverter.AlbumDTOConverter;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumResponseDTO;
-import com.listenup.individualassignment.entity.Album;
+import com.listenup.individualassignment.repository.entity.Album;
 import com.listenup.individualassignment.repository.AlbumRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;

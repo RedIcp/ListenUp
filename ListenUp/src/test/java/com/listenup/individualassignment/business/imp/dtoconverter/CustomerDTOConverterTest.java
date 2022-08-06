@@ -7,9 +7,9 @@ import com.listenup.individualassignment.dto.CustomerPlaylistListDTO;
 import com.listenup.individualassignment.dto.createdto.CreateUserRequestDTO;
 import com.listenup.individualassignment.dto.vieweditdto.UpdateUserDTO;
 import com.listenup.individualassignment.dto.vieweditdto.ViewUserDTO;
-import com.listenup.individualassignment.entity.Admin;
-import com.listenup.individualassignment.entity.Customer;
-import com.listenup.individualassignment.entity.User;
+import com.listenup.individualassignment.repository.entity.Admin;
+import com.listenup.individualassignment.repository.entity.Customer;
+import com.listenup.individualassignment.repository.entity.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

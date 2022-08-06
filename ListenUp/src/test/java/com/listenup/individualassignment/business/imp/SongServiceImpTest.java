@@ -5,14 +5,13 @@ import com.listenup.individualassignment.business.dtoconverter.AlbumDTOConverter
 import com.listenup.individualassignment.business.dtoconverter.ArtistDTOConverter;
 import com.listenup.individualassignment.business.dtoconverter.GenreDTOConverter;
 import com.listenup.individualassignment.business.dtoconverter.SongDTOConverter;
-import com.listenup.individualassignment.business.song.*;
 import com.listenup.individualassignment.business.song.imp.*;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumSongRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumSongResponseDTO;
 import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateSingleSongResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
-import com.listenup.individualassignment.entity.*;
+import com.listenup.individualassignment.repository.entity.*;
 import com.listenup.individualassignment.repository.SongRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

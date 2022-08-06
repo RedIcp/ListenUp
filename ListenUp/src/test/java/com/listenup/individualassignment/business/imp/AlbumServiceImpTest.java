@@ -1,6 +1,5 @@
 package com.listenup.individualassignment.business.imp;
 
-import com.listenup.individualassignment.business.album.*;
 import com.listenup.individualassignment.business.album.imp.*;
 import com.listenup.individualassignment.business.exception.InvalidAlbumException;
 import com.listenup.individualassignment.business.dtoconverter.AlbumDTOConverter;
@@ -9,8 +8,8 @@ import com.listenup.individualassignment.dto.AlbumSongListDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreateAlbumResponseDTO;
 import com.listenup.individualassignment.dto.vieweditdto.AlbumDTO;
-import com.listenup.individualassignment.entity.Album;
-import com.listenup.individualassignment.entity.Artist;
+import com.listenup.individualassignment.repository.entity.Album;
+import com.listenup.individualassignment.repository.entity.Artist;
 import com.listenup.individualassignment.repository.AlbumRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

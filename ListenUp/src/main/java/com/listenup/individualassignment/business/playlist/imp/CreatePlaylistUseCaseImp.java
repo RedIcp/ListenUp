@@ -4,14 +4,17 @@ import com.listenup.individualassignment.business.dtoconverter.PlaylistDTOConver
 import com.listenup.individualassignment.business.playlist.CreatePlaylistUseCase;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
-import com.listenup.individualassignment.entity.Playlist;
+import com.listenup.individualassignment.repository.entity.Playlist;
 import com.listenup.individualassignment.repository.PlaylistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @Primary
+@Transactional
 @RequiredArgsConstructor
 public class CreatePlaylistUseCaseImp implements CreatePlaylistUseCase {
     private final PlaylistRepository db;

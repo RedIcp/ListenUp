@@ -8,7 +8,7 @@ import com.listenup.individualassignment.dto.createdto.CreateAlbumSongRequestDTO
 import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDTO;
 import com.listenup.individualassignment.dto.vieweditdto.AlbumSongDTO;
 import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
-import com.listenup.individualassignment.entity.*;
+import com.listenup.individualassignment.repository.entity.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

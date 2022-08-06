@@ -5,8 +5,8 @@ import com.listenup.individualassignment.business.dtoconverter.PlaylistDTOConver
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
 import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
-import com.listenup.individualassignment.entity.Customer;
-import com.listenup.individualassignment.entity.Playlist;
+import com.listenup.individualassignment.repository.entity.Customer;
+import com.listenup.individualassignment.repository.entity.Playlist;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

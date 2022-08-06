@@ -18,4 +18,5 @@ public class SingleSongDTO {
     private GenreDTO genre;
     private Date releasedDate;
     private Date uploadedDate;
+    private int isLiked;
 }

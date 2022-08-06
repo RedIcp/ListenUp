@@ -1,12 +1,11 @@
 package com.listenup.individualassignment.business.imp;
 
 import com.listenup.individualassignment.business.exception.InvalidPlaylistException;
-import com.listenup.individualassignment.business.exception.UnauthorizedDataAccessException;
 import com.listenup.individualassignment.business.dtoconverter.CustomerDTOConverter;
 import com.listenup.individualassignment.business.dtoconverter.PlaylistDTOConverter;
 import com.listenup.individualassignment.business.dtoconverter.SongDTOConverter;
-import com.listenup.individualassignment.business.playlist.*;
 import com.listenup.individualassignment.business.playlist.imp.*;
+import com.listenup.individualassignment.business.song.GetSong;
 import com.listenup.individualassignment.business.user.IsAuthorised;
 import com.listenup.individualassignment.dto.AccessTokenDTO;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
@@ -17,8 +16,9 @@ import com.listenup.individualassignment.dto.vieweditdto.ArtistDTO;
 import com.listenup.individualassignment.dto.vieweditdto.GenreDTO;
 import com.listenup.individualassignment.dto.vieweditdto.PlaylistDTO;
 import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
-import com.listenup.individualassignment.entity.*;
 import com.listenup.individualassignment.repository.PlaylistRepository;
+import com.listenup.individualassignment.repository.entity.Customer;
+import com.listenup.individualassignment.repository.entity.Playlist;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -40,6 +40,8 @@ class PlaylistServiceImpTest {
     private AccessTokenDTO requestAccessToken;
     @Mock
     private IsAuthorised authorised;
+    @Mock
+    private GetSong getSong;
 
     @InjectMocks
     private CreatePlaylistUseCaseImp createPlaylistUseCase;
@@ -172,7 +174,7 @@ class PlaylistServiceImpTest {
 
         InvalidPlaylistException exception = assertThrows(InvalidPlaylistException.class, () -> updatePlaylistUseCase.editPlaylist(updateDTO));
 
-        assertEquals("INVALID_ID", exception.getReason());
+        assertEquals("INVALID_PLAYLIST", exception.getReason());
 
         verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);
@@ -225,7 +227,7 @@ class PlaylistServiceImpTest {
         AddRemoveSongToPlaylistDTO updateDTO = AddRemoveSongToPlaylistDTO.builder()
                 .customerID(1L)
                 .playlistID(1L)
-                .song(song)
+                .songID(1L)
                 .build();
 
         addSongToPlaylistUseCase.addSongToPlaylist(updateDTO);
@@ -239,7 +241,6 @@ class PlaylistServiceImpTest {
 
         verify(repository).getById(1L);
         verify(repository).existsById(1L);
-        verify(repository).save(actualPlaylist);
     }
 
     @Test
@@ -249,12 +250,12 @@ class PlaylistServiceImpTest {
         AddRemoveSongToPlaylistDTO updateDTO = AddRemoveSongToPlaylistDTO.builder()
                 .customerID(1L)
                 .playlistID(1L)
-                .song(null)
+                .songID(1L)
                 .build();
 
         InvalidPlaylistException exception = assertThrows(InvalidPlaylistException.class, () -> addSongToPlaylistUseCase.addSongToPlaylist(updateDTO));
 
-        assertEquals("INVALID_ID", exception.getReason());
+        assertEquals("INVALID_PLAYLIST", exception.getReason());
 
         verify(repository).getById(1L);
         verifyNoMoreInteractions(repository);
@@ -262,9 +263,6 @@ class PlaylistServiceImpTest {
 
     @Test
     void removeSongFromPlaylistValid() {
-        Playlist beforeUpdatePlaylist = new Playlist(1L, "Chill", customer);
-
-        when(repository.getById(1L)).thenReturn(beforeUpdatePlaylist);
         when(repository.existsById(1L)).thenReturn(true);
 
         ArtistDTO artist = ArtistDTO.builder()
@@ -289,7 +287,7 @@ class PlaylistServiceImpTest {
         AddRemoveSongToPlaylistDTO updateDTO = AddRemoveSongToPlaylistDTO.builder()
                 .customerID(1L)
                 .playlistID(1L)
-                .song(song)
+                .songID(1L)
                 .build();
 
         removeSongFromPlaylistUseCase.removeSongFromPlaylist(updateDTO);
@@ -301,9 +299,7 @@ class PlaylistServiceImpTest {
                 .songs(Collections.emptyList())
                 .build();
 
-        verify(repository).getById(1L);
-        verify(repository).existsById(1L);
-        verify(repository).save(actualPlaylist);
+        verify(repository).removePlaylistSong(1L, 1L);
     }
 
     @Test
@@ -313,14 +309,14 @@ class PlaylistServiceImpTest {
         AddRemoveSongToPlaylistDTO updateDTO = AddRemoveSongToPlaylistDTO.builder()
                 .customerID(1L)
                 .playlistID(1L)
-                .song(null)
+                .songID(1L)
                 .build();
 
         InvalidPlaylistException exception = assertThrows(InvalidPlaylistException.class, () -> removeSongFromPlaylistUseCase.removeSongFromPlaylist(updateDTO));
 
-        assertEquals("INVALID_ID", exception.getReason());
+        assertEquals("INVALID_PLAYLIST", exception.getReason());
 
-        verify(repository).getById(1L);
+        verify(repository).existsById(1L);
         verifyNoMoreInteractions(repository);
     }
 

@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AddRemoveSongToCollectionDTO {
     private long customerID;
-    private SingleSongDTO song;
+    private long songID;
 }

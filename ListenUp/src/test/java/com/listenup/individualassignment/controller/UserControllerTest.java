@@ -54,13 +54,9 @@ class UserControllerTest {
     @MockBean
     private GetUserLikedSongsUseCase getUserLikedSongsUseCase;
     @MockBean
-    private AddLikedSongUseCase addLikedSongUseCase;
+    private LikeUnlikeSongUseCase likeUnlikeSongUseCase;
     @MockBean
-    private AddLikedPlaylistUseCase addLikedPlaylistUseCase;
-    @MockBean
-    private RemoveLikedSongUseCase removeLikedSongUseCase;
-    @MockBean
-    private RemoveLikedPlaylistUseCase removeLikedPlaylistUseCase;
+    private LikeUnlikePlaylistUseCase likeUnlikePlaylistUseCase;
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"ADMIN"})
@@ -282,12 +278,12 @@ class UserControllerTest {
     @Test
     @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void addSongToCollection() throws Exception{
-        mockMvc.perform(put("/users/1/collection/add")
+        mockMvc.perform(put("/users/1/collection")
                         .contentType(APPLICATION_JSON_VALUE)
                         .content("""
                                 {
-                                        "id": 1,
-                                        "song": null
+                                        "customerID": 1,
+                                        "songID": 1
                                 }
                                 """))
                 .andDo(print())
@@ -295,43 +291,21 @@ class UserControllerTest {
 
         AddRemoveSongToCollectionDTO user = AddRemoveSongToCollectionDTO.builder()
                 .customerID(1L)
-                .song(null)
+                .songID(1L)
                 .build();
 
-        verify(addLikedSongUseCase).addSongToCollection(user);
-    }
-
-    @Test
-    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
-    void removeSongToCollection() throws Exception{
-        mockMvc.perform(put("/users/1/collection/remove")
-                        .contentType(APPLICATION_JSON_VALUE)
-                        .content("""
-                                {
-                                        "id": 1,
-                                        "song": null
-                                }
-                                """))
-                .andDo(print())
-                .andExpect(status().isNoContent());
-
-        AddRemoveSongToCollectionDTO user = AddRemoveSongToCollectionDTO.builder()
-                .customerID(1L)
-                .song(null)
-                .build();
-
-        verify(removeLikedSongUseCase).removeSongFromCollection(user);
+        verify(likeUnlikeSongUseCase).likeUnlikeSong(user);
     }
 
     @Test
     @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
     void addLikedPlaylist() throws Exception{
-        mockMvc.perform(put("/users/1/likedplaylist/add")
+        mockMvc.perform(put("/users/1/library")
                         .contentType(APPLICATION_JSON_VALUE)
                         .content("""
                                 {
-                                        "id": 1,
-                                        "playlist": null
+                                        "customerID": 1,
+                                        "playlistID": 1
                                 }
                                 """))
                 .andDo(print())
@@ -339,32 +313,10 @@ class UserControllerTest {
 
         AddRemoveLikedPlaylistDTO user = AddRemoveLikedPlaylistDTO.builder()
                 .customerID(1L)
-                .playlist(null)
+                .playlistID(1L)
                 .build();
 
-        verify(addLikedPlaylistUseCase).addLikedPlaylist(user);
-    }
-
-    @Test
-    @WithMockUser(username = "Yellow", roles = {"CUSTOMER"})
-    void removeLikedPlaylist() throws Exception{
-        mockMvc.perform(put("/users/1/likedplaylist/remove")
-                        .contentType(APPLICATION_JSON_VALUE)
-                        .content("""
-                                {
-                                        "id": 1,
-                                        "playlist": null
-                                }
-                                """))
-                .andDo(print())
-                .andExpect(status().isNoContent());
-
-        AddRemoveLikedPlaylistDTO user = AddRemoveLikedPlaylistDTO.builder()
-                .customerID(1L)
-                .playlist(null)
-                .build();
-
-        verify(removeLikedPlaylistUseCase).removeLikedPlaylist(user);
+        verify(likeUnlikePlaylistUseCase).likeUnlikePlaylist(user);
     }
 
     @Test

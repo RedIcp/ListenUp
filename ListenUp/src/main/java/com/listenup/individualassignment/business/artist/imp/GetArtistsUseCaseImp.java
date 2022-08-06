@@ -8,10 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @Primary
+@Transactional
 @RequiredArgsConstructor
 public class GetArtistsUseCaseImp implements GetArtistsUseCase {
     private final ArtistRepository db;

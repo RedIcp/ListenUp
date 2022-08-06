@@ -1,4 +1,4 @@
-package com.listenup.individualassignment.entity;
+package com.listenup.individualassignment.repository.entity;
 
 import lombok.*;
 import java.util.List;

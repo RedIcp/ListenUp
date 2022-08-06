@@ -6,14 +6,17 @@ import com.listenup.individualassignment.business.exception.InvalidCustomerExcep
 import com.listenup.individualassignment.business.user.IsAuthorised;
 import com.listenup.individualassignment.business.user.account.UpdateProfileUseCase;
 import com.listenup.individualassignment.dto.vieweditdto.UpdateUserDTO;
-import com.listenup.individualassignment.entity.User;
+import com.listenup.individualassignment.repository.entity.User;
 import com.listenup.individualassignment.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @Primary
+@Transactional
 @RequiredArgsConstructor
 public class UpdateProfileUseCaseImp implements UpdateProfileUseCase {
     private final UserRepository db;

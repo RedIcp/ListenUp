@@ -10,8 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @Primary
+@Transactional
 @RequiredArgsConstructor
 public class UpdatePlaylistUseCaseImp implements UpdatePlaylistUseCase {
     private final PlaylistRepository db;
@@ -22,7 +25,7 @@ public class UpdatePlaylistUseCaseImp implements UpdatePlaylistUseCase {
         authorised.isAuthorised(playlist.getCustomer().getId());
 
         if(!db.existsById(playlist.getId())){
-            throw new InvalidPlaylistException("INVALID_ID");
+            throw new InvalidPlaylistException("INVALID_PLAYLIST");
         }
 
         db.save(PlaylistDTOConverter.convertToModelForUpdate(playlist));
