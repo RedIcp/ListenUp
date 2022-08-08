@@ -4,11 +4,16 @@ import com.listenup.individualassignment.business.exception.InvalidPlaylistExcep
 import com.listenup.individualassignment.business.dtoconverter.CustomerDTOConverter;
 import com.listenup.individualassignment.business.dtoconverter.PlaylistDTOConverter;
 import com.listenup.individualassignment.business.dtoconverter.SongDTOConverter;
+import com.listenup.individualassignment.business.exception.SongAlreadyExistsInPlaylistException;
 import com.listenup.individualassignment.business.playlist.imp.*;
 import com.listenup.individualassignment.business.song.GetSong;
 import com.listenup.individualassignment.business.user.IsAuthorised;
+import com.listenup.individualassignment.business.user.action.imp.AddLikedPlaylistUseCaseImp;
+import com.listenup.individualassignment.business.user.action.imp.LikeUnlikePlaylistUseCaseImp;
+import com.listenup.individualassignment.business.user.action.imp.RemoveLikedPlaylistUseCaseImp;
 import com.listenup.individualassignment.dto.AccessTokenDTO;
 import com.listenup.individualassignment.dto.PlaylistSongListDTO;
+import com.listenup.individualassignment.dto.createdto.AddRemoveLikedPlaylistDTO;
 import com.listenup.individualassignment.dto.createdto.AddRemoveSongToPlaylistDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistRequestDTO;
 import com.listenup.individualassignment.dto.createdto.CreatePlaylistResponseDTO;
@@ -42,6 +47,10 @@ class PlaylistServiceImpTest {
     private IsAuthorised authorised;
     @Mock
     private GetSong getSong;
+    @Mock
+    private AddLikedPlaylistUseCaseImp add;
+    @Mock
+    private RemoveLikedPlaylistUseCaseImp remove;
 
     @InjectMocks
     private CreatePlaylistUseCaseImp createPlaylistUseCase;
@@ -57,8 +66,10 @@ class PlaylistServiceImpTest {
     private AddSongToPlaylistUseCaseImp addSongToPlaylistUseCase;
     @InjectMocks
     private RemoveSongFromPlaylistUseCaseImp removeSongFromPlaylistUseCase;
+    @InjectMocks
+    private LikeUnlikePlaylistUseCaseImp likeUnlikePlaylistUseCase;
 
-    final Customer customer = new Customer(1L,"Yellow", "yellow@gmail.com", "123Yellow");
+    final Customer customer = new Customer(1L, "Yellow", "yellow@gmail.com", "123Yellow");
 
     @Test
     void addPlaylist() {
@@ -180,24 +191,6 @@ class PlaylistServiceImpTest {
         verifyNoMoreInteractions(repository);
     }
 
-//    @Test
-//    void editPlaylistUnauthorised() {
-//        when(requestAccessToken.hasRole(RoleEnum.ADMIN.name())).thenReturn(false);
-//        when(requestAccessToken.getUserID()).thenReturn(4L);
-//
-//        PlaylistDTO updateDTO = PlaylistDTO.builder()
-//                .id(1L)
-//                .name("Workout")
-//                .customer(CustomerDTOConverter.convertToDTOForUpdate(customer))
-//                .build();
-//
-//        UnauthorizedDataAccessException exception = assertThrows(UnauthorizedDataAccessException.class, () -> updatePlaylistUseCase.editPlaylist(updateDTO));
-//
-//        assertEquals("USER_ID_NOT_FROM_LOGGED_IN_USER", exception.getReason());
-//
-//        verifyNoMoreInteractions(repository);
-//    }
-
     @Test
     void addSongToPlaylistValid() {
         Playlist beforeUpdatePlaylist = new Playlist(1L, "Chill", customer);
@@ -258,6 +251,26 @@ class PlaylistServiceImpTest {
         assertEquals("INVALID_PLAYLIST", exception.getReason());
 
         verify(repository).getById(1L);
+        verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void addSongToPlaylistSongAlreadyExists() {
+        when(repository.existsById(1L)).thenReturn(true);
+        when(repository.songExistInPlaylist(1L, 1L)).thenReturn(1);
+
+        AddRemoveSongToPlaylistDTO updateDTO = AddRemoveSongToPlaylistDTO.builder()
+                .customerID(1L)
+                .playlistID(1L)
+                .songID(1L)
+                .build();
+
+        SongAlreadyExistsInPlaylistException exception = assertThrows(SongAlreadyExistsInPlaylistException.class, () -> addSongToPlaylistUseCase.addSongToPlaylist(updateDTO));
+
+        assertEquals("SONG_ALREADY_IN_PLAYLIST", exception.getReason());
+
+        verify(repository).getById(1L);
+        verify(repository).songExistInPlaylist(1L, 1L);
         verifyNoMoreInteractions(repository);
     }
 
@@ -337,6 +350,48 @@ class PlaylistServiceImpTest {
         deletePlaylistUseCase.deletePlaylist(1L);
 
         verify(repository).existsById(1L);
+        verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void likePlaylist() {
+        when(repository.playlistLiked(1L, 1L)).thenReturn(0);
+
+        AddRemoveLikedPlaylistDTO playlist = AddRemoveLikedPlaylistDTO.builder()
+                .customerID(1L)
+                .playlistID(1L)
+                .build();
+
+        likeUnlikePlaylistUseCase.likeUnlikePlaylist(playlist);
+
+        verify(add).addLikedPlaylist(playlist);
+    }
+
+    @Test
+    void unLikePlaylist() {
+        when(repository.playlistLiked(1L, 1L)).thenReturn(1);
+
+        AddRemoveLikedPlaylistDTO playlist = AddRemoveLikedPlaylistDTO.builder()
+                .customerID(1L)
+                .playlistID(1L)
+                .build();
+
+        likeUnlikePlaylistUseCase.likeUnlikePlaylist(playlist);
+
+        verify(remove).removeLikedPlaylist(playlist);
+    }
+
+    @Test
+    void likeUnLikePlaylistRandomNumber() {
+        when(repository.playlistLiked(1L, 1L)).thenReturn(5);
+
+        AddRemoveLikedPlaylistDTO playlist = AddRemoveLikedPlaylistDTO.builder()
+                .customerID(1L)
+                .playlistID(1L)
+                .build();
+
+        assertDoesNotThrow(()->likeUnlikePlaylistUseCase.likeUnlikePlaylist(playlist));
+
         verifyNoMoreInteractions(repository);
     }
 }

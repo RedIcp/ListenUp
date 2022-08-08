@@ -6,10 +6,10 @@ import com.listenup.individualassignment.business.dtoconverter.ArtistDTOConverte
 import com.listenup.individualassignment.business.dtoconverter.GenreDTOConverter;
 import com.listenup.individualassignment.business.dtoconverter.SongDTOConverter;
 import com.listenup.individualassignment.business.song.imp.*;
-import com.listenup.individualassignment.dto.createdto.CreateAlbumSongRequestDTO;
-import com.listenup.individualassignment.dto.createdto.CreateAlbumSongResponseDTO;
-import com.listenup.individualassignment.dto.createdto.CreateSingleSongRequestDTO;
-import com.listenup.individualassignment.dto.createdto.CreateSingleSongResponseDTO;
+import com.listenup.individualassignment.business.user.action.imp.AddLikedSongUseCaseImp;
+import com.listenup.individualassignment.business.user.action.imp.LikeUnlikeSongUseCaseImp;
+import com.listenup.individualassignment.business.user.action.imp.RemoveLikedSongUseCaseImp;
+import com.listenup.individualassignment.dto.createdto.*;
 import com.listenup.individualassignment.dto.vieweditdto.SingleSongDTO;
 import com.listenup.individualassignment.repository.entity.*;
 import com.listenup.individualassignment.repository.SongRepository;
@@ -30,6 +30,10 @@ import static org.mockito.Mockito.*;
 class SongServiceImpTest {
     @Mock
     private SongRepository repository;
+    @Mock
+    private AddLikedSongUseCaseImp add;
+    @Mock
+    private RemoveLikedSongUseCaseImp remove;
 
     @InjectMocks
     private CreateSingleSongUseCaseImp createSingleSongUseCase;
@@ -43,6 +47,8 @@ class SongServiceImpTest {
     private GetSongUseCaseImp getSongUseCase;
     @InjectMocks
     private GetSongsUseCaseImp getSongsUseCase;
+    @InjectMocks
+    private LikeUnlikeSongUseCaseImp likeUnlikeSongUseCase;
 
     final Artist artist = Artist.builder()
             .id(1L)
@@ -62,13 +68,13 @@ class SongServiceImpTest {
             .name("Pop")
             .build();
 
-    final Date date = new Date(2021,11,27);
+    final Date date = new Date(2021, 11, 27);
 
     @Test
     void addSingleSong() {
         Song song = new SingleSong("Sugar", artist, genre, date, date);
 
-        Song savedSong = new SingleSong(1L,"Sugar", artist, genre, date, date);
+        Song savedSong = new SingleSong(1L, "Sugar", artist, genre, date, date);
 
         when(repository.save(song)).thenReturn(savedSong);
 
@@ -95,7 +101,7 @@ class SongServiceImpTest {
     void addAlbumSong() {
         Song song = new AlbumSong("Map", genre, album);
 
-        Song savedSong = new AlbumSong(1L,"Map", genre, album);
+        Song savedSong = new AlbumSong(1L, "Map", genre, album);
 
         when(repository.save(song)).thenReturn(savedSong);
 
@@ -118,8 +124,8 @@ class SongServiceImpTest {
 
     @Test
     void getSongs() {
-        Song song1 = new SingleSong(1L,"Sugar", artist, genre, date, date);
-        Song song2 = new AlbumSong(1L,"Map", genre, album);
+        Song song1 = new SingleSong(1L, "Sugar", artist, genre, date, date);
+        Song song2 = new AlbumSong(1L, "Map", genre, album);
 
         when(repository.findAll()).thenReturn(List.of(song1, song2));
 
@@ -136,7 +142,7 @@ class SongServiceImpTest {
 
     @Test
     void getSong() {
-        Song song = new SingleSong(1L,"Sugar", artist, genre, date, date);
+        Song song = new SingleSong(1L, "Sugar", artist, genre, date, date);
 
         when(repository.getById(1L)).thenReturn(song);
 
@@ -171,7 +177,7 @@ class SongServiceImpTest {
 
         updateSongUseCase.editSong(updateDTO);
 
-        Song actualSong = new SingleSong(1L,"Lost Stars", artist, genre, date, date);
+        Song actualSong = new SingleSong(1L, "Lost Stars", artist, genre, date, date);
 
         verify(repository).existsById(1L);
         verify(repository).save(actualSong);
@@ -215,6 +221,48 @@ class SongServiceImpTest {
         deleteSongUseCase.deleteSong(1L);
 
         verify(repository).existsById(1L);
+        verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void likeSong() {
+        when(repository.songLiked(1L, 1L)).thenReturn(0);
+
+        AddRemoveSongToCollectionDTO song = AddRemoveSongToCollectionDTO.builder()
+                .customerID(1L)
+                .songID(1L)
+                .build();
+
+        likeUnlikeSongUseCase.likeUnlikeSong(song);
+
+        verify(add).addSongToCollection(song);
+    }
+
+    @Test
+    void unLikeSong() {
+        when(repository.songLiked(1L, 1L)).thenReturn(1);
+
+        AddRemoveSongToCollectionDTO song = AddRemoveSongToCollectionDTO.builder()
+                .customerID(1L)
+                .songID(1L)
+                .build();
+
+        likeUnlikeSongUseCase.likeUnlikeSong(song);
+
+        verify(remove).removeSongFromCollection(song);
+    }
+
+    @Test
+    void likeUnLikeSongRandomNumber() {
+        when(repository.songLiked(1L, 1L)).thenReturn(20);
+
+        AddRemoveSongToCollectionDTO song = AddRemoveSongToCollectionDTO.builder()
+                .customerID(1L)
+                .songID(1L)
+                .build();
+
+        assertDoesNotThrow(()-> likeUnlikeSongUseCase.likeUnlikeSong(song));
+
         verifyNoMoreInteractions(repository);
     }
 }
